@@ -1,4 +1,16 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useNavigate } from "react-router-dom"
+import { useRoute } from "src/context/RouteContext"
+
 const Login = () => {
+
+    const { setRoute, route } = useRoute()
+    const navigate = useNavigate()
+
+    const changeUrl = () => {
+        navigate(route)
+    }
+
     return (
         <>
             <div className="flex flex-col">
@@ -10,7 +22,7 @@ const Login = () => {
                     <h3>Password</h3>
                     <input></input>
                 </div>
-                <button>Login</button>
+                <button onClick={() => {setRoute('/'); changeUrl()}}>Login</button>
             </div>
         </>
     )
