@@ -10,7 +10,7 @@ export function useRoute(){
 
 export default function RouteProvider({ children }) {
 
-  const [route, setRoute] = useState('/')
+  const [route, setRoute] = useState(null)
 
   return (
     <RouteContext.Provider value={{ route: route, setRoute: setRoute }}>

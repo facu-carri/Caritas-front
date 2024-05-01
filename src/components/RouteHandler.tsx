@@ -11,7 +11,7 @@ const RouteHandler = () => {
     const { route } = useRoute()
 
     useEffect(() => {
-        navigator(route)
+        if(route) navigator(route)
     }, [route])
 
     return (<></>)
