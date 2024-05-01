@@ -2,14 +2,14 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './routes/main/App.tsx'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
-import Login from './routes/login/login.tsx'
-import '@css/index.css'
 import RouteProvider from './context/RouteContext.tsx'
+import Login from './routes/login/Login.tsx'
+import '@css/index.css'
 
 const routes = [
   {
     path: "/",
-    element: <App/>,
+    element: <App/>,// app debe subdividirse en 3: Intercambiador, Ayudante, Administrador
   },
   {
     path: "/login",
