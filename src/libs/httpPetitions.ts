@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { serverAddress } from "./constants"
+import { serverAddress } from "./constants.ts"
 import { Url } from "./url.ts"
 
 const reqHeaders = {
