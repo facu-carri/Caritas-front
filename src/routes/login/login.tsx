@@ -55,20 +55,18 @@ const Login = () => {
     }
 
     return (
-        <>
+        <div className="flex justify-center items-center h-[100vh] text-[100%]">
             <RouteHandler/>
             <div className="flex flex-col gap-4">
                 <Input id='username' text={'Username'} icon={Icons.username} showError={errorCode?.getType() == ErrorCodeTypes.USERNAME_ERROR} errorMsg={errorCode?.getMessage()}/>
-
                 <Input id='password' text={'Password'} icon={Icons.password} type={ show_password ? "text" : "password"} showError={errorCode?.getType() == ErrorCodeTypes.PASSWORD_ERROR} errorMsg={errorCode?.getMessage()}>
                     {<button className="bg-transparent p-1" onClick={() => showPassword(!show_password)}>{show_password ? Icons.eyeHidden : Icons.eye}</button>}
                 </Input> 
-
                 <button className="btn btn-primary" onClick={() => handleLogin()}>
                     {reqStatus == RequestStatus.PENDING ? <span className="loading loading-spinner"></span> : 'Login'}
                 </button>
             </div>
-        </>
+        </div>
     )
 }
 
