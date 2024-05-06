@@ -5,6 +5,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import RouteProvider from './context/RouteContext.tsx'
 import Login from './routes/login/Login.tsx'
 import '@css/index.css'
+import Maps from './routes/maps/Map.tsx'
 
 const routes = [
   {
@@ -14,6 +15,10 @@ const routes = [
   {
     path: "/login",
     element: <Login/>
+  },
+  {
+    path: "/maps",
+    element: <Maps/>
   }
 ]
 
