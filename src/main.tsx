@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client'
 import App from './routes/main/App.tsx'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import RouteProvider from './context/RouteContext.tsx'
-import Login from './routes/login/Login.tsx'
+import Login from './routes/login/login.tsx'
 import '@css/index.css'
 import Maps from './routes/maps/Map.tsx'
 
