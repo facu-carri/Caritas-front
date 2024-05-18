@@ -6,6 +6,7 @@ import Username from "./icons/Username"
 import Eye from "./icons/Eye"
 import EyeHidden from "./icons/EyeHidden"
 import Home from "./icons/Home"
+import Menu from "./icons/Menu"
 
 const default_color = '#000000'
 
@@ -17,5 +18,6 @@ export const Icons = {
     eyeHidden: (color:string = default_color) => <EyeHidden currentColor={color}/>,
     search: (color:string = default_color) => <Search currentColor={color}/>,
     check: (color: string = default_color) => <Check currentColor={color} />,
-    home: (color:string = default_color) => <Home currentColor={color}/>,
+    home: (color: string = default_color) => <Home currentColor={color} />,
+    menu: (color:string = default_color) => <Menu currentColor={color}/>,
 }

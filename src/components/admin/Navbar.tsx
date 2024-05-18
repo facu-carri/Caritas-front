@@ -1,8 +1,12 @@
+import Button from "../Button"
+
 export type Tab = {
     text?: string,
-    onClick: () => void,
+    onClick?: () => void,
     icon?: JSX.Element,
-    active?: boolean
+    active?: boolean,
+    visible?: boolean
+    customElement?: JSX.Element
 }
 
 type NavbarType = {
@@ -15,17 +19,18 @@ export default function Navbar({startTabs: start, middleTabs: middle, endTabs: e
 
     const getTabObjs = (tabs:Array<Tab>) => {
         return tabs && tabs.map((tab, index) => (
-            <button className={`btn btn-ghost ${tab.active && 'btn-active'} text-xl`} onClick={tab.onClick} key={index}>
-                {tab.icon ?? null}
-                {tab.text ?? null}
-            </button>
+            <>
+                {tab.customElement ? tab.customElement :
+                    <Button text={tab.text} icon={tab.icon} visible={tab.visible} active={tab.visible} onClick={tab.onClick} key={index}/>
+                }
+            </>
         ))
     }
 
     return (
-        <div className="px-5">
+        <div className="px-5 fixed top-0 left-0 w-full text-white shadow-md z-10">
             <div className="navbar bg-navbar-blue mt-2 shadow-xl rounded-box">
-                <div className="navbar-start">
+                <div className="navbar-start gap-2">
                     {
                         getTabObjs(start)
                     }
@@ -37,7 +42,7 @@ export default function Navbar({startTabs: start, middleTabs: middle, endTabs: e
                         }
                     </ul>
                 </div>
-                <div className="navbar-end">
+                <div className="navbar-end gap-2">
                     {
                         getTabObjs(end)
                     }

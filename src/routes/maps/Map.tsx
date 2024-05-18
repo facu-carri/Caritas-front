@@ -13,7 +13,7 @@ function Maps(){
     return (
         <div style={{ height: '100vh'}}>
             <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API}>
-                <Map defaultZoom={9} zoomControl={true} defaultCenter={position} fullscreenControl={false} mapId={import.meta.env.VITE_GOOGLE_MAPS_MAP_ID}>
+                <Map disableDefaultUI={true} defaultZoom={9} zoomControl={true} defaultCenter={position} fullscreenControl={false} mapId={import.meta.env.VITE_GOOGLE_MAPS_MAP_ID}>
                     <AdvancedMarker position={position} title="Testing!" onClick={() => setOpen(true)}>
                     </AdvancedMarker>
                     {open && (
