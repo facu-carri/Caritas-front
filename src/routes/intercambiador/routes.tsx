@@ -1,6 +1,7 @@
 import { useRoutes } from "react-router-dom";
 import { NormalMain } from "./main";
 import { TestPage } from "../TestPage";
+import ErrorPage from "../ErrorPage";
 
 export function NormalRouter() {
   return useRoutes([
@@ -11,6 +12,10 @@ export function NormalRouter() {
     {
       path: '/test',
       element: <TestPage/>
+    },
+    {
+      path: '*',
+      element: <ErrorPage/>
     }
   ]);
 }

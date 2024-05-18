@@ -5,6 +5,7 @@ import { roles } from "./constants"
 import { AdminRouter } from "../routes/administrador/routes"
 import { HelperRouter } from "../routes/ayudante/routes"
 import { NormalRouter } from "../routes/intercambiador/routes"
+import ErrorPage from "src/routes/ErrorPage"
 
 export default function RoleBasedRouting() {
   const { getRol } = User()
@@ -17,5 +18,7 @@ export default function RoleBasedRouting() {
       return <HelperRouter/>
     case roles.NORMAL:
       return <NormalRouter/>
+    default:
+      return <ErrorPage/>
   }
 }

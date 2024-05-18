@@ -1,5 +1,6 @@
 import { useRoutes } from "react-router-dom";
 import { AdminMain } from "./main";
+import ErrorPage from "../ErrorPage";
 
 export function AdminRouter() {
   return useRoutes([
@@ -7,5 +8,9 @@ export function AdminRouter() {
       path: "/",
       element: <AdminMain />
     },
+    {
+      path: '*',
+      element: <ErrorPage/>
+    }
   ]);
 }

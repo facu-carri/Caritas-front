@@ -54,7 +54,7 @@ const Login = () => {
             .then(() => setReqStatus(RequestStatus.SUCCESS))
             .catch((err) => { setReqStatus(RequestStatus.FAILED); handleError(err) })
             .then(() => setUser('444'))//hardcoded
-            //.finally(() => checkStatus())
+            .finally(() => checkStatus())
     }
 
     return (
