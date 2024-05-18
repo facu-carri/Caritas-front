@@ -7,9 +7,8 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: rgb(186, 218, 227);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -38,4 +37,23 @@ h1 {
   button {
     background-color: #f9f9f9;
   }
+}
+
+.input{
+  padding: 12px;
+  border: 2px solid;
+  border-radius: 6px;
+  box-sizing: border-box;
+  font-size: 16px;
+  background-color: #ffffff;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.btn {
+  background-color: #ff4500;
+  color: white;
+  padding: 12px 20px;
+  font-weight: bold;
+  transition: background-color 0.3s, transform 0.3s;
+  animation: bounce 2s infinite;
 }
