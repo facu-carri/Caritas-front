@@ -7,7 +7,8 @@ const adminRoutes = {
     'gestionarUsuarios': '/gestionar-usuarios',
     'gestionarAyudantes': '/gestionar-ayudantes',
     'listarDonaciones': '/donaciones',
-    'gestionarFiliales': '/gestionar-filiales'
+    'gestionarFiliales': '/gestionar-filiales',
+     
 }
 export const routes = {
     main: '/',
