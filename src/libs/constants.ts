@@ -6,3 +6,8 @@ export const routes = {
     main: '/',
     login: '/login'
 }
+export const roles = {
+    'ADMIN': 'administrador',
+    'HELPER': 'ayudante',
+    'NORMAL': 'intercambiador'
+}
