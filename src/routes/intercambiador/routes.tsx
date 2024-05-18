@@ -1,5 +1,5 @@
 import { useRoutes } from "react-router-dom";
-import { NormalMain } from "./main";
+import  {NormalMain}  from "./main";
 import { TestPage } from "../TestPage";
 import ErrorPage from "../ErrorPage";
 
