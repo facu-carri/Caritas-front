@@ -52,8 +52,14 @@ h1 {
 .btn {
   background-color: #ff4500;
   color: white;
-  padding: 12px 20px;
+  padding: 0px 20px;
   font-weight: bold;
-  transition: background-color 0.3s, transform 0.3s;
-  animation: bounce 2s infinite;
+  border-color: transparent;
+  transition: background-color 0.3s, transform 0.3s !important;
+  animation: bounce 2s infinite !important;
+}
+
+.btn:hover, .btn-ghost.btn-active{
+  border-color: transparent;
+  background-color: #b83303;
 }

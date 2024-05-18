@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState } from "react"
-import { Icons } from "src/icons/Icons"
+import { Icons } from "src/Icons"
 import Input from "src/components/Input"
 import { RequestStatus } from "src/libs/types/RequestStatus"
 import { getElementValue, validString } from "src/libs/api"
@@ -11,8 +11,8 @@ import { ErrorCode } from "../../libs/Error/ErrorCode"
 import { IErrorResponse } from "../../libs/Error/IErrorResponse"
 import { ErrorCodeTypes } from "src/libs/Error/ErrorCodeTypes"
 import { LoginQuery } from "./LoginQuery"
-import { useNavigate } from "react-router-dom"
 import { User } from "src/libs/User"
+import RoutesHandler from "src/libs/routesHandler"
 
 const Login = () => {
 
@@ -20,7 +20,7 @@ const Login = () => {
     const [reqStatus, setReqStatus] = useState<RequestStatus>(RequestStatus.INITIAL)
     const [errorCode, setErrorCode] = useState<ErrorCode>(null)
     const { setUser } = User()
-    const navigator = useNavigate()
+    const { setRoute } = RoutesHandler()
 
     function handleError(err: IErrorResponse | any) {
         const errorCode: ErrorCode = new ErrorCode(err?.code ?? 0)
@@ -29,7 +29,7 @@ const Login = () => {
 
     function checkStatus(){
         if (reqStatus == RequestStatus.SUCCESS) {
-            navigator(routes.main)
+            setRoute(routes.main)
         }
         setReqStatus(RequestStatus.INITIAL)
     }
@@ -60,9 +60,9 @@ const Login = () => {
     return (
         <div className="flex justify-center items-center h-[100vh] text-[100%]">
             <div className="flex flex-col gap-4">
-                <Input id='username' text={'Username'} icon={Icons.username} showError={errorCode?.getType() == ErrorCodeTypes.USERNAME_ERROR} errorMsg={errorCode?.getMessage()}/>
-                <Input id='password' text={'Password'} icon={Icons.password} type={ show_password ? "text" : "password"} showError={errorCode?.getType() == ErrorCodeTypes.PASSWORD_ERROR} errorMsg={errorCode?.getMessage()}>
-                    {<button className="bg-transparent p-1" onClick={() => showPassword(!show_password)}>{show_password ? Icons.eyeHidden : Icons.eye}</button>}
+                <Input id='username' text={'Username'} icon={Icons.username()} showError={errorCode?.getType() == ErrorCodeTypes.USERNAME_ERROR} errorMsg={errorCode?.getMessage()}/>
+                <Input id='password' text={'Password'} icon={Icons.password()} type={ show_password ? "text" : "password"} showError={errorCode?.getType() == ErrorCodeTypes.PASSWORD_ERROR} errorMsg={errorCode?.getMessage()}>
+                    {<button className="bg-transparent p-1" onClick={() => showPassword(!show_password)}>{show_password ? Icons.eyeHidden() : Icons.eye()}</button>}
                 </Input> 
                 <button className="btn btn-primary" onClick={() => handleLogin()}>
                     {reqStatus == RequestStatus.PENDING ? <span className="loading loading-spinner"></span> : 'Login'}

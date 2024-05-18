@@ -9,10 +9,7 @@ import RoleBasedRouting from './libs/RoleRouting.tsx'
 const routes = [
   {
     path: "/*",
-    element:
-    <AuthProvider>
-      <RoleBasedRouting/>
-    </AuthProvider>,
+    element:<AuthProvider><RoleBasedRouting/></AuthProvider>,
   },
   {
     path: "/login",

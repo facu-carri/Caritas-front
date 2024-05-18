@@ -1,6 +1,6 @@
-import { useNavigate } from "react-router-dom"
 import { routes } from "./constants"
 import { getItem, removeItem, setItem } from "./localStorage"
+import RoutesHandler from "./routesHandler"
 
 type UserData = {
     token: string,
@@ -11,12 +11,12 @@ export const User = () => {
 
     const TOKEN: string = 'token'
     const ROL: string = 'rol'
-    const navigator = useNavigate()
+    const { setRoute } = RoutesHandler()
 
     const setUser = (data: UserData) => {
         setItem(TOKEN, data.token)
         setItem(ROL, data.rol)
-        navigator(routes.main)
+        setRoute(routes.main)
     }
     
     const getToken = () => {
@@ -29,7 +29,7 @@ export const User = () => {
 
     const logout = () => {
         removeItem(TOKEN)
-        navigator(routes.main)
+        setRoute(routes.main)
     }
 
     return { setUser, getToken, getRol, logout }

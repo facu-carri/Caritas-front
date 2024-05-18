@@ -1,14 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react"
-import { useNavigate } from "react-router-dom"
 import { routes } from "src/libs/constants"
+import RoutesHandler from "src/libs/routesHandler"
 
 export default function ErrorPage() {
 
-    const nav = useNavigate()
+    const { setRoute } = RoutesHandler()
 
     useEffect(() => {
-        setTimeout(() => nav(routes.login), 5000)
+        setTimeout(() => setRoute(routes.main), 1000)
     }, [])
 
     return(
