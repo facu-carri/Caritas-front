@@ -8,7 +8,7 @@ import { NormalRouter } from "../routes/intercambiador/routes"
 import ErrorPage from "src/routes/ErrorPage"
 
 export default function RoleBasedRouting() {
-  const { getRole } = User()
+  const { getRole, logout } = User()
   const role = getRole()
 
   switch (role) {
@@ -19,6 +19,7 @@ export default function RoleBasedRouting() {
     case roles.NORMAL:
       return <NormalRouter/>
     default:
+      logout()
       return <ErrorPage/>
   }
 }
