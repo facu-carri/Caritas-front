@@ -7,7 +7,6 @@ import { Outlet } from "react-router-dom"
 import { useEffect, useState } from "react"
 import Button from "src/components/Button"
 import { FilialesOptions } from "./menu/Filiales"
-import GenericProfile from "src/components/GenericProfile"
 import CircularDropdown from "src/components/DropDown"
 
 export default function AdminLayout() {
