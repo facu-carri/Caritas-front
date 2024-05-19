@@ -40,7 +40,7 @@ export default function AdminLayout() {
           <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 mt-2 shadow bg-base-100 rounded-box w-52 gap-2">
             {
               menuOpts.map((tab, index) => (
-                <Button text={tab?.text} icon={tab?.icon} onClick={tab?.onClick} key={index}/>
+                <Button text={tab?.text} icon={tab?.icon} onClick={tab?.onClick} key={'opts' + index}/>
               ))
             }
           </ul>
