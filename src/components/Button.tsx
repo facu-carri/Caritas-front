@@ -9,7 +9,7 @@ type Type = {
 
 export default function Button({ text, icon, active, visible, onClick, ...props }: Type) {
     return (
-        <button className={`btn btn-ghost ${active && 'btn-active'} ${visible == false && 'hidden'} text-xl`} onClick={onClick} {...props}>
+        <button className={`btn btn-ghost ${active && 'btn-active'} ${visible == false && 'hidden'} text-base`} onClick={onClick} {...props}>
             {icon ?? null}
             {text ?? null}
         </button>
