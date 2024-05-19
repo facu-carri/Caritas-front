@@ -28,7 +28,7 @@ export default function Navbar({startTabs: start, middleTabs: middle, endTabs: e
     }
 
     return (
-        <div className="px-5 fixed top-0 left-0 w-full text-white shadow-md z-10">
+        <div className="px-5 fixed top-0 left-0 w-full text-white z-10">
             <div className="navbar bg-navbar-blue mt-2 shadow-xl rounded-box">
                 <div className="navbar-start gap-2">
                     {
