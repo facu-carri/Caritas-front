@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { serverAddress } from "../constants.ts"
 import { Url } from "./url.ts"
+import { getItem } from "../localStorage.ts"
 
 const reqHeaders = {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
+    'Authorization': `Bearer ${getItem('token')}`
 }
 
 export const convertToString = (obj: Record<string, string>): string => {
