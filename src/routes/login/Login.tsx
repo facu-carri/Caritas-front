@@ -5,7 +5,7 @@ import { Icons } from "src/Icons"
 import Input from "src/components/Input"
 import { RequestStatus } from "src/libs/types/RequestStatus"
 import { getElementValue, validString } from "src/libs/api"
-import { endPoints, roles, routes } from "src/libs/constants"
+import { endPoints, routes } from "src/libs/constants"
 import { postData } from "src/libs/request/httpRequests"
 import { ErrorCode } from "../../libs/Error/ErrorCode"
 import { IErrorResponse } from "../../libs/Error/IErrorResponse"
@@ -56,7 +56,6 @@ const Login = () => {
             .then((data) => setUser(data))
             .then(() => setReqStatus(RequestStatus.SUCCESS))
             .catch((err) => { setReqStatus(RequestStatus.FAILED); handleError(err) })
-            //.finally(() => setUser({token: '333', rol: roles.HELPER}))//hardcoded
             .finally(() => checkStatus())
     }
 

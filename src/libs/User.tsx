@@ -29,7 +29,8 @@ export const User = () => {
 
     const logout = () => {
         removeItem(TOKEN)
-        setRoute(routes.main)
+        removeItem(ROLE)
+        setRoute(routes.login)
     }
 
     return { setUser, getToken, getRole, logout }
