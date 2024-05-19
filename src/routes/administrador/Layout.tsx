@@ -1,27 +1,33 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Icons } from "src/Icons"
 import Navbar, { Tab } from "src/components/admin/Navbar"
 import { colors, routes } from "src/libs/constants"
 import RoutesHandler from "src/libs/routesHandler"
 import { Outlet } from "react-router-dom"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Button from "src/components/Button"
+import { FilialesOptions } from "./menu/Filiales"
 
 export default function AdminLayout() {
 
   const { setRoute, getRoute } = RoutesHandler()
-  const [ showMenu, setShowMenu ] = useState(false)
-  const menuRoutes = [routes.admin.gestionarFiliales]
+  const [showMenu, setShowMenu] = useState(false)
+  const [menuOpts, setMenuOpts] = useState<Array<Tab>>([])
+
+  useEffect(() => {
+    const route = getRoute()
+    let options: Tab[] = []
+
+    switch (route) {
+        case routes.admin.gestionarFiliales:
+          options = FilialesOptions
+        break
+    }
+    setMenuOpts(options)
+  }, [])
 
   const btnActive = (route:string) => {
     return getRoute() == route
-  }
-
-  const menuVisible = (routes:string[]) => {
-    const currentRoute = getRoute()
-    for (const route of routes) {
-      if(route == currentRoute) return true
-    }
-    return false
   }
 
   const menu = () => {
@@ -31,8 +37,11 @@ export default function AdminLayout() {
         {
           showMenu &&
           <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 mt-2 shadow bg-base-100 rounded-box w-52">
-            <li><a>Agregar filiales</a></li>
-            <li><a>Eliminar filiales</a></li>
+            {
+              menuOpts.map((tab, index) => (
+                <Button text={tab?.text} icon={tab?.icon} onClick={tab?.onClick} key={index}/>
+              ))
+            }
           </ul>
         }
       </div>
@@ -47,7 +56,7 @@ export default function AdminLayout() {
     },
     {
       icon: Icons.menu(colors.white),
-      customElement: <>{menuVisible(menuRoutes) && menu()}</>
+      customElement: <>{menuOpts.length > 0 && menu()}</>
     }
   ]
 
