@@ -10,21 +10,21 @@ import { FilialesOptions } from "./menu/Filiales"
 
 export default function AdminLayout() {
 
-  const { setRoute, getRoute } = RoutesHandler()
+  const { setRoute, getRoute, location } = RoutesHandler()
   const [showMenu, setShowMenu] = useState(false)
   const [menuOpts, setMenuOpts] = useState<Array<Tab>>([])
 
   useEffect(() => {
     const route = getRoute()
-    let options: Tab[] = []
 
     switch (route) {
-        case routes.admin.gestionarFiliales:
-          options = FilialesOptions
+      case routes.admin.gestionarFiliales:
+        setMenuOpts(FilialesOptions)
         break
+      default:
+        setMenuOpts([])
     }
-    setMenuOpts(options)
-  }, [])
+  }, [location])
 
   const btnActive = (route:string) => {
     return getRoute() == route
