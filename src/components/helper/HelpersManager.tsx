@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import HelpersList from './HelpersList';
-import EditHelperModal from './EditHelperModal';
+import EditHelperModal from '../EditHelperModal';
 import { getData } from 'src/libs/request/httpRequests';
 
 //tiene toda la logica de eliminar y editar ayudantes listados y su estado.
@@ -41,4 +41,4 @@ export default function HelpersManager() {
       {isEditing && <EditHelperModal helper={currentHelper} onSave={handleSave} onClose={() => setIsEditing(false)} />}
     </div>
   );
-};
+}
