@@ -4,7 +4,7 @@ import ErrorPage from "../ErrorPage";
 import { routes } from "src/libs/constants";
 import { TestPage } from "../TestPage";
 import AdminLayout from "./Layout";
-import HelpersManager from "src/components/HelpersManager";
+import HelpersManager from "src/components/helper/HelpersManager";
 
 export function AdminRouter() {
   return useRoutes([
