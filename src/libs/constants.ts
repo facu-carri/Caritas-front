@@ -1,6 +1,6 @@
 export const serverAddress = 'http://localhost:8080/api'
 export const endPoints = {
-    login: 'login'
+    login: 'v1/auth/authenticate'
 }
 const adminRoutes = {
     'estadisticas': '/estadisticas',

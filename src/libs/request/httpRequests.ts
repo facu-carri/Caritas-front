@@ -6,7 +6,7 @@ import { getItem } from "../localStorage.ts"
 const reqHeaders = {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
-    'Authorization': `Bearer ${getItem('token')}`
+    'Authorization': getItem('token') && `Bearer ${getItem('token')}`
 }
 
 export const convertToString = (obj: Record<string, string>): string => {
@@ -40,13 +40,12 @@ export function getData(endPoint: string, querys: Record<string, string> = null)
     .then(handleResponse)
 }
 
-export function postData(endPoint: string, querys: Record<string, any> = null, data?: string) {
+export function postData(endPoint: string, querys: Record<string, any> = null, data?: any) {
     const url = new Url(serverAddress, endPoint, querys)
     const request = fetch(url.toString(), {
         method: "POST",
-        mode: 'cors',
         headers: reqHeaders,
-        body: data
+        body: JSON.stringify(data)
     })
     return request.then(handleResponse)
 }

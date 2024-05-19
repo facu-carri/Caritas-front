@@ -6,7 +6,7 @@ import Input from "src/components/Input"
 import { RequestStatus } from "src/libs/types/RequestStatus"
 import { getElementValue, validString } from "src/libs/api"
 import { endPoints, roles, routes } from "src/libs/constants"
-import { getData } from "src/libs/request/httpRequests"
+import { postData } from "src/libs/request/httpRequests"
 import { ErrorCode } from "../../libs/Error/ErrorCode"
 import { IErrorResponse } from "../../libs/Error/IErrorResponse"
 import { ErrorCodeTypes } from "src/libs/Error/ErrorCodeTypes"
@@ -16,7 +16,7 @@ import RoutesHandler from "src/libs/routesHandler"
 
 const Login = () => {
 
-    const [show_password, showPassword] = useState(false)
+    const [showPassword, setShowPassword] = useState(false)
     const [reqStatus, setReqStatus] = useState<RequestStatus>(RequestStatus.INITIAL)
     const [errorCode, setErrorCode] = useState<ErrorCode>(null)
     const { setUser } = User()
@@ -49,22 +49,25 @@ const Login = () => {
         if (isInvalid(query)) return
 
         setReqStatus(RequestStatus.PENDING)
-        getData(endPoints.login, query)
+        postData(endPoints.login, null, {
+            email: query.username,
+            password: query.password
+        })
             .then((data) => setUser(data))
             .then(() => setReqStatus(RequestStatus.SUCCESS))
             .catch((err) => { setReqStatus(RequestStatus.FAILED); handleError(err) })
-            .finally(() => setUser({token: '333', rol: roles.HELPER}))//hardcoded
-            //.finally(() => checkStatus())
+            //.finally(() => setUser({token: '333', rol: roles.HELPER}))//hardcoded
+            .finally(() => checkStatus())
     }
 
     return (
         <div className="flex justify-center items-center h-[100vh] text-[100%]">
             <div className="flex flex-col gap-4">
                 <Input id='username' text={'Username'} icon={Icons.username()} showError={errorCode?.getType() == ErrorCodeTypes.USERNAME_ERROR} errorMsg={errorCode?.getMessage()}/>
-                <Input id='password' text={'Password'} icon={Icons.password()} type={ show_password ? "text" : "password"} showError={errorCode?.getType() == ErrorCodeTypes.PASSWORD_ERROR} errorMsg={errorCode?.getMessage()}>
-                    {<button className="bg-transparent p-1" onClick={() => showPassword(!show_password)}>{show_password ? Icons.eyeHidden() : Icons.eye()}</button>}
+                <Input id='password' text={'Password'} icon={Icons.password()} type={ showPassword ? "text" : "password"} showError={errorCode?.getType() == ErrorCodeTypes.PASSWORD_ERROR} errorMsg={errorCode?.getMessage()}>
+                    {<button className="bg-transparent p-1" onClick={() => setShowPassword(!showPassword)}>{showPassword ? Icons.eyeHidden() : Icons.eye()}</button>}
                 </Input> 
-                <button className="btn btn-primary" onClick={() => handleLogin()}>
+                <button className="btn btn-primary" onClick={handleLogin}>
                     {reqStatus == RequestStatus.PENDING ? <span className="loading loading-spinner"></span> : 'Login'}
                 </button>
             </div>
