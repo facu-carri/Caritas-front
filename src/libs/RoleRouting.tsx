@@ -8,10 +8,10 @@ import { NormalRouter } from "../routes/intercambiador/routes"
 import ErrorPage from "src/routes/ErrorPage"
 
 export default function RoleBasedRouting() {
-  const { getRol } = User()
-  const rol = getRol()
+  const { getRole } = User()
+  const role = getRole()
 
-  switch (rol) {
+  switch (role) {
     case roles.ADMIN:
       return <AdminRouter/>
     case roles.HELPER:

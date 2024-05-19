@@ -23,7 +23,7 @@ export const User = () => {
         return getItem(TOKEN)
     }
 
-    const getRol = () => {
+    const getRole = () => {
         return getItem(ROLE)
     }
 
@@ -32,5 +32,5 @@ export const User = () => {
         setRoute(routes.main)
     }
 
-    return { setUser, getToken, getRol, logout }
+    return { setUser, getToken, getRole, logout }
 }

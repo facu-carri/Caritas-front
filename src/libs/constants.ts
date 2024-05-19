@@ -16,9 +16,9 @@ export const routes = {
     admin: adminRoutes
 }
 export const roles = {
-    'ADMIN': 'administrador',
-    'HELPER': 'ayudante',
-    'NORMAL': 'intercambiador'
+    'ADMIN': 'ADMIN',
+    'HELPER': 'AYUDANTE',
+    'NORMAL': 'INTERCAMBIADOR'
 }
 export const colors = {
     'white': '#FFFFFF'

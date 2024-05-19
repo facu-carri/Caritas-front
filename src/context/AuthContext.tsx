@@ -13,13 +13,13 @@ export function useAuth(){
 
 export default function AuthProvider({ children }) {
 
-    const { getToken, getRol } = User()
+    const { getToken, getRole } = User()
     const [token, setToken] = useState(null)
     const navigator = useNavigate()
 
     useEffect(() => {
         const _token = getToken()
-        const _rol = getRol()
+        const _rol = getRole()
         setToken(_token)
         if (!_token && !_rol) {
             navigator(routes.login)
