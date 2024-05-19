@@ -4,18 +4,18 @@ import RoutesHandler from "./routesHandler"
 
 type UserData = {
     token: string,
-    rol: string
+    role: string
 }
 
 export const User = () => {
 
     const TOKEN: string = 'token'
-    const ROL: string = 'rol'
+    const ROLE: string = 'role'
     const { setRoute } = RoutesHandler()
 
     const setUser = (data: UserData) => {
         setItem(TOKEN, data.token)
-        setItem(ROL, data.rol)
+        setItem(ROLE, data.role)
         setRoute(routes.main)
     }
     
@@ -24,7 +24,7 @@ export const User = () => {
     }
 
     const getRol = () => {
-        return getItem(ROL)
+        return getItem(ROLE)
     }
 
     const logout = () => {
