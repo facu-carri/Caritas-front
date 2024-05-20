@@ -16,7 +16,7 @@ export default function AuthEmployeeProvider({ children }) {
 
     return (
         <AuthEmployeeContext.Provider value=''>
-            {getAuth() != null ? children : <AuthenticationCodeInput onSubmit={() => {}}/>}
+            {getAuth() != null ? children : <AuthenticationCodeInput/>}
         </AuthEmployeeContext.Provider>
     )
 }
