@@ -4,7 +4,7 @@ import Navbar, { Tab } from "src/components/admin/Navbar"
 import { colors, routes } from "src/libs/constants"
 import RoutesHandler from "src/libs/routesHandler"
 import { Outlet } from "react-router-dom"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import Button, { ButtonType } from "src/components/Button"
 import { FilialesOptions } from "./menu/Filiales"
 import CircularDropdown from "src/components/DropDown"
@@ -15,6 +15,7 @@ export default function AdminLayout() {
   const { setRoute, getRoute, location } = RoutesHandler()
   const [showMenu, setShowMenu] = useState(false)
   const [menuOpts, setMenuOpts] = useState<Array<Tab>>([])
+  const dropdownRef = useRef(null);
   const { logout } = User()
 
   useEffect(() => {
@@ -29,13 +30,32 @@ export default function AdminLayout() {
     }
   }, [location])
 
+
+  useEffect(() => {
+    if (showMenu) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showMenu]);
+
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setShowMenu(false);
+    }
+  };
+
   const btnActive = (route:string) => {
     return getRoute() == route
   }
 
   const menu = () => {
     return (
-      <div className="dropdown">
+      <div className="dropdown" ref={dropdownRef}>
         <Button onClick={() => setShowMenu(!showMenu)}>
           {Icons.menu(colors.white)}
         </Button>

@@ -3,8 +3,8 @@
 import { User } from "./User"
 import { roles } from "./constants"
 import { AdminRouter } from "../routes/administrador/routes"
-import { HelperRouter } from "../routes/ayudante/routes"
-import { NormalRouter } from "../routes/intercambiador/routes"
+import { HelperRouter } from "../routes/helper/routes"
+import { ExchangerRouter } from "../routes/exchanger/routes"
 import ErrorPage from "src/routes/ErrorPage"
 
 export default function RoleBasedRouting() {
@@ -16,8 +16,8 @@ export default function RoleBasedRouting() {
       return <AdminRouter/>
     case roles.HELPER:
       return <HelperRouter/>
-    case roles.NORMAL:
-      return <NormalRouter/>
+    case roles.EXCHANGER:
+      return <ExchangerRouter/>
     default:
       logout()
       return <ErrorPage/>

@@ -17,13 +17,14 @@ const exchangerRoutes = {
 export const routes = {
     main: '/',
     login: '/login',
+    auth: '/auth',
     admin: adminRoutes,
     exchanger: exchangerRoutes
 }
 export const roles = {
     'ADMIN': 'ADMIN',
     'HELPER': 'AYUDANTE',
-    'NORMAL': 'INTERCAMBIADOR'
+    'EXCHANGER': 'INTERCAMBIADOR'
 }
 export const colors = {
     'white': '#FFFFFF'

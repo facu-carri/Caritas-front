@@ -6,7 +6,7 @@ import Inventory from "src/components/exchanger/Inventory";
 import Profile from "src/components/exchanger/Profile";
 import ProductList from "src/components/exchanger/ProductList";
 
-export function NormalRouter() {
+export function ExchangerRouter() {
   return useRoutes([
     {
       path: routes.main,

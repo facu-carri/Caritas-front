@@ -1,4 +1,4 @@
-import { routes } from "./constants"
+import { roles, routes } from "./constants"
 import { getItem, removeItem, setItem } from "./localStorage"
 import RoutesHandler from "./routesHandler"
 
@@ -11,14 +11,18 @@ export const User = () => {
 
     const TOKEN: string = 'token'
     const ROLE: string = 'role'
+    const AUTH: string = 'auth'
     const { setRoute } = RoutesHandler()
 
     const setUser = (data: UserData) => {
         setItem(TOKEN, data.token)
         setItem(ROLE, data.role)
-        setRoute(routes.main)
     }
-    
+
+    const setAuth = (auth: string) => {
+        setItem(AUTH, auth)
+    }
+
     const getToken = () => {
         return getItem(TOKEN)
     }
@@ -27,11 +31,15 @@ export const User = () => {
         return getItem(ROLE)
     }
 
+    const getAuth = () => {
+        return getItem(AUTH)
+    }
+
     const logout = () => {
         removeItem(TOKEN)
         removeItem(ROLE)
         setRoute(routes.login)
     }
 
-    return { setUser, getToken, getRole, logout }
+    return { setUser, getToken, getRole, getAuth, setAuth, logout }
 }

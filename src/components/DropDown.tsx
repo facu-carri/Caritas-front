@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Button, { ButtonType } from './Button';
 
 export type DropdownItem = {
@@ -8,14 +8,33 @@ export type DropdownItem = {
 
 const CircularDropdown = ({icon, items}: DropdownItem) => {
   const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen]);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   }
 
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setIsOpen(false);
+    }
+  };
+
   function getItems(){
     return items.map((item) => (
-      <Button onClick={item.onClick} className="flex items-center px-4 py-2 text-sm hover:bg-blue-600 hover:text-white" role="menuitem" key={item.text}>
+      <Button onClick={item.onClick} className="flex w-full items-center px-4 py-2 text-sm hover:bg-blue-600 hover:text-white" role="menuitem" key={item.text}>
         {item.text}
         {item.icon}
       </Button>
@@ -23,8 +42,7 @@ const CircularDropdown = ({icon, items}: DropdownItem) => {
   }
 
   return (
-    <div className="">
-      <div className="relative inline-block text-right">
+      <div className="relative inline-block text-right" ref={dropdownRef}>
         <div>
           <button
             type="button"
@@ -45,7 +63,6 @@ const CircularDropdown = ({icon, items}: DropdownItem) => {
           </div>
         )}
       </div>
-    </div>
   );
 };
 

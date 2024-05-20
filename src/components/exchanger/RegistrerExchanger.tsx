@@ -1,7 +1,7 @@
 import GenericForm from "../GenericForm";
 
 // Componente de Registro de Ayudante
-export default function RegistroAyudante() {
+export default function RegisterExchanger({modalId}) {
     const campos = [
       { nombre: 'nombre', etiqueta: 'Nombre', tipo: 'text' },
       { nombre: 'apellido', etiqueta: 'Apellido', tipo: 'text' },
@@ -11,5 +11,5 @@ export default function RegistroAyudante() {
       { nombre: 'contraseña', etiqueta: 'Contraseña', tipo: 'password' },
     ];
   
-    return <GenericForm campos={campos} />;
+  return <GenericForm campos={campos} modalId={modalId} />;
 }
