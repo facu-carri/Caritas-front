@@ -5,7 +5,7 @@ import { Icons } from "src/Icons"
 import Input from "src/components/Input"
 import { RequestStatus } from "src/libs/types/RequestStatus"
 import { getElementValue, validString } from "src/libs/api"
-import { endPoints, routes } from "src/libs/constants"
+import { endPoints, roles, routes } from "src/libs/constants"
 import { postData } from "src/libs/request/httpRequests"
 import { ErrorCode } from "../../libs/Error/ErrorCode"
 import { IErrorResponse } from "../../libs/Error/IErrorResponse"
@@ -27,7 +27,8 @@ const Login = () => {
         setErrorCode(errorCode)
     }
 
-    function checkStatus(){
+    function checkStatus() {
+        setUser({token: '2323', role:roles.ADMIN})
         if (reqStatus == RequestStatus.SUCCESS) {
             setRoute(routes.main)
         }

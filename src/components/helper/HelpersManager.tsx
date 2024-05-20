@@ -2,15 +2,12 @@ import { useEffect, useState } from 'react';
 import HelpersList from './HelpersList';
 import EditHelperModal from '../EditHelperModal';
 import { getData } from 'src/libs/request/httpRequests';
+import Button from '../Button';
+import RegisterHelper from '../admin/RegisterHelper';
 
 //tiene toda la logica de eliminar y editar ayudantes listados y su estado.
 export default function HelpersManager() {
   const [helpers, setHelpers] = useState([]);
-
-  useEffect(() => {
-    getData('employee')
-      .then(data => setHelpers(data));
-  }, []);
 
 
   const [isEditing, setIsEditing] = useState(false);
@@ -32,13 +29,24 @@ export default function HelpersManager() {
     setIsEditing(false);
   };
 
+  const handleRegisterHelper = () => {
+    const elem = (document.getElementById('registerModal') as HTMLDialogElement)
+    elem.showModal()
+  }
+
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+  <>
+    <dialog className="modal" id='registerModal'>
+        <RegisterHelper modalId={'registerModal'} />
+    </dialog>
+    <div className="min-h-screen bg-gray-100 flex items-center flex-col gap-4 justify-center p-4">
+      <Button onClick={handleRegisterHelper} >Registrar ayudante</Button>
       <div className="w-full max-w-2xl bg-white shadow-lg rounded-lg p-6">
         <h1 className="text-2xl font-bold text-blue-700 mb-4">Listado de Ayudantes</h1>
         <HelpersList helpers={helpers} onEdit={handleEdit} onDelete={handleDelete} />
       </div>
       {isEditing && <EditHelperModal helper={currentHelper} onSave={handleSave} onClose={() => setIsEditing(false)} />}
-    </div>
+      </div>
+      </>
   );
 }

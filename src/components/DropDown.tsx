@@ -1,14 +1,26 @@
 import { useState } from 'react';
-import { User } from 'src/libs/User';
+import Button, { ButtonType } from './Button';
 
-const CircularDropdown = ({icon}) => {
+export type DropdownItem = {
+  icon?: JSX.Element,
+  items: Array<ButtonType>
+}
+
+const CircularDropdown = ({icon, items}: DropdownItem) => {
   const [isOpen, setIsOpen] = useState(false);
-
-  const { logout } = User()
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
-  };
+  }
+
+  function getItems(){
+    return items.map((item) => (
+      <Button onClick={item.onClick} className="flex items-center px-4 py-2 text-sm hover:bg-blue-600 hover:text-white" role="menuitem" key={item.text}>
+        {item.text}
+        {item.icon}
+      </Button>
+    ))
+  }
 
   return (
     <div className="">
@@ -28,12 +40,7 @@ const CircularDropdown = ({icon}) => {
         {isOpen && (
           <div className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-blue-500 text-white ring-1 ring-black ring-opacity-5 focus:outline-none">
             <div className="py-1" role="none">
-              <button onClick={logout} className="flex items-center px-4 py-2 text-sm hover:bg-blue-600 hover:text-white" role="menuitem">
-                <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-                </svg>
-                Cerrar Sesión
-              </button>
+              {getItems()}
             </div>
           </div>
         )}

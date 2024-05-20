@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-type Type = {
+export type ButtonType = {
     text?: string,
     icon?: JSX.Element,
     active?: boolean,
@@ -7,11 +7,10 @@ type Type = {
     onClick?: () => void,
 } & React.ButtonHTMLAttributes<HTMLButtonElement>
 
-export default function Button({ text, icon, active, visible, onClick, ...props }: Type) {
+export default function Button({ active, visible, onClick, children, ...props }: ButtonType) {
     return (
         <button className={`btn btn-ghost ${active && 'btn-active'} ${visible == false && 'hidden'} text-base`} onClick={onClick} {...props}>
-            {icon ?? null}
-            {text ?? null}
+            {children}
         </button>
     )
 }

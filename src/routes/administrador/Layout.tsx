@@ -5,15 +5,17 @@ import { colors, routes } from "src/libs/constants"
 import RoutesHandler from "src/libs/routesHandler"
 import { Outlet } from "react-router-dom"
 import { useEffect, useState } from "react"
-import Button from "src/components/Button"
+import Button, { ButtonType } from "src/components/Button"
 import { FilialesOptions } from "./menu/Filiales"
 import CircularDropdown from "src/components/DropDown"
+import { User } from "src/libs/User"
 
 export default function AdminLayout() {
 
   const { setRoute, getRoute, location } = RoutesHandler()
   const [showMenu, setShowMenu] = useState(false)
   const [menuOpts, setMenuOpts] = useState<Array<Tab>>([])
+  const { logout } = User()
 
   useEffect(() => {
     const route = getRoute()
@@ -34,13 +36,18 @@ export default function AdminLayout() {
   const menu = () => {
     return (
       <div className="dropdown">
-        <Button icon={Icons.menu(colors.white)} onClick={() => setShowMenu(!showMenu)} />
+        <Button onClick={() => setShowMenu(!showMenu)}>
+          {Icons.menu(colors.white)}
+        </Button>
         {
           showMenu &&
           <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 mt-2 shadow bg-base-100 rounded-box w-52 gap-2">
             {
               menuOpts.map((tab, index) => (
-                <Button text={tab?.text} icon={tab?.icon} onClick={tab?.onClick} key={'opts' + index}/>
+                <Button onClick={tab?.onClick} key={'opts' + index}>
+                  {tab.text}
+                  {tab.icon}
+                </Button>
               ))
             }
           </ul>
@@ -89,11 +96,17 @@ export default function AdminLayout() {
     }
   ]
 
+  const dropdownItems: ButtonType[] = [
+    {
+      text: 'Cerrar sesion',
+      onClick: () => logout()
+    }
+  ]
+
   const endTabs: Tab[] = [
     {
       icon: Icons.username(colors.white),
-      customElement: <CircularDropdown icon={Icons.username()}/>,
-      onClick: () => {}
+      customElement: <CircularDropdown icon={Icons.username()} items={dropdownItems}/>
     }
   ]
 
