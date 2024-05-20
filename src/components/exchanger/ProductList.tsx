@@ -18,8 +18,10 @@ function ProductList() {
   return (
     <div className="bg-gray-100 min-h-screen">
       <header className="bg-blue-600 text-white p-4 text-center shadow-md">
-        <h1 className="text-3xl font-bold">Descubre nuevos productos para intercambiar</h1>
-        <p className="text-sm">Explora nuestra selección de productos disponibles para intercambios.</p>
+        <div className='mt-16'>
+          <h1 className="text-3xl font-bold">Descubre nuevos productos para intercambiar</h1>
+          <p className="text-sm">Explora nuestra selección de productos disponibles para intercambios.</p>
+        </div>
       </header>
       <main className="bg-gray-200 py-8">
         <div className="container mx-auto px-4">
