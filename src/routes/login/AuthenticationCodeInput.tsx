@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { postData } from 'src/libs/request/httpRequests';
 
-const AuthenticationCodeInput = ({ onSubmit }) => {
+const AuthenticationCodeInput = () => {
   const [code, setCode] = useState('');
 
   const handleChange = (e) => {
     setCode(e.target.value);
   };
+
+  const onSubmit = (code) => {
+    //postData()
+  }
 
   const handleSubmit = () => {
     if (code.length === 6) {
