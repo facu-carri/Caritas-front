@@ -1,4 +1,6 @@
 import React from 'react';
+import Input from 'src/components/Input';
+import Password from 'src/icons/Password';
 
 // Componente de formulario de registro
 function FormularioRegistroIntercambiador() {
@@ -19,31 +21,31 @@ function RegistrationFields() {
     <form className="space-y-4">
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2">
-          <FormLabel htmlFor="first-name">Nombre</FormLabel>
-          <FormInput id="first-name" placeholder="Ingresa tu nombre" required />
+          <FormLabel htmlFor="first-name">Nombre completo</FormLabel>
+          <Input text={"Ingresa nombre completo"}></Input>
         </div>
         <div className="space-y-2">
-          <FormLabel htmlFor="last-name">Apellido</FormLabel>
-          <FormInput id="last-name" placeholder="Ingresa tu apellido" required />
+          <FormLabel htmlFor="last-name">Fecha Nacimiento</FormLabel>
+          <Input text={"Ingresa tu fecha de nacimiento"} type="date"></Input>
         </div>
       </div>
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2">
           <FormLabel htmlFor="dni">DNI</FormLabel>
-          <FormInput id="dni" placeholder="Ingresa tu DNI" required />
+          <Input text={"Ingresa tu DNI"}></Input>
         </div>
         <div className="space-y-2">
           <FormLabel htmlFor="phone">Teléfono</FormLabel>
-          <FormInput id="phone" placeholder="Ingresa tu teléfono" required />
+          <Input text={"Ingresa tu télefono"}></Input>
         </div>
       </div>
       <div className="space-y-2">
         <FormLabel htmlFor="email">Correo electrónico</FormLabel>
-        <FormInput id="email" placeholder="Ingresa tu correo" required type="email" />
+        <Input text={"Ingresa tu correo"}></Input>
       </div>
       <div className="space-y-2">
         <FormLabel htmlFor="password">Contraseña</FormLabel>
-        <FormInput id="password" placeholder="Ingresa tu contraseña" required type="password" />
+        <Input text={"Ingresa tu contraseña"} type={"Password"}></Input>
       </div>
       <SubmitButton className="w-full">Registrarse</SubmitButton>
     </form>
