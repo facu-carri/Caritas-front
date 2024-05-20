@@ -3,7 +3,8 @@ import Avatar from 'react-avatar';
 function Profile() {
   return (
     <div className="flex flex-col min-h-screen">
-      <header className="bg-gradient-to-r from-red-500 to-blue-500 py-8 px-6 md:px-12">
+      <div className='bg-gradient-to-r from-red-500 to-blue-500'>
+      <header className="py-8 px-6 md:px-12 mt-16">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <div className="h-12 w-12 rounded-full overflow-hidden bg-white flex items-center justify-center">
@@ -18,7 +19,8 @@ function Profile() {
             <button className="text-black hover:bg-black/20 border border-black py-2 px-4 rounded">Edit Profile</button>
           </div>
         </div>
-      </header>
+        </header>
+        </div>
       <main className="flex-1 bg-gray-100 dark:bg-gray-900 py-8 px-6 md:px-12">
         <div className="max-w-4xl mx-auto grid gap-8">
           <section>

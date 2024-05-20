@@ -22,13 +22,31 @@ function GenericForm({ campos, listener, modalId }: Type) {
     elem.close()
   }
 
+  function getImageData(img) {
+      const reader = new FileReader();
+
+      reader.readAsText(img)
+      reader.onload = ((e) => {
+        const base64String = (e.target.result as string).split(',')[1]; // Obtener solo la parte Base64
+        return base64String
+    })
+    reader.onerror = () => {
+      return null
+    }
+  }
+
   function getInputValues(): Record<string, any> {
     const inputs = document.getElementsByName('inputField')
     const obj = {}
     for (const inputField of inputs) {
       const input = inputField as HTMLInputElement
-      console.log(input)
-      obj[input.id] = input.value
+      if (input.type == 'file') {
+        const img = input.files[0]
+        const imageData = getImageData(img)
+        obj[input.id] = imageData
+      } else {
+        obj[input.id] = input.value
+      }
     }
     return obj
   }

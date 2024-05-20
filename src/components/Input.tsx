@@ -1,5 +1,5 @@
 type Type = {
-    text: string,
+    text?: string,
     icon?: JSX.Element,
     showError?: boolean,
     errorMsg?: string,
@@ -16,7 +16,7 @@ export default function Input({ text, icon, showError = false, errorMsg, file, c
                     {children}
                 </label>
                 :
-                <input type="file" id="photo" className="grow file-input file-input-bordered w-full max-w-xs" {...props} />
+                <input type="file" id="photo" accept="image/png, image/jpeg" className="grow file-input file-input-bordered w-full max-w-xs" {...props} />
             }
             {showError ? <h3>{errorMsg}</h3> : ''}
         </>

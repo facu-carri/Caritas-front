@@ -8,7 +8,7 @@ export default function RegisterHelper({ modalId }) {
 
   const handleRegister = (data: Record<string, any>) => {
     console.log(data)
-    //postData(endPoints.registerHelper, null, data)
+    postData(endPoints.registerHelper, null, data)
   }
 
   const campos: Array<FormField> = [

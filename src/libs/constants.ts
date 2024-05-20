@@ -9,12 +9,16 @@ const adminRoutes = {
     'gestionarAyudantes': '/gestionar-ayudantes',
     'listarDonaciones': '/donaciones',
     'gestionarFiliales': '/gestionar-filiales',
-     
+}
+const exchangerRoutes = {
+    'inventory': 'inventario',
+    'profile': 'perfil'
 }
 export const routes = {
     main: '/',
     login: '/login',
-    admin: adminRoutes
+    admin: adminRoutes,
+    exchanger: exchangerRoutes
 }
 export const roles = {
     'ADMIN': 'ADMIN',
