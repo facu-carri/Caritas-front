@@ -1,0 +1,1 @@
+export type IErrorCodesMsgs = { [x: number]: string }

@@ -1,15 +1,10 @@
-import { ErrorCodeTypes } from "./ErrorCodeTypes"
-import { IErrorCodes } from "./IErrorCode"
-import { LoginErrorCodes } from "./login/LoginErrorCodes"
+import { LoginErrorCodes } from "./login/LoginErrorCode";
 
-const DefaultErrorCodes: IErrorCodes = {
-    0: {
-        type: ErrorCodeTypes.UNKNOWN_ERROR,
-        text: ''
-    }
+const DefaultErrorCode = {
+    UNKNOWN_ERROR: 404
 }
 
 export const ErrorCodes = {
-    ...DefaultErrorCodes,
+    ...DefaultErrorCode,
     ...LoginErrorCodes
 }

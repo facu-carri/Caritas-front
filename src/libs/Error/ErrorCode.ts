@@ -1,6 +1,7 @@
-import { ErrorCodes } from "./ErrorCodes"
+import { ErrorsMsgs } from "./ErrorCodesMsgs"
 
-export class ErrorCode{
+export class ErrorCode {
+    
     private code: number
 
     constructor(code: number = null) {
@@ -8,17 +9,17 @@ export class ErrorCode{
     }
 
     private isValid() {
-        return this.code && this.code > 0 && ErrorCodes[this.code]
+        return this.code && this.code > 0 && ErrorsMsgs[this.code]
     }
 
     getMessage(): string {
         if(!this.isValid()) return null
-        return ErrorCodes[this.code].text ?? ''
+        return ErrorsMsgs[this.code].text ?? ''
     }
 
-    getType(): string {
+    getCode(): number {
         if(!this.isValid()) return null
-        return ErrorCodes[this.code].type ?? ''
+        return this.code
     }
 
     setCode(code: number) {
