@@ -11,6 +11,7 @@ import { LoginQuery } from "./LoginQuery"
 import { User } from "src/libs/User"
 import RoutesHandler from "src/libs/routesHandler"
 import ErrorAlert from "src/components/ErrorAlert"
+import BotonARuta from "src/components/BotonARuta"
 
 const Login = () => {
 
@@ -66,6 +67,7 @@ const Login = () => {
                 <button className="btn btn-primary" onClick={handleLogin}>
                     {reqStatus == RequestStatus.PENDING ? <span className="loading loading-spinner"></span> : 'Login'}
                 </button>
+                <BotonARuta nombre="Registrarse" ruta="/registro"/>
             </div>
         </div>
     )
