@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { User } from 'src/libs/User';
-import { endPoints } from 'src/libs/constants';
+import { endPoints, routes } from 'src/libs/constants';
 import { postData } from 'src/libs/request/httpRequests';
+import RoutesHandler from 'src/libs/routesHandler';
 
 const AuthenticationCodeInput = () => {
   const [code, setCode] = useState('');
-  const { setAuth } = User()
+  const { setAuth, setUser } = User()
+  const { setRoute } = RoutesHandler()
 
   const handleChange = (e) => {
     setCode(e.target.value);
@@ -15,7 +17,7 @@ const AuthenticationCodeInput = () => {
     postData(endPoints.verificationCode, null, {
       code: code
     })
-      .then(() => setAuth(true))
+      .then((data) => { setUser(data); setAuth(true); setRoute(routes.main) })
       .catch(() => alert('Codigo incorrecto'))
   }
 
