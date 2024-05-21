@@ -1,16 +1,20 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import HelpersList from './HelpersList';
 import EditHelperModal from './EditHelperModal';
 import Button from '../Button';
 import RegisterHelper from '../admin/RegisterHelper';
+import { getData } from 'src/libs/request/httpRequests';
 
 //tiene toda la logica de eliminar y editar ayudantes listados y su estado.
 export default function HelpersManager() {
   const [helpers, setHelpers] = useState([]);
-
-
   const [isEditing, setIsEditing] = useState(false);
   const [currentHelper, setCurrentHelper] = useState(null);
+
+  useEffect(() => {
+    getData('employee')
+      .then(data => setHelpers(data));
+  }, []);
 
   const handleEdit = (helper) => {
     setCurrentHelper(helper);
