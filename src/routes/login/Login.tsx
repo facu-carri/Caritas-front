@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Icons } from "src/Icons"
 import Input from "src/components/Input"
 import { RequestStatus } from "src/libs/types/RequestStatus"
@@ -20,16 +20,16 @@ const Login = () => {
     const { setUser } = User()
     const { setRoute } = RoutesHandler()
 
-    function handleError(errCode: number) {
-        console.log(errCode)
-    }
-
-    function checkStatus() {
-        if (reqStatus == RequestStatus.SUCCESS) {
-            setRoute(routes.main)
+    useEffect(() => {
+        switch (reqStatus) {
+            case RequestStatus.FAILED:
+                resetState()
+                break
+            case RequestStatus.SUCCESS:
+                setRoute(routes.main)
+                break
         }
-        resetState()
-    }
+    }, [reqStatus])
 
     function resetState() {
         setTimeout(() => setReqStatus(RequestStatus.INITIAL), 5000)
@@ -52,8 +52,7 @@ const Login = () => {
         postData(endPoints.login, null, query)
             .then((data) => setUser(data))
             .then(() => setReqStatus(RequestStatus.SUCCESS))
-            .catch((err) => { setReqStatus(RequestStatus.FAILED); handleError(err) })
-            .finally(() => checkStatus())
+            .catch(() => setReqStatus(RequestStatus.FAILED))
     }
 
     return (

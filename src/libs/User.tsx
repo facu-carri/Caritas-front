@@ -18,7 +18,6 @@ export const User = () => {
     const setUser = (data: UserData) => {
         setItem(TOKEN, data.token)
         setItem(ROLE, data.role)
-        setRoute(routes.main)
         if(data.role == roles.EXCHANGER) activateAuth()
     }
 
