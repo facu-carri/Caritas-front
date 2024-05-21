@@ -9,6 +9,7 @@ import FormularioRegistroIntercambiador from './routes/exchanger/FormularioRegis
 import LogoutProvider from './context/LogoutContext.tsx'
 import { routes } from './libs/constants.ts'
 import CustomModalProvider from './context/CustomModalContext.tsx'
+import AuthenticationCodeInput from './routes/login/AuthenticationCodeInput.tsx'
 
 const _routes = [
   {
@@ -25,6 +26,10 @@ const _routes = [
   {
     path: routes.login,
     element: <Login/>
+  },
+  {
+    path: routes.auth,
+    element: <AuthenticationCodeInput />
   },
   {
     path: routes.register,
