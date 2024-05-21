@@ -1,14 +1,9 @@
 import Avatar from 'react-avatar';
 
-/*const products = [
-  { name: "Product A", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", date: "May 20, 2024" },
-  { name: "Product B", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", date: "May 21, 2024" },
-  { name: "Product C", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", date: "May 22, 2024" },
-];*/
-const comments = [
+/*const comments = [
   { name: "John Doe", comment: "Great product! I've been using it for a week and it's been a game-changer.", daysAgo: "2 days ago", stars: 4, color: "text-red-500" },
   { name: "Jane Smith", comment: "I'm really impressed with the quality of this product. Highly recommended!", daysAgo: "5 days ago", stars: 5, color: "text-blue-500" },
-];
+];*/
 
 
 import { getData } from "src/libs/request/httpRequests";
@@ -37,20 +32,41 @@ type ItemCategory = {
   id: number
   name: string
 }
+type Review = {
+  id: number
+  name: string
+  description: string
+  stars: number
+  date: string // TODO:Date
+  //TODO: otros
+}
 
 
 function Profile() {
+  const [userData, setUserData] = useState<UserData>();
+  const [inventory, setInventory] = useState<ItemData[]>();
+  const [reviews, setReviews] = useState<Review[]>();
   
-const [userData, setUserData] = useState<UserData>();
-const [inventory, setInventory] = useState<[ItemData]>();
-
-  useEffect(() => {
-    getData(endPoints.profile)
-      .then(userData => setUserData(userData));
-    getData(endPoints.inventory)
-      .then(inventory => setInventory(inventory));
-  }, []);
-
+  function resetInvetory(error){
+    if(error == 404)
+      setInventory([])
+  }   
+  
+  function resetReviews(error){
+    //TODO: if(error == 404)
+    setInventory([])
+  }   
+    useEffect(() => {
+      getData(endPoints.profile)
+        .then(userData => setUserData(userData));
+      getData(endPoints.inventory)
+        .then(inventory => setInventory(inventory))
+        .catch(error => resetInvetory(error));
+      getData(endPoints.myReviews)
+        .then(reviews => setReviews(reviews))
+        .catch(error => resetReviews(error));
+    }, []);
+  
   if (!userData) {
     return <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">Loading...</div>; // Muestra un mensaje de carga mientras se obtienen los datos
   }
@@ -100,7 +116,11 @@ const [inventory, setInventory] = useState<[ItemData]>();
           <section>
             <h2 className="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-200">Product Publications</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-              {inventory.map((product, idx) => (
+              {!(inventory)||inventory.length==0? 
+                <div >
+                  <p className="text-gray-600 dark:text-gray-400 line-clamp-2">No hay elementos</p>
+                </div>
+                : inventory.map((product, idx) => (
                 <div key={`product-${idx}`} className="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
                   <div className="w-full h-40 bg-gray-200 flex items-center justify-center">
                     <Avatar name={product.name} size="64" round={true} />
@@ -117,7 +137,11 @@ const [inventory, setInventory] = useState<[ItemData]>();
           <section>
             <h2 className="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-200">Comments</h2>
             <div className="space-y-4">
-              {comments.map((comment, idx) => (
+              {!(reviews)||reviews.length==0? 
+                <div >
+                  <p className="text-gray-600 dark:text-gray-400 line-clamp-2">No hay elementos</p>
+                </div>
+                :reviews.map((comment, idx) => (
                 <div key={`comment-${idx}`} className="bg-white dark:bg-gray-800 rounded-lg shadow p-4 flex items-start space-x-4">
                   <div className="flex-shrink-0">
                     <div className="rounded-md bg-gray-200 flex items-center justify-center" style={{ width: '64px', height: '64px' }}>
@@ -127,7 +151,7 @@ const [inventory, setInventory] = useState<[ItemData]>();
                   <div className="flex-1">
                     <div className="flex items-center justify-between">
                       <div>
-                        <h3 className={`text-lg font-bold ${comment.color}`}>{comment.name}</h3>
+                        <h3 className={`text-lg font-bold text-red-500`}>{comment.name}</h3>
                         <div className="flex items-center gap-0.5 text-yellow-500">
                           {[...Array(comment.stars)].map((_, starIdx) => (
                             <StarIcon key={starIdx} className="h-5 w-5" />
@@ -136,13 +160,13 @@ const [inventory, setInventory] = useState<[ItemData]>();
                             <StarIcon key={starIdx} className="h-5 w-5 text-gray-300" />
                           ))}
                         </div>
-                        <p className="text-gray-600 dark:text-gray-400 text-sm">{comment.daysAgo}</p>
+                        <p className="text-gray-600 dark:text-gray-400 text-sm">{comment.date}</p>
                       </div>
                       <button className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300">
                         <MoveVerticalIcon className="h-5 w-5" />
                       </button>
                     </div>
-                    <p className="text-gray-600 dark:text-gray-400 mt-2">{comment.comment}</p>
+                    <p className="text-gray-600 dark:text-gray-400 mt-2">{comment.description}</p>
                   </div>
                 </div>
               ))}

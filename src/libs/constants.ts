@@ -6,8 +6,8 @@ export const endPoints = {
     registerExchanger: 'v1/auth/register', 
     profile:'exchanger/myProfile',
     inventory: 'item/myInventory',
-    location: 'location'
-    
+    location: 'location',
+    myReviews: 'reviews/myReviews',
 }
 const adminRoutes = {
     'estadisticas': '/estadisticas',
