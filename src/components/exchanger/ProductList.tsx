@@ -25,7 +25,7 @@ type ItemCategory = {
   id: number
   name: string
 }
-function ProductList() {
+function ProductList({ruta, text}) { // endPoints.exchangeablesProducts
   const [category, setCategory] = useState('');
   const [inventory, setInventory] = useState<ItemData[]>();
   const [categories, setCategories] = useState<ItemCategory[]>();
@@ -39,13 +39,13 @@ function ProductList() {
       setCategories([])
   }   
   useEffect(() => {
-    getData(endPoints.inventory)
+    getData(ruta)
       .then(inventory => setInventory(inventory))
       .catch(error => resetInvetory(error));
-      getData(endPoints.categories)
-        .then(categories => setCategories(categories))
-        .catch(error => resetCategories(error));
-    }, []);
+    getData(endPoints.categories)
+      .then(categories => setCategories(categories))
+      .catch(error => resetCategories(error));
+    }, [ruta]);
 
   const filteredProducts = category
     ? inventory.filter(product => product.itemCategory.name === category)
@@ -55,7 +55,7 @@ function ProductList() {
     <div className="bg-gray-100 min-h-screen">
       <header className="bg-blue-600 text-white p-4 text-center shadow-md">
         <div className='mt-16'>
-          <h1 className="text-3xl font-bold">Descubre nuevos productos para intercambiar</h1>
+          <h1 className="text-3xl font-bold">{text}</h1>
           <p className="text-sm">Explora nuestra selección de productos disponibles para intercambios.</p>
         </div>
       </header>

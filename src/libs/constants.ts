@@ -9,6 +9,7 @@ export const endPoints = {
     location: 'location',
     myReviews: 'reviews/myReviews',
     categories: 'itemCategory',
+    exchangeablesProducts: 'item',
 }
 const adminRoutes = {
     'estadisticas': '/estadisticas',

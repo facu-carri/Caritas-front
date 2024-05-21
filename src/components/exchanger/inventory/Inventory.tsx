@@ -1,4 +1,4 @@
-import { useState } from 'react';
+/*import { useState } from 'react';
 import AddItemModal from './AddItemModal';
 import { ProductType } from './ProductType';
 
@@ -108,3 +108,4 @@ const bruteProducts: Array<ProductType> = [
     description: 'Effortless floor cleaning.',
   },
 ];
+*/
