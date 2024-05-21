@@ -25,6 +25,7 @@ function handleResponse(res: Response) {
 
 export function getData(endPoint: string, querys: Record<string, string> = null, data?: any) {
     const url = new Url(serverAddress, endPoint, querys)
+    console.log(reqHeaders)
     return fetch(url.toString(), {
         method: "GET",
         mode: 'cors',

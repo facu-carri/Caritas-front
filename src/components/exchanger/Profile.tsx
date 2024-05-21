@@ -1,44 +1,94 @@
 import Avatar from 'react-avatar';
 
+/*const products = [
+  { name: "Product A", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", date: "May 20, 2024" },
+  { name: "Product B", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", date: "May 21, 2024" },
+  { name: "Product C", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", date: "May 22, 2024" },
+];*/
+const comments = [
+  { name: "John Doe", comment: "Great product! I've been using it for a week and it's been a game-changer.", daysAgo: "2 days ago", stars: 4, color: "text-red-500" },
+  { name: "Jane Smith", comment: "I'm really impressed with the quality of this product. Highly recommended!", daysAgo: "5 days ago", stars: 5, color: "text-blue-500" },
+];
+
+
+import { getData } from "src/libs/request/httpRequests";
+import { endPoints } from "src/libs/constants";
+import { useEffect, useRef, useState } from 'react';
+
+type UserData = {
+  id: number,
+  name: string,
+  email: string, 
+  dni: string,
+  phone: string, 
+  photo: string,
+  stars: number,
+  absentees: number,
+}
+type ItemData = {
+  id: number
+  photo: string
+  name: string
+  description: string
+  owner: UserData
+  itemCategory: ItemCategory
+}
+type ItemCategory = {
+  id: number
+  name: string
+}
+
+
 function Profile() {
+  
+const [userData, setUserData] = useState<UserData>();
+const [inventory, setInventory] = useState<[ItemData]>();
+
+  useEffect(() => {
+    getData(endPoints.profile)
+      .then(userData => setUserData(userData));
+    getData(endPoints.inventory + '/' + userData.id)
+      .then(inventory => setInventory(inventory));
+  }, []);
+
+  if (!userData) {
+    return <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">Loading...</div>; // Muestra un mensaje de carga mientras se obtienen los datos
+  }
+
   return (
     <div className="flex flex-col min-h-screen">
-      <div className='bg-gradient-to-r from-red-500 to-blue-500'>
-      <header className="py-8 px-6 md:px-12 mt-16">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <div className="h-12 w-12 rounded-full overflow-hidden bg-white flex items-center justify-center">
-              <Avatar name="Jared Palmer" size="48" round={true} />
+      <div className="bg-gradient-to-r from-red-500 to-blue-500">
+        <header className="py-8 px-6 md:px-12 mt-16">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-4">
+              <div className="h-12 w-12 rounded-full overflow-hidden bg-white flex items-center justify-center">
+                <Avatar name={userData.name} size="48" round={true} />
+              </div>
+              <div className="text-white">
+                <h1 className="text-2xl font-bold">{userData.name}</h1>
+                <p className="text-sm">@{userData.email}</p>
+              </div>
             </div>
-            <div className="text-white">
-              <h1 className="text-2xl font-bold">Jared Palmer</h1>
-              <p className="text-sm">@jaredpalmer</p>
+            <div>
+              <button className="text-black hover:bg-black/20 border border-black py-2 px-4 rounded">Edit Profile</button>
             </div>
           </div>
-          <div>
-            <button className="text-black hover:bg-black/20 border border-black py-2 px-4 rounded">Edit Profile</button>
-          </div>
-        </div>
         </header>
-        </div>
+      </div>
       <main className="flex-1 bg-gray-100 dark:bg-gray-900 py-8 px-6 md:px-12">
         <div className="max-w-4xl mx-auto grid gap-8">
           <section>
             <h2 className="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-200">Personal Information</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {[
-                { title: "Location", value: "San Francisco, CA", color: "text-red-500" },
-                { title: "Occupation", value: "Software Engineer", color: "text-blue-500" },
-                { title: "Contact Info", value: "jared@example.com", color: "text-red-500" },
-                {
-                  title: "Social Media",
-                  value: (
-                    <>
-                      <button className="text-blue-500 hover:underline" onClick={() => window.open('https://twitter.com')}>Twitter</button> | <button className="text-blue-500 hover:underline" onClick={() => window.open('https://linkedin.com')}>LinkedIn</button>
-                    </>
-                  ),
-                  color: "text-blue-500",
-                },
+                //{ title: "Location", value: userData.name, color: "text-red-500" },
+                { title: "Name", value: userData.name, color: "text-red-500" },
+                { title: "Email", value: userData.email, color: "text-red-500" },
+                { title: "DNI", value: userData.dni, color: "text-blue-500" },
+                { title: "Phone", value: userData.phone, color: "text-blue-500" },
+                { title: "Photo", value: userData.photo, color: "text-blue-500" },
+                { title: "Stars", value: userData.stars + "/10", color: "text-blue-500" },
+                { title: "Absentees", value: userData.absentees, color: "text-red-500" },
               ].map((info, idx) => (
                 <div key={`info-${idx}`} className="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
                   <h3 className={`text-lg font-bold mb-2 ${info.color}`}>{info.title}</h3>
@@ -50,17 +100,15 @@ function Profile() {
           <section>
             <h2 className="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-200">Product Publications</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-              {["Product A", "Product B", "Product C"].map((product, idx) => (
+              {inventory.map((product, idx) => (
                 <div key={`product-${idx}`} className="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
                   <div className="w-full h-40 bg-gray-200 flex items-center justify-center">
-                    <Avatar name={product} size="64" round={true} />
+                    <Avatar name={product.name} size="64" round={true} />
                   </div>
                   <div className="p-4">
-                    <h3 className={`text-lg font-bold mb-2 ${idx % 2 === 0 ? 'text-red-500' : 'text-blue-500'}`}>{product}</h3>
-                    <p className="text-gray-600 dark:text-gray-400 line-clamp-2">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    </p>
-                    <p className="text-gray-500 dark:text-gray-400 text-sm mt-2">Published: May 20, 2024</p>
+                    <h3 className={`text-lg font-bold mb-2 ${idx % 2 === 0 ? 'text-red-500' : 'text-blue-500'}`}>{product.name}</h3>
+                    <p className="text-gray-600 dark:text-gray-400 line-clamp-2">{product.description}</p>
+                    <p className="text-gray-500 dark:text-gray-400 text-sm mt-2">Published: {product.date}</p>
                   </div>
                 </div>
               ))}
@@ -69,10 +117,7 @@ function Profile() {
           <section>
             <h2 className="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-200">Comments</h2>
             <div className="space-y-4">
-              {[
-                { name: "John Doe", comment: "Great product! I've been using it for a week and it's been a game-changer.", daysAgo: "2 days ago", color: "text-red-500" },
-                { name: "Jane Smith", comment: "I'm really impressed with the quality of this product. Highly recommended!", daysAgo: "5 days ago", color: "text-blue-500" },
-              ].map((comment, idx) => (
+              {comments.map((comment, idx) => (
                 <div key={`comment-${idx}`} className="bg-white dark:bg-gray-800 rounded-lg shadow p-4 flex items-start space-x-4">
                   <div className="flex-shrink-0">
                     <div className="rounded-md bg-gray-200 flex items-center justify-center" style={{ width: '64px', height: '64px' }}>
@@ -84,11 +129,12 @@ function Profile() {
                       <div>
                         <h3 className={`text-lg font-bold ${comment.color}`}>{comment.name}</h3>
                         <div className="flex items-center gap-0.5 text-yellow-500">
-                          <StarIcon className="h-5 w-5" />
-                          <StarIcon className="h-5 w-5" />
-                          <StarIcon className="h-5 w-5" />
-                          <StarIcon className="h-5 w-5" />
-                          <StarIcon className="h-5 w-5 text-gray-300" />
+                          {[...Array(comment.stars)].map((_, starIdx) => (
+                            <StarIcon key={starIdx} className="h-5 w-5" />
+                          ))}
+                          {[...Array(5 - comment.stars)].map((_, starIdx) => (
+                            <StarIcon key={starIdx} className="h-5 w-5 text-gray-300" />
+                          ))}
                         </div>
                         <p className="text-gray-600 dark:text-gray-400 text-sm">{comment.daysAgo}</p>
                       </div>
@@ -107,6 +153,8 @@ function Profile() {
     </div>
   );
 }
+
+export default Profile;
 
 function MoveVerticalIcon(props) {
   return (
@@ -147,5 +195,3 @@ function StarIcon(props) {
     </svg>
   );
 }
-
-export default Profile;

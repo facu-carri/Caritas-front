@@ -3,7 +3,9 @@ export const endPoints = {
     login: 'v1/auth/authenticate',
     verificationCode: 'v1/auth/verificationCode',
     registerHelper: 'employee', 
-    registerExchanger: 'v1/auth/register'
+    registerExchanger: 'v1/auth/register', 
+    profile:'exchanger/myProfile',
+    inventory:'exchanger/myInventory',
 }
 const adminRoutes = {
     'estadisticas': '/estadisticas',
