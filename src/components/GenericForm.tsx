@@ -70,7 +70,7 @@ function GenericForm({ campos, listener, modalId }: Type) {
           <div key={campo.nombre} className="mb-4">
             <label className="block font-semibold mb-2 text-blue-900">{campo.etiqueta}</label>
             {
-              <Input file={campo.image} name='inputField' id={campo.etiqueta} type={campo.tipo} text=''/>
+              <Input file={campo.tipo == 'file'} name='inputField' id={campo.etiqueta} type={campo.tipo} text=''/>
             }
           </div>
         ))}

@@ -22,7 +22,7 @@ export default function RegisterHelper() {
   }
 
   const campos: Array<FormField> = [
-    { nombre: 'Foto', etiqueta: 'photo', tipo: 'file', image: true},
+    { nombre: 'Foto', etiqueta: 'photo', tipo: 'file'},
     { nombre: 'Nombre', etiqueta: 'name', tipo: 'text' },
     { nombre: 'Apellido', etiqueta: 'apellido', tipo: 'text' },
     { nombre: 'DNI', etiqueta: 'dni', tipo: 'text' },
