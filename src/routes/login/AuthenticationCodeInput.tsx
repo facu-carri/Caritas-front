@@ -1,15 +1,22 @@
 import { useState } from 'react';
+import { useAuthExmployee } from 'src/context/AuthEmployee';
+import { endPoints } from 'src/libs/constants';
 import { postData } from 'src/libs/request/httpRequests';
 
 const AuthenticationCodeInput = () => {
   const [code, setCode] = useState('');
+  const { setAuth } = useAuthExmployee()
 
   const handleChange = (e) => {
     setCode(e.target.value);
   };
 
   const onSubmit = (code) => {
-    //postData()
+    postData(endPoints.verificationCode, null, {
+      code: code
+    })
+      .then(() => setAuth(true))
+      .catch(() => alert('Codigo incorrecto'))
   }
 
   const handleSubmit = () => {

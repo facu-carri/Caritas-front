@@ -1,6 +1,7 @@
 export const serverAddress = 'http://localhost:8080/api'
 export const endPoints = {
     login: 'v1/auth/authenticate',
+    verificationCode: 'v1/auth/verificationCode',
     registerHelper: '',
     registerExchanger: 'v1/auth/register'
 }

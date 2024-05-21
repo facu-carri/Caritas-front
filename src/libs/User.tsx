@@ -1,5 +1,6 @@
 import { roles, routes } from "./constants"
 import { getItem, removeItem, setItem } from "./localStorage"
+import { activateAuth } from "./request/httpRequests"
 import RoutesHandler from "./routesHandler"
 
 type UserData = {
@@ -18,6 +19,7 @@ export const User = () => {
         setItem(TOKEN, data.token)
         setItem(ROLE, data.role)
         setRoute(routes.main)
+        if(data.role == roles.EXCHANGER) activateAuth()
     }
 
     const setAuth = (auth: string) => {

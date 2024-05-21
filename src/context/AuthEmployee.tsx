@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-refresh/only-export-components */
-import React, { useContext } from "react";
-import { User } from "src/libs/User";
+import React, { useContext, useState } from "react";
 import AuthenticationCodeInput from "src/routes/login/AuthenticationCodeInput";
+import { AuthEmployeeContextType } from "./types/AuthEmployee";
 
-const AuthEmployeeContext = React.createContext(undefined)
+const AuthEmployeeContext = React.createContext<AuthEmployeeContextType>(undefined)
 
 export function useAuthExmployee(){
   return useContext(AuthEmployeeContext)
@@ -12,11 +12,11 @@ export function useAuthExmployee(){
 
 export default function AuthEmployeeProvider({ children }) {
 
-    const { getAuth } = User()
+    const [auth, setAuth] = useState(false)
 
     return (
-        <AuthEmployeeContext.Provider value=''>
-            {getAuth() != null ? children : <AuthenticationCodeInput/>}
+        <AuthEmployeeContext.Provider value={{auth, setAuth}}>
+            {auth ? children : <AuthenticationCodeInput/>}
         </AuthEmployeeContext.Provider>
     )
 }
