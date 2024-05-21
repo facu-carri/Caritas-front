@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { useAuthExmployee } from 'src/context/AuthEmployee';
+import { User } from 'src/libs/User';
 import { endPoints } from 'src/libs/constants';
 import { postData } from 'src/libs/request/httpRequests';
 
 const AuthenticationCodeInput = () => {
   const [code, setCode] = useState('');
-  const { setAuth } = useAuthExmployee()
+  const { setAuth } = User()
 
   const handleChange = (e) => {
     setCode(e.target.value);
