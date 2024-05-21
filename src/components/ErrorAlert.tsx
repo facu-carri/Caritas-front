@@ -1,9 +1,14 @@
 import { Icons } from "src/Icons";
 
-export default function ErrorAlert({ show, children }) {
+type Type = {
+    show: boolean,
+    attrs?: string,
+} & React.HTMLAttributes<HTMLDivElement>
+
+export default function ErrorAlert({ show, attrs, children }: Type) {
     return <>
         {show &&
-            <div role="alert" className="alert alert-error">
+            <div role="alert" className={`alert alert-error ${attrs}`}>
             {Icons.error}
             {children}
             </div>

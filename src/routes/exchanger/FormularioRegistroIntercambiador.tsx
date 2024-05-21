@@ -3,6 +3,9 @@ import Input from 'src/components/Input';
 import RoutesHandler from 'src/libs/routesHandler';
 import { endPoints, routes } from 'src/libs/constants';
 import { postData } from 'src/libs/request/httpRequests';
+import { ErrorCode } from 'src/libs/Error/ErrorCode';
+import { ErrorTypes } from 'src/libs/Error/ErrorTypes';
+import ErrorAlert from 'src/components/ErrorAlert';
 
 // Componente de formulario de registro
 export default function FormularioRegistroIntercambiador() {
@@ -29,6 +32,18 @@ function RegistrationFields() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
+  const [error, setError] = useState<ErrorCode>(null)
+
+  const handleError = (errCode: number) => {
+    const err = new ErrorCode(errCode, ErrorTypes.REGISTER_EXCHANGER_ERROR)
+    setError(err)
+    setTimeout(hiddeError, 5000)
+  }
+
+  const hiddeError = () => {
+    setError(null)
+  }
+
   function handleSubmit(event) {
     event.preventDefault()
     postData(endPoints.registerExchanger, null, {
@@ -40,13 +55,15 @@ function RegistrationFields() {
       password
     })
       .then(() => setRoute(routes.login))
-      .catch((errorCode: number) => {
-        console.log(errorCode)
-      })
+      .catch((errCode: number) => handleError(errCode))
   }
 
   return (
-    <form className="space-y-4">
+    <>
+      <form className="space-y-4">
+      {<ErrorAlert show={error != null} attrs='w-full'>
+        <span>{error && error.getMessage()}</span>
+      </ErrorAlert>}
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2">
           <FormLabel htmlFor="first-name">Nombre completo</FormLabel>
@@ -79,6 +96,7 @@ function RegistrationFields() {
         Registrarse
       </button>
     </form>
+    </>
   );
 }
 
