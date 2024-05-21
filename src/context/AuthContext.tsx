@@ -17,19 +17,15 @@ export default function AuthProvider({ children }) {
     const [token, setToken] = useState(null)
     const { setRoute } = RoutesHandler()
 
-    const isValidToken = (token: string, role: string) => {
-        return token != 'null'
+    const isValidToken = (token: string) => {
+        return token || token == 'null'
     }
 
     useEffect(() => {
         const _token = getToken()
         const _rol = getRole()
         setToken(_token)
-        if (!isValidToken(_token, _rol) || !_rol) {
-            console.log('token is invalid', _token, _rol)
-            if(_rol === roles.ADMIN || _rol === roles.EXCHANGER) {
-                return;
-            }
+        if (!isValidToken(_token) || !_rol) {
             setRoute(routes.login)
         } else {
             setToken(_token)
@@ -38,7 +34,7 @@ export default function AuthProvider({ children }) {
 
     return (
         <AuthContext.Provider value={{token}}>
-            {token === "null" ? null : children }
+            {isValidToken(token) ? children : null }
         </AuthContext.Provider>
     )
 }
