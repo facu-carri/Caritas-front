@@ -5,8 +5,8 @@ import { Icons } from "src/Icons"
 import Input from "src/components/Input"
 import { RequestStatus } from "src/libs/types/RequestStatus"
 import { getElementValue, validString } from "src/libs/api"
-import { endPoints, roles, routes } from "src/libs/constants"
-import { postData } from "src/libs/request/httpRequests"
+import { endPoints, roles, routes, serverAddress } from "src/libs/constants"
+import { handleResponse } from "src/libs/request/httpRequests"
 import { ErrorCode } from "../../libs/Error/ErrorCode"
 import { IErrorResponse } from "../../libs/Error/IErrorResponse"
 import { ErrorCodeTypes } from "src/libs/Error/ErrorCodeTypes"
@@ -28,7 +28,6 @@ const Login = () => {
     }
 
     function checkStatus() {
-        //setUser({token: '2323', role:roles.ADMIN})
         if (reqStatus == RequestStatus.SUCCESS) {
             setRoute(routes.main)
         }
@@ -36,12 +35,12 @@ const Login = () => {
     }
 
     const isInvalid = (loginQuery: LoginQuery) => {
-        return !validString(loginQuery.username) || !validString(loginQuery.password)
+        return !validString(loginQuery.email) || !validString(loginQuery.password)
     }
 
     const handleLogin = () => {
-        const query:LoginQuery = {
-            username: getElementValue('username'),
+        const query: LoginQuery = {
+            email: getElementValue('email'),
             password: getElementValue('password')
         }
 
@@ -50,10 +49,27 @@ const Login = () => {
         if (isInvalid(query)) return
 
         setReqStatus(RequestStatus.PENDING)
-        postData(endPoints.login, null, {
-            email: query.username,
+        /*postData(endPoints.login, null, {
+            email: query.email,
             password: query.password
         })
+            .then((data) => setUser(data))
+            .then(() => setReqStatus(RequestStatus.SUCCESS))
+            .catch((err) => { setReqStatus(RequestStatus.FAILED); handleError(err) })
+            .finally(() => checkStatus())*/
+        fetch(`${serverAddress}/${endPoints.login}`, {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            },
+            body: JSON.stringify({
+                email: query.email,
+                password: query.password
+            })
+        })
+            .then(handleResponse)
             .then((data) => setUser(data))
             .then(() => setReqStatus(RequestStatus.SUCCESS))
             .catch((err) => { setReqStatus(RequestStatus.FAILED); handleError(err) })
@@ -63,7 +79,7 @@ const Login = () => {
     return (
         <div className="flex justify-center items-center h-[100vh] text-[100%]">
             <div className="flex flex-col gap-4">
-                <Input id='username' text={'Username'} icon={Icons.username()} showError={errorCode?.getType() == ErrorCodeTypes.USERNAME_ERROR} errorMsg={errorCode?.getMessage()}/>
+                <Input id='email' text={'Email'} icon={Icons.username()} showError={errorCode?.getType() == ErrorCodeTypes.USERNAME_ERROR} errorMsg={errorCode?.getMessage()}/>
                 <Input id='password' text={'Password'} icon={Icons.password()} type={ showPassword ? "text" : "password"} showError={errorCode?.getType() == ErrorCodeTypes.PASSWORD_ERROR} errorMsg={errorCode?.getMessage()}>
                     {<button className="bg-transparent p-1" onClick={() => setShowPassword(!showPassword)}>{showPassword ? Icons.eyeHidden() : Icons.eye()}</button>}
                 </Input> 

@@ -1,4 +1,4 @@
 export type LoginQuery = {
-    username: string,
+    email: string,
     password: string
 }

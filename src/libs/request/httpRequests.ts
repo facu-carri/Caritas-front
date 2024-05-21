@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { serverAddress } from "../constants.ts"
+import { endPoints, serverAddress } from "../constants.ts"
 import { Url } from "./url.ts"
 import { getItem } from "../localStorage.ts"
 
@@ -19,7 +19,7 @@ export const convertToString = (obj: Record<string, string>): string => {
     return urlStr.slice(0, -1)
 }
 
-const handleResponse = (res: Response) => {
+export function handleResponse(res: Response) {
     const type = res.headers.get('Content-Type')
     let data = null
     if (type.includes('application/json')) { data = res.json() } else { data = res.text() }
@@ -46,7 +46,7 @@ export function postData(endPoint: string, querys: Record<string, any> = null, d
     const request = fetch(url.toString(), {
         method: "POST",
         headers: reqHeaders,
-        body: JSON.stringify(data)
+        body: JSON.stringify(data),
     })
     return request.then(handleResponse)
 }

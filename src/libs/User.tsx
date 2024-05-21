@@ -17,6 +17,7 @@ export const User = () => {
     const setUser = (data: UserData) => {
         setItem(TOKEN, data.token)
         setItem(ROLE, data.role)
+        setRoute(routes.main)
     }
 
     const setAuth = (auth: string) => {
@@ -38,6 +39,7 @@ export const User = () => {
     const logout = () => {
         removeItem(TOKEN)
         removeItem(ROLE)
+        removeItem(AUTH)
         setRoute(routes.login)
     }
 
