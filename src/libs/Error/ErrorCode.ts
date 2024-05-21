@@ -3,18 +3,20 @@ import { ErrorsMsgs } from "./ErrorCodesMsgs"
 export class ErrorCode {
     
     private code: number
+    private type: string
 
-    constructor(code: number = null) {
+    constructor(code: number = null, type: string) {
         this.code = code
+        this.type = type
     }
 
     private isValid() {
-        return this.code && this.code > 0 && ErrorsMsgs[this.code]
+        return this.code && this.code > 0 && this.type
     }
 
     getMessage(): string {
         if(!this.isValid()) return null
-        return ErrorsMsgs[this.code].text ?? ''
+        return ErrorsMsgs[this.type][this.code] ?? ''
     }
 
     getCode(): number {
@@ -25,5 +27,4 @@ export class ErrorCode {
     setCode(code: number) {
         this.code = code
     }
-
 }

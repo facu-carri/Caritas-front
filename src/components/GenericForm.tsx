@@ -2,6 +2,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import logo from '@images/LogoCaritas.png'
 import Input from './Input';
+import { ErrorCode } from 'src/libs/Error/ErrorCode';
+import ErrorAlert from './ErrorAlert';
 
 export type FormField = {
   nombre: string,
@@ -12,17 +14,11 @@ export type FormField = {
 
 type Type = {
   campos: Array<FormField>,
-  listener?: (values: Record<string, any>) => void,
-  modalId?: string
+  listener?: (values: Record<string, any>) => void
+  error?: ErrorCode
 }
 
-function GenericForm({ campos, listener, modalId }: Type) {
-
-
-  const closeModal = () => {
-    const elem = modalId && (document.getElementById(modalId) as HTMLDialogElement)
-    elem?.close()
-  }
+function GenericForm({ campos, listener, error }: Type) {
 
   async function getImageBase64(img:File) {
     return new Promise((resolve, reject) => {
@@ -59,12 +55,14 @@ function GenericForm({ campos, listener, modalId }: Type) {
     ev.preventDefault()
     const data = await getInputValues()
     listener(data)
-    closeModal()
   }
   
   return (
     <div className="modal-box rounded-lg max-w-md mx-auto p-8 my-8 transition-transform hover:scale-105 shadow-2xl bg-navbar-blue">
       <img src={logo} alt="Logo" className="w-full h-auto mb-4 rounded-lg transition-transform duration-300 transform hover:scale-105 border-2 shadow-2xl" />
+      {<ErrorAlert show={error != null}>
+        <span>error.getMessage()</span>
+      </ErrorAlert>}
       <form className="text-center">
         {campos.map((campo) => (
           <div key={campo.nombre} className="mb-4">

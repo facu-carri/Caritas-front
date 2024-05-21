@@ -1,0 +1,3 @@
+export const LOGIN_ERROR = 'LOGIN'
+export const REGISTER_HELPER_ERROR = 'REGISTERHELPER'
+export const UNKNOWN_ERROR = 'UNKNOWN'

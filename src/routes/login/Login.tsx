@@ -59,7 +59,9 @@ const Login = () => {
     return (
         <div className="flex justify-center items-center h-[100vh] text-[100%]">
             <div className="flex flex-col gap-4">
-                {<ErrorAlert show={reqStatus == RequestStatus.FAILED}/>}
+                {<ErrorAlert show={reqStatus == RequestStatus.FAILED}>
+                    <span>Los datos son incorrectos</span>
+                </ErrorAlert>}
                 <Input id='email' text={'Email'} icon={Icons.username()}/>
                 <Input id='password' text={'Password'} icon={Icons.password()} type={ showPassword ? "text" : "password"}>
                     {<button className="bg-transparent p-1" onClick={() => setShowPassword(!showPassword)}>{showPassword ? Icons.eyeHidden() : Icons.eye()}</button>}

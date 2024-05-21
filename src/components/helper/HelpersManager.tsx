@@ -43,7 +43,7 @@ export default function HelpersManager() {
   return (
   <>
     <dialog className="modal" id='registerModal' onClick={handleClickModal} ref={modalRef}>
-        <RegisterHelper />
+        <RegisterHelper modalId={'registerModal'} />
     </dialog>
       <div className="min-h-screen bg-gray-100 flex items-center flex-col gap-4 justify-center p-4">
       <Button onClick={handleRegisterHelper} >Registrar ayudante</Button>

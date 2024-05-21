@@ -1,1 +1,5 @@
-export type IErrorCodesMsgs = { [x: number]: string }
+export type IErrorCodesMsgs = {
+    [type: string]: {
+        [code: number]: string
+    }
+}

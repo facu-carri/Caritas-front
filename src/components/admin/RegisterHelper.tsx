@@ -2,6 +2,9 @@
 import { postData } from "src/libs/request/httpRequests";
 import GenericForm, { FormField } from "../GenericForm";
 import { endPoints } from "src/libs/constants";
+import { useState } from "react";
+import { ErrorCode } from "src/libs/Error/ErrorCode";
+import { REGISTER_HELPER_ERROR } from "src/libs/Error/ErrorTypes";
 
 type Type = {
   photo: string,
@@ -15,10 +18,29 @@ type Type = {
 }
 
 // Componente de Registro de Ayudante
-export default function RegisterHelper() {
+export default function RegisterHelper({modalId}) {
+
+  const [error, setError] = useState<ErrorCode>(null)
+  
+  const closeModal = () => {
+    const elem = modalId && (document.getElementById(modalId) as HTMLDialogElement)
+    elem?.close()
+  }
+
+  const handleError = (errCode: number) => {
+    const err = new ErrorCode(errCode, REGISTER_HELPER_ERROR)
+    setError(err)
+    setTimeout(hiddeError, 5000)
+  }
+
+  const hiddeError = () => {
+    setError(null)
+  }
 
   const handleRegister = (data: Type) => {
     postData(endPoints.registerHelper, null, data)
+      .catch((errCode: number) => handleError(errCode))
+      .then(() => closeModal())
   }
 
   const campos: Array<FormField> = [
@@ -32,5 +54,5 @@ export default function RegisterHelper() {
     { nombre: 'Sede Asignada', etiqueta: 'helperLocation', tipo: 'text' },
   ]
 
-  return <GenericForm campos={campos} listener={handleRegister} />;
+  return <GenericForm campos={campos} listener={handleRegister} error={error} />;
 }
