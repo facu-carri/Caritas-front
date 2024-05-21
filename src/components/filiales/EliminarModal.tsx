@@ -11,7 +11,7 @@ type Type = {
   filial: string,
 }
 
-type Location = {
+export type Location = {
   id: number,
   coordinates: string,
   description: string
@@ -29,6 +29,7 @@ export default function EliminarFilialModal({ modalId }) {
 
   const handleError = (errCode: number) => {
     const err = new ErrorCode(errCode, ErrorTypes.FILIALES_ERROR)
+    if(errCode == 403) setTimeout(closeModal, 5000)
     setError(err)
     setTimeout(hiddeError, 5000)
   }

@@ -1,10 +1,12 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { postData } from "src/libs/request/httpRequests";
-import GenericForm, { FormField } from "../GenericForm";
+import { getData, postData } from "src/libs/request/httpRequests";
+import GenericForm, { FormField, ListItem } from "../GenericForm";
 import { endPoints } from "src/libs/constants";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ErrorCode } from "src/libs/Error/ErrorCode";
 import { ErrorTypes } from "src/libs/Error/ErrorTypes";
+import { Location } from "../filiales/EliminarModal";
 
 type Type = {
   photo: string,
@@ -15,6 +17,15 @@ type Type = {
   password: string,
   helperLocation: string
 }
+
+const campos_default: Array<FormField> = [
+  { nombre: 'Foto', etiqueta: 'photo', tipo: 'file'},
+  { nombre: 'Nombre', etiqueta: 'name', tipo: 'text' },
+  { nombre: 'DNI', etiqueta: 'dni', tipo: 'text' },
+  { nombre: 'Teléfono', etiqueta: 'phone', tipo: 'tel' },
+  { nombre: 'Email', etiqueta: 'email', tipo: 'email' },
+  { nombre: 'Contraseña', etiqueta: 'password', tipo: 'password' },
+]
 
 // Componente de Registro de Ayudante
 export default function RegisterHelper({modalId}) {
@@ -42,15 +53,23 @@ export default function RegisterHelper({modalId}) {
       .then(() => closeModal())
   }
 
-  const campos: Array<FormField> = [
-    { nombre: 'Foto', etiqueta: 'photo', tipo: 'file'},
-    { nombre: 'Nombre', etiqueta: 'name', tipo: 'text' },
-    { nombre: 'DNI', etiqueta: 'dni', tipo: 'text' },
-    { nombre: 'Teléfono', etiqueta: 'phone', tipo: 'tel' },
-    { nombre: 'Email', etiqueta: 'email', tipo: 'email' },
-    { nombre: 'Contraseña', etiqueta: 'password', tipo: 'password' },
-    { nombre: 'Sede Asignada', etiqueta: 'helperLocation', tipo: 'text' },
-  ]
+  function generateFields(locations: Location[]): FormField{
+    const field:FormField = { nombre: 'Selecciona una filial', etiqueta: 'filial', tipo: 'list' }
+    const items: ListItem[] = locations.map((location) => ({
+      key: location.id,
+      value: location.description
+    }))
+    field.items = items
+    return field
+  }
+
+  useEffect(() => {
+    getData(endPoints.location)
+      .then((locations: Location[]) => generateFields(locations))
+      .then((fields) => setCampos({...campos, ...fields}))
+  }, [])
+
+  const [campos, setCampos] = useState(campos_default)
 
   return <GenericForm campos={campos} listener={handleRegister} error={error} />;
 }
