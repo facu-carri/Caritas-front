@@ -2,7 +2,7 @@ export const serverAddress = 'http://localhost:8080/api'
 export const endPoints = {
     login: 'v1/auth/authenticate',
     verificationCode: 'v1/auth/verificationCode',
-    registerHelper: '/api/employee', //made by ale, por si despues hay que corregir
+    registerHelper: '/employee', //made by ale, por si despues hay que corregir
     registerExchanger: 'v1/auth/register'
 }
 const adminRoutes = {
