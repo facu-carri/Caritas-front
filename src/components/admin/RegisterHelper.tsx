@@ -3,23 +3,33 @@ import { postData } from "src/libs/request/httpRequests";
 import GenericForm, { FormField } from "../GenericForm";
 import { endPoints } from "src/libs/constants";
 
+type Type = {
+  photo: string,
+  name: string,
+  apellido: string,
+  dni: string,
+  phone: string,
+  email: string,
+  password: string,
+  helperLocation: string
+}
+
 // Componente de Registro de Ayudante
 export default function RegisterHelper({ modalId }) {
 
-  const handleRegister = (data: Record<string, any>) => {
-    console.log(data)
+  const handleRegister = (data: Type) => {
     postData(endPoints.registerHelper, null, data)
   }
 
   const campos: Array<FormField> = [
-    { nombre: 'photo', etiqueta: 'Foto', tipo: 'file', image: true},
-    { nombre: 'name', etiqueta: 'Nombre', tipo: 'text' },
-    { nombre: 'apellido', etiqueta: 'apellido', tipo: 'text' },
-    { nombre: 'dni', etiqueta: 'DNI', tipo: 'text' },
-    { nombre: 'phone', etiqueta: 'Teléfono', tipo: 'tel' },
-    { nombre: 'email', etiqueta: 'Email', tipo: 'email' },
-    { nombre: 'password', etiqueta: 'Contraseña', tipo: 'password' },
-    { nombre: 'helperLocation', etiqueta: 'Sede Asignada', tipo: 'text' },
+    { nombre: 'Foto', etiqueta: 'photo', tipo: 'file', image: true},
+    { nombre: 'Nombre', etiqueta: 'name', tipo: 'text' },
+    { nombre: 'Apellido', etiqueta: 'apellido', tipo: 'text' },
+    { nombre: 'DNI', etiqueta: 'dni', tipo: 'text' },
+    { nombre: 'Teléfono', etiqueta: 'phone', tipo: 'tel' },
+    { nombre: 'Email', etiqueta: 'email', tipo: 'email' },
+    { nombre: 'Contraseña', etiqueta: 'password', tipo: 'password' },
+    { nombre: 'Sede Asignada', etiqueta: 'helperLocation', tipo: 'text' },
   ]
 
   return <GenericForm campos={campos} listener={handleRegister} modalId={modalId} />;
