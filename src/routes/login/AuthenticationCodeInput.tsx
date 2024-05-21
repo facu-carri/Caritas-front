@@ -6,7 +6,7 @@ import RoutesHandler from 'src/libs/routesHandler';
 
 const AuthenticationCodeInput = () => {
   const [code, setCode] = useState('');
-  const { setAuth, setUser } = User()
+  const { setUser } = User()
   const { setRoute } = RoutesHandler()
 
   const handleChange = (e) => {
@@ -34,8 +34,8 @@ const AuthenticationCodeInput = () => {
       }
       return res.json()
     }).then(data => {
+      console.log(data, routes.main)
       setUser(data);
-      setAuth(true);
       setRoute(routes.main);
     }).catch(() => alert('Codigo incorrecto'))
   }

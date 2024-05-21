@@ -5,15 +5,8 @@ import { getItem } from "../localStorage.ts"
 
 const reqHeaders = {
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*'
-}
-
-export const activateAuth = () => {
-    reqHeaders['Authorization'] = `Bearer ${getItem('token')}`
-}
-
-export const desactivateAuth = () => {
-    reqHeaders['Authorization'] = ''
+    'Access-Control-Allow-Origin': '*',
+    'Authorization': `Bearer ${getItem('token')}`
 }
 
 function handleResponse(res: Response) {
