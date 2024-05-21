@@ -22,8 +22,8 @@ const Login = () => {
     const { setUser } = User()
     const { setRoute } = RoutesHandler()
 
-    function handleError(err: IErrorResponse | any) {
-        const errorCode: ErrorCode = new ErrorCode(err?.code ?? 0)
+    function handleError(errCode: number) {
+        const errorCode: ErrorCode = new ErrorCode(errCode ?? 0)
         setErrorCode(errorCode)
     }
 

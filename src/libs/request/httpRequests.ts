@@ -26,16 +26,17 @@ const handleResponse = (res: Response) => {
     if (res.ok) {
         return data
     } else {
-        throw data
+        throw res.status
     }
 }
 
-export function getData(endPoint: string, querys: Record<string, string> = null) {
+export function getData(endPoint: string, querys: Record<string, string> = null, data?: any) {
     const url = new Url(serverAddress, endPoint, querys)
     return fetch(url.toString(), {
         method: "GET",
         mode: 'cors',
-        headers: reqHeaders
+        headers: reqHeaders,
+        body: JSON.stringify(data)
     })
     .then(handleResponse)
 }
