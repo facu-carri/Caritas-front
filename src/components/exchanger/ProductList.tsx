@@ -1,19 +1,55 @@
-import { useState } from 'react';
 import ProductCard from './ProductCard';
-//la pagina de las publicaciones de los intercambios
-const productsData = [
-  { id: 1, category: 'Limpieza', name: 'Detergente', rating: 4, absences: 0, image: 'https://source.unsplash.com/300x200/?placeholder' },
-  { id: 2, category: 'Deporte', name: 'Balón de Fútbol', rating: 5, absences: 1, image: 'https://source.unsplash.com/300x200/?demo' },
-  { id: 3, category: 'Electrónica', name: 'Auriculares', rating: 3, absences: 2, image: 'https://source.unsplash.com/300x200/?generic' },
-  // Puedes agregar más productos aquí
-];
-
+import { getData } from "src/libs/request/httpRequests";
+import { endPoints } from "src/libs/constants";
+import { useEffect, useRef, useState } from 'react';
+// TODO: Juntarlo con lo del Profiles 
+type ItemData = {
+  id: number
+  photo: string
+  name: string
+  description: string
+  owner: UserData
+  itemCategory: ItemCategory
+}
+type UserData = {
+  id: number,
+  name: string,
+  email: string, 
+  dni: string,
+  phone: string, 
+  photo: string,
+  stars: number,
+  absentees: number,
+}
+type ItemCategory = {
+  id: number
+  name: string
+}
 function ProductList() {
   const [category, setCategory] = useState('');
+  const [inventory, setInventory] = useState<ItemData[]>();
+  const [categories, setCategories] = useState<ItemCategory[]>();
+  
+  function resetInvetory(error){
+    if(error == 404)
+      setInventory([])
+  }   
+  function resetCategories(error){
+    // TODO: CHECK ERROR TYPE if(error == 404)
+      setCategories([])
+  }   
+  useEffect(() => {
+    getData(endPoints.inventory)
+      .then(inventory => setInventory(inventory))
+      .catch(error => resetInvetory(error));
+      getData(endPoints.categories)
+        .then(categories => setCategories(categories))
+        .catch(error => resetCategories(error));
+    }, []);
 
   const filteredProducts = category
-    ? productsData.filter(product => product.category === category)
-    : productsData;
+    ? inventory.filter(product => product.itemCategory.name === category)
+    : inventory;
 
   return (
     <div className="bg-gray-100 min-h-screen">
@@ -32,13 +68,21 @@ function ProductList() {
               onChange={(e) => setCategory(e.target.value)}
             >
               <option value="">Todas las Categorías</option>
-              <option value="Limpieza">Limpieza</option>
-              <option value="Deporte">Deporte</option>
-              <option value="Electrónica">Electrónica</option>
+              {!(categories)||categories.length==0? 
+                  <option value="">No hay categorias cargadas</option>
+              :categories.map((cat) => (
+                <option key={cat.id} value={cat.name}>
+                  {cat.name}
+                </option>
+              ))}
             </select>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {filteredProducts.map(product => (
+            {!(filteredProducts)||filteredProducts.length==0? 
+                <div >
+                  <p className="text-gray-600 dark:text-gray-400 line-clamp-2">No hay elementos</p>
+                </div>
+              : filteredProducts.map(product => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>

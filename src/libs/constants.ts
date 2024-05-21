@@ -8,6 +8,7 @@ export const endPoints = {
     inventory: 'item/myInventory',
     location: 'location',
     myReviews: 'reviews/myReviews',
+    categories: 'itemCategory',
 }
 const adminRoutes = {
     'estadisticas': '/estadisticas',
