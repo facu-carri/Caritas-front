@@ -25,7 +25,7 @@ type ItemCategory = {
   id: number
   name: string
 }
-function ProductList({ruta, text}) { // endPoints.exchangeablesProducts
+function ProductList({ruta, text, subText}) { // endPoints.exchangeablesProducts
   const [category, setCategory] = useState('');
   const [inventory, setInventory] = useState<ItemData[]>();
   const [categories, setCategories] = useState<ItemCategory[]>();
@@ -56,7 +56,7 @@ function ProductList({ruta, text}) { // endPoints.exchangeablesProducts
       <header className="bg-blue-600 text-white p-4 text-center shadow-md">
         <div className='mt-16'>
           <h1 className="text-3xl font-bold">{text}</h1>
-          <p className="text-sm">Explora nuestra selección de productos disponibles para intercambios.</p>
+          <p className="text-sm">{subText}</p>
         </div>
       </header>
       <main className="bg-gray-200 py-8">
