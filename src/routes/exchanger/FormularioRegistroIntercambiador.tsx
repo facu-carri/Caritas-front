@@ -1,6 +1,4 @@
-import React from 'react';
 import Input from 'src/components/Input';
-import Password from 'src/icons/Password';
 
 // Componente de formulario de registro
 function FormularioRegistroIntercambiador() {
