@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import AddItemModal from './AddItemModal';
+import { ProductType } from './ProductType';
 
 function PlusIcon(props) {
   return (
@@ -23,21 +24,21 @@ function PlusIcon(props) {
 
 export default function Inventory() {
   const [searchQuery, setSearchQuery] = useState('');
-  const [products, setProducts] = useState(bruteProducts);
+  const [products, setProducts] = useState<ProductType[]>(bruteProducts);
   const [showModal, setShowModal] = useState(false)
 
   const handleModal = () => {
     setShowModal(!showModal)
   };
 
-  const addItem = (item) => {
+  const addItem = (item:ProductType) => {
     setProducts(products.concat(item))
   }
 
   const handleSearchChange = (e) => {
     const query = e.target.value.toLowerCase();
     setSearchQuery(query);
-    const filtered = products.filter((product) =>
+    const filtered = products.filter((product:ProductType) =>
       product.name.toLowerCase().includes(query)
     );
     setProducts(filtered);
@@ -78,7 +79,7 @@ export default function Inventory() {
               <img
                 alt={product.name}
                 className="h-60 w-full object-cover"
-                src={`https://via.placeholder.com/300x200?text=${product.name}`}
+                src={`data:image/jpg;base64,${product.image}`}
               />
             </div>
             <div className="flex-grow p-4 bg-gray-700">
@@ -93,7 +94,7 @@ export default function Inventory() {
   );
 }
 
-const bruteProducts = [
+const bruteProducts: Array<ProductType> = [
   {
     name: 'Smart TV',
     description: '4K resolution for an immersive viewing experience.',
