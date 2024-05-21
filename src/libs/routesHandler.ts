@@ -10,7 +10,6 @@ export default function RoutesHandler() {
     }
 
     const setRoute = (route: string) => {
-        if(getRoute() == route) return
         navigator(route)
     }
 

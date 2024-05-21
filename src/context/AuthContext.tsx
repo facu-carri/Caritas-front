@@ -3,7 +3,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { User } from "src/libs/User";
 import { roles, routes } from "src/libs/constants";
-import { activateAuth, desactivateAuth } from "src/libs/request/httpRequests";
 import RoutesHandler from "src/libs/routesHandler";
 
 const AuthContext = React.createContext(undefined)
@@ -18,25 +17,24 @@ export default function AuthProvider({ children }) {
     const [token, setToken] = useState(null)
     const { setRoute } = RoutesHandler()
 
-    const isValidToken = (token: string, role:string) => {
-        return token != 'null' || role != roles.EXCHANGER
+    const isValidToken = (token: string) => {
+        return token || token == 'null'
     }
 
     useEffect(() => {
         const _token = getToken()
         const _rol = getRole()
-        if (!isValidToken(_token, _rol) || !_rol) {
-            desactivateAuth()
+        setToken(_token)
+        if (!isValidToken(_token) || !_rol) {
             setRoute(routes.login)
         } else {
             setToken(_token)
-            if(_rol == roles.EXCHANGER) activateAuth()
         }
     }, [])
 
     return (
-        <AuthContext.Provider value=''>
-            {token != null ? children : null}
+        <AuthContext.Provider value={{token}}>
+            {isValidToken(token) ? children : null }
         </AuthContext.Provider>
     )
 }
