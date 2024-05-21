@@ -25,22 +25,22 @@ type Type = {
   error?: ErrorCode
 }
 
-function GenericForm({ campos, listener, error }: Type) {
+export async function getImageBase64(img:File) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
 
-  async function getImageBase64(img:File) {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-
-      reader.readAsDataURL(img)
-      reader.onload = (() => {
-        const base64String = (reader.result as string).split(',')[1];
-        resolve(base64String)
-      })
-      reader.onerror = () => {
-        reject(null)
-      }
+    reader.readAsDataURL(img)
+    reader.onload = (() => {
+      const base64String = (reader.result as string).split(',')[1];
+      resolve(base64String)
     })
-  }
+    reader.onerror = () => {
+      reject(null)
+    }
+  })
+}
+
+function GenericForm({ campos, listener, error }: Type) {
 
   async function getInputValues(): Promise<Record<string, any>> {
     const inputs = document.getElementsByName('inputField')

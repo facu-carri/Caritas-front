@@ -3,6 +3,7 @@ import Input from "../../Input";
 import Button from "../../Button";
 import { getData } from "src/libs/request/httpRequests";
 import { endPoints } from "src/libs/constants";
+import { getImageBase64 } from "src/components/GenericForm";
 
 export default function AddItemModal({ onClose, onAddItem }) {
   const [name, setName] = useState('');
@@ -25,20 +26,22 @@ export default function AddItemModal({ onClose, onAddItem }) {
     )*/
 
     // Convert photoFile to a URL
-    const photo = URL.createObjectURL(photoFile); // TODO: It's wrong
+    //const photo = URL.createObjectURL(photoFile); // TODO: It's wrong
+    getImageBase64(photoFile)
+      .then(photo => {
+        // Call the onAddItem function with the new item data
+        onAddItem({ name, description, itemCategoryId, photo, quantity });
 
-    // Call the onAddItem function with the new item data
-    onAddItem({ name, description, itemCategoryId, photo, quantity });
+        // Clear input fields
+        setName('');
+        setDescription('');
+        setItemCategoryId(0);
+        setQuantity(0);
+        setPhotoFile(null);
 
-    // Clear input fields
-    setName('');
-    setDescription('');
-    setItemCategoryId(0);
-    setQuantity(0);
-    setPhotoFile(null);
-
-    // Close the modal
-    onClose();
+        // Close the modal
+        onClose();
+      })
   };
 
   useEffect(() => {
