@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { Icons } from "src/Icons"
 import Input from "src/components/Input"
 import { RequestStatus } from "src/libs/types/RequestStatus"
@@ -12,8 +12,6 @@ import { User } from "src/libs/User"
 import RoutesHandler from "src/libs/routesHandler"
 import ErrorAlert from "src/components/ErrorAlert"
 import BotonARuta from "src/components/BotonARuta"
-import { ErrorCode } from "src/libs/Error/ErrorCode"
-import { ErrorTypes } from "src/libs/Error/ErrorTypes"
 
 const Login = () => {
 
@@ -21,11 +19,6 @@ const Login = () => {
     const [reqStatus, setReqStatus] = useState<RequestStatus>(RequestStatus.INITIAL)
     const { setUser } = User()
     const { setRoute } = RoutesHandler()
-
-    useEffect(() => {
-        const err = new ErrorCode(404, ErrorTypes.LOGIN_ERROR)
-        console.log('test msg', err.getMessage())
-    }, [])
 
     function handleError(errCode: number) {
         console.log(errCode)
