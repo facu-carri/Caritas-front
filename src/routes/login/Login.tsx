@@ -69,7 +69,7 @@ const Login = () => {
                 <button className="btn btn-primary" onClick={handleLogin}>
                     {reqStatus == RequestStatus.PENDING ? <span className="loading loading-spinner"></span> : 'Login'}
                 </button>
-                <BotonARuta nombre="Registrarse" ruta="/registro"/>
+                <BotonARuta nombre="Registrarse" ruta="/register"/>
             </div>
         </div>
     )

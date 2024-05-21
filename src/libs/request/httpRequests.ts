@@ -35,6 +35,7 @@ export function getData(endPoint: string, querys: Record<string, string> = null,
 }
 
 export function postData(endPoint: string, querys: Record<string, any> = null, data?: any) {
+    console.log(data)
     const url = new Url(serverAddress, endPoint, querys)
     const request = fetch(url.toString(), {
         method: "POST",

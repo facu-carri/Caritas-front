@@ -23,7 +23,7 @@ export function ExchangerRouter() {
       element: <ErrorPage/>
     },
     {
-      path: '/registro',
+      path: '/register',
       element: <FormularioRegistroIntercambiador/>
     }
   ]);

@@ -1,6 +1,5 @@
 // BotonARuta.jsx
 import { useNavigate } from 'react-router-dom';
-
 const BotonARuta = ({ nombre, ruta }) => {
     const navigate = useNavigate();
 
