@@ -28,7 +28,7 @@ const Login = () => {
     }
 
     function checkStatus() {
-        setUser({token: '2323', role:roles.ADMIN})
+        //setUser({token: '2323', role:roles.ADMIN})
         if (reqStatus == RequestStatus.SUCCESS) {
             setRoute(routes.main)
         }
