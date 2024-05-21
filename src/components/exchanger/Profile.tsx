@@ -86,7 +86,7 @@ function Profile() {
               </div>
             </div>
             <div>
-              <button className="text-black hover:bg-black/20 border border-black py-2 px-4 rounded">Edit Profile</button>
+              <button className="text-black hover:bg-black/20 border border-black py-2 px-4 rounded">Editar Perfil</button>
             </div>
           </div>
         </header>
@@ -94,7 +94,7 @@ function Profile() {
       <main className="flex-1 bg-gray-100 dark:bg-gray-900 py-8 px-6 md:px-12">
         <div className="max-w-4xl mx-auto grid gap-8">
           <section>
-            <h2 className="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-200">Personal Information</h2>
+            <h2 className="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-200">Informacion Personal</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {[
                 //{ title: "Location", value: userData.name, color: "text-red-500" },
@@ -114,7 +114,7 @@ function Profile() {
             </div>
           </section>
           <section>
-            <h2 className="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-200">Product Publications</h2>
+            <h2 className="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-200">Publicaciones de productos</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
               {!(inventory)||inventory.length==0? 
                 <div >
@@ -135,7 +135,7 @@ function Profile() {
             </div>
           </section>
           <section>
-            <h2 className="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-200">Comments</h2>
+            <h2 className="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-200">Comentarios</h2>
             <div className="space-y-4">
               {!(reviews)||reviews.length==0? 
                 <div >
