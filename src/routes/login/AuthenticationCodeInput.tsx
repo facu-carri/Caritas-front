@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { User } from 'src/libs/User';
-import { endPoints, routes } from 'src/libs/constants';
+import { endPoints, routes, serverAddress } from 'src/libs/constants';
 import { postData } from 'src/libs/request/httpRequests';
 import RoutesHandler from 'src/libs/routesHandler';
 
@@ -13,12 +13,31 @@ const AuthenticationCodeInput = () => {
     setCode(e.target.value);
   };
 
-  const onSubmit = (code) => {
-    postData(endPoints.verificationCode, null, {
+  const onSubmit = (code: string) => {
+    /*postData(endPoints.verificationCode, null, {
       code: code
     })
-      .then((data) => { setUser(data); setAuth(true); setRoute(routes.main) })
-      .catch(() => alert('Codigo incorrecto'))
+      .then((data) => { setUser(data); setAuth(true); setRoute(routes.main) })*/
+    fetch(`${serverAddress}/${endPoints.verificationCode}`, {
+      method: 'POST',
+      cache: 'no-cache',
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      },
+      body: JSON.stringify({
+        code
+      })
+    }).then(res => {
+      if(!res.ok) {
+        throw new Error()
+      }
+      return res.json()
+    }).then(data => {
+      setUser(data);
+      setAuth(true);
+      setRoute(routes.main);
+    }).catch(() => alert('Codigo incorrecto'))
   }
 
   const handleSubmit = () => {
