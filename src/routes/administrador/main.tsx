@@ -1,11 +1,15 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect } from "react"
+import { routes } from "src/libs/constants"
+import RoutesHandler from "src/libs/routesHandler"
 
 export const AdminMain = () => {
 
-  return (
-    <>
-      <h1 className="flex justify-center items-center h-[100vh] text-[100%]">
-        USUARIO ADMINISTRADOR
-      </h1>
-    </>
-  )
+  const { setRoute } = RoutesHandler()
+
+  useEffect(() => {
+    setRoute(routes.admin.gestionarAyudantes)
+  }, [])
+
+  return <></>
 }

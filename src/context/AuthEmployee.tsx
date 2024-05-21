@@ -12,7 +12,7 @@ export function useAuthExmployee(){
 
 export default function AuthEmployeeProvider({ children }) {
 
-    const [auth, setAuth] = useState(false)
+    const [auth, setAuth] = useState(true)
 
     return (
         <AuthEmployeeContext.Provider value={{auth, setAuth}}>
