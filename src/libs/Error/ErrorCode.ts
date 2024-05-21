@@ -12,7 +12,7 @@ export class ErrorCode {
     }
 
     private isValid() {
-        return this.code && this.code > 0 && ErrorsMsgs[this.type] && ErrorsMsgs[this.type][this.code]
+        return this.code && this.code > 0 && ErrorsMsgs[this.type] && Object.keys(ErrorsMsgs[this.type]).includes(this.code.toString())
     }
 
     getMessage(): string {
