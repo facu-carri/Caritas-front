@@ -3,7 +3,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { User } from "src/libs/User";
 import { roles, routes } from "src/libs/constants";
-import { activateAuth } from "src/libs/request/httpRequests";
+import { activateAuth, desactivateAuth } from "src/libs/request/httpRequests";
 import RoutesHandler from "src/libs/routesHandler";
 
 const AuthContext = React.createContext(undefined)
@@ -26,6 +26,7 @@ export default function AuthProvider({ children }) {
         const _token = getToken()
         const _rol = getRole()
         if (!isValidToken(_token, _rol) || !_rol) {
+            desactivateAuth()
             setRoute(routes.login)
         } else {
             setToken(_token)
