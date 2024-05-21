@@ -11,6 +11,7 @@ function Maps(){
     }
 
     return (
+        <>
         <div style={{ height: '100vh'}}>
             <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API}>
                 <Map disableDefaultUI={true} defaultZoom={9} zoomControl={true} defaultCenter={position} fullscreenControl={false} mapId={import.meta.env.VITE_GOOGLE_MAPS_MAP_ID}>
@@ -25,6 +26,7 @@ function Maps(){
                 </Map>
             </APIProvider>
         </div>
+        </>
     )
 }
 

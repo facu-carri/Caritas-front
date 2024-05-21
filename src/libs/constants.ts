@@ -21,7 +21,8 @@ const adminRoutes = {
 }
 const exchangerRoutes = {
     'inventory': 'inventario',
-    'profile': 'perfil'
+    'profile': 'perfil',
+    'caritasInformation':'informacionCaritas'
 }
 export const routes = {
     main: '/',
