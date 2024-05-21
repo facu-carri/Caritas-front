@@ -6,9 +6,10 @@ import RoutesHandler from "src/libs/routesHandler"
 import { Outlet } from "react-router-dom"
 import { useEffect, useRef, useState } from "react"
 import Button, { ButtonType } from "src/components/Button"
-import { FilialesOptions } from "./menu/Filiales"
 import CircularDropdown from "src/components/DropDown"
 import { useLogout } from "src/context/LogoutContext"
+import FilialesOptions from "./menu/Filiales"
+import { useCustomModal } from "src/context/CustomModalContext"
 
 export default function AdminLayout() {
 
@@ -17,13 +18,14 @@ export default function AdminLayout() {
   const [menuOpts, setMenuOpts] = useState<Array<Tab>>([])
   const dropdownRef = useRef(null);
   const { setShowLogoutModal } = useLogout()
+  const { setModal } = useCustomModal()
 
   useEffect(() => {
     const route = getRoute()
 
     switch (route) {
       case routes.admin.gestionarFiliales:
-        setMenuOpts(FilialesOptions)
+        setMenuOpts(FilialesOptions())
         break
       default:
         setMenuOpts([])
@@ -64,7 +66,7 @@ export default function AdminLayout() {
           <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 mt-2 shadow bg-base-100 rounded-box w-52 gap-2">
             {
               menuOpts.map((tab, index) => (
-                <Button onClick={tab?.onClick} key={'opts' + index}>
+                <Button onClick={() => setModal(tab.customElement)} key={'opts' + index}>
                   {tab.text}
                   {tab.icon}
                 </Button>

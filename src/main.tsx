@@ -8,6 +8,7 @@ import RoleBasedRouting from './libs/RoleRouting.tsx'
 import FormularioRegistroIntercambiador from './routes/exchanger/FormularioRegistroIntercambiador.tsx'
 import LogoutProvider from './context/LogoutContext.tsx'
 import { routes } from './libs/constants.ts'
+import CustomModalProvider from './context/CustomModalContext.tsx'
 
 const _routes = [
   {
@@ -15,7 +16,9 @@ const _routes = [
     element:
       <LogoutProvider>
         <AuthProvider>
-          <RoleBasedRouting/>
+          <CustomModalProvider>
+            <RoleBasedRouting/>
+          </CustomModalProvider>
         </AuthProvider>
       </LogoutProvider>,
   },

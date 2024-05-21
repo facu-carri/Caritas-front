@@ -3,6 +3,7 @@ import { LoginErrorMsgs } from "./ErrorMessages/Login"
 import { ErrorTypes } from "./ErrorTypes"
 import { RegisterHelperErrorMsgs } from "./ErrorMessages/RegisterHelper"
 import { RegisterExchangerErrorMsgs } from "./ErrorMessages/RegisterExchanger"
+import { FilialesErrorMsgs } from "./ErrorMessages/Filiales"
 
 const DefaultErrors: IErrorCodesMsgs = {
     [ErrorTypes.UNKNOWN_ERROR]: {
@@ -15,4 +16,5 @@ export const ErrorsMsgs = {
     ...LoginErrorMsgs,
     ...RegisterHelperErrorMsgs,
     ...RegisterExchangerErrorMsgs,
+    ...FilialesErrorMsgs,
 }

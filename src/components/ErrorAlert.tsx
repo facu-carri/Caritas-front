@@ -8,7 +8,7 @@ type Type = {
 export default function ErrorAlert({ show, attrs, children }: Type) {
     return <>
         {show &&
-            <div role="alert" className={`alert alert-error ${attrs}`}>
+            <div role="alert" className={`alert alert-error ${attrs} mb-3`}>
             {Icons.error}
             {children}
             </div>
