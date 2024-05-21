@@ -6,11 +6,17 @@ import Login from './routes/login/Login.tsx'
 import AuthProvider from './context/AuthContext.tsx'
 import RoleBasedRouting from './libs/RoleRouting.tsx'
 import FormularioRegistroIntercambiador from './routes/exchanger/FormularioRegistroIntercambiador.tsx'
+import LogoutProvider from './context/LogoutContext.tsx'
 
 const routes = [
   {
     path: "/*",
-    element:<AuthProvider><RoleBasedRouting/></AuthProvider>,
+    element:
+      <LogoutProvider>
+        <AuthProvider>
+          <RoleBasedRouting/>
+        </AuthProvider>
+      </LogoutProvider>,
   },
   {
     path: "/login",

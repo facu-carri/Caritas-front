@@ -6,12 +6,12 @@ import RoutesHandler from "src/libs/routesHandler"
 import { Outlet } from "react-router-dom"
 import { ButtonType } from "src/components/Button"
 import CircularDropdown from "src/components/DropDown"
-import { User } from "src/libs/User"
+import { useLogout } from "src/context/LogoutContext"
 
 export default function ExchangerLayout() {
 
   const { setRoute } = RoutesHandler()
-  const { logout } = User()
+  const { setShowLogoutModal } = useLogout()
 
   const startTabs: Tab[] = [
     {
@@ -19,10 +19,6 @@ export default function ExchangerLayout() {
       onClick: () => setRoute(routes.main),
       active: false
     }
-  ]
-
-  const middleTabs: Tab[] = [
-
   ]
 
   const dropdownItems: ButtonType[] = [
@@ -36,7 +32,7 @@ export default function ExchangerLayout() {
     },
     {
       text: 'Cerrar sesion',
-      onClick: () => logout()
+      onClick: () => setShowLogoutModal(true)
     }
   ]
 
@@ -49,7 +45,7 @@ export default function ExchangerLayout() {
 
   return (
     <>
-      <Navbar startTabs={startTabs} middleTabs={middleTabs} endTabs={endTabs} />
+      <Navbar startTabs={startTabs} endTabs={endTabs} />
       <Outlet/>
     </>
   )

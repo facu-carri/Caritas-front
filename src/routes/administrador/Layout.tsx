@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from "react"
 import Button, { ButtonType } from "src/components/Button"
 import { FilialesOptions } from "./menu/Filiales"
 import CircularDropdown from "src/components/DropDown"
-import { User } from "src/libs/User"
+import { useLogout } from "src/context/LogoutContext"
 
 export default function AdminLayout() {
 
@@ -16,7 +16,8 @@ export default function AdminLayout() {
   const [showMenu, setShowMenu] = useState(false)
   const [menuOpts, setMenuOpts] = useState<Array<Tab>>([])
   const dropdownRef = useRef(null);
-  const { logout } = User()
+  const { setShowLogoutModal } = useLogout()
+
 
   useEffect(() => {
     const route = getRoute()
@@ -49,7 +50,7 @@ export default function AdminLayout() {
     }
   };
 
-  const btnActive = (route:string) => {
+  const btnActive = (route: string) => {
     return getRoute() == route
   }
 
@@ -119,7 +120,7 @@ export default function AdminLayout() {
   const dropdownItems: ButtonType[] = [
     {
       text: 'Cerrar sesion',
-      onClick: () => logout()
+      onClick: () => setShowLogoutModal(true)
     }
   ]
 

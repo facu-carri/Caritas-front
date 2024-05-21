@@ -12,7 +12,7 @@ export const User = () => {
 
     const TOKEN: string = 'token'
     const ROLE: string = 'role'
-    const AUTH: string = 'auth'
+
     const { setRoute } = RoutesHandler()
 
     const setUser = (data: UserData) => {
@@ -20,10 +20,6 @@ export const User = () => {
         setItem(ROLE, data.role)
         setRoute(routes.main)
         if(data.role == roles.EXCHANGER) activateAuth()
-    }
-
-    const setAuth = (auth: string) => {
-        setItem(AUTH, auth)
     }
 
     const getToken = () => {
@@ -34,16 +30,11 @@ export const User = () => {
         return getItem(ROLE)
     }
 
-    const getAuth = () => {
-        return getItem(AUTH)
-    }
-
     const logout = () => {
         removeItem(TOKEN)
         removeItem(ROLE)
-        removeItem(AUTH)
         setRoute(routes.login)
     }
 
-    return { setUser, getToken, getRole, getAuth, setAuth, logout }
+    return { setUser, getToken, getRole, logout }
 }
