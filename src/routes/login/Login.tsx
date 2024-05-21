@@ -5,7 +5,7 @@ import { Icons } from "src/Icons"
 import Input from "src/components/Input"
 import { RequestStatus } from "src/libs/types/RequestStatus"
 import { getElementValue, validString } from "src/libs/api"
-import { endPoints, routes, serverAddress } from "src/libs/constants"
+import { endPoints, roles, routes, serverAddress } from "src/libs/constants"
 import { postData } from "src/libs/request/httpRequests"
 import { LoginQuery } from "./LoginQuery"
 import { User } from "src/libs/User"
@@ -17,7 +17,7 @@ const Login = () => {
 
     const [showPassword, setShowPassword] = useState(false)
     const [reqStatus, setReqStatus] = useState<RequestStatus>(RequestStatus.INITIAL)
-    const { setUser } = User()
+    const { setUser, getRole } = User()
     const { setRoute } = RoutesHandler()
 
     useEffect(() => {
@@ -26,7 +26,11 @@ const Login = () => {
                 resetState()
                 break
             case RequestStatus.SUCCESS:
-                setRoute(routes.main)
+                if(getRole() === roles.EXCHANGER) {
+                    setRoute(routes.main);
+                } else {
+                    setRoute(routes.auth);
+                }
                 break
         }
     }, [reqStatus])
@@ -49,10 +53,6 @@ const Login = () => {
 
         setReqStatus(RequestStatus.PENDING)
 
-        /*postData(endPoints.login, null, query)
-            .then((data) => setUser(data))
-            .then(() => setReqStatus(RequestStatus.SUCCESS))
-            .catch(() => setReqStatus(RequestStatus.FAILED))*/
         fetch(`${serverAddress}/${endPoints.login}`, {
             method: 'POST',
             cache: 'no-cache',
@@ -74,7 +74,7 @@ const Login = () => {
             })
             .then(data => setUser(data))
             .then(() => setReqStatus(RequestStatus.SUCCESS))
-            .catch(() => {})
+            .catch(() => setReqStatus(RequestStatus.FAILED))
     }
 
     return (
