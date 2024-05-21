@@ -22,28 +22,30 @@ function GenericForm({ campos, listener, modalId }: Type) {
     elem.close()
   }
 
-  function getImageData(img) {
+  async function getImageBase64(img:File) {
+    return new Promise((resolve, reject) => {
       const reader = new FileReader();
 
-      reader.readAsText(img)
-      reader.onload = ((e) => {
-        const base64String = (e.target.result as string).split(',')[1]; // Obtener solo la parte Base64
-        return base64String
+      reader.readAsDataURL(img)
+      reader.onload = (() => {
+        const base64String = (reader.result as string).split(',')[1];
+        resolve(base64String)
+      })
+      reader.onerror = () => {
+        reject(null)
+      }
     })
-    reader.onerror = () => {
-      return null
-    }
   }
 
-  function getInputValues(): Record<string, any> {
+  async function getInputValues(): Promise<Record<string, any>> {
     const inputs = document.getElementsByName('inputField')
     const obj = {}
     for (const inputField of inputs) {
       const input = inputField as HTMLInputElement
       if (input.type == 'file') {
         const img = input.files[0]
-        const imageData = getImageData(img)
-        obj[input.id] = imageData
+        const imageData = await getImageBase64(img)
+        if(imageData) obj[input.id] = imageData
       } else {
         obj[input.id] = input.value
       }
@@ -51,9 +53,9 @@ function GenericForm({ campos, listener, modalId }: Type) {
     return obj
   }
 
-  function handleSubmit(ev:any) {
+  async function handleSubmit(ev:any) {
     ev.preventDefault()
-    const data = getInputValues()
+    const data = await getInputValues()
     listener(data)
     closeModal()
   }
