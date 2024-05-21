@@ -21,7 +21,7 @@ export default function Navbar({startTabs: start, middleTabs: middle, endTabs: e
         return tabs && tabs.map((tab, index) => (
             <div key={`${key}_${index}`}>
                 {tab.customElement ? tab.customElement :
-                    <Button visible={tab.visible} active={tab.visible} onClick={tab.onClick} key={`${key}_${index}`}>
+                    <Button visible={tab.visible} active={tab.active} onClick={tab.onClick} key={`${key}_${index}`}>
                         {tab.icon}
                         {tab.text}
                     </Button>
