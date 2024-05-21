@@ -15,7 +15,7 @@ type Type = {
 }
 
 // Componente de Registro de Ayudante
-export default function RegisterHelper({ modalId }) {
+export default function RegisterHelper() {
 
   const handleRegister = (data: Type) => {
     postData(endPoints.registerHelper, null, data)
@@ -32,5 +32,5 @@ export default function RegisterHelper({ modalId }) {
     { nombre: 'Sede Asignada', etiqueta: 'helperLocation', tipo: 'text' },
   ]
 
-  return <GenericForm campos={campos} listener={handleRegister} modalId={modalId} />;
+  return <GenericForm campos={campos} listener={handleRegister} />;
 }

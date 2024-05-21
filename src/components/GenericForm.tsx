@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import logo from '@images/LogoCaritas.png'
 import Input from './Input';
@@ -12,14 +13,15 @@ export type FormField = {
 type Type = {
   campos: Array<FormField>,
   listener?: (values: Record<string, any>) => void,
-  modalId: string
+  modalId?: string
 }
 
 function GenericForm({ campos, listener, modalId }: Type) {
-  
+
+
   const closeModal = () => {
-    const elem = (document.getElementById(modalId) as HTMLDialogElement)
-    elem.close()
+    const elem = modalId && (document.getElementById(modalId) as HTMLDialogElement)
+    elem?.close()
   }
 
   async function getImageBase64(img:File) {

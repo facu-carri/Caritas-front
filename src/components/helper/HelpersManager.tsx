@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import HelpersList from './HelpersList';
 import EditHelperModal from '../EditHelperModal';
 import Button from '../Button';
@@ -33,10 +33,17 @@ export default function HelpersManager() {
     elem.showModal()
   }
 
+  const modalRef = useRef(null)
+
+  const handleClickModal = (ev) => {
+    const target = ev.target
+    if(target.id && target.id == modalRef.current.id)  modalRef.current.close()
+  }
+
   return (
   <>
-    <dialog className="modal" id='registerModal'>
-        <RegisterHelper modalId={'registerModal'} />
+    <dialog className="modal" id='registerModal' onClick={handleClickModal} ref={modalRef}>
+        <RegisterHelper />
     </dialog>
       <div className="min-h-screen bg-gray-100 flex items-center flex-col gap-4 justify-center p-4">
       <Button onClick={handleRegisterHelper} >Registrar ayudante</Button>
