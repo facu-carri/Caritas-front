@@ -12,6 +12,10 @@ export const activateAuth = () => {
     reqHeaders['Authorization'] = `Bearer ${getItem('token')}`
 }
 
+export const desactivateAuth = () => {
+    reqHeaders['Authorization'] = ''
+}
+
 function handleResponse(res: Response) {
     const type = res.headers.get('Content-Type')
     let data = null
