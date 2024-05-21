@@ -8,7 +8,7 @@ import Avatar from 'react-avatar';
 
 import { getData } from "src/libs/request/httpRequests";
 import { endPoints } from "src/libs/constants";
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 type UserData = {
   id: number,
