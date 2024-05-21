@@ -47,7 +47,7 @@ const [inventory, setInventory] = useState<[ItemData]>();
   useEffect(() => {
     getData(endPoints.profile)
       .then(userData => setUserData(userData));
-    getData(endPoints.inventory + '/' + userData.id)
+    getData(endPoints.inventory)
       .then(inventory => setInventory(inventory));
   }, []);
 
@@ -108,7 +108,7 @@ const [inventory, setInventory] = useState<[ItemData]>();
                   <div className="p-4">
                     <h3 className={`text-lg font-bold mb-2 ${idx % 2 === 0 ? 'text-red-500' : 'text-blue-500'}`}>{product.name}</h3>
                     <p className="text-gray-600 dark:text-gray-400 line-clamp-2">{product.description}</p>
-                    <p className="text-gray-500 dark:text-gray-400 text-sm mt-2">Published: {product.date}</p>
+                    <p className="text-gray-500 dark:text-gray-400 text-sm mt-2">Published: {product.photo}</p>
                   </div>
                 </div>
               ))}
