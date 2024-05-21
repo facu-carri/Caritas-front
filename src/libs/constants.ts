@@ -5,7 +5,9 @@ export const endPoints = {
     registerHelper: 'employee', 
     registerExchanger: 'v1/auth/register', 
     profile:'exchanger/myProfile',
-    inventory:'item/myInventory',
+    inventory: 'item/myInventory',
+    location: 'location'
+    
 }
 const adminRoutes = {
     'estadisticas': '/estadisticas',
