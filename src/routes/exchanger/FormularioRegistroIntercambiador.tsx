@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import Input from 'src/components/Input';
-import Password from 'src/icons/Password';
 import RoutesHandler from 'src/libs/routesHandler';
 import { endPoints, routes } from 'src/libs/constants';
 import { postData } from 'src/libs/request/httpRequests';
