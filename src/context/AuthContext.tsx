@@ -17,12 +17,17 @@ export default function AuthProvider({ children }) {
     const [token, setToken] = useState(null)
     const { setRoute } = RoutesHandler()
 
+    const isValidToken = (token: string) => {
+        return token && token != 'null'
+    }
+
     useEffect(() => {
         const _token = getToken()
         const _rol = getRole()
-        setToken(_token)
-        if (!_token || !_rol) {
+        if (!isValidToken(_token) || !_rol) {
             setRoute(routes.login)
+        } else {
+            setToken(_token)
         }
     }, [])
 
