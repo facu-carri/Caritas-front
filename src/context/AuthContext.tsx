@@ -3,6 +3,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { User } from "src/libs/User";
 import { roles, routes } from "src/libs/constants";
+import { activateAuth } from "src/libs/request/httpRequests";
 import RoutesHandler from "src/libs/routesHandler";
 
 const AuthContext = React.createContext(undefined)
@@ -28,6 +29,7 @@ export default function AuthProvider({ children }) {
             setRoute(routes.login)
         } else {
             setToken(_token)
+            if(_rol == roles.EXCHANGER) activateAuth()
         }
     }, [])
 
