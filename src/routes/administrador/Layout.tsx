@@ -9,6 +9,7 @@ import Button, { ButtonType } from "src/components/Button"
 import { FilialesOptions } from "./menu/Filiales"
 import CircularDropdown from "src/components/DropDown"
 import { useLogout } from "src/context/LogoutContext"
+import { useAuthExmployee } from "src/context/AuthEmployee"
 
 export default function AdminLayout() {
 
@@ -17,7 +18,7 @@ export default function AdminLayout() {
   const [menuOpts, setMenuOpts] = useState<Array<Tab>>([])
   const dropdownRef = useRef(null);
   const { setShowLogoutModal } = useLogout()
-
+  const { setAuth } = useAuthExmployee()
 
   useEffect(() => {
     const route = getRoute()
@@ -120,7 +121,7 @@ export default function AdminLayout() {
   const dropdownItems: ButtonType[] = [
     {
       text: 'Cerrar sesion',
-      onClick: () => setShowLogoutModal(true)
+      onClick: () => { setShowLogoutModal(true); setAuth(false) }
     }
   ]
 
