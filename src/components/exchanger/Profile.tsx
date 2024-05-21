@@ -59,17 +59,18 @@ function Profile() {
   function resetReviews(error){
     //TODO: if(error == 404)
     setInventory([])
-  }   
-    useEffect(() => {
-      getData(endPoints.profile)
-        .then(userData => setUserData(userData));
-      getData(endPoints.inventory)
-        .then(inventory => setInventory(inventory))
-        .catch(error => resetInvetory(error));
-      getData(endPoints.myReviews)
-        .then(reviews => setReviews(reviews))
-        .catch(error => resetReviews(error));
-    }, []);
+  }
+
+  useEffect(() => {
+    getData(endPoints.profile)
+      .then(userData => setUserData(userData));
+    getData(endPoints.inventory)
+      .then(inventory => setInventory(inventory))
+      .catch(error => resetInvetory(error));
+    getData(endPoints.myReviews)
+      .then(reviews => setReviews(reviews))
+      .catch(error => resetReviews(error));
+  }, []);
   
   if (!userData) {
     return <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">Loading...</div>; // Muestra un mensaje de carga mientras se obtienen los datos
