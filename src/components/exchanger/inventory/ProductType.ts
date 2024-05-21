@@ -1,5 +1,7 @@
 export type ProductType = {
     name: string,
     description: string,
-    image?: string
+    photo?: string
+    itemCategoryId:number
+    quantity:number
 }

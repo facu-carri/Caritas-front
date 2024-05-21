@@ -1,6 +1,9 @@
-/*import { useState } from 'react';
+import { useState } from 'react';
 import AddItemModal from './AddItemModal';
 import { ProductType } from './ProductType';
+import ProductList from "src/components/exchanger/ProductList";
+import { endPoints } from "src/libs/constants";
+import { postData } from 'src/libs/request/httpRequests';
 
 function PlusIcon(props) {
   return (
@@ -24,35 +27,24 @@ function PlusIcon(props) {
 
 export default function Inventory() {
   const [searchQuery, setSearchQuery] = useState('');
-  const [products, setProducts] = useState<ProductType[]>(bruteProducts);
+  const [products, setProducts] = useState<ProductType[]>();
   const [showModal, setShowModal] = useState(false)
+
 
   const handleModal = () => {
     setShowModal(!showModal)
   };
 
   const addItem = (item:ProductType) => {
-    setProducts(products.concat(item))
+    //setProducts(products.concat(item))
+    postData(endPoints.addItem, null, item)
   }
-
-  const handleSearchChange = (e) => {
-    const query = e.target.value.toLowerCase();
-    setSearchQuery(query);
-    const filtered = products.filter((product:ProductType) =>
-      product.name.toLowerCase().includes(query)
-    );
-    setProducts(filtered);
-  };
 
   return (
   <div className='mt-16'>
     {showModal && <AddItemModal onClose={handleModal} onAddItem={addItem} />}
-    <main className="container mx-auto px-4 py-8 md:px-6 lg:px-8">
-      <div className="mb-6 flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-blue-700">My Inventory</h1>
-          <p className="text-blue-500 dark:text-blue-400">Keep track of all the products you own.</p>
-        </div>
+    <main>
+    <div className="mb-6 flex items-center justify-between">
         <button
           onClick={handleModal}
           className="flex items-center space-x-2 px-4 py-2 text-sm font-medium text-white bg-red-600 rounded hover:bg-red-500"
@@ -61,51 +53,10 @@ export default function Inventory() {
           <span>Add Item</span>
         </button>
       </div>
-      <div className="mb-6">
-        <div className="relative">
-          <input
-            className="w-full rounded-md border border-gray-300 bg-white px-4 py-2 text-sm focus:border-blue-500 focus:outline-none"
-            placeholder="Search products..."
-            type="search"
-            value={searchQuery}
-            onChange={handleSearchChange}
-          />
-        </div>
-      </div>
-      <div className="container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {products.map((product, index) => (
-          <div key={index} className="group flex flex-col h-full overflow-hidden rounded-lg shadow-md bg-gray-100">
-            <div className="flex-shrink-0">
-              <img
-                alt={product.name}
-                className="h-60 w-full object-cover"
-                src={`data:image/jpg;base64,${product.image}`}
-              />
-            </div>
-            <div className="flex-grow p-4 bg-gray-700">
-              <h3 className="text-lg font-semibold dark:text-white truncate">{product.name}</h3>
-              <p className="text-sm dark:text-gray-300">{product.description}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-
-    </main></div>
+    </main>
+    <ProductList ruta={endPoints.inventory} text='Mi inventario' subText="Consejo: Para intercambiar con un producto tienes que tener un producto de la misma cartegoria cargado"/>
+    </div>
+    
   );
 }
 
-const bruteProducts: Array<ProductType> = [
-  {
-    name: 'Smart TV',
-    description: '4K resolution for an immersive viewing experience.',
-  },
-  {
-    name: 'Outdoor Grill',
-    description: 'Perfect for summer barbecues.',
-  },
-  {
-    name: 'Robotic Vacuum',
-    description: 'Effortless floor cleaning.',
-  },
-];
-*/

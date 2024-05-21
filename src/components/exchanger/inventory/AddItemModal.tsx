@@ -5,23 +5,27 @@ import Button from "../../Button";
 export default function AddItemModal({ onClose, onAddItem }) {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
+  const [itemCategoryId, setCategory] = useState(0);
+  const [quantity, setQuantity] = useState(0);
   const [photoFile, setPhotoFile] = useState(null);
 
   const handleAddItem = () => {
-    if (!name || !description || !photoFile) {
+    if (!name || !description || !photoFile|| !itemCategoryId || !quantity)  {
       alert('Por favor, completa todos los campos');
       return;
     }
 
     // Convert photoFile to a URL
-    const photoURL = URL.createObjectURL(photoFile);
+    const photo = URL.createObjectURL(photoFile);
 
     // Call the onAddItem function with the new item data
-    onAddItem({ name, description, photoURL });
+    onAddItem({ name, description,itemCategoryId, photo, quantity });
 
     // Clear input fields
     setName('');
     setDescription('');
+    setCategory(0);
+    setQuantity(0);
     setPhotoFile(null);
 
     // Close the modal
@@ -43,6 +47,8 @@ export default function AddItemModal({ onClose, onAddItem }) {
                 <Input text="Nombre" onChange={(e) => setName(e.target.value)}></Input>
                 <Input text="Description" onChange={(e) => setDescription(e.target.value)}></Input>
                 <Input file={true} onChange={(e) => setPhotoFile(e.target.files[0])}></Input>
+                <Input text="ItemCategory" onChange={(e) => setCategory(parseInt(e.target.value))}></Input>
+                <Input text="Cantidad" onChange={(e) => setQuantity(parseInt(e.target.value))}></Input>
               </div>
             </div>
           </div>

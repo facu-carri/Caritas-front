@@ -10,6 +10,7 @@ export const endPoints = {
     myReviews: 'reviews/myReviews',
     categories: 'itemCategory',
     exchangeablesProducts: 'item',
+    addItem: 'item'
 }
 const adminRoutes = {
     'estadisticas': '/estadisticas',
