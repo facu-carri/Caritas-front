@@ -10,6 +10,7 @@ type ItemData = {
   description: string
   owner: UserData
   itemCategory: ItemCategory
+  quantity:number
 }
 type UserData = {
   id: number,

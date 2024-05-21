@@ -37,6 +37,10 @@ type Review = {
   name: string
   description: string
   stars: number
+/*TODO USAR ESTO PARA MOSTRAR LAS ESTRELLAS: {[...Array(5)].map((_, index) => (
+          <FaStar key={index} className={index < rating ? "text-yellow-500" : "text-gray-300"} />
+        ))} */
+
   date: string // TODO:Date
   //TODO: otros
 }
