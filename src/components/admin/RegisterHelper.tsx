@@ -4,12 +4,11 @@ import GenericForm, { FormField } from "../GenericForm";
 import { endPoints } from "src/libs/constants";
 import { useState } from "react";
 import { ErrorCode } from "src/libs/Error/ErrorCode";
-import { REGISTER_HELPER_ERROR } from "src/libs/Error/ErrorTypes";
+import { ErrorTypes } from "src/libs/Error/ErrorTypes";
 
 type Type = {
   photo: string,
   name: string,
-  apellido: string,
   dni: string,
   phone: string,
   email: string,
@@ -28,7 +27,7 @@ export default function RegisterHelper({modalId}) {
   }
 
   const handleError = (errCode: number) => {
-    const err = new ErrorCode(errCode, REGISTER_HELPER_ERROR)
+    const err = new ErrorCode(errCode, ErrorTypes.REGISTER_HELPER_ERROR)
     setError(err)
     setTimeout(hiddeError, 5000)
   }
@@ -46,7 +45,6 @@ export default function RegisterHelper({modalId}) {
   const campos: Array<FormField> = [
     { nombre: 'Foto', etiqueta: 'photo', tipo: 'file'},
     { nombre: 'Nombre', etiqueta: 'name', tipo: 'text' },
-    { nombre: 'Apellido', etiqueta: 'apellido', tipo: 'text' },
     { nombre: 'DNI', etiqueta: 'dni', tipo: 'text' },
     { nombre: 'Teléfono', etiqueta: 'phone', tipo: 'tel' },
     { nombre: 'Email', etiqueta: 'email', tipo: 'email' },

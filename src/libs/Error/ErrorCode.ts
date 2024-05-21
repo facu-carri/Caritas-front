@@ -1,17 +1,18 @@
 import { ErrorsMsgs } from "./ErrorCodesMsgs"
+import { ErrorTypes } from "./ErrorTypes"
 
 export class ErrorCode {
     
     private code: number
-    private type: string
+    private type: ErrorTypes
 
-    constructor(code: number = null, type: string) {
+    constructor(code: number = null, type: ErrorTypes) {
         this.code = code
         this.type = type
     }
 
     private isValid() {
-        return this.code && this.code > 0 && this.type
+        return this.code && this.code > 0
     }
 
     getMessage(): string {

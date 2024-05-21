@@ -1,8 +1,9 @@
 import { IErrorCodesMsgs } from "./types/IErrorCodeMsgs"
-import { LoginErrorMsgs } from "./login/LoginErrorCode"
+import { LoginErrorMsgs } from "./ErrorMessages/Login"
+import { ErrorTypes } from "./ErrorTypes"
 
 const DefaultErrors: IErrorCodesMsgs = {
-    UNKNOWN_ERROR: {
+    [ErrorTypes.UNKNOWN_ERROR]: {
         404: 'Unknown error'
     }
 }

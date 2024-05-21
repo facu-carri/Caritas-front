@@ -1,3 +1,5 @@
-export const LOGIN_ERROR = 'LOGIN'
-export const REGISTER_HELPER_ERROR = 'REGISTERHELPER'
-export const UNKNOWN_ERROR = 'UNKNOWN'
+export enum ErrorTypes{
+    LOGIN_ERROR,
+    REGISTER_HELPER_ERROR,
+    UNKNOWN_ERROR
+}
