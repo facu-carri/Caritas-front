@@ -5,7 +5,7 @@ import { Icons } from "src/Icons"
 import Input from "src/components/Input"
 import { RequestStatus } from "src/libs/types/RequestStatus"
 import { getElementValue, validString } from "src/libs/api"
-import { endPoints, routes } from "src/libs/constants"
+import { endPoints, routes, serverAddress } from "src/libs/constants"
 import { postData } from "src/libs/request/httpRequests"
 import { LoginQuery } from "./LoginQuery"
 import { User } from "src/libs/User"
@@ -49,10 +49,32 @@ const Login = () => {
 
         setReqStatus(RequestStatus.PENDING)
 
-        postData(endPoints.login, null, query)
+        /*postData(endPoints.login, null, query)
             .then((data) => setUser(data))
             .then(() => setReqStatus(RequestStatus.SUCCESS))
-            .catch(() => setReqStatus(RequestStatus.FAILED))
+            .catch(() => setReqStatus(RequestStatus.FAILED))*/
+        fetch(`${serverAddress}/${endPoints.login}`, {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            },
+            body: JSON.stringify({
+                email: query.email,
+                password: query.password
+            })
+        })
+            .then(res => {
+                if(!res.ok) {
+                    setReqStatus(RequestStatus.FAILED)
+                    throw new Error();
+                }
+                return res.json()
+            })
+            .then(data => setUser(data))
+            .then(() => setReqStatus(RequestStatus.SUCCESS))
+            .catch(() => {})
     }
 
     return (

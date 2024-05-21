@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Input from 'src/components/Input';
 import RoutesHandler from 'src/libs/routesHandler';
-import { endPoints, routes } from 'src/libs/constants';
+import { endPoints, routes, serverAddress } from 'src/libs/constants';
 import { postData } from 'src/libs/request/httpRequests';
 import { ErrorCode } from 'src/libs/Error/ErrorCode';
 import { ErrorTypes } from 'src/libs/Error/ErrorTypes';
@@ -46,7 +46,7 @@ function RegistrationFields() {
 
   function handleSubmit(event) {
     event.preventDefault()
-    postData(endPoints.registerExchanger, null, {
+    /*postData(endPoints.registerExchanger, null, {
       name,
       birthdate,
       dni,
@@ -55,7 +55,31 @@ function RegistrationFields() {
       password
     })
       .then(() => setRoute(routes.login))
-      .catch((errCode: number) => handleError(errCode))
+      .catch((errCode: number) => handleError(errCode))*/
+
+    fetch(`${serverAddress}/${endPoints.registerExchanger}`, {
+        method: 'POST',
+        cache: 'no-cache',
+        headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*'
+        },
+        body: JSON.stringify({
+            name,
+            birthdate,
+            dni,
+            phone,
+            email,
+            password
+        })
+    })
+        .then(res => {
+            if(!res.ok) {
+              handleError(res.status)
+            }
+            return res.json()
+        })
+        .then(() => setRoute(routes.login))
   }
 
   return (
