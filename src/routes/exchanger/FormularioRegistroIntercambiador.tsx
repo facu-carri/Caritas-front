@@ -1,5 +1,9 @@
 import Input from 'src/components/Input';
 
+function test() {
+  console.log('test')
+}
+
 // Componente de formulario de registro
 function FormularioRegistroIntercambiador() {
   return (
