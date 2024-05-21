@@ -13,8 +13,8 @@ export function ExchangerRouter() {
       path: routes.main,
       element: <ExchangerLayout />,
       children: [
-        { path: routes.main, element: <ProductList ruta={endPoints.exchangeablesProducts} text='Descubre nuevos productos para intercambiar'/> },
-        { path: routes.exchanger.inventory, element: <ProductList ruta={endPoints.inventory} text='Mi inventario'/>/*<Inventory /> */},
+        { path: routes.main, element: <ProductList ruta={endPoints.exchangeablesProducts} text='Descubre nuevos productos para intercambiar' subText='Explora nuestra selección de productos disponibles para intercambios.'/> },
+        { path: routes.exchanger.inventory, element: <ProductList ruta={endPoints.inventory} text='Mi inventario' subText="Consejo: Para intercambiar con un producto tienes que tener un producto de la misma cartegoria cargado"/>/*<Inventory /> */},
         { path: routes.exchanger.profile, element: <Profile/> },
       ]
     },
