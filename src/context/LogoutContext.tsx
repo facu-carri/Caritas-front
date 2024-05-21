@@ -15,9 +15,7 @@ export default function LogoutProvider({ children }) {
 
     return (
         <LogoutContext.Provider value={{ showLogoutModal, setShowLogoutModal }}>
-            {
-                showLogoutModal && <LogoutModal/>
-            }
+            {showLogoutModal && <LogoutModal/>}
             {children}
         </LogoutContext.Provider>
     )
