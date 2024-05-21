@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import HelpersList from './HelpersList';
-import EditHelperModal from '../EditHelperModal';
+import EditHelperModal from './EditHelperModal';
 import Button from '../Button';
 import RegisterHelper from '../admin/RegisterHelper';
 
