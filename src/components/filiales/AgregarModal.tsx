@@ -6,7 +6,7 @@ import { useState } from "react";
 import { ErrorCode } from "src/libs/Error/ErrorCode";
 import { ErrorTypes } from "src/libs/Error/ErrorTypes";
 
-type Type = {
+type LocationType = {
   coordenadas: string,
   description: string,
 }
@@ -31,10 +31,10 @@ export default function AgregarFilialModal({modalId}) {
     setError(null)
   }
 
-  const handleRegister = (data: Type) => {
+  const handleRegister = (data: LocationType) => {
     postData(endPoints.location, null, data)
-      .catch((errCode: number) => handleError(errCode))
       .then(() => closeModal())
+      .catch((errCode: number) => handleError(errCode))
   }
 
   const campos: Array<FormField> = [
