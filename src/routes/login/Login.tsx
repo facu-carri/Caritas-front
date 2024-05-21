@@ -49,14 +49,6 @@ const Login = () => {
         if (isInvalid(query)) return
 
         setReqStatus(RequestStatus.PENDING)
-        /*postData(endPoints.login, null, {
-            email: query.email,
-            password: query.password
-        })
-            .then((data) => setUser(data))
-            .then(() => setReqStatus(RequestStatus.SUCCESS))
-            .catch((err) => { setReqStatus(RequestStatus.FAILED); handleError(err) })
-            .finally(() => checkStatus())*/
         fetch(`${serverAddress}/${endPoints.login}`, {
             method: 'POST',
             cache: 'no-cache',

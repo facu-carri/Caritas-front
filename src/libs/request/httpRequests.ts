@@ -22,7 +22,7 @@ export const convertToString = (obj: Record<string, string>): string => {
 export function handleResponse(res: Response) {
     const type = res.headers.get('Content-Type')
     let data = null
-    if (type.includes('application/json')) { data = res.json() } else { data = res.text() }
+    if (type?.includes('application/json')) { data = res.json() } else { data = res.text() }
     if (res.ok) {
         return data
     } else {

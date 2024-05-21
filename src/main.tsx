@@ -5,6 +5,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import Login from './routes/login/Login.tsx'
 import AuthProvider from './context/AuthContext.tsx'
 import RoleBasedRouting from './libs/RoleRouting.tsx'
+import FormularioRegistroIntercambiador from './routes/exchanger/FormularioRegistroIntercambiador.tsx'
 
 const routes = [
   {
@@ -14,6 +15,10 @@ const routes = [
   {
     path: "/login",
     element: <Login/>
+  },
+  {
+    path: '/register',
+    element: <FormularioRegistroIntercambiador />
   }
 ]
 
