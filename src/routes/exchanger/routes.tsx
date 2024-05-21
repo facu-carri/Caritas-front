@@ -4,7 +4,6 @@ import { routes } from "src/libs/constants";
 import ExchangerLayout from "./Layout";
 import Profile from "src/components/exchanger/Profile";
 import ProductList from "src/components/exchanger/ProductList";
-import FormularioRegistroIntercambiador from "./FormularioRegistroIntercambiador";
 import Inventory from "src/components/exchanger/inventory/Inventory";
 
 export function ExchangerRouter() {
@@ -21,10 +20,6 @@ export function ExchangerRouter() {
     {
       path: '*',
       element: <ErrorPage/>
-    },
-    {
-      path: '/register',
-      element: <FormularioRegistroIntercambiador/>
     }
   ]);
 }

@@ -7,8 +7,9 @@ import AuthProvider from './context/AuthContext.tsx'
 import RoleBasedRouting from './libs/RoleRouting.tsx'
 import FormularioRegistroIntercambiador from './routes/exchanger/FormularioRegistroIntercambiador.tsx'
 import LogoutProvider from './context/LogoutContext.tsx'
+import { routes } from './libs/constants.ts'
 
-const routes = [
+const _routes = [
   {
     path: "/*",
     element:
@@ -19,16 +20,16 @@ const routes = [
       </LogoutProvider>,
   },
   {
-    path: "/login",
+    path: routes.login,
     element: <Login/>
   },
   {
-    path: '/register',
+    path: routes.register,
     element: <FormularioRegistroIntercambiador />
   }
 ]
 
-const router = createBrowserRouter(routes);
+const router = createBrowserRouter(_routes);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

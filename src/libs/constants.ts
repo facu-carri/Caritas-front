@@ -20,6 +20,7 @@ export const routes = {
     main: '/',
     login: '/login',
     auth: '/auth',
+    register: '/register',
     admin: adminRoutes,
     exchanger: exchangerRoutes
 }
