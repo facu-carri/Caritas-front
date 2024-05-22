@@ -25,7 +25,7 @@ const campos_default: Array<FormField> = [
   { nombre: 'DNI', etiqueta: 'dni', tipo: 'text' },
   { nombre: 'Teléfono', etiqueta: 'phone', tipo: 'tel' },
   { nombre: 'Foto', etiqueta: 'photo', tipo: 'file'},
-  { nombre: 'birthdate', etiqueta: 'birthdate', tipo: 'birthdate' },
+  { nombre: 'birthdate', etiqueta: 'birthdate', tipo: 'date' },
 ]
 
 // Componente de Registro de Ayudante
@@ -65,6 +65,9 @@ export default function RegisterHelper({modalId}) {
   }
 
   useEffect(() => {
+    if(campos.map(campo => campo.etiqueta).includes('employeeLocationId')) {
+      return;
+    }
     getData(endPoints.location)
       .then((employeeLocationids: Location[]) => generateFields(employeeLocationids))
       .then((fields) => setCampos([...campos, fields]))

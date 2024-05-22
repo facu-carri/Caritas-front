@@ -95,8 +95,11 @@ function GenericForm({ campos, listener, error, btnText }: Type) {
           <div key={campo.nombre} className="mb-4">
             <label className="block font-semibold mb-2 text-blue-900">{campo.nombre}</label>
             {
-              campo.tipo == 'list' ?
+              campo.tipo === 'list' ?
                 <select name='inputField' id={campo.etiqueta} className="select select-bordered w-full max-w-xs">{getItemsObjs(campo.items, 'items')}</select>
+              :
+              campo.tipo === 'date' ?
+                <Input file={campo.tipo == 'file'} name='inputField' id={campo.etiqueta} type={'date'} text='' />
                 :
                 <Input file={campo.tipo == 'file'} name='inputField' id={campo.etiqueta} type={campo.tipo} text='' />
             }
