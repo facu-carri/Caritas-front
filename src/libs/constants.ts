@@ -4,13 +4,15 @@ export const endPoints = {
     verificationCode: 'v1/auth/verificationCode',
     registerHelper: 'employee', 
     registerExchanger: 'v1/auth/register', 
-    profile:'exchanger/myProfile',
+    profile: 'exchanger/myProfile',
+    otherProfile: 'exchanger/',
     inventory: 'item/myInventory',
     location: 'location',
     myReviews: 'reviews/myReviews',
     categories: 'itemCategory',
     exchangeablesProducts: 'item',
-    addItem: 'item'
+    addItem: 'item',
+    exchanger: 'exchanger'
 }
 const adminRoutes = {
     'estadisticas': '/estadisticas',
@@ -20,12 +22,12 @@ const adminRoutes = {
     'gestionarFiliales': '/gestionar-filiales',
 }
 const helperRoutes = {
-    profile: 'perfil'
+    profile: '/perfil'
 }
 const exchangerRoutes = {
-    'inventory': 'inventario',
-    'profile': 'perfil',
-    'caritasInformation':'informacionCaritas'
+    'inventory': '/inventario',
+    'profile': '/perfil',
+    'caritasInformation':'/informacionCaritas'
 }
 export const routes = {
     main: '/',

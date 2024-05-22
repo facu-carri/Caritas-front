@@ -30,7 +30,7 @@ export default function AdminLayout() {
       default:
         setMenuOpts([])
     }
-  }, [location])
+  }, [location.pathname])
 
 
   useEffect(() => {

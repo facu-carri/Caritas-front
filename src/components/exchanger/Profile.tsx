@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import Avatar from 'react-avatar';
 
 /*const comments = [
@@ -45,8 +46,11 @@ type Review = {
   //TODO: otros
 }
 
+type Props = {
+  id?: number|string
+}
 
-function Profile() {
+function Profile({id}: Props) {
   const [userData, setUserData] = useState<UserData>();
   const [inventory, setInventory] = useState<ItemData[]>();
   const [reviews, setReviews] = useState<Review[]>();
@@ -62,11 +66,14 @@ function Profile() {
   }
 
   useEffect(() => {
-    getData(endPoints.profile)
+    console.log(id)
+    getData(`${id ? `${endPoints.otherProfile}${id}` : endPoints.profile}`)
       .then(userData => setUserData(userData));
-    getData(endPoints.inventory)
+    if (!id) {
+      getData(endPoints.inventory)
       .then(inventory => setInventory(inventory))
       .catch(error => resetInvetory(error));
+    }
     getData(endPoints.myReviews)
       .then(reviews => setReviews(reviews))
       .catch(error => resetReviews(error));

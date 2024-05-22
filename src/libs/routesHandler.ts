@@ -13,5 +13,5 @@ export default function RoutesHandler() {
         navigator(route)
     }
 
-    return { getRoute, setRoute, location: location.pathname }
+    return { getRoute, setRoute, location }
 }
