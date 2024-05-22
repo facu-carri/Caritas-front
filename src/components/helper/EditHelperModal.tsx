@@ -1,124 +1,74 @@
-import { useState } from 'react';
-//gestiona el modal de edición de ayudantes.
-//El modal de edición de ayudantes es una ventana emergente
-//que permite al usuario editar la información de un ayudante específico
-const EditHelperModal = ({ helper, onSave, onClose }) => {
-  const [formData, setFormData] = useState({ ...helper });
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { getData, postData } from "src/libs/request/httpRequests";
+import GenericForm, { FormField, ListItem } from "../GenericForm";
+import { endPoints } from "src/libs/constants";
+import { useEffect, useState } from "react";
+import { ErrorCode } from "src/libs/Error/ErrorCode";
+import { ErrorTypes } from "src/libs/Error/ErrorTypes";
+import { Location } from "../filiales/EliminarModal";
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    });
-  };
+type Type = {
+  name: string,
+  dni: string,
+  phone: string,
+  email: string,
+  password: string,
+  employeeLocationId: string
+}
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSave(formData);
-  };
+export default function EditHelpersModal({helper, onSave, onClose, modalId}) {
 
-  return (
-    <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center">
-      <div className="bg-white rounded-lg p-6 w-full max-w-md">
-        <h2 className="text-xl font-bold mb-4">Editar Ayudante</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label className="block text-gray-700">Nombre</label>
-            <input
-              type="text"
-              name="firstName"
-              value={formData.firstName}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border rounded"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700">Apellido</label>
-            <input
-              type="text"
-              name="lastName"
-              value={formData.lastName}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border rounded"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700">Email</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border rounded"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700">DNI</label>
-            <input
-              type="text"
-              name="dni"
-              value={formData.dni}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border rounded"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700">Teléfono</label>
-            <input
-              type="text"
-              name="phone"
-              value={formData.phone}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border rounded"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700">Contraseña</label>
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border rounded"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700">Sede</label>
-            <input
-              type="text"
-              name="office"
-              value={formData.office}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border rounded"
-              required
-            />
-          </div>
-          <div className="flex justify-end space-x-2">
-            <button
-              type="button"
-              onClick={onClose}
-              className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-700"
-            >
-              Cancelar
-            </button>
-            <button
-              type="submit"
-              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700"
-            >
-              Aceptar
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-  );
-};
+  const [error, setError] = useState<ErrorCode>(null)
+  
+  const campos_default: Array<FormField> = [
+    { nombre: 'Nombre', etiqueta: helper.firstName, tipo: 'text' },
+    { nombre: 'Email', etiqueta: helper.email, tipo: 'email' },
+    { nombre: 'Contraseña', etiqueta: helper.password, tipo: 'password' },
+    { nombre: 'DNI', etiqueta: helper.dni, tipo: 'text' },
+    { nombre: 'Teléfono', etiqueta: helper.phone, tipo: 'tel' },
+  ]
+  
+  const closeModal = () => {
+    const elem = modalId && (document.getElementById(modalId) as HTMLDialogElement)
+    elem?.close()
+  }
 
-export default EditHelperModal;
+  const handleError = (errCode: number) => {
+    const err = new ErrorCode(errCode, ErrorTypes.REGISTER_HELPER_ERROR)
+    setError(err)
+    setTimeout(hiddeError, 5000)
+  }
+
+  const hiddeError = () => {
+    setError(null)
+  }
+
+  const handleEdit = (data: Type) => {
+    onSave(data)
+    onClose()
+    postData(endPoints.registerHelper, null, data)
+      .then(() => closeModal())
+      .catch((errCode: number) => handleError(errCode))
+  }
+
+  function generateFields(employeeLocationids: Location[]): FormField{
+    const field:FormField = { nombre: 'Selecciona una filial', etiqueta: 'employeeLocationId', tipo: 'list' }
+    const items: ListItem[] = employeeLocationids.map((employeeLocationid) => ({
+      key: employeeLocationid.id,
+      value: employeeLocationid.description
+    }))
+    field.items = items
+    return field
+  }
+
+  useEffect(() => {
+    getData(endPoints.location)
+      .then((employeeLocationids: Location[]) => generateFields(employeeLocationids))
+      .then((fields) => setCampos([...campos, fields]))
+  }, [])
+
+  const [campos, setCampos] = useState(campos_default)
+
+  return <GenericForm campos={campos} listener={handleEdit} error={error} btnText="Editar" />;
+}
