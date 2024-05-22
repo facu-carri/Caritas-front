@@ -16,8 +16,8 @@ export class ErrorCode {
     }
 
     getMessage(): string {
-        if(!this.isValid()) return ''
-        return ErrorsMsgs[this.type][this.code] ?? ''
+        if(!this.isValid()) return 'Error desconocido'
+        return ErrorsMsgs[this.type][this.code] ?? 'Error desconocido'
     }
 
     getCode(): number {

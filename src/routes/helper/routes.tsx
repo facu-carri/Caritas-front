@@ -4,6 +4,7 @@ import ErrorPage from "../ErrorPage";
 import { routes } from "src/libs/constants";
 import AuthEmployeeProvider from "src/context/AuthEmployee";
 import HelperLayout from "./Layout";
+import Profile from "src/components/exchanger/Profile";
 
 export function HelperRouter() {
   return useRoutes([
@@ -11,7 +12,8 @@ export function HelperRouter() {
       path: routes.main,
       element: <AuthEmployeeProvider><HelperLayout /></AuthEmployeeProvider>,
       children: [
-        { path: routes.main, element: <HelperMain/> },
+        { path: routes.main, element: <HelperMain /> },
+        { path: routes.main, element: <Profile/> },
       ]
     },
     {

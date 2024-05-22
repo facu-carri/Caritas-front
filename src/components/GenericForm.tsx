@@ -28,7 +28,7 @@ type Type = {
 export async function getImageBase64(img:File) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
-
+    if(!img) return null
     reader.readAsDataURL(img)
     reader.onload = (() => {
       const base64String = (reader.result as string).split(',')[1];
@@ -48,8 +48,6 @@ function GenericForm({ campos, listener, error }: Type) {
 
     for (const inputField of inputs) {
       const input: any = inputField
-
-      console.log(input, input.type)
 
       switch (input.type) {
         case 'file':
@@ -93,7 +91,7 @@ function GenericForm({ campos, listener, error }: Type) {
       <form className="text-center">
         {campos.map((campo) => (
           <div key={campo.nombre} className="mb-4">
-            <label className="block font-semibold mb-2 text-blue-900">{campo.etiqueta}</label>
+            <label className="block font-semibold mb-2 text-blue-900">{campo.nombre}</label>
             {
               campo.tipo == 'list' ?
                 <select name='inputField' id={campo.etiqueta} className="select select-bordered w-full max-w-xs">{getItemsObjs(campo.items, 'items')}</select>

@@ -49,8 +49,8 @@ export default function RegisterHelper({modalId}) {
 
   const handleRegister = (data: Type) => {
     postData(endPoints.registerHelper, null, data)
-      .catch((errCode: number) => handleError(errCode))
       .then(() => closeModal())
+      .catch((errCode: number) => handleError(errCode))
   }
 
   function generateFields(locations: Location[]): FormField{
