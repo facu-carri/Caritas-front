@@ -61,7 +61,7 @@ export default function ManagerUsers() {
         setIsEditing(true);
         
         
-        const elem = (document.getElementById('editarexchangerModal') as HTMLDialogElement)
+        const elem = (document.getElementById('editExchangerAsAdminModal') as HTMLDialogElement)
         elem.showModal()
     };
     
@@ -107,7 +107,7 @@ export default function ManagerUsers() {
   };
     return (<>
     
-        <dialog className="modal bg-gray-500/50" id='editarexchangerModal' onClick={handleClickEditModal} ref={modalEditRef}>
+        <dialog className="modal bg-gray-500/50" id='editExchangerAsAdminModal' onClick={handleClickEditModal} ref={modalEditRef}>
         <EditExchangerAsAdminModal closeModal={handleClickEditModal} helper={currentexchanger} onSave={handleSave} />
         </dialog>
         <div className="bg-gray-100 flex items-center justify-center min-h-screen">

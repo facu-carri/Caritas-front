@@ -48,16 +48,6 @@ export default function EditExchangerAsAdminModal({helper, onSave, closeModal}: 
       .catch((errCode: number) => handleError(errCode))*/
   }
 
-  function generateFields(employeeLocationids: Location[]): FormField{
-    const field:FormField = { nombre: 'Selecciona una filial', etiqueta: 'employeeLocationId', tipo: 'list' }
-    const items: ListItem[] = employeeLocationids.map((employeeLocationid) => ({
-      key: employeeLocationid.id,
-      value: employeeLocationid.description
-    }))
-    field.items = items
-    return field
-  }
-
   function getDefaultFileds(): Array<FormField> {
     return [
       { nombre: 'Nombre completo', etiqueta: 'name', value: helper.name, tipo: 'text' },
@@ -70,9 +60,8 @@ export default function EditExchangerAsAdminModal({helper, onSave, closeModal}: 
   useEffect(() => {
     if (!helper) return
     console.log(getDefaultFileds())
-    getData(endPoints.location)
-      .then((employeeLocationids: Location[]) => generateFields(employeeLocationids))
-      .then((fields) => setCampos([...getDefaultFileds(), fields]))
+
+    setCampos([...getDefaultFileds()])
   }, [helper])
 
   return campos && campos.length > 0 && <GenericForm id="edit-helpers-modal" campos={campos} listener={handleEdit} error={error} btnText="Aplicar cambios" />;
