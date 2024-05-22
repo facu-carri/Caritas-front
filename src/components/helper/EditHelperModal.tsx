@@ -57,7 +57,7 @@ export default function EditHelpersModal({helper, onSave, closeModal}: Props) {
 
   function getDefaultFileds(): Array<FormField> {
     return [
-      { nombre: 'Nombre', etiqueta: 'name', value: helper.name, tipo: 'text' },
+      { nombre: 'Nombre completo', etiqueta: 'name', value: helper.name, tipo: 'text' },
       { nombre: 'Email', etiqueta: 'email', value: helper.email, tipo: 'email' },
       { nombre: 'Contraseña', etiqueta: 'password', value: helper.password, tipo: 'password' },
       { nombre: 'DNI', etiqueta: 'dni', value: helper.dni, tipo: 'text' },
@@ -73,5 +73,5 @@ export default function EditHelpersModal({helper, onSave, closeModal}: Props) {
       .then((fields) => setCampos([...getDefaultFileds(), fields]))
   }, [helper])
 
-  return campos && campos.length > 0 && <GenericForm campos={campos} listener={handleEdit} error={error} btnText="Editar" />;
+  return campos && campos.length > 0 && <GenericForm campos={campos} listener={handleEdit} error={error} btnText="Aplicar cambios" />;
 }

@@ -19,13 +19,13 @@ type Type = {
 }
 
 const campos_default: Array<FormField> = [
-  { nombre: 'Nombre', etiqueta: 'name', tipo: 'text' },
+  { nombre: 'Nombre completo', etiqueta: 'name', tipo: 'text' },
   { nombre: 'Email', etiqueta: 'email', tipo: 'email' },
   { nombre: 'Contraseña', etiqueta: 'password', tipo: 'password' },
   { nombre: 'DNI', etiqueta: 'dni', tipo: 'text' },
   { nombre: 'Teléfono', etiqueta: 'phone', tipo: 'tel' },
   { nombre: 'Foto', etiqueta: 'photo', tipo: 'file'},
-  { nombre: 'birthdate', etiqueta: 'birthdate', tipo: 'date' },
+  { nombre: 'Fecha de nacimiento', etiqueta: 'birthdate', tipo: 'date' },
 ]
 
 // Componente de Registro de Ayudante
