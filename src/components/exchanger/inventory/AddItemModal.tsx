@@ -63,7 +63,7 @@ export default function AddItemModal({ onClose, onAddItem }) {
                   className="select select-bordered w-full max-w-xs"
                   onChange={e => setItemCategoryId(Number(e.target.value))}
                 >
-                   <option value="" disabled selected hidden>Selecciona una opción</option>
+                   <option disabled selected hidden>Selecciona una opción</option>
                   {
                     categories.map(({ id, name }) => 
                       <option key={id} value={id}>{name}</option>

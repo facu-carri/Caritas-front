@@ -1,10 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import ProductCard from './ProductCard';
-import { deleteData, getData, postData, putData } from "src/libs/request/httpRequests";
-import { endPoints, serverAddress } from "src/libs/constants";
+import { deleteData, getData, putData } from "src/libs/request/httpRequests";
+import { endPoints } from "src/libs/constants";
 import { useEffect, useState } from 'react';
 import EditItemModal from './inventory/EditItemModal';
 // TODO: Juntarlo con lo del Profiles 
-type ItemData = {
+export type ItemData = {
   id: number
   photo: string
   name: string
@@ -28,19 +29,26 @@ type ItemCategory = {
   name: string
 }
 
-export default function ProductListInventory({ ruta, text, subText }) { // endPoints.exchangeablesProducts
+type Props = {
+  ruta: string,
+  text: string,
+  subText: string,
+  item?: ItemData
+}
+
+export default function ProductListInventory({ ruta, text, subText, item }: Props) { // endPoints.exchangeablesProducts
   const [category, setCategory] = useState('');
   const [inventory, setInventory] = useState<ItemData[]>();
   const [categories, setCategories] = useState<ItemCategory[]>();
   const [showModal, setShowModal] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState();
+  const [selectedProduct, setSelectedProduct] = useState<ItemData>();
   const [userId, setUserId] = useState()
   
   function resetInvetory(error) {
     if(error == 404)
       setInventory([])
   }   
-  function resetCategories(error) {
+  function resetCategories() {
     // TODO: CHECK ERROR TYPE if(error == 404)
       setCategories([])
   }   
@@ -50,8 +58,14 @@ export default function ProductListInventory({ ruta, text, subText }) { // endPo
       .catch(error => resetInvetory(error));
     getData(endPoints.categories)
       .then(categories => setCategories(categories))
-      .catch(error => resetCategories(error));
-    }, [ruta]);
+      .catch(() => resetCategories());
+  }, [ruta]);
+
+  useEffect(() => {
+    if (item) {
+      setInventory(inventory.concat(item))
+    }
+  }, [item])
 
   const filteredProducts = category
     ? inventory.filter(product => product.itemCategory.name === category)
@@ -68,11 +82,13 @@ export default function ProductListInventory({ ruta, text, subText }) { // endPo
   }
 
   function editItem(item) {
+    if(!selectedProduct) return
     putData(`${endPoints.addItem}/${selectedProduct?.id}`, null, item)
       .then(res => console.log(res))
   }
 
   function deleteItem() {
+    if(!selectedProduct) return
     deleteData(`${endPoints.addItem}/${selectedProduct?.id}`, null)
       .then(() => toggleModal({}))
   }

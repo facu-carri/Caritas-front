@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import AddItemModal from './AddItemModal';
 import { ProductType } from './ProductType';
-import ProductListInventory from '../ProductListInventory';
+import ProductListInventory, { ItemData } from '../ProductListInventory';
 import { endPoints } from "src/libs/constants";
 import { postData } from 'src/libs/request/httpRequests';
 
@@ -26,24 +26,23 @@ function PlusIcon(props) {
 }
 
 export default function Inventory() {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [products, setProducts] = useState<ProductType[]>();
   const [showModal, setShowModal] = useState(false)
+  const [newItem, setNewItem] = useState<ItemData>(null)
 
   const handleModal = () => {
     setShowModal(!showModal)
   };
 
   const addItem = (item:ProductType) => {
-    //setProducts(products.concat(item))
     postData(endPoints.addItem, null, item)
+    .then((itemData) => setNewItem(itemData))
   }
 
   return (
     <>
       <div className="relative">
         {showModal && <AddItemModal onClose={handleModal} onAddItem={addItem} />}
-        <ProductListInventory ruta={endPoints.inventory} text='Mi inventario' subText="Consejo: Para intercambiar con un producto tienes que tener un producto de la misma cartegoria cargado"/>
+        <ProductListInventory item={newItem} ruta={endPoints.inventory} text='Mi inventario' subText="Consejo: Para intercambiar con un producto tienes que tener un producto de la misma cartegoria cargado"/>
         <button
           onClick={handleModal}
           className="absolute top-[100px] right-4 flex items-center space-x-2 px-4 py-2 text-sm font-medium text-white bg-red-600 rounded hover:bg-red-500"
