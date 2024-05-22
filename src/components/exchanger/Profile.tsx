@@ -7,12 +7,14 @@ import Avatar from 'react-avatar';
 ];*/
 
 
-import { getData } from "src/libs/request/httpRequests";
+import { getData, putData } from "src/libs/request/httpRequests";
 import { endPoints } from "src/libs/constants";
 import { useEffect, useState } from 'react';
 import LoadingAnimation from '../LoadingAnimation';
+import EditExchangerModal from '../admin/EditExchangerModal';
+import { useCustomModal } from 'src/context/CustomModalContext';
 import ProductCard from './ProductCard';
-import { ItemData } from './ProductListInventory';
+
 
 type UserData = {
   id: number,
@@ -42,10 +44,13 @@ type Props = {
   id?: number|string
 }
 
-function Profile({id}: Props) {
+export default function Profile({ id }: Props) {
   const [userData, setUserData] = useState<UserData>();
   const [inventory, setInventory] = useState<ItemData[]>();
   const [reviews, setReviews] = useState<Review[]>();
+
+  const [showEditModal, setShowEditModal] = useState(false);
+  const { setModal } = useCustomModal()
   
   function resetInvetory(error){
     if(error == 404)
@@ -75,6 +80,28 @@ function Profile({id}: Props) {
     return date.toDateString()
   }
 
+  function handleEditProfile(newUserInfo) {
+    putData(`${endPoints.exchanger}/${userData.id}`, null, {
+      ...newUserInfo,
+      email: userData.email
+    })
+      .then(res => console.log(res))
+  }
+
+  function toggleShowEditModal() {
+    setModal(
+      <dialog className="modal bg-gray-500/50" id='editarHelperModal' open={true}>
+        <EditExchangerModal exchanger={userData} onSave={handleEditProfile} closeModal={handleCloseModal} />
+      </dialog>
+    )
+
+    setShowEditModal(prev => !prev);
+  }
+
+  function handleCloseModal() {
+    setModal(null)
+  }
+
   if (!userData) {
     return <LoadingAnimation/>
   }
@@ -96,7 +123,7 @@ function Profile({id}: Props) {
             {
               !id &&
               <div>
-                <button className="text-black hover:bg-black/20 border border-black py-2 px-4 rounded">Editar Perfil</button>
+                <button onClick={toggleShowEditModal} className="text-black hover:bg-black/20 border border-black py-2 px-4 rounded">Editar Perfil</button>
               </div>
             }
           </div>
@@ -128,7 +155,7 @@ function Profile({id}: Props) {
                 }
                 return ["Email", "DNI", "Phone"].includes(field.title) === false
               })
-               .map((info, idx) => (
+              .map((info, idx) => (
                 <div key={`info-${idx}`} className="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
                   <h3 className={`text-lg font-bold mb-2 ${info.color}`}>{info.title}</h3>
                   <p className="text-gray-600 dark:text-gray-400">{info.value}</p>
@@ -191,8 +218,6 @@ function Profile({id}: Props) {
     </div>
   );
 }
-
-export default Profile;
 
 function MoveVerticalIcon(props) {
   return (

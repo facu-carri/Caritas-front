@@ -7,16 +7,12 @@ import { useEffect, useState } from "react";
 import { ErrorCode } from "src/libs/Error/ErrorCode";
 import { ErrorTypes } from "src/libs/Error/ErrorTypes";
 import { Location } from "../filiales/EliminarModal";
+import { useCustomModal } from "src/context/CustomModalContext";
 
 type Exchanger = {
-  id: number,
   name: string,
-  dni: string,
   phone: string,
-  email: string,
-  password: string,
-  birthdate: string,
-  employeeLocationId: string
+  birthdate: string
 }
 
 type Props = {
@@ -41,39 +37,21 @@ export default function EditExchangerModal({exchanger, onSave, closeModal}: Prop
   }
 
   const handleEdit = (data: Exchanger) => {
-    console.log(data)
+    console.log('data', data)
     onSave(data)
-    /*postData(endPoints.registerHelper, null, data)
-      .then(() => closeModal(null))
-      .catch((errCode: number) => handleError(errCode))*/
-  }
-
-  function generateFields(employeeLocationids: Location[]): FormField{
-    const field:FormField = { nombre: 'Selecciona una filial', etiqueta: 'employeeLocationId', tipo: 'list' }
-    const items: ListItem[] = employeeLocationids.map((employeeLocationid) => ({
-      key: employeeLocationid.id,
-      value: employeeLocationid.description
-    }))
-    field.items = items
-    return field
+    closeModal(null);
   }
 
   function getDefaultFileds(): Array<FormField> {
     return [
       { nombre: 'Nombre completo', etiqueta: 'name', value: exchanger.name, tipo: 'text' },
-      { nombre: 'Contraseña', etiqueta: 'password', value: exchanger.password, tipo: 'password' },
-      { nombre: 'DNI', etiqueta: 'dni', value: exchanger.dni, tipo: 'text' },
       { nombre: 'Teléfono', etiqueta: 'phone', value: exchanger.phone, tipo: 'tel' },
       { nombre: 'Fecha de nacimiento', etiqueta: 'birthdate', value: exchanger.birthdate, tipo: 'date'}
     ]
   }
 
   useEffect(() => {
-    if (!exchanger) return
-    console.log(getDefaultFileds())
-    getData(endPoints.location)
-      .then((employeeLocationids: Location[]) => generateFields(employeeLocationids))
-      .then((fields) => setCampos([...getDefaultFileds(), fields]))
+    setCampos(getDefaultFileds())
   }, [exchanger])
 
   return campos && campos.length > 0 && <GenericForm id="edit-helpers-modal" campos={campos} listener={handleEdit} error={error} btnText="Aplicar cambios" />;
