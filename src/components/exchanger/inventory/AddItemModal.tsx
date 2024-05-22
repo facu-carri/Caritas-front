@@ -66,16 +66,19 @@ export default function AddItemModal({ onClose, onAddItem }) {
                 <Input text="Description" onChange={(e) => setDescription(e.target.value)}></Input>
                 <Input file={true} onChange={(e) => setPhotoFile(e.target.files[0])}></Input>
                 <select
+                
                   className="select select-bordered w-full max-w-xs"
                   onChange={e => setItemCategoryId(Number(e.target.value))}
+                  
                 >
+                   <option value="" disabled selected hidden>Selecciona una opción</option>
                   {
                     categories.map(({ id, name }) => 
                       <option key={id} value={id}>{name}</option>
                     )
                   }
                 </select>
-                <Input text="Cantidad" onChange={(e) => setQuantity(parseInt(e.target.value))}></Input>
+                <Input type="number" min="1" text="Cantidad" onChange={(e) => setQuantity(parseInt(e.target.value))}></Input>
               </div>
             </div>
           </div>
