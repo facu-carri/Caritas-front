@@ -66,7 +66,7 @@ export default function RegisterHelper({modalId}) {
   useEffect(() => {
     getData(endPoints.location)
       .then((locations: Location[]) => generateFields(locations))
-      .then((fields) => setCampos({...campos, ...fields}))
+      .then((fields) => setCampos([...campos, fields]))
   }, [])
 
   const [campos, setCampos] = useState(campos_default)
