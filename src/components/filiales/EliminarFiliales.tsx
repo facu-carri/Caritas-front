@@ -15,7 +15,7 @@ export default function EliminarFiliales() {
 
     return (
         <dialog className="modal bg-gray-500/50" id='eliminarFilial' open={true} onClick={handleClickModal} ref={modalRef}>
-            <EliminarFilialModal modalId={'eliminarFilial'}/>
+            <EliminarFilialModal closeModal={handleClickModal}/>
         </dialog>
     )
 }

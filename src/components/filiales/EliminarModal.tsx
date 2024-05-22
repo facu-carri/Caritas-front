@@ -18,14 +18,9 @@ export type Location = {
 }
 
 // Componente de Registro de Ayudante
-export default function EliminarFilialModal({ modalId }) {
+export default function EliminarFilialModal({ closeModal }) {
 
   const [error, setError] = useState<ErrorCode>(null)
-  
-  const closeModal = () => {
-    const elem = modalId && (document.getElementById(modalId) as HTMLDialogElement)
-    elem?.close()
-  }
 
   const handleError = (errCode: number) => {
     const err = new ErrorCode(errCode, ErrorTypes.FILIALES_ERROR)
