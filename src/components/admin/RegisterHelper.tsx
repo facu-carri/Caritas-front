@@ -19,12 +19,13 @@ type Type = {
 }
 
 const campos_default: Array<FormField> = [
-  { nombre: 'Foto', etiqueta: 'photo', tipo: 'file'},
   { nombre: 'Nombre', etiqueta: 'name', tipo: 'text' },
-  { nombre: 'DNI', etiqueta: 'dni', tipo: 'text' },
-  { nombre: 'Teléfono', etiqueta: 'phone', tipo: 'tel' },
   { nombre: 'Email', etiqueta: 'email', tipo: 'email' },
   { nombre: 'Contraseña', etiqueta: 'password', tipo: 'password' },
+  { nombre: 'DNI', etiqueta: 'dni', tipo: 'text' },
+  { nombre: 'Teléfono', etiqueta: 'phone', tipo: 'tel' },
+  { nombre: 'Foto', etiqueta: 'photo', tipo: 'file'},
+  { nombre: 'birthdate', etiqueta: 'birthdate', tipo: 'birthdate' },
 ]
 
 // Componente de Registro de Ayudante
@@ -53,11 +54,11 @@ export default function RegisterHelper({modalId}) {
       .catch((errCode: number) => handleError(errCode))
   }
 
-  function generateFields(locations: Location[]): FormField{
-    const field:FormField = { nombre: 'Selecciona una filial', etiqueta: 'filial', tipo: 'list' }
-    const items: ListItem[] = locations.map((location) => ({
-      key: location.id,
-      value: location.description
+  function generateFields(employeeLocationids: Location[]): FormField{
+    const field:FormField = { nombre: 'Selecciona una filial', etiqueta: 'employeeLocationId', tipo: 'list' }
+    const items: ListItem[] = employeeLocationids.map((employeeLocationid) => ({
+      key: employeeLocationid.id,
+      value: employeeLocationid.description
     }))
     field.items = items
     return field
@@ -65,7 +66,7 @@ export default function RegisterHelper({modalId}) {
 
   useEffect(() => {
     getData(endPoints.location)
-      .then((locations: Location[]) => generateFields(locations))
+      .then((employeeLocationids: Location[]) => generateFields(employeeLocationids))
       .then((fields) => setCampos([...campos, fields]))
   }, [])
 

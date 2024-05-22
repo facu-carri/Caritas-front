@@ -12,7 +12,8 @@ export const endPoints = {
     categories: 'itemCategory',
     exchangeablesProducts: 'item',
     addItem: 'item',
-    exchanger: 'exchanger'
+    exchanger: 'exchanger',
+    employees: 'employee',
 }
 const adminRoutes = {
     'estadisticas': '/estadisticas',

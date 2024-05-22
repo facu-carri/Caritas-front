@@ -7,7 +7,7 @@ import { ErrorCode } from "src/libs/Error/ErrorCode";
 import { ErrorTypes } from "src/libs/Error/ErrorTypes";
 
 type LocationType = {
-  coordenadas: string,
+  coordinates: string,
   description: string,
 }
 
@@ -38,7 +38,7 @@ export default function AgregarFilialModal({modalId}) {
   }
 
   const campos: Array<FormField> = [
-    { nombre: 'Coordenadas', etiqueta: 'coordenadas', tipo: 'text' },
+    { nombre: 'Coordenadas', etiqueta: 'coordinates', tipo: 'text' },
     { nombre: 'Descripcion', etiqueta: 'description', tipo: 'text' },
   ]
 

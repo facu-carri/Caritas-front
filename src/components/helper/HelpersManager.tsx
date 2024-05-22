@@ -4,6 +4,8 @@ import EditHelperModal from './EditHelperModal';
 import Button from '../Button';
 import RegisterHelper from '../admin/RegisterHelper';
 import { getData } from 'src/libs/request/httpRequests';
+import { postData } from "src/libs/request/httpRequests";
+import { endPoints } from "src/libs/constants";
 
 //tiene toda la logica de eliminar y editar ayudantes listados y su estado.
 export default function HelpersManager() {
@@ -12,7 +14,7 @@ export default function HelpersManager() {
   const [currentHelper, setCurrentHelper] = useState(null);
 
   useEffect(() => {
-    getData('employee')
+    getData(endPoints.employees)
       .then(data => setHelpers(data));
   }, []);
 
@@ -22,10 +24,10 @@ export default function HelpersManager() {
   };
 
   const handleDelete = (id) => {
-    setHelpers(helpers.filter(helper => helper.id !== id));
+    setHelpers(helpers.filter(helper => helper.id !== id)); // EDIT: usar deleteData de httpRequests
   };
 
-  const handleSave = (updatedHelper) => {
+  const handleSave = (updatedHelper) => { // EDIT: usar putData de httpRequests
     setHelpers(helpers.map(helper =>
       helper.id === updatedHelper.id ? updatedHelper : helper
     ));

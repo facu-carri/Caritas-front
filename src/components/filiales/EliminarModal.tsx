@@ -8,7 +8,7 @@ import { ErrorCode } from "src/libs/Error/ErrorCode";
 import { ErrorTypes } from "src/libs/Error/ErrorTypes";
 
 type Type = {
-  filial: string,
+  employeeLocationId: string,
 }
 
 export type Location = {
