@@ -30,11 +30,13 @@ export default function HelpersManager() {
   };
 
   const handleSave = (updatedHelper) => { // EDIT: usar putData de httpRequests
+    if(updatedHelper.password === "") {
+      updatedHelper.password = null;
+    }
     console.log(updatedHelper)
     putData(`${endPoints.employees}/${currentHelper.id}`, null, {
       ...updatedHelper,
-      birthdate: currentHelper.birthdate
-    
+      email: currentHelper.email
     })
       .then(res => console.log(res))
       

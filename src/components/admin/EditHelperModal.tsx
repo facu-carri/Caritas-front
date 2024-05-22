@@ -15,6 +15,7 @@ type Helper = {
   phone: string,
   email: string,
   password: string,
+  birthdate: string,
   employeeLocationId: string
 }
 
@@ -60,10 +61,10 @@ export default function EditHelpersModal({helper, onSave, closeModal}: Props) {
   function getDefaultFileds(): Array<FormField> {
     return [
       { nombre: 'Nombre completo', etiqueta: 'name', value: helper.name, tipo: 'text' },
-      { nombre: 'Email', etiqueta: 'email', value: helper.email, tipo: 'email' },
       { nombre: 'Contraseña', etiqueta: 'password', value: helper.password, tipo: 'password' },
       { nombre: 'DNI', etiqueta: 'dni', value: helper.dni, tipo: 'text' },
       { nombre: 'Teléfono', etiqueta: 'phone', value: helper.phone, tipo: 'tel' },
+      { nombre: 'Fecha de nacimiento', etiqueta: 'birthdate', value: helper.birthdate, tipo: 'date'}
     ]
   }
 

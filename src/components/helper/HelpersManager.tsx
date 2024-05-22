@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+/*import { useEffect, useRef, useState } from 'react';
 import HelpersList from './HelpersList';
 import EditHelperModal from '../admin/EditHelperModal';
 import Button from '../Button';
@@ -34,11 +34,11 @@ export default function HelpersManager() {
     
     })
       .then(res => console.log(res))
-      
+      */
     /*setHelpers(helpers.map(helper =>
       helper.id === updatedHelper.id ? updatedHelper : helper
     ));*/
-  };
+  /*};
 
   const modalRef = useRef(null)
 
@@ -66,13 +66,13 @@ export default function HelpersManager() {
       setCurrentHelper(null)
     }
   }
-
+*/
   /*const handleSelect = (id) => {
     console.log(id)
     if(!id) return
     setRoute(`${routes.helper.profile}/${id}`)
   }*/
-
+/*
   return (
   <>
     <dialog className="modal" id='registerModal' onClick={handleClickModal} ref={modalRef}>
@@ -92,4 +92,4 @@ export default function HelpersManager() {
     </div>
   </>
   );
-}
+}*/
