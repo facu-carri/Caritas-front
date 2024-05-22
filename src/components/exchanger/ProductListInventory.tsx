@@ -1,5 +1,5 @@
 import ProductCard from './ProductCard';
-import { getData, postData, putData } from "src/libs/request/httpRequests";
+import { deleteData, getData, postData, putData } from "src/libs/request/httpRequests";
 import { endPoints, serverAddress } from "src/libs/constants";
 import { useEffect, useState } from 'react';
 import EditItemModal from './inventory/EditItemModal';
@@ -72,13 +72,19 @@ export default function ProductListInventory({ ruta, text, subText }) { // endPo
       .then(res => console.log(res))
   }
 
+  function deleteItem() {
+    deleteData(`${endPoints.addItem}/${selectedProduct?.id}`, null)
+      .then(() => toggleModal({}))
+  }
+
   return (
     <>
       {
         showModal &&
         <EditItemModal
           onClose={()=>toggleModal({})}
-          onAddItem={editItem}
+          onEditItem={editItem}
+          onDeleteItem={deleteItem}
           defaultName={selectedProduct?.name}
           defaultDescription={selectedProduct?.description}
           defaultItemCategoryId={selectedProduct?.itemCategory.id}

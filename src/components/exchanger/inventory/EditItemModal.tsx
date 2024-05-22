@@ -4,8 +4,9 @@ import Button from "../../Button";
 import { getData } from "src/libs/request/httpRequests";
 import { endPoints } from "src/libs/constants";
 import { getImageBase64 } from "src/components/GenericForm";
+import Trash from "src/icons/Trash";
 
-export default function EditItemModal({ onClose, onAddItem, defaultName, defaultDescription, defaultItemCategoryId, defaultQuantity }) {
+export default function EditItemModal({ onClose, onEditItem, onDeleteItem, defaultName, defaultDescription, defaultItemCategoryId, defaultQuantity }) {
   const [name, setName] = useState(defaultName);
   const [description, setDescription] = useState(defaultDescription);
   const [itemCategoryId, setItemCategoryId] = useState(defaultItemCategoryId);
@@ -24,8 +25,8 @@ export default function EditItemModal({ onClose, onAddItem, defaultName, default
     // Convert photoFile to a URL
     getImageBase64(photoFile)
       .then(photo => {
-        // Call the onAddItem function with the new item data
-        onAddItem({ name, description, itemCategoryId, photo, quantity });
+        // Call the onEditItem function with the new item data
+        onEditItem({ name, description, itemCategoryId, photo, quantity });
 
         // Clear input fields
         setName('');
@@ -55,7 +56,10 @@ export default function EditItemModal({ onClose, onAddItem, defaultName, default
         <div className="inline-block align-bottom bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-3xl sm:w-full">
           <div className="bg-white px-6 py-8">
             <div className="mt-3 text-center sm:mt-0 sm:text-left">
-              <h3 className="text-lg font-medium text-gray-900">Agregar Nuevo Artículo</h3>
+              <div className="flex items-center justify-between">
+                <h3 className="text-lg font-medium text-gray-900">Editar Artículo</h3>
+                <Button onClick={onDeleteItem}><Trash/></Button>
+              </div>
               <div className="mt-5 flex flex-col gap-4">
                 <Input text="Nombre" onChange={(e) => setName(e.target.value)} value={name}></Input>
                 <Input text="Description" onChange={(e) => setDescription(e.target.value)} value={description}></Input>

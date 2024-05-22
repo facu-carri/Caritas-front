@@ -61,3 +61,16 @@ export function putData(endPoint: string, querys: Record<string, any> = null, da
     })
     return request.then(handleResponse)
 }
+
+export function deleteData(endPoint: string, querys: Record<string, any> = null) {
+    const url = new Url(serverAddress, endPoint, querys)
+    const request = fetch(url.toString(), {
+        method: "DELETE",
+        cache: 'no-cache',
+        headers: {
+            ...reqHeaders,
+            'Authorization': `Bearer ${getItem('token')}`
+        },
+    })
+    return request.then(handleResponse)
+}
