@@ -19,14 +19,8 @@ export default function AddItemModal({ onClose, onAddItem }) {
       alert('Por favor, completa todos los campos');
       return;
     }
-    /*setItemCategoryId(
-      categories
-        .find(category => itemCategoryName === category.name)
-        ?.id
-    )*/
 
     // Convert photoFile to a URL
-    //const photo = URL.createObjectURL(photoFile); // TODO: It's wrong
     getImageBase64(photoFile)
       .then(photo => {
         // Call the onAddItem function with the new item data
@@ -66,10 +60,8 @@ export default function AddItemModal({ onClose, onAddItem }) {
                 <Input text="Description" onChange={(e) => setDescription(e.target.value)}></Input>
                 <Input file={true} onChange={(e) => setPhotoFile(e.target.files[0])}></Input>
                 <select
-                
                   className="select select-bordered w-full max-w-xs"
                   onChange={e => setItemCategoryId(Number(e.target.value))}
-                  
                 >
                    <option value="" disabled selected hidden>Selecciona una opción</option>
                   {

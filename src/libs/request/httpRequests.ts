@@ -47,3 +47,17 @@ export function postData(endPoint: string, querys: Record<string, any> = null, d
     })
     return request.then(handleResponse)
 }
+
+export function putData(endPoint: string, querys: Record<string, any> = null, data?: any) {
+    const url = new Url(serverAddress, endPoint, querys)
+    const request = fetch(url.toString(), {
+        method: "PUT",
+        cache: 'no-cache',
+        headers: {
+            ...reqHeaders,
+            'Authorization': `Bearer ${getItem('token')}`
+        },
+        body: JSON.stringify(data),
+    })
+    return request.then(handleResponse)
+}
