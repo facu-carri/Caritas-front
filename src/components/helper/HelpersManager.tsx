@@ -4,7 +4,6 @@ import EditHelperModal from './EditHelperModal';
 import Button from '../Button';
 import RegisterHelper from '../admin/RegisterHelper';
 import { deleteData, getData } from 'src/libs/request/httpRequests';
-import { postData } from "src/libs/request/httpRequests";
 import { endPoints } from "src/libs/constants";
 
 //tiene toda la logica de eliminar y editar ayudantes listados y su estado.
