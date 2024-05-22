@@ -6,6 +6,8 @@ export const endPoints = {
     registerExchanger: 'v1/auth/register', 
     profile: 'exchanger/myProfile',
     otherProfile: 'exchanger/',
+    profileHelper: 'employee/myProfile',
+    otherProfileHelper: 'employee/',
     inventory: 'item/myInventory',
     location: 'location',
     myReviews: 'reviews/myReviews',
