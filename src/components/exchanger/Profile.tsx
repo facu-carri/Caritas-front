@@ -11,6 +11,8 @@ import { getData } from "src/libs/request/httpRequests";
 import { endPoints } from "src/libs/constants";
 import { useEffect, useState } from 'react';
 import LoadingAnimation from '../LoadingAnimation';
+import ProductCard from './ProductCard';
+import { ItemData } from './ProductListInventory';
 
 type UserData = {
   id: number,
@@ -22,18 +24,6 @@ type UserData = {
   stars: number,
   absentees: number,
   birthdate: string,
-}
-type ItemData = {
-  id: number
-  photo: string
-  name: string
-  description: string
-  owner: UserData
-  itemCategory: ItemCategory
-}
-type ItemCategory = {
-  id: number
-  name: string
 }
 type Review = {
   id: number
@@ -154,15 +144,7 @@ function Profile({id}: Props) {
                   <p className="text-gray-600 dark:text-gray-400 line-clamp-2">No hay elementos</p>
                 </div>
                 : inventory.map((product, index) => (
-                <div key={`${index}-${product.name}`} className="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
-                  <div className="w-full h-40 bg-gray-200 flex items-center justify-center">
-                    <img src={`data:image/jpeg;base64,${product.photo}`} />
-                  </div>
-                  <div className="p-4">
-                    <h3 className={`text-lg font-bold mb-2 ${index % 2 === 0 ? 'text-red-500' : 'text-blue-500'}`}>{product.name}</h3>
-                    <p className="text-gray-600 dark:text-gray-400 line-clamp-2">{product.description}</p>
-                  </div>
-                </div>
+                  <ProductCard key={index} product={product} hiddeBtns={true} />
               ))}
             </div>
           </section>
