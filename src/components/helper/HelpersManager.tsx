@@ -1,18 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
-import HelpersList from '../helper/HelpersList';
-import EditHelperModal from './EditHelperModal';
+import HelpersList from './HelpersList';
+import EditHelperModal from '../admin/EditHelperModal';
 import Button from '../Button';
-import RegisterHelper from './RegisterHelper';
+import RegisterHelper from '../admin/RegisterHelper';
 import { deleteData, getData, putData } from 'src/libs/request/httpRequests';
-import { endPoints, routes } from "src/libs/constants";
-import RoutesHandler from 'src/libs/routesHandler';
+import { endPoints } from "src/libs/constants";
 
 //tiene toda la logica de eliminar y editar ayudantes listados y su estado.
 export default function HelpersManager() {
   const [helpers, setHelpers] = useState([]);
   const [currentHelper, setCurrentHelper] = useState(null);
-
-  const { setRoute } = RoutesHandler()
 
   useEffect(() => {
     getData(endPoints.employees)
@@ -70,10 +67,11 @@ export default function HelpersManager() {
     }
   }
 
-  const handleSelect = (id) => {
+  /*const handleSelect = (id) => {
+    console.log(id)
     if(!id) return
     setRoute(`${routes.helper.profile}/${id}`)
-  }
+  }*/
 
   return (
   <>
@@ -88,7 +86,7 @@ export default function HelpersManager() {
         <Button onClick={handleRegisterHelper}>Registrar ayudante</Button>
         <div className="w-full max-w-2xl bg-white shadow-lg rounded-lg p-6">
           <h1 className="text-2xl font-bold text-blue-700 mb-4">Listado de Ayudantes</h1>
-          <HelpersList helpers={helpers} onEdit={handleEdit} onDelete={handleDelete} onSelect={handleSelect} />
+          <HelpersList helpers={helpers} onEdit={handleEdit} onDelete={handleDelete} onSelect={()=>{}} />
         </div>
       </div>
     </div>

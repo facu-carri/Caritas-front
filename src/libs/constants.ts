@@ -25,7 +25,7 @@ const adminRoutes = {
     'gestionarFiliales': '/gestionar-filiales',
 }
 const helperRoutes = {
-    profile: '/perfil'
+    profile: '/perfilAyudante'
 }
 const exchangerRoutes = {
     'inventory': '/inventario',

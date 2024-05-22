@@ -8,6 +8,7 @@ import Maps from "../maps/Map";
 import AuthEmployeeProvider from "src/context/AuthEmployee";
 import ManagerUsers from "./ManageUsers";
 import Profile from "src/components/exchanger/Profile";
+import EmployeeProfile from "src/components/helper/Profile";
 import RoutesHandler from "src/libs/routesHandler";
 
 export function AdminRouter() {
@@ -28,7 +29,8 @@ export function AdminRouter() {
         { path: routes.admin.gestionarFiliales, element: <Maps /> },
         { path: routes.admin.gestionarUsuarios, element: <ManagerUsers/>},
         { path: routes.admin.gestionarAyudantes, element: <HelpersManager /> },
-        { path: `${routes.exchanger.profile}/*`, element: <Profile id={getId()}/>}
+        { path: `${routes.exchanger.profile}/*`, element: <Profile id={getId()}/>},
+        { path: `${routes.helper.profile}/*`, element: <EmployeeProfile id={getId()}/>},
       ]
     },
     {

@@ -32,7 +32,7 @@ type Props = {
   id?: number|string
 }
 
-function Profile({id}: Props) {
+function Profile({ id }: Props) {
   const [userData, setUserData] = useState<UserData>();
   
   function setData(userData){
