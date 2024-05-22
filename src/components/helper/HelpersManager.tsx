@@ -27,7 +27,12 @@ export default function HelpersManager() {
   };
 
   const handleSave = (updatedHelper) => { // EDIT: usar putData de httpRequests
-    putData(`${endPoints.employees}/${updatedHelper.id}`, null, updatedHelper)
+    console.log(updatedHelper)
+    putData(`${endPoints.employees}/${currentHelper.id}`, null, {
+      ...updatedHelper,
+      birthdate: currentHelper.birthdate
+    
+    })
       .then(res => console.log(res))
       
     /*setHelpers(helpers.map(helper =>

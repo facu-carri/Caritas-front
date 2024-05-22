@@ -22,6 +22,7 @@ export type FormField = {
 }
 
 type Type = {
+  id: string,
   campos: Array<FormField>,
   listener?: (values: Record<string, any>) => void
   error?: ErrorCode,
@@ -43,10 +44,11 @@ export async function getImageBase64(img:File) {
   })
 }
 
-function GenericForm({ campos, listener, error, btnText }: Type) {
+function GenericForm({ id, campos, listener, error, btnText }: Type) {
 
   async function getInputValues(): Promise<Record<string, any>> {
-    const inputs = document.getElementsByName('inputField')
+    const inputs = document.getElementsByName(id)
+    console.log(inputs, inputs.length)
     const obj = {}
 
     for (const inputField of inputs) {
@@ -99,12 +101,12 @@ function GenericForm({ campos, listener, error, btnText }: Type) {
             <label className="block font-semibold mb-2 text-blue-900">{campo.nombre}</label>
             {
               campo.tipo === 'list' ?
-                <select name='inputField' id={campo.etiqueta} className="select select-bordered w-full max-w-xs">{getItemsObjs(campo.items, 'items')}</select>
+                <select name={id} id={campo.etiqueta} className="select select-bordered w-full max-w-xs">{getItemsObjs(campo.items, 'items')}</select>
               :
               campo.tipo === 'date' ?
-                <Input file={campo.tipo == 'date'} defaultValue={campo.value} name='inputField' id={campo.etiqueta} type={'date'} />
+                <Input file={campo.tipo == 'date'} defaultValue={campo.value} name={id} id={campo.etiqueta} type={'date'} />
                 :
-                <Input file={campo.tipo == 'file'} defaultValue={campo.value} name='inputField' id={campo.etiqueta} type={campo.tipo}  />
+                <Input file={campo.tipo == 'file'} defaultValue={campo.value} name={id} id={campo.etiqueta} type={campo.tipo}  />
             }
           </div>
         ))}

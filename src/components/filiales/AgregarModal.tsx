@@ -42,5 +42,5 @@ export default function AgregarFilialModal({modalId}) {
     { nombre: 'Descripcion', etiqueta: 'description', tipo: 'text' },
   ]
 
-  return <GenericForm campos={campos} listener={handleRegister} error={error} />;
+  return <GenericForm id="agregar-filial-modal" campos={campos} listener={handleRegister} error={error} />;
 }

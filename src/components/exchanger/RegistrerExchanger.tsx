@@ -11,5 +11,5 @@ export default function RegisterExchanger() {
       { nombre: 'contraseña', etiqueta: 'Contraseña', tipo: 'password' },
     ];
   
-  return <GenericForm campos={campos} />;
+  return <GenericForm id="register-exchanger" campos={campos} />;
 }

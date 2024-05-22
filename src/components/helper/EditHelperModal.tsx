@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { getData, postData } from "src/libs/request/httpRequests";
+import { getData, postData, putData } from "src/libs/request/httpRequests";
 import GenericForm, { FormField, ListItem } from "../GenericForm";
 import { endPoints } from "src/libs/constants";
 import { useEffect, useState } from "react";
@@ -9,6 +9,7 @@ import { ErrorTypes } from "src/libs/Error/ErrorTypes";
 import { Location } from "../filiales/EliminarModal";
 
 type Helper = {
+  id: number,
   name: string,
   dni: string,
   phone: string,
@@ -39,10 +40,11 @@ export default function EditHelpersModal({helper, onSave, closeModal}: Props) {
   }
 
   const handleEdit = (data: Helper) => {
+    console.log(data)
     onSave(data)
-    postData(endPoints.registerHelper, null, data)
+    /*postData(endPoints.registerHelper, null, data)
       .then(() => closeModal(null))
-      .catch((errCode: number) => handleError(errCode))
+      .catch((errCode: number) => handleError(errCode))*/
   }
 
   function generateFields(employeeLocationids: Location[]): FormField{
@@ -73,5 +75,5 @@ export default function EditHelpersModal({helper, onSave, closeModal}: Props) {
       .then((fields) => setCampos([...getDefaultFileds(), fields]))
   }, [helper])
 
-  return campos && campos.length > 0 && <GenericForm campos={campos} listener={handleEdit} error={error} btnText="Aplicar cambios" />;
+  return campos && campos.length > 0 && <GenericForm id="edit-helpers-modal" campos={campos} listener={handleEdit} error={error} btnText="Aplicar cambios" />;
 }

@@ -6,5 +6,5 @@ export default function RegistrarFilial() {
       { nombre: 'ubicación', etiqueta: 'Ubicacion', tipo: 'text' },
       { nombre: 'descripción', etiqueta: 'Descripcion', tipo: 'text' },
     ];
-    return <GenericForm campos={campos} />;
+    return <GenericForm id="registrar-filial" campos={campos} />;
 }

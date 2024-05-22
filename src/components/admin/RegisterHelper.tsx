@@ -75,5 +75,5 @@ export default function RegisterHelper({modalId}) {
 
   const [campos, setCampos] = useState(campos_default)
 
-  return <GenericForm campos={campos} listener={handleRegister} error={error} />;
+  return <GenericForm id="register-helper" campos={campos} listener={handleRegister} error={error} />;
 }

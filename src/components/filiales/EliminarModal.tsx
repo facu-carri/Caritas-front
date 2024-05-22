@@ -59,6 +59,6 @@ export default function EliminarFilialModal({ closeModal }) {
   }, [])
 
   return <>
-    {campos && < GenericForm campos={campos} listener={handleDelete} error={error} btnText="Eliminar" />}
+    {campos && < GenericForm id="eliminar-filial-modal" campos={campos} listener={handleDelete} error={error} btnText="Eliminar" />}
   </>;
 }
