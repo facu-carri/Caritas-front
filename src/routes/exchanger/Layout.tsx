@@ -18,6 +18,11 @@ export default function ExchangerLayout() {
       icon: Icons.home(colors.white),
       onClick: () => setRoute(routes.main),
       active: false
+    },
+    {
+      text:"Quienes Somos",
+      onClick: () => setRoute(routes.exchanger.caritasInformation),
+      active: false
     }
   ]
 

@@ -5,8 +5,7 @@ import { getItem } from "../localStorage.ts"
 
 const reqHeaders = {
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*',
-    'Authorization': `Bearer ${getItem('token')}`
+    'Access-Control-Allow-Origin': '*'
 }
 
 function handleResponse(res: Response) {
@@ -22,22 +21,28 @@ function handleResponse(res: Response) {
 
 export function getData(endPoint: string, querys: Record<string, string> = null, data?: any) {
     const url = new Url(serverAddress, endPoint, querys)
-    console.log(reqHeaders)
     return fetch(url.toString(), {
         method: "GET",
+        cache: 'no-cache',
         mode: 'cors',
-        headers: reqHeaders,
+        headers: {
+            ...reqHeaders,
+            'Authorization': `Bearer ${getItem('token')}`
+        },
         body: JSON.stringify(data)
     })
     .then(handleResponse)
 }
 
 export function postData(endPoint: string, querys: Record<string, any> = null, data?: any) {
-    console.log(data)
     const url = new Url(serverAddress, endPoint, querys)
     const request = fetch(url.toString(), {
         method: "POST",
-        headers: reqHeaders,
+        cache: 'no-cache',
+        headers: {
+            ...reqHeaders,
+            'Authorization': `Bearer ${getItem('token')}`
+        },
         body: JSON.stringify(data),
     })
     return request.then(handleResponse)

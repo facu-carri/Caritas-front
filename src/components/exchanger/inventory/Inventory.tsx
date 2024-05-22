@@ -30,7 +30,6 @@ export default function Inventory() {
   const [products, setProducts] = useState<ProductType[]>();
   const [showModal, setShowModal] = useState(false)
 
-
   const handleModal = () => {
     setShowModal(!showModal)
   };
@@ -41,22 +40,18 @@ export default function Inventory() {
   }
 
   return (
-  <div className='mt-16'>
-    {showModal && <AddItemModal onClose={handleModal} onAddItem={addItem} />}
-    <main>
-    <div className="mb-6 flex items-center justify-between">
+    <>
+      <div className="relative">
+        {showModal && <AddItemModal onClose={handleModal} onAddItem={addItem} />}
+        <ProductList ruta={endPoints.inventory} text='Mi inventario' subText="Consejo: Para intercambiar con un producto tienes que tener un producto de la misma cartegoria cargado"/>
         <button
           onClick={handleModal}
-          className="flex items-center space-x-2 px-4 py-2 text-sm font-medium text-white bg-red-600 rounded hover:bg-red-500"
+          className="absolute top-[100px] right-4 flex items-center space-x-2 px-4 py-2 text-sm font-medium text-white bg-red-600 rounded hover:bg-red-500"
         >
           <PlusIcon className="h-4 w-4" />
-          <span>Add Item</span>
+          <span>Agregar Item</span>
         </button>
       </div>
-    </main>
-    <ProductList ruta={endPoints.inventory} text='Mi inventario' subText="Consejo: Para intercambiar con un producto tienes que tener un producto de la misma cartegoria cargado"/>
-    </div>
-    
+    </>
   );
 }
-
