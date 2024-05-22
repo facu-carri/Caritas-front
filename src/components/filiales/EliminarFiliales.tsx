@@ -9,8 +9,13 @@ export default function EliminarFiliales() {
     const { setModal } = useCustomModal()
 
     const handleClickModal = (ev) => {
-        const target = ev.target
-        if (target.id && target.id == modalRef.current.id) setModal(null)
+        if(!ev) {
+            return setModal(null);
+        }
+        const { target } = ev
+        if (target.id && target.id == modalRef.current.id) {
+            setModal(null)
+        }
     }
 
     return (

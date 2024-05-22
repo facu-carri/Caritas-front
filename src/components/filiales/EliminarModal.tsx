@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { getData, postData } from "src/libs/request/httpRequests";
+import { deleteData, getData, postData } from "src/libs/request/httpRequests";
 import GenericForm, { FormField, ListItem } from "../GenericForm";
 import { endPoints } from "src/libs/constants";
 import { useEffect, useState } from "react";
@@ -8,7 +8,7 @@ import { ErrorCode } from "src/libs/Error/ErrorCode";
 import { ErrorTypes } from "src/libs/Error/ErrorTypes";
 
 type Type = {
-  employeeLocationId: string,
+  filial: number,
 }
 
 export type Location = {
@@ -33,8 +33,8 @@ export default function EliminarFilialModal({ closeModal }) {
     setError(null)
   }
 
-  const handleRegister = (data: Type) => {
-    postData(endPoints.location, null, data)
+  const handleDelete = (data: Type) => {
+    deleteData(`${endPoints.location}/${data?.filial}`, null)
       .catch((errCode: number) => handleError(errCode))
       .then(() => closeModal())
   }
@@ -59,6 +59,6 @@ export default function EliminarFilialModal({ closeModal }) {
   }, [])
 
   return <>
-    {campos && < GenericForm campos={campos} listener={handleRegister} error={error} />}
+    {campos && < GenericForm campos={campos} listener={handleDelete} error={error} />}
   </>;
 }
