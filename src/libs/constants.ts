@@ -19,6 +19,9 @@ const adminRoutes = {
     'listarDonaciones': '/donaciones',
     'gestionarFiliales': '/gestionar-filiales',
 }
+const helperRoutes = {
+    profile: 'perfil'
+}
 const exchangerRoutes = {
     'inventory': 'inventario',
     'profile': 'perfil',
@@ -30,6 +33,7 @@ export const routes = {
     auth: '/auth',
     register: '/register',
     admin: adminRoutes,
+    helper: helperRoutes,
     exchanger: exchangerRoutes
 }
 export const roles = {
