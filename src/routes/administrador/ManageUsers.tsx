@@ -55,19 +55,17 @@ export default function ManagerUsers() {
         }
     }
 
-
-
     const handleEdit = (helper) => {
         setCurrentHelper(helper);
         setIsEditing(true);
-      };
+    };
     
-      const handleDelete = (id) => {
+    const handleDelete = (id) => {
         deleteData(`${endPoints.exchanger}/${id}`, null)
-          .then(() => setUsers(users.filter(user => user.id !== id)))
-      };
+            .then(() => setUsers(prev => prev.filter(user => user.id !== id)))
+    };
     
-      const handleSave = (updatedHelper) => { // EDIT: usar putData de httpRequests
+    const handleSave = (updatedHelper) => { // EDIT: usar putData de httpRequests
         putData(`${endPoints.employees}/${updatedHelper.id}`, null, updatedHelper)
           .then(res => console.log(res))
           
@@ -75,12 +73,8 @@ export default function ManagerUsers() {
           helper.id === updatedHelper.id ? updatedHelper : helper
         ));*/
         setIsEditing(false);
-      };
+    };
     
-
-
-
-
     return (
         <div className="bg-gray-100 flex items-center justify-center min-h-screen">
             <section className="w-full py-12">
