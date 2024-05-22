@@ -39,6 +39,11 @@ function Profile({id}: Props) {
       setUserData(userData)
   }   
 
+  function formatDate(_date: string) {
+    const date = new Date(_date)
+    return date.toDateString()
+  }
+
   useEffect(() => {
     console.log(id)
     getData(`${id ? `${endPoints.otherProfileHelper}${id}` : endPoints.profileHelper}`)
@@ -75,14 +80,12 @@ function Profile({id}: Props) {
             </div>    
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {[
-                //{ title: "Location", value: userData.name, color: "text-red-500" },
                 { title: "Name", value: userData.name, color: "text-red-500" },
                 { title: "Email", value: userData.email, color: "text-red-500" },
                 { title: "DNI", value: userData.dni, color: "text-blue-500" },
                 { title: "Phone", value: userData.phone, color: "text-blue-500" },
-                //{ title: "Photo", value: userData.photo, color: "text-blue-500" },
                 { title: "Location", value: userData.employeeLocation.id, color: "text-blue-500" },
-                { title: "Birthdate", value: userData.birthdate, color: "text-red-500" },
+                { title: "Birthdate", value: formatDate(userData.birthdate), color: "text-red-500" },
               ].map((info, idx) => (
                 <div key={`info-${idx}`} className="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
                   <h3 className={`text-lg font-bold mb-2 ${info.color}`}>{info.title}</h3>
@@ -98,43 +101,3 @@ function Profile({id}: Props) {
 }
 
 export default Profile;
-
-function MoveVerticalIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <polyline points="8 18 12 22 16 18" />
-      <polyline points="8 6 12 2 16 6" />
-      <line x1="12" x2="12" y1="2" y2="22" />
-    </svg>
-  );
-}
-
-function StarIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-    </svg>
-  );
-}
