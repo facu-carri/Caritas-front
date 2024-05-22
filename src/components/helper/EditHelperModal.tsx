@@ -8,8 +8,8 @@ import { ErrorCode } from "src/libs/Error/ErrorCode";
 import { ErrorTypes } from "src/libs/Error/ErrorTypes";
 import { Location } from "../filiales/EliminarModal";
 
-type Type = {
-  name: string,
+type Helper = {
+  firstName: string,
   dni: string,
   phone: string,
   email: string,
@@ -17,17 +17,16 @@ type Type = {
   employeeLocationId: string
 }
 
-export default function EditHelpersModal({helper, onSave, onClose, closeModal}) {
+type Props = {
+  helper: Helper,
+  onSave: (ev) => void,
+  closeModal: (ev) => void
+}
+
+export default function EditHelpersModal({helper, onSave, closeModal}: Props) {
 
   const [error, setError] = useState<ErrorCode>(null)
-  
-  const campos_default: Array<FormField> = [
-    { nombre: 'Nombre', etiqueta: helper.firstName, tipo: 'text' },
-    { nombre: 'Email', etiqueta: helper.email, tipo: 'email' },
-    { nombre: 'Contraseña', etiqueta: helper.password, tipo: 'password' },
-    { nombre: 'DNI', etiqueta: helper.dni, tipo: 'text' },
-    { nombre: 'Teléfono', etiqueta: helper.phone, tipo: 'tel' },
-  ]
+  const [campos, setCampos] = useState([])
 
   const handleError = (errCode: number) => {
     const err = new ErrorCode(errCode, ErrorTypes.REGISTER_HELPER_ERROR)
@@ -39,11 +38,10 @@ export default function EditHelpersModal({helper, onSave, onClose, closeModal}) 
     setError(null)
   }
 
-  const handleEdit = (data: Type) => {
+  const handleEdit = (data: Helper) => {
     onSave(data)
-    onClose()
     postData(endPoints.registerHelper, null, data)
-      .then(() => closeModal())
+      .then(() => closeModal(null))
       .catch((errCode: number) => handleError(errCode))
   }
 
@@ -57,13 +55,23 @@ export default function EditHelpersModal({helper, onSave, onClose, closeModal}) 
     return field
   }
 
+  function getDefaultFileds(): Array<FormField> {
+    return [
+      { nombre: 'Nombre', etiqueta: 'name', value: helper.firstName, tipo: 'text' },
+      { nombre: 'Email', etiqueta: 'email', value: helper.email, tipo: 'email' },
+      { nombre: 'Contraseña', etiqueta: 'password', value: helper.password, tipo: 'password' },
+      { nombre: 'DNI', etiqueta: 'dni', value: helper.dni, tipo: 'text' },
+      { nombre: 'Teléfono', etiqueta: 'phone', value: helper.phone, tipo: 'tel' },
+    ]
+  }
+
   useEffect(() => {
+    if (!helper) return
+    console.log(getDefaultFileds())
     getData(endPoints.location)
       .then((employeeLocationids: Location[]) => generateFields(employeeLocationids))
-      .then((fields) => setCampos([...campos, fields]))
-  }, [])
+      .then((fields) => setCampos([...getDefaultFileds(), fields]))
+  }, [helper])
 
-  const [campos, setCampos] = useState(campos_default)
-
-  return <GenericForm campos={campos} listener={handleEdit} error={error} btnText="Editar" />;
+  return campos && campos.length > 0 && <GenericForm campos={campos} listener={handleEdit} error={error} btnText="Editar" />;
 }

@@ -9,7 +9,6 @@ import { endPoints } from "src/libs/constants";
 //tiene toda la logica de eliminar y editar ayudantes listados y su estado.
 export default function HelpersManager() {
   const [helpers, setHelpers] = useState([]);
-  const [isEditing, setIsEditing] = useState(false);
   const [currentHelper, setCurrentHelper] = useState(null);
 
   useEffect(() => {
@@ -18,8 +17,8 @@ export default function HelpersManager() {
   }, []);
 
   const handleEdit = (helper) => {
+    handleEditHelper()
     setCurrentHelper(helper);
-    setIsEditing(true);
   };
 
   const handleDelete = (id) => {
@@ -34,7 +33,6 @@ export default function HelpersManager() {
     /*setHelpers(helpers.map(helper =>
       helper.id === updatedHelper.id ? updatedHelper : helper
     ));*/
-    setIsEditing(false);
   };
 
   const modalRef = useRef(null)
@@ -51,9 +49,17 @@ export default function HelpersManager() {
   
   const modalEditRef = useRef(null)
 
+  const handleEditHelper = () => {
+    const elem = (document.getElementById('editarHelperModal') as HTMLDialogElement)
+    elem.showModal()
+  }
+
   const handleClickEditModal = (ev) => {
-    const target = ev.target
-    if(target.id && target.id == modalEditRef.current.id)  modalEditRef.current.close()
+    const target = ev ? ev.target : null
+    if (target == null || target.id && target.id == modalEditRef.current.id) {
+      modalEditRef.current.close()
+      setCurrentHelper(null)
+    }
   }
 
   return (
@@ -61,8 +67,8 @@ export default function HelpersManager() {
     <dialog className="modal" id='registerModal' onClick={handleClickModal} ref={modalRef}>
         <RegisterHelper modalId={'registerModal'} />
     </dialog>
-    <dialog className="modal bg-gray-500/50" id='eliminarFilial' open={currentHelper} onClick={handleClickModal} ref={modalEditRef}>
-      {currentHelper && <EditHelperModal closeModal={handleClickEditModal} helper={currentHelper} onSave={handleSave} onClose={() => setIsEditing(false)} />}
+    <dialog className="modal bg-gray-500/50" id='editarHelperModal' onClick={handleClickEditModal} ref={modalEditRef}>
+      <EditHelperModal closeModal={handleClickEditModal} helper={currentHelper} onSave={handleSave} />
     </dialog>
     <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-4 relative">
       <div className="absolute top-1/2 transform -translate-y-1/2 flex flex-col items-center gap-4">

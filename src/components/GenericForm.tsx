@@ -16,6 +16,7 @@ export type FormField = {
   nombre: string,
   etiqueta: string,
   tipo: string,
+  value?: string,
   image?: boolean,
   items?: ListItem[]
 }
@@ -99,9 +100,9 @@ function GenericForm({ campos, listener, error, btnText }: Type) {
                 <select name='inputField' id={campo.etiqueta} className="select select-bordered w-full max-w-xs">{getItemsObjs(campo.items, 'items')}</select>
               :
               campo.tipo === 'date' ?
-                <Input file={campo.tipo == 'file'} name='inputField' id={campo.etiqueta} type={'date'} text='' />
+                <Input file={campo.tipo == 'date'} defaultValue={campo.value} name='inputField' id={campo.etiqueta} type={'date'} />
                 :
-                <Input file={campo.tipo == 'file'} name='inputField' id={campo.etiqueta} type={campo.tipo} text='' />
+                <Input file={campo.tipo == 'file'} defaultValue={campo.value} name='inputField' id={campo.etiqueta} type={campo.tipo}  />
             }
           </div>
         ))}
