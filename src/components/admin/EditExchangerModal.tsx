@@ -8,7 +8,7 @@ import { ErrorCode } from "src/libs/Error/ErrorCode";
 import { ErrorTypes } from "src/libs/Error/ErrorTypes";
 import { Location } from "../filiales/EliminarModal";
 
-type Helper = {
+type Exchanger = {
   id: number,
   name: string,
   dni: string,
@@ -20,12 +20,12 @@ type Helper = {
 }
 
 type Props = {
-  helper: Helper,
+  exchanger: Exchanger,
   onSave: (ev) => void,
   closeModal: (ev) => void
 }
 
-export default function EditHelpersModal({helper, onSave, closeModal}: Props) {
+export default function EditExchangerModal({exchanger, onSave, closeModal}: Props) {
 
   const [error, setError] = useState<ErrorCode>(null)
   const [campos, setCampos] = useState([])
@@ -40,7 +40,7 @@ export default function EditHelpersModal({helper, onSave, closeModal}: Props) {
     setError(null)
   }
 
-  const handleEdit = (data: Helper) => {
+  const handleEdit = (data: Exchanger) => {
     console.log(data)
     onSave(data)
     /*postData(endPoints.registerHelper, null, data)
@@ -60,21 +60,21 @@ export default function EditHelpersModal({helper, onSave, closeModal}: Props) {
 
   function getDefaultFileds(): Array<FormField> {
     return [
-      { nombre: 'Nombre completo', etiqueta: 'name', value: helper.name, tipo: 'text' },
-      { nombre: 'Contraseña', etiqueta: 'password', value: helper.password, tipo: 'password' },
-      { nombre: 'DNI', etiqueta: 'dni', value: helper.dni, tipo: 'text' },
-      { nombre: 'Teléfono', etiqueta: 'phone', value: helper.phone, tipo: 'tel' },
-      { nombre: 'Fecha de nacimiento', etiqueta: 'birthdate', value: helper.birthdate, tipo: 'date'}
+      { nombre: 'Nombre completo', etiqueta: 'name', value: exchanger.name, tipo: 'text' },
+      { nombre: 'Contraseña', etiqueta: 'password', value: exchanger.password, tipo: 'password' },
+      { nombre: 'DNI', etiqueta: 'dni', value: exchanger.dni, tipo: 'text' },
+      { nombre: 'Teléfono', etiqueta: 'phone', value: exchanger.phone, tipo: 'tel' },
+      { nombre: 'Fecha de nacimiento', etiqueta: 'birthdate', value: exchanger.birthdate, tipo: 'date'}
     ]
   }
 
   useEffect(() => {
-    if (!helper) return
+    if (!exchanger) return
     console.log(getDefaultFileds())
     getData(endPoints.location)
       .then((employeeLocationids: Location[]) => generateFields(employeeLocationids))
       .then((fields) => setCampos([...getDefaultFileds(), fields]))
-  }, [helper])
+  }, [exchanger])
 
   return campos && campos.length > 0 && <GenericForm id="edit-helpers-modal" campos={campos} listener={handleEdit} error={error} btnText="Aplicar cambios" />;
 }

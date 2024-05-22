@@ -70,11 +70,11 @@ function Profile({id}: Props) {
   useEffect(() => {
     getData(`${id ? `${endPoints.otherProfile}${id}` : endPoints.profile}`)
       .then(userData => setUserData(userData));
-    if (!id) {
-      getData(endPoints.inventory)
+
+    getData(`${id ? `${endPoints.inventory}/${id}` : endPoints.inventory }`)
       .then(inventory => setInventory(inventory))
       .catch(error => resetInvetory(error));
-    }
+
     getData(endPoints.myReviews)
       .then(reviews => setReviews(reviews))
       .catch(error => resetReviews(error));
@@ -146,30 +146,26 @@ function Profile({id}: Props) {
               ))}
             </div>
           </section>
-          { // TODO: se necesita API para mostrar inventario de otro usuario
-            !id &&
-            <section>
-              <h2 className="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-200">Publicaciones de productos</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                {!(inventory)||inventory.length==0? 
-                  <div >
-                    <p className="text-gray-600 dark:text-gray-400 line-clamp-2">No hay elementos</p>
+          <section>
+            <h2 className="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-200">Publicaciones de productos</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+              {!(inventory)||inventory.length==0? 
+                <div >
+                  <p className="text-gray-600 dark:text-gray-400 line-clamp-2">No hay elementos</p>
+                </div>
+                : inventory.map((product, index) => (
+                <div key={`${index}-${product.name}`} className="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
+                  <div className="w-full h-40 bg-gray-200 flex items-center justify-center">
+                    <img src={`data:image/jpeg;base64,${product.photo}`} />
                   </div>
-                  : inventory.map((product, idx) => (
-                  <div key={`product-${idx}`} className="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
-                    <div className="w-full h-40 bg-gray-200 flex items-center justify-center">
-                      <Avatar name={product.name} size="64" round={true} />
-                    </div>
-                    <div className="p-4">
-                      <h3 className={`text-lg font-bold mb-2 ${idx % 2 === 0 ? 'text-red-500' : 'text-blue-500'}`}>{product.name}</h3>
-                      <p className="text-gray-600 dark:text-gray-400 line-clamp-2">{product.description}</p>
-                      <p className="text-gray-500 dark:text-gray-400 text-sm mt-2">Published: {product.photo}</p>
-                    </div>
+                  <div className="p-4">
+                    <h3 className={`text-lg font-bold mb-2 ${index % 2 === 0 ? 'text-red-500' : 'text-blue-500'}`}>{product.name}</h3>
+                    <p className="text-gray-600 dark:text-gray-400 line-clamp-2">{product.description}</p>
                   </div>
-                ))}
-              </div>
-            </section>
-          }
+                </div>
+              ))}
+            </div>
+          </section>
           <section>
             <h2 className="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-200">Comentarios</h2>
             <div className="space-y-4">
