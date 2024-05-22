@@ -5,8 +5,8 @@ import PersonCard from "src/components/admin/PersonCard";
 import { ErrorCode } from "src/libs/Error/ErrorCode";
 import { ErrorTypes } from "src/libs/Error/ErrorTypes";
 import { endPoints } from "src/libs/constants";
-import { getData } from "src/libs/request/httpRequests";
 import { ExchangerData } from "src/libs/types/ExchangerData";
+import { deleteData, getData, putData } from 'src/libs/request/httpRequests';
 
 type ExchangerCard = {
     visible: boolean
@@ -16,8 +16,10 @@ export default function ManagerUsers() {
     
     const [searchQuery, setSearchQuery] = useState('');
     const [users, setUsers] = useState<ExchangerCard[]>([])
+    const [isEditing, setIsEditing] = useState(false);
 
     const [error, setError] = useState<ErrorCode>(null)
+    const [currentHelper, setCurrentHelper] = useState(null);
 
     const handleError = (errCode: number) => {
         const err = new ErrorCode(errCode, ErrorTypes.EXCHANGER_ERROR)
@@ -52,6 +54,32 @@ export default function ManagerUsers() {
             handleError(400)
         }
     }
+
+
+
+    const handleEdit = (helper) => {
+        setCurrentHelper(helper);
+        setIsEditing(true);
+      };
+    
+      const handleDelete = (id) => {
+        deleteData(`${endPoints.exchanger}/${id}`, null)
+          .then(() => setUsers(users.filter(user => user.id !== id)))
+      };
+    
+      const handleSave = (updatedHelper) => { // EDIT: usar putData de httpRequests
+        putData(`${endPoints.employees}/${updatedHelper.id}`, null, updatedHelper)
+          .then(res => console.log(res))
+          
+        /*setHelpers(helpers.map(helper =>
+          helper.id === updatedHelper.id ? updatedHelper : helper
+        ));*/
+        setIsEditing(false);
+      };
+    
+
+
+
 
     return (
         <div className="bg-gray-100 flex items-center justify-center min-h-screen">
@@ -93,7 +121,7 @@ export default function ManagerUsers() {
                     <div className="justify-center items-center text-[100%] grid grid-cols-3 gap-6 md:gap-8 mt-8 min-h-[300px]">
                         {users.map((exchanger) => (
                             <div className={`${!exchanger.visible && 'hidden'}`} key={exchanger.id}>
-                                <PersonCard data={exchanger} key={exchanger.id} />
+                                <PersonCard person={exchanger} onEdit={handleEdit} onDelete={handleDelete} key={exchanger.id} />
                             </div>
                         ))}
                     </div>
