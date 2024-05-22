@@ -3,6 +3,10 @@ import { FaStar } from 'react-icons/fa';
 function ProductCard({ product }) {
   const { id, photo, name, description, owner, itemCategory, quantity } = product;
 
+
+  function onClickHandler(){
+    //setRoute(otherProfile)
+  }
   return (
     <div className="bg-white p-4 rounded shadow-lg">
       <div className="mb-4">
@@ -12,7 +16,8 @@ function ProductCard({ product }) {
       <p className="text-sm text-gray-500 mb-2">ItemCategory: {itemCategory.name}</p>
       <p className="text-sm text-gray-500 mb-2">Description: {description}</p>
       <p className="text-sm text-gray-500 mb-2">Cantidad restante: {quantity}</p>
-      <button className="bg-red-500 text-white px-4 py-2 rounded">Intercambiar con el usuario {owner.id}</button>
+      <button className="bg-red-500 text-white px-4 py-2 rounded">Intercambiar </button>
+      <button className="bg-blue-500 text-white px-4 py-2 rounded">Dueño del item: {owner.id} onClick = onClickHandler</button>
     </div>
   );
 }
