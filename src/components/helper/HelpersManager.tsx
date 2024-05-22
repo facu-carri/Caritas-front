@@ -49,14 +49,16 @@ export default function HelpersManager() {
     <dialog className="modal" id='registerModal' onClick={handleClickModal} ref={modalRef}>
         <RegisterHelper modalId={'registerModal'} />
     </dialog>
-      <div className="min-h-screen bg-gray-100 flex items-center flex-col gap-4 justify-center p-4">
-      <Button onClick={handleRegisterHelper} >Registrar ayudante</Button>
-      <div className="w-full max-w-2xl bg-white shadow-lg rounded-lg p-6">
-        <h1 className="text-2xl font-bold text-blue-700 mb-4">Listado de Ayudantes</h1>
-        <HelpersList helpers={helpers} onEdit={handleEdit} onDelete={handleDelete} />
+    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-4 relative">
+      <div className="absolute top-1/2 transform -translate-y-1/2 flex flex-col items-center gap-4">
+        <Button onClick={handleRegisterHelper}>Registrar ayudante</Button>
+        <div className="w-full max-w-2xl bg-white shadow-lg rounded-lg p-6">
+          <h1 className="text-2xl font-bold text-blue-700 mb-4">Listado de Ayudantes</h1>
+          <HelpersList helpers={helpers} onEdit={handleEdit} onDelete={handleDelete} />
+        </div>
+        {isEditing && <EditHelperModal helper={currentHelper} onSave={handleSave} onClose={() => setIsEditing(false)} />}
       </div>
-      {isEditing && <EditHelperModal helper={currentHelper} onSave={handleSave} onClose={() => setIsEditing(false)} />}
-      </div>
-      </>
+    </div>
+  </>
   );
 }
