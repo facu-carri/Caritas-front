@@ -9,7 +9,7 @@ import { ErrorTypes } from "src/libs/Error/ErrorTypes";
 import { Location } from "../filiales/EliminarModal";
 
 type Helper = {
-  firstName: string,
+  name: string,
   dni: string,
   phone: string,
   email: string,
@@ -57,7 +57,7 @@ export default function EditHelpersModal({helper, onSave, closeModal}: Props) {
 
   function getDefaultFileds(): Array<FormField> {
     return [
-      { nombre: 'Nombre', etiqueta: 'name', value: helper.firstName, tipo: 'text' },
+      { nombre: 'Nombre', etiqueta: 'name', value: helper.name, tipo: 'text' },
       { nombre: 'Email', etiqueta: 'email', value: helper.email, tipo: 'email' },
       { nombre: 'Contraseña', etiqueta: 'password', value: helper.password, tipo: 'password' },
       { nombre: 'DNI', etiqueta: 'dni', value: helper.dni, tipo: 'text' },

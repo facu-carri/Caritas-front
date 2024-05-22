@@ -60,9 +60,11 @@ function GenericForm({ campos, listener, error, btnText }: Type) {
           break
         case 'select-one':
           const select = input as HTMLSelectElement
+          console.log('select-one', input.id, select.options[select.selectedIndex].text)
           obj[input.id] = select.options[select.selectedIndex].text
           break
         default:
+          console.log('default', input.id, input.value)
           obj[input.id] = input.value
       }
     }
