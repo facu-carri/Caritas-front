@@ -17,7 +17,7 @@ type Type = {
   employeeLocationId: string
 }
 
-export default function EditHelpersModal({helper, onSave, onClose, modalId}) {
+export default function EditHelpersModal({helper, onSave, onClose, closeModal}) {
 
   const [error, setError] = useState<ErrorCode>(null)
   
@@ -28,11 +28,6 @@ export default function EditHelpersModal({helper, onSave, onClose, modalId}) {
     { nombre: 'DNI', etiqueta: helper.dni, tipo: 'text' },
     { nombre: 'Teléfono', etiqueta: helper.phone, tipo: 'tel' },
   ]
-  
-  const closeModal = () => {
-    const elem = modalId && (document.getElementById(modalId) as HTMLDialogElement)
-    elem?.close()
-  }
 
   const handleError = (errCode: number) => {
     const err = new ErrorCode(errCode, ErrorTypes.REGISTER_HELPER_ERROR)

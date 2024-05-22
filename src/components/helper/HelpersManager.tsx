@@ -37,22 +37,32 @@ export default function HelpersManager() {
     setIsEditing(false);
   };
 
+  const modalRef = useRef(null)
+
   const handleRegisterHelper = () => {
     const elem = (document.getElementById('registerModal') as HTMLDialogElement)
     elem.showModal()
   }
 
-  const modalRef = useRef(null)
-
   const handleClickModal = (ev) => {
     const target = ev.target
     if(target.id && target.id == modalRef.current.id)  modalRef.current.close()
+  }
+  
+  const modalEditRef = useRef(null)
+
+  const handleClickEditModal = (ev) => {
+    const target = ev.target
+    if(target.id && target.id == modalEditRef.current.id)  modalEditRef.current.close()
   }
 
   return (
   <>
     <dialog className="modal" id='registerModal' onClick={handleClickModal} ref={modalRef}>
         <RegisterHelper modalId={'registerModal'} />
+    </dialog>
+    <dialog className="modal bg-gray-500/50" id='eliminarFilial' open={currentHelper} onClick={handleClickModal} ref={modalEditRef}>
+      {currentHelper && <EditHelperModal closeModal={handleClickEditModal} helper={currentHelper} onSave={handleSave} onClose={() => setIsEditing(false)} />}
     </dialog>
     <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-4 relative">
       <div className="absolute top-1/2 transform -translate-y-1/2 flex flex-col items-center gap-4">
@@ -61,7 +71,6 @@ export default function HelpersManager() {
           <h1 className="text-2xl font-bold text-blue-700 mb-4">Listado de Ayudantes</h1>
           <HelpersList helpers={helpers} onEdit={handleEdit} onDelete={handleDelete} />
         </div>
-        {isEditing && <EditHelperModal helper={currentHelper} onSave={handleSave} onClose={() => setIsEditing(false)} />}
       </div>
     </div>
   </>
