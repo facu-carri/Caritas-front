@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
-import HelpersList from './HelpersList';
+import HelpersList from '../helper/HelpersList';
 import EditHelperModal from './EditHelperModal';
 import Button from '../Button';
-import RegisterHelper from '../admin/RegisterHelper';
+import RegisterHelper from './RegisterHelper';
 import { deleteData, getData, putData } from 'src/libs/request/httpRequests';
 import { endPoints } from "src/libs/constants";
 

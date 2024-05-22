@@ -138,9 +138,7 @@ export default function ProductListInventory({ ruta, text, subText, item }: Prop
                     <p className="text-gray-600 dark:text-gray-400 line-clamp-2">No hay elementos</p>
                   </div>
                 : filteredProducts.map(product => (
-                  <a key={product.id} onClick={() => toggleModal(product)}>
-                    <ProductCard key={product.id} product={product} />
-                  </a>
+                    <ProductCard key={product.id} product={product} onClick={() => toggleModal(product)} />
               ))}
             </div>
           </div>

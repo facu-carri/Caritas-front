@@ -3,7 +3,7 @@ import { AdminMain } from "./main";
 import ErrorPage from "../ErrorPage";
 import { routes } from "src/libs/constants";
 import AdminLayout from "./Layout";
-import HelpersManager from "src/components/helper/HelpersManager";
+import HelpersManager from "src/components/admin/HelpersManager";
 import Maps from "../maps/Map";
 import AuthEmployeeProvider from "src/context/AuthEmployee";
 import ManagerUsers from "./ManageUsers";

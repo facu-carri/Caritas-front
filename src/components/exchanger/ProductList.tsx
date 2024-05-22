@@ -2,6 +2,7 @@ import ProductCard from './ProductCard';
 import { getData } from "src/libs/request/httpRequests";
 import { endPoints } from "src/libs/constants";
 import { useEffect, useRef, useState } from 'react';
+import ProductModal from './ProductModal';
 // TODO: Juntarlo con lo del Profiles 
 type ItemData = {
   id: number
@@ -30,29 +31,45 @@ function ProductList({ruta, text, subText}) { // endPoints.exchangeablesProducts
   const [category, setCategory] = useState('');
   const [inventory, setInventory] = useState<ItemData[]>();
   const [categories, setCategories] = useState<ItemCategory[]>();
-  
+  const [currentProduct, setCurrentProduct] = useState<ItemData>(null)
+
   function resetInvetory(error){
     if(error == 404)
       setInventory([])
   }   
-  function resetCategories(error){
+  function resetCategories(){
     // TODO: CHECK ERROR TYPE if(error == 404)
       setCategories([])
-  }   
+  }
+
   useEffect(() => {
     getData(ruta)
       .then(inventory => setInventory(inventory))
       .catch(error => resetInvetory(error));
     getData(endPoints.categories)
       .then(categories => setCategories(categories))
-      .catch(error => resetCategories(error));
+      .catch(() => resetCategories());
     }, [ruta]);
 
   const filteredProducts = category
     ? inventory.filter(product => product.itemCategory.name === category)
     : inventory;
 
+  const modalRef = useRef(null)
+
+  const handleClickModal = (ev) => {
+    const target = ev ? ev.target : null
+    if (target == null || target.id && target.id == modalRef.current.id) {
+      modalRef.current.close()
+      setCurrentProduct(null)
+    }
+  }
+  
   return (
+    <>
+    <dialog className="modal bg-gray-500/50" id='editarHelperModal' open={currentProduct != null} onClick={handleClickModal} ref={modalRef}>
+      {currentProduct && <ProductModal product={currentProduct} />}
+    </dialog>
     <div className="bg-gray-100 min-h-screen">
       <header className="bg-blue-600 text-white p-4 text-center shadow-md">
         <div className='mt-16'>
@@ -84,12 +101,13 @@ function ProductList({ruta, text, subText}) { // endPoints.exchangeablesProducts
                   <p className="text-gray-600 dark:text-gray-400 line-clamp-2">No hay elementos</p>
                 </div>
               : filteredProducts.map(product => (
-              <ProductCard key={product.id} product={product} />
+              <ProductCard key={product.id} product={product} onClick={() => setCurrentProduct(product)}/>
             ))}
           </div>
         </div>
       </main>
     </div>
+    </>
   );
 }
 
