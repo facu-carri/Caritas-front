@@ -81,6 +81,11 @@ function Profile({id}: Props) {
       .catch(error => resetReviews(error));
   }, []);
   
+  function formatDate(_date: string) {
+    const date = new Date(_date)
+    return date.toDateString()
+  }
+
   if (!userData) {
     return <LoadingAnimation/>
   }
@@ -122,7 +127,7 @@ function Profile({id}: Props) {
                 { title: "Photo", value: userData.photo, color: "text-blue-500" },
                 { title: "Stars", value: userData.stars + "/10", color: "text-blue-500" },
                 { title: "Absentees", value: userData.absentees, color: "text-red-500" },
-                { title: "Birthdate", value: userData.birthdate, color: "text-red-500" },
+                { title: "Birthdate", value: formatDate(userData.birthdate), color: "text-red-500" },
               ].map((info, idx) => (
                 <div key={`info-${idx}`} className="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
                   <h3 className={`text-lg font-bold mb-2 ${info.color}`}>{info.title}</h3>
