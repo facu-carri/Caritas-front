@@ -20,6 +20,7 @@ type UserData = {
   photo: string,
   stars: number,
   absentees: number,
+  birthdate: string,
 }
 type ItemData = {
   id: number
@@ -107,6 +108,9 @@ function Profile({id}: Props) {
         <div className="max-w-4xl mx-auto grid gap-8">
           <section>
             <h2 className="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-200">Informacion Personal</h2>
+            <div className="mb-4">
+              <img src={`data:image/jpeg;base64,${userData.photo}`} alt={userData.name} className="w-full rounded" />
+            </div> 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {[
                 //{ title: "Location", value: userData.name, color: "text-red-500" },
@@ -117,6 +121,7 @@ function Profile({id}: Props) {
                 { title: "Photo", value: userData.photo, color: "text-blue-500" },
                 { title: "Stars", value: userData.stars + "/10", color: "text-blue-500" },
                 { title: "Absentees", value: userData.absentees, color: "text-red-500" },
+                { title: "Birthdate", value: userData.birthdate, color: "text-red-500" },
               ].map((info, idx) => (
                 <div key={`info-${idx}`} className="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
                   <h3 className={`text-lg font-bold mb-2 ${info.color}`}>{info.title}</h3>
