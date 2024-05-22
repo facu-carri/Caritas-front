@@ -13,5 +13,10 @@ export default function RoutesHandler() {
         navigator(route)
     }
 
-    return { getRoute, setRoute, location }
+    const getId = () => {
+        const split = location.pathname.split('/')
+        return split[split.length - 1]
+    }
+
+    return { getRoute, setRoute, location, getId }
 }
