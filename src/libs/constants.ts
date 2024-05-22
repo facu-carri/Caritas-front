@@ -30,7 +30,6 @@ const helperRoutes = {
 const exchangerRoutes = {
     'inventory': '/inventario',
     'profile': '/perfil',
-    'otherProfile': '/perfil/',
     'caritasInformation':'/informacionCaritas'
 }
 export const routes = {

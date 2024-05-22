@@ -3,7 +3,7 @@ import HelpersList from './HelpersList';
 import EditHelperModal from './EditHelperModal';
 import Button from '../Button';
 import RegisterHelper from '../admin/RegisterHelper';
-import { deleteData, getData } from 'src/libs/request/httpRequests';
+import { deleteData, getData, putData } from 'src/libs/request/httpRequests';
 import { endPoints } from "src/libs/constants";
 
 //tiene toda la logica de eliminar y editar ayudantes listados y su estado.
@@ -28,9 +28,12 @@ export default function HelpersManager() {
   };
 
   const handleSave = (updatedHelper) => { // EDIT: usar putData de httpRequests
-    setHelpers(helpers.map(helper =>
+    putData(`${endPoints.employees}/${updatedHelper.id}`, null, updatedHelper)
+      .then(res => console.log(res))
+      
+    /*setHelpers(helpers.map(helper =>
       helper.id === updatedHelper.id ? updatedHelper : helper
-    ));
+    ));*/
     setIsEditing(false);
   };
 
