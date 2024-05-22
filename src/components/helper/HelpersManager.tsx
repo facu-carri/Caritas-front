@@ -3,7 +3,7 @@ import HelpersList from './HelpersList';
 import EditHelperModal from './EditHelperModal';
 import Button from '../Button';
 import RegisterHelper from '../admin/RegisterHelper';
-import { getData } from 'src/libs/request/httpRequests';
+import { deleteData, getData } from 'src/libs/request/httpRequests';
 import { postData } from "src/libs/request/httpRequests";
 import { endPoints } from "src/libs/constants";
 
@@ -24,7 +24,8 @@ export default function HelpersManager() {
   };
 
   const handleDelete = (id) => {
-    setHelpers(helpers.filter(helper => helper.id !== id)); // EDIT: usar deleteData de httpRequests
+    deleteData(`${endPoints.employees}/${id}`, null)
+      .then(() => setHelpers(helpers.filter(helper => helper.id !== id)))
   };
 
   const handleSave = (updatedHelper) => { // EDIT: usar putData de httpRequests
