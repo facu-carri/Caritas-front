@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react"
 import ErrorAlert from "src/components/ErrorAlert";
 import PersonCard from "src/components/admin/PersonCard";
 import { ErrorCode } from "src/libs/Error/ErrorCode";
@@ -7,6 +6,8 @@ import { ErrorTypes } from "src/libs/Error/ErrorTypes";
 import { endPoints } from "src/libs/constants";
 import { ExchangerData } from "src/libs/types/ExchangerData";
 import { deleteData, getData, putData } from 'src/libs/request/httpRequests';
+import EditExchangerAsAdminModal from 'src/components/admin/EditExchangerAsAdminModal.tsx';
+import { useEffect, useRef, useState } from 'react';
 
 type ExchangerCard = {
     visible: boolean
@@ -19,7 +20,7 @@ export default function ManagerUsers() {
     const [isEditing, setIsEditing] = useState(false);
 
     const [error, setError] = useState<ErrorCode>(null)
-    const [currentHelper, setCurrentHelper] = useState(null);
+    const [currentexchanger, setCurrentexchanger] = useState(null);
 
     const handleError = (errCode: number) => {
         const err = new ErrorCode(errCode, ErrorTypes.EXCHANGER_ERROR)
@@ -55,9 +56,13 @@ export default function ManagerUsers() {
         }
     }
 
-    const handleEdit = (helper) => {
-        setCurrentHelper(helper);
+    const handleEdit = (exchanger) => {
+        setCurrentexchanger(exchanger);
         setIsEditing(true);
+        
+        
+        const elem = (document.getElementById('editarexchangerModal') as HTMLDialogElement)
+        elem.showModal()
     };
     
     const handleDelete = (id) => {
@@ -65,17 +70,46 @@ export default function ManagerUsers() {
             .then(() => setUsers(prev => prev.filter(user => user.id !== id)))
     };
     
-    const handleSave = (updatedHelper) => { // EDIT: usar putData de httpRequests
-        putData(`${endPoints.employees}/${updatedHelper.id}`, null, updatedHelper)
+    /*const handleSave = (updatedexchanger) => { // EDIT: usar putData de httpRequests
+        putData(`${endPoints.employees}/${updatedexchanger.id}`, null, updatedexchanger)
           .then(res => console.log(res))
           
-        /*setHelpers(helpers.map(helper =>
-          helper.id === updatedHelper.id ? updatedHelper : helper
-        ));*/
+        /*setexchangers(exchangers.map(exchanger =>
+          exchanger.id === updatedexchanger.id ? updatedexchanger : exchanger
+        ));*//*
         setIsEditing(false);
-    };
+    };*/
+    const modalEditRef = useRef(null)
     
-    return (
+  const handleClickEditModal = (ev) => {
+    const target = ev ? ev.target : null
+    if (target == null || target.id && target.id == modalEditRef.current.id) {
+      modalEditRef.current.close()
+      setCurrentexchanger(null)
+    }
+  }
+  const handleSave = (updatedexchanger) => { 
+    if(updatedexchanger.password === "") {
+      updatedexchanger.password = null;
+    }
+    updatedexchanger.birthdate="2000-02-02"
+    console.log(updatedexchanger)
+    putData(`${endPoints.exchanger}/${currentexchanger.id}`, null, {
+      ...updatedexchanger,
+      email: currentexchanger.email,
+      birthdate:"2000-02-02"
+    })
+      .then(res => console.log(res))
+      
+    /*setexchangers(exchangers.map(exchanger =>
+      exchanger.id === updatedexchanger.id ? updatedexchanger : exchanger
+    ));*/
+  };
+    return (<>
+    
+        <dialog className="modal bg-gray-500/50" id='editarexchangerModal' onClick={handleClickEditModal} ref={modalEditRef}>
+        <EditExchangerAsAdminModal closeModal={handleClickEditModal} helper={currentexchanger} onSave={handleSave} />
+        </dialog>
         <div className="bg-gray-100 flex items-center justify-center min-h-screen">
             <section className="w-full py-12">
                 <div className="max-w-4xl mx-auto px-4">
@@ -122,5 +156,6 @@ export default function ManagerUsers() {
                 </div>
             </section>
         </div>
+        </>
     );
 }
