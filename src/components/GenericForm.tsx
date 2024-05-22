@@ -22,7 +22,8 @@ export type FormField = {
 type Type = {
   campos: Array<FormField>,
   listener?: (values: Record<string, any>) => void
-  error?: ErrorCode
+  error?: ErrorCode,
+  btnText?: string
 }
 
 export async function getImageBase64(img:File) {
@@ -40,7 +41,7 @@ export async function getImageBase64(img:File) {
   })
 }
 
-function GenericForm({ campos, listener, error }: Type) {
+function GenericForm({ campos, listener, error, btnText }: Type) {
 
   async function getInputValues(): Promise<Record<string, any>> {
     const inputs = document.getElementsByName('inputField')
@@ -101,7 +102,7 @@ function GenericForm({ campos, listener, error }: Type) {
           </div>
         ))}
         {error == null && <button onClick={handleSubmit} className="bg-red-500 text-white px-4 py-2 rounded-lg font-bold transition-colors duration-300 hover:bg-red-700 transform hover:-translate-y-1 hover:scale-105">
-          Enviar
+          {btnText ?? 'Enviar'}
         </button>}
       </form>
     </div>

@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { deleteData, getData, postData } from "src/libs/request/httpRequests";
+import { deleteData, getData } from "src/libs/request/httpRequests";
 import GenericForm, { FormField, ListItem } from "../GenericForm";
 import { endPoints } from "src/libs/constants";
 import { useEffect, useState } from "react";
@@ -59,6 +59,6 @@ export default function EliminarFilialModal({ closeModal }) {
   }, [])
 
   return <>
-    {campos && < GenericForm campos={campos} listener={handleDelete} error={error} />}
+    {campos && < GenericForm campos={campos} listener={handleDelete} error={error} btnText="Eliminar" />}
   </>;
 }
