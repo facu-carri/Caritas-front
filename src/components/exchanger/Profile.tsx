@@ -10,6 +10,7 @@ import Avatar from 'react-avatar';
 import { getData } from "src/libs/request/httpRequests";
 import { endPoints } from "src/libs/constants";
 import { useEffect, useState } from 'react';
+import LoadingAnimation from '../LoadingAnimation';
 
 type UserData = {
   id: number,
@@ -81,7 +82,7 @@ function Profile({id}: Props) {
   }, []);
   
   if (!userData) {
-    return <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">Loading...</div>; // Muestra un mensaje de carga mientras se obtienen los datos
+    return <LoadingAnimation/>
   }
 
   return (

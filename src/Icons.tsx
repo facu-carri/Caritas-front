@@ -9,6 +9,7 @@ import Home from "./icons/Home"
 import Menu from "./icons/Menu"
 import Error from "./icons/Error"
 import Map from "./icons/Map"
+import Loading from "./icons/Loading"
 
 const default_color = '#000000'
 
@@ -24,4 +25,5 @@ export const Icons = {
     menu: (color: string = default_color) => <Menu currentColor={color} />,
     error: <Error/>,
     map: <Map/>,
+    loading: <Loading/>
 }

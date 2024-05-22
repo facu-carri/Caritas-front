@@ -10,6 +10,20 @@ export default {
       colors: {
         'navbar-blue': '#BACDE3',
       },
+      keyframes: {
+        bounce: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-25%)' },
+        },
+        spin: {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg)' },
+        },
+      },
+      animation: {
+        bounce: 'bounce 1s infinite',
+        spin: 'spin 3s linear infinite',
+      },
     }
   },
   daisyui: {
