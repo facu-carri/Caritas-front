@@ -3,9 +3,9 @@ import HelpersList from '../helper/HelpersList';
 import EditHelperModal from './EditHelperModal';
 import Button from '../Button';
 import RegisterHelper from './RegisterHelper';
-import { deleteData, getData, putData } from 'src/libs/request/httpRequests';
-import { endPoints, routes } from "src/libs/constants";
-import RoutesHandler from 'src/libs/routesHandler';
+import { deleteData, getData, putData } from 'src/utils/request/httpRequests';
+import { endPoints, routes } from "src/utils/constants";
+import RoutesHandler from 'src/utils/routesHandler';
 
 //tiene toda la logica de eliminar y editar ayudantes listados y su estado.
 export default function HelpersManager() {

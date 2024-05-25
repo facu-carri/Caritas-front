@@ -1,5 +1,5 @@
-import { routes } from 'src/libs/constants';
-import RoutesHandler from 'src/libs/routesHandler';
+import { routes } from 'src/utils/constants';
+import RoutesHandler from 'src/utils/routesHandler';
 import { ItemData } from './ProductListInventory';
 //la publicacion particular del producto a intercambiar
 

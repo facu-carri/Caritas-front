@@ -4,7 +4,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import logo from '@images/LogoCaritas.png'
 import Input from './Input';
-import { ErrorCode } from 'src/libs/Error/ErrorCode';
+import { ErrorCode } from 'src/utils/Error/ErrorCode';
 import ErrorAlert from './ErrorAlert';
 
 export type ListItem = {

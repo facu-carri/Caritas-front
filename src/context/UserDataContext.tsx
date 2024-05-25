@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import React, { useContext, useState } from "react";
-import { UserDataContextType } from "./types/User";
+import { UserDataContextType } from "../types/context/User";
 
 const UserDataContext = React.createContext<UserDataContextType>(undefined)
 

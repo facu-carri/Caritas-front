@@ -1,7 +1,7 @@
 import { useRef } from "react"
 import { useLogout } from "src/context/LogoutContext"
 import Button from "../Button"
-import { User } from "src/libs/User"
+import { User } from "src/utils/User"
 
 export default function ConfirmationModal({ onAccept, onCancel }) {
     

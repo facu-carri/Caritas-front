@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-refresh/only-export-components */
 import React, { useContext, useEffect, useState } from "react";
-import { User } from "src/libs/User";
-import { roles, routes } from "src/libs/constants";
-import RoutesHandler from "src/libs/routesHandler";
+import { User } from "src/utils/User";
+import { roles, routes } from "src/utils/constants";
+import RoutesHandler from "src/utils/routesHandler";
 
 const AuthContext = React.createContext(undefined)
 

@@ -1,7 +1,7 @@
 import { useRoutes } from "react-router-dom";
 import { AdminMain } from "./main";
 import ErrorPage from "../ErrorPage";
-import { routes } from "src/libs/constants";
+import { routes } from "src/utils/constants";
 import AdminLayout from "./Layout";
 import HelpersManager from "src/components/admin/HelpersManager";
 import Maps from "../maps/Map";
@@ -9,7 +9,7 @@ import AuthEmployeeProvider from "src/context/AuthEmployee";
 import ManagerUsers from "./ManageUsers";
 import Profile from "src/components/exchanger/Profile";
 import EmployeeProfile from "src/components/helper/Profile";
-import RoutesHandler from "src/libs/routesHandler";
+import RoutesHandler from "src/utils/routesHandler";
 
 export function AdminRouter() {
 

@@ -4,10 +4,10 @@ import ReactDOM from 'react-dom/client'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import Login from './routes/login/Login.tsx'
 import AuthProvider from './context/AuthContext.tsx'
-import RoleBasedRouting from './libs/RoleRouting.tsx'
+import RoleBasedRouting from './utils/RoleRouting.tsx'
 import FormularioRegistroIntercambiador from './routes/exchanger/FormularioRegistroIntercambiador.tsx'
 import LogoutProvider from './context/LogoutContext.tsx'
-import { routes } from './libs/constants.ts'
+import { routes } from './utils/constants.ts'
 import CustomModalProvider from './context/CustomModalContext.tsx'
 
 const _routes = [

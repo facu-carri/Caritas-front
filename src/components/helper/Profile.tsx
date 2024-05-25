@@ -7,8 +7,8 @@ import Avatar from 'react-avatar';
 ];*/
 
 
-import { getData } from "src/libs/request/httpRequests";
-import { endPoints } from "src/libs/constants";
+import { getData } from "src/utils/request/httpRequests";
+import { endPoints } from "src/utils/constants";
 import { useEffect, useState } from 'react';
 import LoadingAnimation from '../LoadingAnimation';
 

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import Input from "../../Input";
 import Button from "../../Button";
-import { getData } from "src/libs/request/httpRequests";
-import { endPoints } from "src/libs/constants";
+import { getData } from "src/utils/request/httpRequests";
+import { endPoints } from "src/utils/constants";
 import { getImageBase64 } from "src/components/GenericForm";
 
 export default function AddItemModal({ onClose, onAddItem }) {

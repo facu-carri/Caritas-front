@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import ErrorAlert from "src/components/ErrorAlert";
 import PersonCard from "src/components/admin/PersonCard";
-import { ErrorCode } from "src/libs/Error/ErrorCode";
-import { ErrorTypes } from "src/libs/Error/ErrorTypes";
-import { endPoints } from "src/libs/constants";
-import { ExchangerData } from "src/libs/types/ExchangerData";
-import { deleteData, getData, putData } from 'src/libs/request/httpRequests';
+import { ErrorCode } from "src/utils/Error/ErrorCode";
+import { ErrorTypes } from "src/utils/Error/ErrorTypes";
+import { endPoints } from "src/utils/constants";
+import { ExchangerData } from "src/types/ExchangerData";
+import { deleteData, getData, putData } from 'src/utils/request/httpRequests';
 import EditExchangerAsAdminModal from 'src/components/admin/EditExchangerAsAdminModal.tsx';
 import { useEffect, useRef, useState } from 'react';
 

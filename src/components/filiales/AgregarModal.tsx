@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { postData } from "src/libs/request/httpRequests";
+import { postData } from "src/utils/request/httpRequests";
 import GenericForm, { FormField } from "../GenericForm";
-import { endPoints } from "src/libs/constants";
+import { endPoints } from "src/utils/constants";
 import { useState } from "react";
-import { ErrorCode } from "src/libs/Error/ErrorCode";
-import { ErrorTypes } from "src/libs/Error/ErrorTypes";
+import { ErrorCode } from "src/utils/Error/ErrorCode";
+import { ErrorTypes } from "src/utils/Error/ErrorTypes";
 
 type LocationType = {
   coordinates: string,

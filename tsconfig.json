@@ -22,7 +22,7 @@
     "baseUrl": ".",
     "paths": {
       "@css/*": ["src/css/*"],
-      "@images/*": ["src/images/*"]
+      "@images/*": ["src/assets/images/*"]
     }
   },
   "include": ["src", "*.d.ts"],

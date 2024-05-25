@@ -1,6 +1,6 @@
 import ProductCard from './ProductCard';
-import { getData } from "src/libs/request/httpRequests";
-import { endPoints } from "src/libs/constants";
+import { getData } from "src/utils/request/httpRequests";
+import { endPoints } from "src/utils/constants";
 import { useEffect, useRef, useState } from 'react';
 import ProductModal from './ProductModal';
 // TODO: Juntarlo con lo del Profiles 

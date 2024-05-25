@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Icons } from "src/Icons"
 import Navbar, { Tab } from "src/components/admin/Navbar"
-import { colors, routes } from "src/libs/constants"
-import RoutesHandler from "src/libs/routesHandler"
+import { colors, routes } from "src/utils/constants"
+import RoutesHandler from "src/utils/routesHandler"
 import { Outlet } from "react-router-dom"
 import { useEffect, useRef, useState } from "react"
 import Button, { ButtonType } from "src/components/Button"

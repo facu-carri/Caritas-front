@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import ProductCard from './ProductCard';
-import { deleteData, getData, putData } from "src/libs/request/httpRequests";
-import { endPoints } from "src/libs/constants";
+import { deleteData, getData, putData } from "src/utils/request/httpRequests";
+import { endPoints } from "src/utils/constants";
 import { useEffect, useState } from 'react';
 import EditItemModal from './inventory/EditItemModal';
 // TODO: Juntarlo con lo del Profiles 

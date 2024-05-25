@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { getData, postData, putData } from "src/libs/request/httpRequests";
+import { getData, postData, putData } from "src/utils/request/httpRequests";
 import GenericForm, { FormField, ListItem } from "../GenericForm";
-import { endPoints } from "src/libs/constants";
+import { endPoints } from "src/utils/constants";
 import { useEffect, useState } from "react";
-import { ErrorCode } from "src/libs/Error/ErrorCode";
-import { ErrorTypes } from "src/libs/Error/ErrorTypes";
+import { ErrorCode } from "src/utils/Error/ErrorCode";
+import { ErrorTypes } from "src/utils/Error/ErrorTypes";
 import { Location } from "../filiales/EliminarModal";
 
 type Helper = {

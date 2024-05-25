@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import Input from "../../Input";
 import Button from "../../Button";
-import { getData } from "src/libs/request/httpRequests";
-import { endPoints } from "src/libs/constants";
+import { getData } from "src/utils/request/httpRequests";
+import { endPoints } from "src/utils/constants";
 import { getImageBase64 } from "src/components/GenericForm";
-import Trash from "src/icons/Trash";
+import Trash from "src/assets/icons/Trash";
 
 export default function EditItemModal({ onClose, onEditItem, onDeleteItem, defaultName, defaultDescription, defaultItemCategoryId, defaultQuantity }) {
   const [name, setName] = useState(defaultName);

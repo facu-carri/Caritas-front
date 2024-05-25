@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import React, { useContext, useState } from "react";
-import { LogoutContextType } from "./types/Logout";
+import { LogoutContextType } from "../types/context/Logout";
 import LogoutModal from "src/components/LogoutModal";
 
 const LogoutContext = React.createContext<LogoutContextType>(undefined)

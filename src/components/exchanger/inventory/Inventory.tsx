@@ -2,8 +2,8 @@ import { useState } from 'react';
 import AddItemModal from './AddItemModal';
 import { ProductType } from './ProductType';
 import ProductListInventory, { ItemData } from '../ProductListInventory';
-import { endPoints } from "src/libs/constants";
-import { postData } from 'src/libs/request/httpRequests';
+import { endPoints } from "src/utils/constants";
+import { postData } from 'src/utils/request/httpRequests';
 
 function PlusIcon(props) {
   return (

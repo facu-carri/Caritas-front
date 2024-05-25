@@ -7,13 +7,14 @@ import Avatar from 'react-avatar';
 ];*/
 
 
-import { getData, putData } from "src/libs/request/httpRequests";
-import { endPoints } from "src/libs/constants";
+import { getData, putData } from "src/utils/request/httpRequests";
+import { endPoints } from "src/utils/constants";
 import { useEffect, useState } from 'react';
 import LoadingAnimation from '../LoadingAnimation';
 import EditExchangerModal from '../admin/EditExchangerModal';
 import { useCustomModal } from 'src/context/CustomModalContext';
 import ProductCard from './ProductCard';
+import { ItemData } from './ProductListInventory';
 
 
 type UserData = {

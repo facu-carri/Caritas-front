@@ -3,14 +3,14 @@
 import { useEffect, useState } from "react"
 import { Icons } from "src/Icons"
 import Input from "src/components/Input"
-import { RequestStatus } from "src/libs/types/RequestStatus"
-import { getElementValue, validString } from "src/libs/api"
-import { endPoints, routes, serverAddress } from "src/libs/constants"
+import { getElementValue, validString } from "src/utils/api"
+import { endPoints, routes, serverAddress } from "src/utils/constants"
 import { LoginQuery } from "./LoginQuery"
-import { User } from "src/libs/User"
-import RoutesHandler from "src/libs/routesHandler"
+import { User } from "src/utils/User"
+import RoutesHandler from "src/utils/routesHandler"
 import ErrorAlert from "src/components/ErrorAlert"
 import BotonARuta from "src/components/BotonARuta"
+import { RequestStatus } from "src/types/RequestStatus"
 
 const Login = () => {
 

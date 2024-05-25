@@ -2,7 +2,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import React, { useContext } from "react";
 import AuthenticationCodeInput from "src/routes/login/AuthenticationCodeInput";
-import { User } from "src/libs/User";
+import { User } from "src/utils/User";
 
 const AuthEmployeeContext = React.createContext(undefined)
 

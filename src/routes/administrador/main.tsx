@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react"
-import { routes } from "src/libs/constants"
-import RoutesHandler from "src/libs/routesHandler"
+import { routes } from "src/utils/constants"
+import RoutesHandler from "src/utils/routesHandler"
 
 export const AdminMain = () => {
 
