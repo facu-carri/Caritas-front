@@ -5,11 +5,11 @@ import { Outlet } from "react-router-dom"
 import { useEffect, useRef, useState } from "react"
 import Button, { ButtonType } from "src/components/Button"
 import CircularDropdown from "src/components/DropDown"
-import { useLogout } from "src/context/LogoutContext"
 import FilialesOptions from "./Filiales"
 import { useCustomModal } from "src/context/CustomModalContext"
 import { Icons } from "src/utils/Icons"
 import Navbar, { Tab } from "./Navbar"
+import LogoutModal from "src/components/modals/Logout"
 
 export default function AdminLayout() {
 
@@ -17,7 +17,6 @@ export default function AdminLayout() {
   const [showMenu, setShowMenu] = useState(false)
   const [menuOpts, setMenuOpts] = useState<Array<Tab>>([])
   const dropdownRef = useRef(null);
-  const { setShowLogoutModal } = useLogout()
   const { setModal } = useCustomModal()
 
   useEffect(() => {
@@ -121,7 +120,7 @@ export default function AdminLayout() {
   const dropdownItems: ButtonType[] = [
     {
       text: 'Cerrar sesion',
-      onClick: () => setShowLogoutModal(true)
+      onClick: () => setModal(<LogoutModal/>)
     }
   ]
 
