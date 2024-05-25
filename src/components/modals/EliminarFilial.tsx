@@ -8,6 +8,7 @@ import { ErrorCode } from "src/utils/Error/ErrorCode";
 import { ErrorTypes } from "src/utils/Error/ErrorTypes";
 import { useQuery } from "react-query";
 import LoadingSpinner from "../LoadingSpinner";
+import { useCustomModal } from "src/context/CustomModalContext";
 
 type Type = {
   filial: number,
@@ -19,10 +20,11 @@ export type Location = {
   description: string
 }
 
-export default function EliminarFilialModal({ closeModal }) {
+export default function EliminarFilialModal() {
 
   const [error, setError] = useState<ErrorCode>(null)
-
+  const { closeModal } = useCustomModal()
+  
   const handleError = (errCode: number) => {
     const err = new ErrorCode(errCode, ErrorTypes.FILIALES_ERROR)
     if(errCode == 403) setTimeout(closeModal, 5000)

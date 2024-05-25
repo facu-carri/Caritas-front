@@ -1,17 +1,17 @@
-import { Tab } from "src/routes/admin/components/Navbar";
-import AgregarFiliales from "src/components/filiales/AgregarFiliales";
-import EliminarFiliales from "src/components/filiales/EliminarFiliales";
+import EliminarFilialModal from "src/components/modals/EliminarFilial";
+import { Tab } from "./Navbar";
+import AgregarFilialModal from "src/components/modals/AgregarFilial";
 
 export default function FilialesOptions() {
 
     const FilialesOpts: Tab[] = [
         {
             text: 'Agregar filiales',
-            customElement: <AgregarFiliales/>
+            customElement: <AgregarFilialModal/>
         },
         {
             text: 'Eliminar filiales',
-            customElement: <EliminarFiliales/>
+            customElement: <EliminarFilialModal/>
         }
     ]
 

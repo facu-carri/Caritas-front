@@ -5,6 +5,7 @@ import { endPoints } from "src/utils/constants";
 import { useState } from "react";
 import { ErrorCode } from "src/utils/Error/ErrorCode";
 import { ErrorTypes } from "src/utils/Error/ErrorTypes";
+import { useCustomModal } from "src/context/CustomModalContext";
 
 type LocationType = {
   coordinates: string,
@@ -12,14 +13,10 @@ type LocationType = {
 }
 
 // Componente de Registro de Ayudante
-export default function AgregarFilialModal({modalId}) {
+export default function AgregarFilialModal() {
 
   const [error, setError] = useState<ErrorCode>(null)
-  
-  const closeModal = () => {
-    const elem = modalId && (document.getElementById(modalId) as HTMLDialogElement)
-    elem?.close()
-  }
+  const { closeModal } = useCustomModal()
 
   const handleError = (errCode: number) => {
     const err = new ErrorCode(errCode, ErrorTypes.REGISTER_HELPER_ERROR)

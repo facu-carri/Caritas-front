@@ -6,7 +6,7 @@ import { endPoints } from "src/utils/constants";
 import { useEffect, useState } from "react";
 import { ErrorCode } from "src/utils/Error/ErrorCode";
 import { ErrorTypes } from "src/utils/Error/ErrorTypes";
-import { Location } from "../../../components/filiales/EliminarFilialModal";
+import { Location } from "../../../components/modals/EliminarFilial";
 
 type Type = {
   photo: string,
