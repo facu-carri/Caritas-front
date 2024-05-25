@@ -4,14 +4,15 @@ import RoutesHandler from "src/utils/routesHandler"
 import { Outlet } from "react-router-dom"
 import { ButtonType } from "src/components/Button"
 import CircularDropdown from "src/components/DropDown"
-import { useLogout } from "src/context/LogoutContext"
 import Navbar, { Tab } from "src/routes/admin/components/Navbar/Navbar"
 import { Icons } from "src/utils/Icons"
+import { useCustomModal } from "src/context/CustomModalContext"
+import LogoutModal from "src/components/modals/Logout"
 
 export default function HelperLayout() {
 
   const { setRoute } = RoutesHandler()
-  const { setShowLogoutModal } = useLogout()
+  const { setModal } = useCustomModal()
 
   const startTabs: Tab[] = [
     {
@@ -28,7 +29,7 @@ export default function HelperLayout() {
     },
     {
       text: 'Cerrar sesion',
-      onClick: () => setShowLogoutModal(true)
+      onClick: () => setModal(<LogoutModal/>)
     }
   ]
 
