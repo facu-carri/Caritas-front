@@ -2,10 +2,10 @@
 
 import { User } from "./User"
 import { roles } from "./constants"
-import { AdminRouter } from "../routes/administrador/routes"
+import { AdminRouter } from "../routes/admin/routes"
 import { HelperRouter } from "../routes/helper/routes"
-import { ExchangerRouter } from "../routes/exchanger/routes"
-import ErrorPage from "src/routes/ErrorPage"
+import ErrorPage from "src/ErrorPage"
+import { ExchangerRouter } from "src/routes/exchanger/routes"
 
 export default function RoleBasedRouting() {
   const { getRole, logout } = User()

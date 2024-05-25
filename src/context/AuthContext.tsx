@@ -2,7 +2,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import React, { useContext, useEffect, useState } from "react";
 import { User } from "src/utils/User";
-import { roles, routes } from "src/utils/constants";
+import { routes } from "src/utils/constants";
 import RoutesHandler from "src/utils/routesHandler";
 
 const AuthContext = React.createContext(undefined)
@@ -21,14 +21,17 @@ export default function AuthProvider({ children }) {
         return token || token == 'null'
     }
 
+    const isUserAuthenticated = (_token:string) => {
+        const _rol = getRole()
+        return _rol && isValidToken(_token)
+    }
+
     useEffect(() => {
         const _token = getToken()
-        const _rol = getRole()
-        setToken(_token)
-        if (!isValidToken(_token) || !_rol) {
-            setRoute(routes.login)
-        } else {
+        if (isUserAuthenticated(_token)) {
             setToken(_token)
+        } else {
+            setRoute(routes.login)
         }
     }, [])
 

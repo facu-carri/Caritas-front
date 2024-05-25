@@ -2,37 +2,9 @@ import '@css/index.css'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
-import Login from './routes/login/Login.tsx'
-import AuthProvider from './context/AuthContext.tsx'
-import RoleBasedRouting from './utils/RoleRouting.tsx'
-import FormularioRegistroIntercambiador from './routes/exchanger/FormularioRegistroIntercambiador.tsx'
-import LogoutProvider from './context/LogoutContext.tsx'
-import { routes } from './utils/constants.ts'
-import CustomModalProvider from './context/CustomModalContext.tsx'
+import { MainRouter } from './routes/routes';
 
-const _routes = [
-  {
-    path: "/*",
-    element:
-      <LogoutProvider>
-        <AuthProvider>
-          <CustomModalProvider>
-            <RoleBasedRouting/>
-          </CustomModalProvider>
-        </AuthProvider>
-      </LogoutProvider>,
-  },
-  {
-    path: routes.login,
-    element: <Login/>
-  },
-  {
-    path: routes.register,
-    element: <FormularioRegistroIntercambiador />
-  }
-]
-
-const router = createBrowserRouter(_routes);
+const router = createBrowserRouter(MainRouter());
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

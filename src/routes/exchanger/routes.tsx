@@ -1,14 +1,13 @@
 import { useRoutes } from "react-router-dom";
-import ErrorPage from "../ErrorPage";
 import { routes } from "src/utils/constants";
-import ExchangerLayout from "./Layout";
+import ExchangerLayout from "./components/Layout";
 import Profile from "src/components/exchanger/Profile";
 import ProductList from "src/components/exchanger/ProductList";
 import Inventory from "src/components/exchanger/inventory/Inventory";
 import { endPoints } from "src/utils/constants";
 import CaritasInformation from "src/components/filiales/CaritasInformation";
 import RoutesHandler from "src/utils/routesHandler";
-
+import ErrorPage from "../error/ErrorPage";
 
 export function ExchangerRouter() {
 

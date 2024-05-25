@@ -1,8 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import React, { useContext, useState } from "react";
-import LogoutModal from "src/components/LogoutModal";
-import { ConfirmationContextType } from "../types/context/Confirmation";
 import ConfirmationModal from "src/components/helper/GenericConfirmationModal";
+import { ConfirmationContextType } from "src/types/TypeContext";
 
 const ConfirmationContext = React.createContext<ConfirmationContextType>(undefined)
 

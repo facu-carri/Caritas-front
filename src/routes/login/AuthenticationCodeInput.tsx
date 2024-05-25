@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { User } from 'src/utils/User';
 import { endPoints, routes, serverAddress } from 'src/utils/constants';
-import { postData } from 'src/utils/request/httpRequests';
 import RoutesHandler from 'src/utils/routesHandler';
 
 const AuthenticationCodeInput = () => {

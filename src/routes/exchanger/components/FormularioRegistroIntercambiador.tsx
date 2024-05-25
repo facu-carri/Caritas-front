@@ -2,7 +2,6 @@ import { useState } from 'react';
 import Input from 'src/components/Input';
 import RoutesHandler from 'src/utils/routesHandler';
 import { endPoints, routes, serverAddress } from 'src/utils/constants';
-import { postData } from 'src/utils/request/httpRequests';
 import { ErrorCode } from 'src/utils/Error/ErrorCode';
 import { ErrorTypes } from 'src/utils/Error/ErrorTypes';
 import ErrorAlert from 'src/components/ErrorAlert';

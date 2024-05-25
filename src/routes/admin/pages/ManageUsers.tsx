@@ -4,10 +4,10 @@ import PersonCard from "src/components/admin/PersonCard";
 import { ErrorCode } from "src/utils/Error/ErrorCode";
 import { ErrorTypes } from "src/utils/Error/ErrorTypes";
 import { endPoints } from "src/utils/constants";
-import { ExchangerData } from "src/types/ExchangerData";
 import { deleteData, getData, putData } from 'src/utils/request/httpRequests';
 import EditExchangerAsAdminModal from 'src/components/admin/EditExchangerAsAdminModal.tsx';
 import { useEffect, useRef, useState } from 'react';
+import { ExchangerData } from "src/types/Types";
 
 type ExchangerCard = {
     visible: boolean

@@ -1,6 +1,5 @@
 import { routes } from "src/utils/constants";
 import RoutesHandler from "src/utils/routesHandler";
-import { ExchangerData } from "src/types/ExchangerData";
 /*
 type Type = {
   person: ExchangerData

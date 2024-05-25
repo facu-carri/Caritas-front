@@ -1,12 +1,12 @@
 import { useRoutes } from "react-router-dom";
-import { AdminMain } from "./main";
-import ErrorPage from "../ErrorPage";
+import { AdminMain } from "./pages/main";
+import ErrorPage from "../error/ErrorPage";
 import { routes } from "src/utils/constants";
-import AdminLayout from "./Layout";
+import AdminLayout from "./components/Layout";
 import HelpersManager from "src/components/admin/HelpersManager";
 import Maps from "../maps/Map";
 import AuthEmployeeProvider from "src/context/AuthEmployee";
-import ManagerUsers from "./ManageUsers";
+import ManagerUsers from "./pages/ManageUsers";
 import Profile from "src/components/exchanger/Profile";
 import EmployeeProfile from "src/components/helper/Profile";
 import RoutesHandler from "src/utils/routesHandler";

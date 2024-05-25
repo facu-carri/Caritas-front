@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from "react"
 import Button, { ButtonType } from "src/components/Button"
 import CircularDropdown from "src/components/DropDown"
 import { useLogout } from "src/context/LogoutContext"
-import FilialesOptions from "./menu/Filiales"
+import FilialesOptions from "./Filiales"
 import { useCustomModal } from "src/context/CustomModalContext"
 
 export default function AdminLayout() {

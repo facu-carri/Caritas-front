@@ -1,9 +1,9 @@
 import { useRoutes } from "react-router-dom";
-import { HelperMain } from "./main";
-import ErrorPage from "../ErrorPage";
+import { HelperMain } from "./pages/main";
+import ErrorPage from "../error/ErrorPage";
 import { routes } from "src/utils/constants";
 import AuthEmployeeProvider from "src/context/AuthEmployee";
-import HelperLayout from "./Layout";
+import HelperLayout from "./components/Layout";
 import Profile from "src/components/helper/Profile";
 
 export function HelperRouter() {
