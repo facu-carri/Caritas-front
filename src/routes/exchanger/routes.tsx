@@ -5,9 +5,9 @@ import Profile from "src/routes/exchanger/components/Profile";
 import ProductList from "src/routes/exchanger/components/ProductList";
 import Inventory from "src/routes/exchanger/components/inventory/Inventory";
 import { endPoints } from "src/utils/constants";
-import CaritasInformation from "src/components/filiales/CaritasInformation";
 import RoutesHandler from "src/utils/routesHandler";
 import ErrorPage from "../error/ErrorPage";
+import { Information } from "./pages/Information";
 
 export function ExchangerRouter() {
 
@@ -21,7 +21,7 @@ export function ExchangerRouter() {
         { path: routes.main, element: <ProductList ruta={endPoints.exchangeablesProducts} text='Descubre nuevos productos para intercambiar' subText='Explora nuestra selección de productos disponibles para intercambios.'/> },
         { path: routes.exchanger.inventory, element: <Inventory /> },
         { path: routes.exchanger.profile, element: <Profile/> },
-        { path: routes.exchanger.caritasInformation, element: <CaritasInformation/> },
+        { path: routes.exchanger.information, element: <Information/> },
         { path: `${routes.exchanger.profile}/*`, element: <Profile id={getId()}/>}
       ]
     },

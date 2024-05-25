@@ -1,6 +1,6 @@
 import Maps from "src/routes/maps/Map";
 
-const CaritasInformation = () => {
+export const Information = () => {
   return (
     <div className="flex flex-col items-center justify-start min-h-screen bg-gray-100 dark:bg-gray-900 pt-20">
       <div className="max-w-3xl px-6 py-12 text-center">
@@ -24,5 +24,3 @@ const CaritasInformation = () => {
     </div>
   );
 };
-
-export default CaritasInformation;
