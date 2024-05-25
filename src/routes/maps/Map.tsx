@@ -106,7 +106,7 @@ function Maps() {
                 defaultZoom={minZoom}
                 minZoom={minZoom}
                 zoomControl={false}
-                center={canEdit() ? null : defaultPosition}
+                center={defaultPosition}
                 defaultCenter={defaultPosition}
                 fullscreenControl={false}
                 onClick={handleMapClick}
