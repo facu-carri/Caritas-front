@@ -3,33 +3,19 @@ import { colors, routes } from "src/utils/constants"
 import RoutesHandler from "src/utils/routesHandler"
 import { Outlet } from "react-router-dom"
 import { useEffect, useRef, useState } from "react"
-import Button, { ButtonType } from "src/components/Button"
 import CircularDropdown from "src/components/DropDown"
-import FilialesOptions from "./Filiales"
 import { useCustomModal } from "src/context/CustomModalContext"
 import { Icons } from "src/utils/Icons"
-import Navbar, { Tab } from "./Navbar"
+import Navbar from "../../../../components/Navbar"
 import LogoutModal from "src/components/modals/Logout"
+import { DropdownItem, Tab } from "src/types/Types"
 
 export default function AdminLayout() {
 
-  const { setRoute, getRoute, location } = RoutesHandler()
+  const { setRoute, getRoute } = RoutesHandler()
   const [showMenu, setShowMenu] = useState(false)
-  const [menuOpts, setMenuOpts] = useState<Array<Tab>>([])
   const dropdownRef = useRef(null);
-  const { setModal } = useCustomModal()
-
-  useEffect(() => {
-    const route = getRoute()
-
-    switch (route) {
-      case routes.admin.gestionarFiliales:
-        setMenuOpts(FilialesOptions())
-        break
-      default:
-        setMenuOpts([])
-    }
-  }, [location.pathname])
+  const { showModal } = useCustomModal()
 
 
   useEffect(() => {
@@ -54,38 +40,11 @@ export default function AdminLayout() {
     return getRoute() == route
   }
 
-  const menu = () => {
-    return (
-      <div className="dropdown" ref={dropdownRef}>
-        <Button onClick={() => setShowMenu(!showMenu)}>
-          {Icons.menu(colors.white)}
-        </Button>
-        {
-          showMenu &&
-          <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 mt-2 shadow bg-base-100 rounded-box w-52 gap-2">
-            {
-              menuOpts.map((tab, index) => (
-                <Button onClick={() => setModal(tab.customElement)} key={'opts' + index}>
-                  {tab.text}
-                  {tab.icon}
-                </Button>
-              ))
-            }
-          </ul>
-        }
-      </div>
-    )
-  }
-
   const startTabs: Tab[] = [
     {
       icon: Icons.home(colors.white),
       onClick: () => setRoute(routes.main),
       active: false
-    },
-    {
-      icon: Icons.menu(colors.white),
-      customElement: <>{menuOpts.length > 0 && menu()}</>
     }
   ]
 
@@ -117,10 +76,10 @@ export default function AdminLayout() {
     }
   ]
 
-  const dropdownItems: ButtonType[] = [
+  const dropdownItems: DropdownItem[] = [
     {
       text: 'Cerrar sesion',
-      onClick: () => setModal(<LogoutModal/>)
+      onClick: () => showModal(<LogoutModal/>)
     }
   ]
 

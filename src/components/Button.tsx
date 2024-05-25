@@ -1,15 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-export type ButtonType = {
-    text?: string,
-    icon?: JSX.Element,
-    active?: boolean,
-    visible?: boolean,
-    onClick?: () => void,
-} & React.ButtonHTMLAttributes<HTMLButtonElement>
+import { ButtonProps } from "src/types/PropsTypes";
 
-export default function Button({ active, visible, onClick, children, ...props }: ButtonType) {
+export default function Button({ active, visible, onClick, children, attrs, ...props }: ButtonProps) {
     return (
-        <button className={`btn btn-ghost ${active && 'btn-active'} ${visible == false && 'hidden'} text-base`} onClick={onClick} {...props}>
+        <button className={`btn btn-ghost ${active && 'btn-active'} ${visible == false && 'hidden'} text-base ${attrs}`} onClick={onClick} {...props}>
             {children}
         </button>
     )

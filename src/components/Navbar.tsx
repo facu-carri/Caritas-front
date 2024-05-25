@@ -1,21 +1,8 @@
-import Button from "../../../../components/Button"
+import { Tab } from "src/types/Types"
+import Button from "./Button"
+import { NavbarProps } from "src/types/PropsTypes"
 
-export type Tab = {
-    text?: string,
-    onClick?: () => void,
-    icon?: JSX.Element,
-    active?: boolean,
-    visible?: boolean
-    customElement?: JSX.Element
-}
-
-type NavbarType = {
-    startTabs?: Tab[]
-    middleTabs?: Tab[]
-    endTabs?: Tab[]
-}
-
-export default function Navbar({startTabs: start, middleTabs: middle, endTabs: end}: NavbarType) {
+export default function Navbar({startTabs: start, middleTabs: middle, endTabs: end}: NavbarProps) {
 
     const getTabObjs = (tabs:Array<Tab>, key:string) => {
         return tabs && tabs.map((tab, index) => (

@@ -1,12 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
-import Button, { ButtonType } from './Button';
+import Button from './Button';
+import { Dropdown } from 'src/types/Types';
 
-export type DropdownItem = {
-  icon?: JSX.Element,
-  items: Array<ButtonType>
-}
-
-const CircularDropdown = ({icon, items}: DropdownItem) => {
+const CircularDropdown = ({icon, items}: Dropdown) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 

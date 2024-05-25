@@ -2,17 +2,17 @@
 import { colors, routes } from "src/utils/constants"
 import RoutesHandler from "src/utils/routesHandler"
 import { Outlet } from "react-router-dom"
-import { ButtonType } from "src/components/Button"
 import CircularDropdown from "src/components/DropDown"
-import Navbar, { Tab } from "src/routes/admin/components/Navbar/Navbar"
 import { Icons } from "src/utils/Icons"
 import { useCustomModal } from "src/context/CustomModalContext"
 import LogoutModal from "src/components/modals/Logout"
+import { DropdownItem, Tab } from "src/types/Types"
+import Navbar from "src/components/Navbar"
 
 export default function HelperLayout() {
 
   const { setRoute } = RoutesHandler()
-  const { setModal } = useCustomModal()
+  const { showModal } = useCustomModal()
 
   const startTabs: Tab[] = [
     {
@@ -22,14 +22,14 @@ export default function HelperLayout() {
     }
   ]
 
-  const dropdownItems: ButtonType[] = [
+  const dropdownItems: DropdownItem[] = [
     {
       text: 'Perfil',
       onClick: () => setRoute(routes.helper.profile)
     },
     {
       text: 'Cerrar sesion',
-      onClick: () => setModal(<LogoutModal/>)
+      onClick: () => showModal(<LogoutModal/>)
     }
   ]
 
