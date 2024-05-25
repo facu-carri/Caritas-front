@@ -62,8 +62,7 @@ function GenericForm({ id, campos, listener, error, btnText }: Type) {
           break
         case 'select-one':
           const select = input as HTMLSelectElement
-          console.log('select-one', input.id, select.options[select.selectedIndex].text)
-          obj[input.id] = select.options[select.selectedIndex].text
+          obj[input.id] = select.options[select.selectedIndex].value
           break
         default:
           console.log('default', input.id, input.value)
@@ -77,14 +76,6 @@ function GenericForm({ id, campos, listener, error, btnText }: Type) {
     ev.preventDefault()
     const data = await getInputValues()
     listener(data)
-  }
-
-  const getItemsObjs = (items:Array<ListItem>, key:string) => {
-    return items.map((item, index) => (
-      <option key={`${key}_${index}`}>
-          {item.key}
-      </option>
-    ))
   }
 
   return (
@@ -101,7 +92,13 @@ function GenericForm({ id, campos, listener, error, btnText }: Type) {
             <label className="block font-semibold mb-2 text-blue-900">{campo.nombre}</label>
             {
               campo.tipo === 'list' ?
-                <select name={id} id={campo.etiqueta} className="select select-bordered w-full max-w-xs">{getItemsObjs(campo.items, 'items')}</select>
+                <select name={id} id={campo.etiqueta} className="select select-bordered w-full max-w-xs">{
+                  campo?.items.map(({ key, value }) => (
+                    <option key={key} value={key}>
+                        {value}
+                    </option>
+                  ))
+                }</select>
               :
               campo.tipo === 'date' ?
                 <Input file={campo.tipo == 'date'} defaultValue={campo.value} name={id} id={campo.etiqueta} type={'date'} />
