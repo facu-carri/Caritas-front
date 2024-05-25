@@ -7,9 +7,10 @@ export type AuthContextType = {
     token: string,
 }
 export type CustomModalContextType = {
-    setModal: (content:JSX.Element) => void,
+    showModal: (content:JSX.Element, id?:string) => void,
     closeModal: () => void,
-    showModal: () => void
+    isOpen: boolean,
+    dialogId: string
 }
 export type UserDataContextType = {
     userData: any,

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-refresh/only-export-components */
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { CustomModalContextType } from "src/types/ContextTypes";
 
 const customModalContext = React.createContext<CustomModalContextType>(undefined)
@@ -12,33 +12,35 @@ export function useCustomModal(){
 
 export default function CustomModalProvider({ children }) {
 
-    const [modal, setModal] = useState(null)
+    const defaultDialogId = 'customModal'
     const dialogRef = useRef(null)
+    const [modal, setModal] = useState(null)
+    const [isOpen, setOpen] = useState(false)
+    const [id, setId] = useState(defaultDialogId)
 
     const dialogElement = () => dialogRef?.current ? (dialogRef?.current as HTMLDialogElement) : null
 
-    const showModal = () => {
-        closeModal()
+    const showModal = (modalContent: JSX.Element, id: string) => {
+        setModal(modalContent)
+        if(id) setId(id)
         dialogElement()?.showModal()
+        setOpen(true)
     }
 
-    const closeModal = () => dialogElement()?.close()
-        
+    const closeModal = () => {
+        dialogElement()?.close()
+        setOpen(false)
+        setId(defaultDialogId)
+    }
+
     const handleClickOutside = (ev:any) => {
         const target = ev.target
         if (target.id && target.id == dialogRef.current.id) closeModal()
     }
-    
-    const setModalContent = (modalContent) => {
-        setModal(modalContent)
-        showModal()
-    }
-
-    useEffect(() => closeModal(), [])
 
     return (
-        <customModalContext.Provider value={{ setModal: setModalContent, showModal, closeModal }}>
-            <dialog className="modal bg-gray-500/50" id='customModal' onClick={handleClickOutside} ref={dialogRef}>
+        <customModalContext.Provider value={{ showModal, isOpen, dialogId: id, closeModal }}>
+            <dialog className="modal bg-gray-500/50" id={id} open={isOpen} onClick={handleClickOutside} ref={dialogRef}>
                 {modal}
             </dialog>
             {children}

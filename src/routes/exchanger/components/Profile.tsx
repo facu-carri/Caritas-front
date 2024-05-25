@@ -52,7 +52,7 @@ export default function Profile({ id }: Props) {
   const [reviews, setReviews] = useState<Review[]>();
 
   const [showEditModal, setShowEditModal] = useState(false);
-  const { setModal } = useCustomModal()
+  const { showModal, closeModal } = useCustomModal()
   
   function resetInvetory(error){
     if(error == 404)
@@ -91,17 +91,13 @@ export default function Profile({ id }: Props) {
   }
 
   function toggleShowEditModal() {
-    setModal(
+    showModal(
       <dialog className="modal bg-gray-500/50" id='editarHelperModal' open={true}>
-        <EditExchangerModal exchanger={userData} onSave={handleEditProfile} closeModal={handleCloseModal} />
+        <EditExchangerModal exchanger={userData} onSave={handleEditProfile} closeModal={closeModal} />
       </dialog>
     )
 
     setShowEditModal(prev => !prev);
-  }
-
-  function handleCloseModal() {
-    setModal(null)
   }
 
   if (!userData) {
