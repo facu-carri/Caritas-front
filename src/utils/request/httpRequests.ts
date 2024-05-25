@@ -3,9 +3,16 @@ import { serverAddress } from "../constants.ts"
 import { Url } from "./url.ts"
 import { getItem } from "../localStorage.ts"
 
-const reqHeaders = {
-    'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*'
+export function getHeaders() {
+    return {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Authorization': getAuthorization()
+    }
+}
+
+export function getAuthorization() {
+    return `Bearer ${getItem('token')}`
 }
 
 function handleResponse(res: Response) {
@@ -25,10 +32,7 @@ export function getData(endPoint: string, querys: Record<string, string> = null,
         method: "GET",
         cache: 'no-cache',
         mode: 'cors',
-        headers: {
-            ...reqHeaders,
-            'Authorization': `Bearer ${getItem('token')}`
-        },
+        headers: getHeaders(),
         body: JSON.stringify(data)
     })
     .then(handleResponse)
@@ -39,10 +43,7 @@ export function postData(endPoint: string, querys: Record<string, any> = null, d
     const request = fetch(url.toString(), {
         method: "POST",
         cache: 'no-cache',
-        headers: {
-            ...reqHeaders,
-            'Authorization': `Bearer ${getItem('token')}`
-        },
+        headers: getHeaders(),
         body: JSON.stringify(data),
     })
     return request.then(handleResponse)
@@ -53,10 +54,7 @@ export function putData(endPoint: string, querys: Record<string, any> = null, da
     const request = fetch(url.toString(), {
         method: "PUT",
         cache: 'no-cache',
-        headers: {
-            ...reqHeaders,
-            'Authorization': `Bearer ${getItem('token')}`
-        },
+        headers: getHeaders(),
         body: JSON.stringify(data),
     })
     return request.then(handleResponse)
@@ -67,10 +65,7 @@ export function deleteData(endPoint: string, querys: Record<string, any> = null)
     const request = fetch(url.toString(), {
         method: "DELETE",
         cache: 'no-cache',
-        headers: {
-            ...reqHeaders,
-            'Authorization': `Bearer ${getItem('token')}`
-        },
+        headers: getHeaders()
     })
     return request.then(handleResponse)
 }

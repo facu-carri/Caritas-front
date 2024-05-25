@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useRef } from "react";
 import { useCustomModal } from "src/context/CustomModalContext";
-import EliminarFilialModal from "./EliminarModal";
+import EliminarFilialModal from "./EliminarFilialModal";
 
 export default function EliminarFiliales() {
     

@@ -1,11 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { deleteData, getData } from "src/utils/request/httpRequests";
+import { deleteData, getHeaders } from "src/utils/request/httpRequests";
 import GenericForm, { FormField, ListItem } from "../GenericForm";
-import { endPoints } from "src/utils/constants";
-import { useEffect, useState } from "react";
+import { endPoints, serverAddress } from "src/utils/constants";
+import { useState } from "react";
 import { ErrorCode } from "src/utils/Error/ErrorCode";
 import { ErrorTypes } from "src/utils/Error/ErrorTypes";
+import { useQuery } from "react-query";
+import LoadingSpinner from "../LoadingSpinner";
 
 type Type = {
   filial: number,
@@ -17,7 +19,6 @@ export type Location = {
   description: string
 }
 
-// Componente de Registro de Ayudante
 export default function EliminarFilialModal({ closeModal }) {
 
   const [error, setError] = useState<ErrorCode>(null)
@@ -42,23 +43,30 @@ export default function EliminarFilialModal({ closeModal }) {
   const [campos, setCampos] = useState([])
 
   function generateFields(locations: Location[]): FormField[]{
-    const field:FormField[] = [{ nombre: 'Selecciona una filial', etiqueta: 'filial', tipo: 'list' }]
-    const items: ListItem[] = locations.map((location) => ({
+    const items: ListItem[] = locations.map(location => ({
       key: location.id,
-      value: location.description
+      value: `${location.description} - ${location.coordinates}`
     }))
-    field[0].items = items
-    return field
+    return [{ nombre: 'Selecciona una filial', etiqueta: 'filial', tipo: 'list', items }]
   }
 
-  useEffect(() => {
-    getData(endPoints.location)
-      .then((locations: Location[]) => generateFields(locations))
-      .then((fields) => setCampos(fields))
-      .catch((err) => handleError(err))
-  }, [])
+  const { isLoading } = useQuery({
+    queryKey: ['location'],
+    queryFn: () => fetch(`${serverAddress}/location`, {
+      method: 'GET',
+      headers: getHeaders()
+    }).then(r => r.json()),
+    onSuccess: (data) => {
+      setCampos(generateFields(data))
+    }
+  })
+
 
   return <>
-    {campos && < GenericForm id="eliminar-filial-modal" campos={campos} listener={handleDelete} error={error} btnText="Eliminar" />}
-  </>;
+    {
+      isLoading || !campos.length ?
+      <LoadingSpinner/> :
+      <GenericForm id="eliminar-filial-modal" campos={campos} listener={handleDelete} error={error} btnText="Eliminar" />
+    }
+  </>
 }
