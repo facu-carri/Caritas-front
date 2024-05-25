@@ -1,11 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-refresh/only-export-components */
 import React, { useContext, useEffect, useState } from "react";
+import { AuthContextType } from "src/types/TypeContext";
 import { User } from "src/utils/User";
 import { routes } from "src/utils/constants";
 import RoutesHandler from "src/utils/routesHandler";
 
-const AuthContext = React.createContext(undefined)
+const AuthContext = React.createContext<AuthContextType>(undefined)
 
 export function useAuth(){
   return useContext(AuthContext)
@@ -28,16 +29,15 @@ export default function AuthProvider({ children }) {
 
     useEffect(() => {
         const _token = getToken()
-        if (isUserAuthenticated(_token)) {
-            setToken(_token)
-        } else {
-            setRoute(routes.login)
-        }
+
+        if (isUserAuthenticated(_token)) setToken(_token)
+        else setRoute(routes.login)
+        
     }, [])
 
     return (
-        <AuthContext.Provider value={{token}}>
-            {isValidToken(token) ? children : null }
+        <AuthContext.Provider value={{ token }}>
+            { isValidToken(token) ? children : null }
         </AuthContext.Provider>
     )
 }
