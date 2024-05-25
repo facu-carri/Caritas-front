@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-refresh/only-export-components */
 import React, { useContext, useEffect, useState } from "react";
-import { AuthContextType } from "src/types/TypeContext";
+import { AuthContextType } from "src/types/ContextTypes";
 import { User } from "src/utils/User";
 import { routes } from "src/utils/constants";
 import RoutesHandler from "src/utils/routesHandler";

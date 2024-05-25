@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-refresh/only-export-components */
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { CustomModalContextType } from "src/types/TypeContext";
+import { CustomModalContextType } from "src/types/ContextTypes";
 
 const customModalContext = React.createContext<CustomModalContextType>(undefined)
 
