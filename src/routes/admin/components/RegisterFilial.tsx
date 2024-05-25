@@ -1,4 +1,4 @@
-import GenericForm from "../GenericForm";
+import GenericForm from "../../../components/GenericForm";
 
 export default function RegistrarFilial() {
     const campos = [

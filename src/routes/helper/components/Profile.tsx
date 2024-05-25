@@ -10,7 +10,7 @@ import Avatar from 'react-avatar';
 import { getData } from "src/utils/request/httpRequests";
 import { endPoints } from "src/utils/constants";
 import { useEffect, useState } from 'react';
-import LoadingAnimation from '../LoadingAnimation';
+import LoadingAnimation from 'src/components/LoadingAnimation';
 
 type UserData = {
   id:number
@@ -101,4 +101,4 @@ function Profile({ id }: Props) {
   );
 }
 
-export default Profile;
+export {Profile as EmployeeProfile}

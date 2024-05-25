@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react"
-import { Icons } from "src/Icons"
 import Input from "src/components/Input"
 import { getElementValue, validString } from "src/utils/api"
 import { endPoints, routes, serverAddress } from "src/utils/constants"
-import { LoginQuery } from "../routes/login/LoginQuery"
 import { User } from "src/utils/User"
 import RoutesHandler from "src/utils/routesHandler"
 import ErrorAlert from "src/components/ErrorAlert"
 import BotonARuta from "src/components/BotonARuta"
 import { RequestStatus } from "src/types/RequestStatus"
+import { LoginQuery } from "src/types/LoginQuery"
+import { Icons } from "src/utils/Icons"
 
 const Login = () => {
 

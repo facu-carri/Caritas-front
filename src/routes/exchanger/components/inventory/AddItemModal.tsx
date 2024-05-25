@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import Input from "../../Input";
-import Button from "../../Button";
+import Input from "../../../../components/Input";
+import Button from "../../../../components/Button";
 import { getData } from "src/utils/request/httpRequests";
 import { endPoints } from "src/utils/constants";
 import { getImageBase64 } from "src/components/GenericForm";

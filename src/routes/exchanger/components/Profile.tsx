@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import Avatar from 'react-avatar';
 
@@ -10,8 +11,8 @@ import Avatar from 'react-avatar';
 import { getData, putData } from "src/utils/request/httpRequests";
 import { endPoints } from "src/utils/constants";
 import { useEffect, useState } from 'react';
-import LoadingAnimation from '../LoadingAnimation';
-import EditExchangerModal from '../admin/EditExchangerModal';
+import LoadingAnimation from '../../../components/LoadingAnimation';
+import EditExchangerModal from '../../admin/components/EditExchangerModal';
 import { useCustomModal } from 'src/context/CustomModalContext';
 import ProductCard from './ProductCard';
 import { ItemData } from './ProductListInventory';

@@ -1,4 +1,4 @@
-import { Icons } from "src/Icons";
+import { Icons } from "src/utils/Icons";
 
 export default function LoadingAnimation() {
   

@@ -4,8 +4,8 @@ import { User } from "./User"
 import { roles } from "./constants"
 import { AdminRouter } from "../routes/admin/routes"
 import { HelperRouter } from "../routes/helper/routes"
-import ErrorPage from "src/ErrorPage"
 import { ExchangerRouter } from "src/routes/exchanger/routes"
+import ErrorPage from "src/routes/error/ErrorPage"
 
 export default function RoleBasedRouting() {
   const { getRole, logout } = User()

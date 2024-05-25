@@ -2,14 +2,14 @@ import { useRoutes } from "react-router-dom";
 import { AdminMain } from "./pages/main";
 import ErrorPage from "../error/ErrorPage";
 import { routes } from "src/utils/constants";
-import AdminLayout from "./components/Layout";
-import HelpersManager from "src/components/admin/HelpersManager";
+import AdminLayout from "./components/Navbar/Layout";
+import HelpersManager from "src/routes/admin/components/HelpersManager";
 import Maps from "../maps/Map";
 import AuthEmployeeProvider from "src/context/AuthEmployee";
 import ManagerUsers from "./pages/ManageUsers";
-import Profile from "src/components/exchanger/Profile";
-import EmployeeProfile from "src/components/helper/Profile";
+import Profile from "src/routes/exchanger/components/Profile";
 import RoutesHandler from "src/utils/routesHandler";
+import { EmployeeProfile } from "../helper/components/Profile";
 
 export function AdminRouter() {
 

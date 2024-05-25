@@ -1,6 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Icons } from "src/Icons"
-import Navbar, { Tab } from "src/components/admin/Navbar"
 import { colors, routes } from "src/utils/constants"
 import RoutesHandler from "src/utils/routesHandler"
 import { Outlet } from "react-router-dom"
@@ -10,6 +8,8 @@ import CircularDropdown from "src/components/DropDown"
 import { useLogout } from "src/context/LogoutContext"
 import FilialesOptions from "./Filiales"
 import { useCustomModal } from "src/context/CustomModalContext"
+import { Icons } from "src/utils/Icons"
+import Navbar, { Tab } from "./Navbar"
 
 export default function AdminLayout() {
 

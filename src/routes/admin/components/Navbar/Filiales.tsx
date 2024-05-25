@@ -1,4 +1,4 @@
-import { Tab } from "src/components/admin/Navbar";
+import { Tab } from "src/routes/admin/components/Navbar";
 import AgregarFiliales from "src/components/filiales/AgregarFiliales";
 import EliminarFiliales from "src/components/filiales/EliminarFiliales";
 

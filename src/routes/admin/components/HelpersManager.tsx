@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
-import HelpersList from '../helper/HelpersList';
 import EditHelperModal from './EditHelperModal';
-import Button from '../Button';
+import Button from '../../../components/Button';
 import RegisterHelper from './RegisterHelper';
 import { deleteData, getData, putData } from 'src/utils/request/httpRequests';
 import { endPoints, routes } from "src/utils/constants";
 import RoutesHandler from 'src/utils/routesHandler';
+import HelpersList from 'src/routes/helper/components/HelpersList';
 
 //tiene toda la logica de eliminar y editar ayudantes listados y su estado.
 export default function HelpersManager() {

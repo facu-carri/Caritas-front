@@ -1,14 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Icons } from "src/Icons"
-import Navbar, { Tab } from "src/components/admin/Navbar"
 import { colors, routes } from "src/utils/constants"
 import RoutesHandler from "src/utils/routesHandler"
 import { Outlet } from "react-router-dom"
 import { ButtonType } from "src/components/Button"
 import CircularDropdown from "src/components/DropDown"
 import { useLogout } from "src/context/LogoutContext"
+import Navbar, { Tab } from "src/routes/admin/components/Navbar/Navbar"
+import { Icons } from "src/utils/Icons"
 
-export default function HelperLayout() {
+export default function ExchangerLayout() {
 
   const { setRoute } = RoutesHandler()
   const { setShowLogoutModal } = useLogout()
@@ -18,13 +18,22 @@ export default function HelperLayout() {
       icon: Icons.home(colors.white),
       onClick: () => setRoute(routes.main),
       active: false
+    },
+    {
+      text:"Quienes Somos",
+      onClick: () => setRoute(routes.exchanger.caritasInformation),
+      active: false
     }
   ]
 
   const dropdownItems: ButtonType[] = [
     {
+      text: 'Inventario',
+      onClick: () => setRoute(routes.exchanger.inventory)
+    },
+    {
       text: 'Perfil',
-      onClick: () => setRoute(routes.helper.profile)
+      onClick: () => setRoute(routes.exchanger.profile)
     },
     {
       text: 'Cerrar sesion',

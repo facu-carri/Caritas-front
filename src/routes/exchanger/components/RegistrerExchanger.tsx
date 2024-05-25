@@ -1,4 +1,4 @@
-import GenericForm from "../GenericForm";
+import GenericForm from "../../../components/GenericForm";
 
 // Componente de Registro de Ayudante
 export default function RegisterExchanger() {

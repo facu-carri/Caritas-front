@@ -1,9 +1,9 @@
 import { useRoutes } from "react-router-dom";
 import { routes } from "src/utils/constants";
-import ExchangerLayout from "./components/Layout";
-import Profile from "src/components/exchanger/Profile";
-import ProductList from "src/components/exchanger/ProductList";
-import Inventory from "src/components/exchanger/inventory/Inventory";
+import ExchangerLayout from "./components/Navbar/Layout";
+import Profile from "src/routes/exchanger/components/Profile";
+import ProductList from "src/routes/exchanger/components/ProductList";
+import Inventory from "src/routes/exchanger/components/inventory/Inventory";
 import { endPoints } from "src/utils/constants";
 import CaritasInformation from "src/components/filiales/CaritasInformation";
 import RoutesHandler from "src/utils/routesHandler";
