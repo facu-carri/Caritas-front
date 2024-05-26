@@ -29,6 +29,7 @@ export default function CustomModalProvider({ children }) {
 
     const closeModal = () => {
         dialogElement()?.close()
+        setModal(null)
         setOpen(false)
         setId(defaultDialogId)
     }
