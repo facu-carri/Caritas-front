@@ -10,6 +10,8 @@ import Menu from "../assets/icons/Menu"
 import Error from "../assets/icons/Error"
 import Map from "../assets/icons/Map"
 import Loading from "../assets/icons/Loading"
+import { Pencil } from "src/assets/icons/Pencil"
+import { Store } from "src/assets/icons/Store"
 
 const default_color = '#000000'
 
@@ -25,5 +27,7 @@ export const Icons = {
     menu: (color: string = default_color) => <Menu currentColor={color} />,
     error: <Error/>,
     map: <Map/>,
-    loading: <Loading/>
+    loading: <Loading />,
+    pencil: <Pencil />,
+    store: (color: string = default_color) => <Store currentColor={color} />
 }

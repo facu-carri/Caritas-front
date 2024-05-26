@@ -1,7 +1,11 @@
-import { GeoPosition, LocationResponse, Tab } from "./Types"
+import { GeoPosition, Location, LocationResponse, Tab } from "./Types"
 
-export type agregarFilialProps = {
+export type AgregarFilialProps = {
     geoPosition: GeoPosition,
+    handleSuccess: (loation: LocationResponse) => void
+}
+export type EditarFilialProps = {
+    location: Location,
     handleSuccess: (loation: LocationResponse) => void
 }
 export type NavbarProps = {

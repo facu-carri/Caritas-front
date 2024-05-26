@@ -40,3 +40,6 @@ export type Dropdown = {
     icon?: JSX.Element,
     items: Array<DropdownItem>
 }
+export type LocationFields = {
+    description: string
+}

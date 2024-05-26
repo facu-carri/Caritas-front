@@ -6,11 +6,11 @@ import { useState } from "react";
 import { ErrorCode } from "src/utils/Error/ErrorCode";
 import { ErrorTypes } from "src/utils/Error/ErrorTypes";
 import { useCustomModal } from "src/context/CustomModalContext";
-import { agregarFilialProps } from "src/types/PropsTypes";
+import { AgregarFilialProps } from "src/types/PropsTypes";
 import { LocationResponse } from "src/types/Types";
 
 // Componente de Registro de Ayudante
-export default function AgregarFilialModal({ geoPosition, handleSuccess }: agregarFilialProps) {
+export default function AgregarFilialModal({ geoPosition, handleSuccess }: AgregarFilialProps) {
 
   const [error, setError] = useState<ErrorCode>(null)
   const { closeModal } = useCustomModal()
@@ -34,7 +34,7 @@ export default function AgregarFilialModal({ geoPosition, handleSuccess }: agreg
   }
 
   const campos: Array<FormField> = [
-    { nombre: 'Descripcion', etiqueta: 'description', tipo: 'text' }
+    { nombre: 'Descripcion', value:'', etiqueta: 'description', tipo: 'text' }
   ]
 
   return <GenericForm id="agregar-filial-modal" campos={campos} listener={handleRegister} error={error} />;

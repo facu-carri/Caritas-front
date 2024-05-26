@@ -8,6 +8,8 @@ import { GeoPosition, Location, LocationResponse } from "src/types/Types";
 import { User } from "src/utils/User";
 import { endPoints, roles } from "src/utils/constants";
 import { deleteData, getData } from "src/utils/request/httpRequests";
+import StoreIcon from '@images/StoreIcon.png'
+import EditarFilialModal from "src/components/modals/EditarFilial";
 
 function Maps() {
     const { showModal, isOpen, dialogId } = useCustomModal()
@@ -60,7 +62,11 @@ function Maps() {
 
         if (!canEdit()) return
 
-        showModal(<AgregarFilialModal geoPosition={ev.detail.latLng} handleSuccess={addLocation} />, 'agregarFilial')
+        agregarFilial(ev.detail.latLng)
+    }
+
+    const agregarFilial = (position:GeoPosition) => {
+        showModal(<AgregarFilialModal geoPosition={position} handleSuccess={addLocation} />, 'agregarFilial')
     }
 
     const isSamePosition = (pos1: GeoPosition, pos2: GeoPosition) => {
@@ -79,16 +85,24 @@ function Maps() {
             //.catch((errCode: number) => handleError(errCode))
     }
 
+    const editarFilial = () => {
+        showModal(<EditarFilialModal location={currentMarker} handleSuccess={addLocation}/>)
+    }
+
     const getLocationsMarkers = () => {
         return locations && locations.map((location, index) => (
             <div key={index}>
             <AdvancedMarker position={location.geoPosition} title={location.description ?? ''} onClick={() => setCurrentMarker(location)} key={index}>
+                <img src={StoreIcon} className="scale-[.9] drop-shadow-white-multi"></img>
             </AdvancedMarker>
-            {showMarkerInfo(location.geoPosition) && 
-                <InfoWindow className="p-1" position={location.geoPosition} onCloseClick={() => setCurrentMarker(null)}>
+                {showMarkerInfo(location.geoPosition) && 
+                <InfoWindow pixelOffset={[1,-35]} className="p-1" position={location.geoPosition} onCloseClick={() => setCurrentMarker(null)}>
                     <div className="ml-2 flex flex-col justify-center items-center text-[100%]">
                         <h2 className="font-bold text-base">{location.description ?? ''}</h2>
-                        <Button attrs="mt-2" visible={canEdit()} onClick={eliminarFilial}>Eliminar</Button>
+                        <div className="flex flex-row mt-2 gap-2">
+                                <Button visible={canEdit()} onClick={editarFilial}>Editar</Button>
+                            <Button visible={canEdit()} onClick={eliminarFilial}>Eliminar</Button>
+                        </div>
                     </div>
                 </InfoWindow>
             }
@@ -106,7 +120,6 @@ function Maps() {
                 defaultZoom={minZoom}
                 minZoom={minZoom}
                 zoomControl={false}
-                center={defaultPosition}
                 defaultCenter={defaultPosition}
                 fullscreenControl={false}
                 onClick={handleMapClick}
