@@ -1,4 +1,4 @@
-import { IErrorCodesMsgs } from "./types/IErrorCodeMsgs"
+import { IErrorCodesMsgs } from "../../types/IErrorCodeMsgs"
 import { LoginErrorMsgs } from "./ErrorMessages/Login"
 import { ErrorTypes } from "./ErrorTypes"
 import { RegisterHelperErrorMsgs } from "./ErrorMessages/RegisterHelper"
