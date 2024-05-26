@@ -79,11 +79,11 @@ const Login = () => {
                     <span>Los datos son incorrectos</span>
                 </ErrorAlert>}
                 <Input id='email' text={'Email'} icon={Icons.username()}/>
-                <Input id='password' text={'Password'} icon={Icons.password()} type={ showPassword ? "text" : "password"}>
+                <Input id='password' text={'Contraseña'} icon={Icons.password()} type={ showPassword ? "text" : "password"}>
                     {<button className="bg-transparent p-1" onClick={() => setShowPassword(!showPassword)}>{showPassword ? Icons.eyeHidden() : Icons.eye()}</button>}
                 </Input> 
                 <button className="btn btn-primary" onClick={handleLogin}>
-                    {reqStatus == RequestStatus.PENDING ? <span className="loading loading-spinner"></span> : 'Login'}
+                    {reqStatus == RequestStatus.PENDING ? <span className="loading loading-spinner"></span> : 'Ingresar'}
                 </button>
                 <BotonARuta nombre="Registrarse" ruta="/register"/>
             </div>
