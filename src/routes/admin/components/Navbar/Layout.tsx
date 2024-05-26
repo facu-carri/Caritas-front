@@ -61,8 +61,8 @@ export default function AdminLayout() {
     },
     {
       text: 'Gestionar usuarios',
-      onClick: () => setRoute(routes.admin.gestionarUsuarios),
-      active: btnActive(routes.admin.gestionarUsuarios)
+      onClick: () => setRoute(routes.admin.gestionarIntercambiadores),
+      active: btnActive(routes.admin.gestionarIntercambiadores)
     },
     {
       text: 'Gestionar filiales',

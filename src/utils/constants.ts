@@ -19,7 +19,7 @@ export const endPoints = {
 }
 const adminRoutes = {
     'estadisticas': '/estadisticas',
-    'gestionarUsuarios': '/gestionar-usuarios',
+    'gestionarIntercambiadores': '/gestionar-intercambiadores',
     'gestionarAyudantes': '/gestionar-ayudantes',
     'listarDonaciones': '/donaciones',
     'gestionarFiliales': '/gestionar-filiales',

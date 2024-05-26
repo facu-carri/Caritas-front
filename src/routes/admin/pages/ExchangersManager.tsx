@@ -1,24 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import ErrorAlert from "src/components/ErrorAlert";
-import PersonCard from "src/routes/admin/components/PersonCard";
+import ExchangerCard from "src/routes/admin/components/ExchangerCard";
 import { ErrorCode } from "src/utils/Error/ErrorCode";
 import { ErrorTypes } from "src/utils/Error/ErrorTypes";
 import { endPoints } from "src/utils/constants";
 import { deleteData, getData, putData } from 'src/utils/request/httpRequests';
 import EditExchangerAsAdminModal from 'src/routes/admin/components/EditExchangerAsAdminModal';
-import { useEffect, useRef, useState } from 'react';
-import { ExchangerData } from "src/types/Types";
+import { useEffect, useState } from 'react';
+import { useCustomModal } from "src/context/CustomModalContext";
+import { ExchangerCardData } from "src/types/Types";
 
-type ExchangerCard = {
-    visible: boolean
-} & ExchangerData
-
-export default function ManagerUsers() {
+export default function ExchangersManager() {
     
     const [searchQuery, setSearchQuery] = useState('');
-    const [users, setUsers] = useState<ExchangerCard[]>([])
-    const [isEditing, setIsEditing] = useState(false);
-
+    const [exchangers, setExchangers] = useState<ExchangerCardData[]>([])
+    const { showModal } = useCustomModal()
     const [error, setError] = useState<ErrorCode>(null)
     const [currentexchanger, setCurrentexchanger] = useState(null);
 
@@ -34,7 +30,7 @@ export default function ManagerUsers() {
 
     useEffect(() => {
         getData(endPoints.exchanger)
-            .then((exchangers: ExchangerCard[]) => setUsers(exchangers.map(exchanger => { exchanger.visible = true;  return exchanger})))
+            .then((exchangers: ExchangerCardData[]) => setExchangers(exchangers.map(exchanger => { exchanger.visible = true;  return exchanger})))
             .catch((errorCode:number) => handleError(errorCode))
     }, [])
 
@@ -42,74 +38,46 @@ export default function ManagerUsers() {
         setSearchQuery(event.target.value);
     }
 
-    const filterUsers = () => {
+    const filterExchangers = () => {
         const value = searchQuery.toLowerCase()
-        const filtered = users.map((user: ExchangerCard) => {
+        const filtered = exchangers.map((user: ExchangerCardData) => {
             user.visible = value == ' ' || user.name.toLowerCase().includes(value) || user.email.toLowerCase().includes(value) || user.dni.toLowerCase().includes(value) || user.phone.toLowerCase().includes(value) 
             return user
         });
-        setUsers(filtered);
+        setExchangers(filtered);
         
         const visibles = filtered.filter(user => user.visible)
-        if (visibles.length <= 0) {
-            handleError(400)
-        }
+        if (visibles.length <= 0) handleError(400)
     }
 
     const handleEdit = (exchanger) => {
         setCurrentexchanger(exchanger);
-        setIsEditing(true);
-        
-        
-        const elem = (document.getElementById('editExchangerAsAdminModal') as HTMLDialogElement)
-        elem.showModal()
-    };
+        showModal(<EditExchangerAsAdminModal exchanger={exchanger} onSave={handleSave} />, () => setCurrentexchanger(null))
+    }
     
     const handleDelete = (id) => {
         deleteData(`${endPoints.exchanger}/${id}`, null)
-            .then(() => setUsers(prev => prev.filter(user => user.id !== id)))
-    };
-    
-    /*const handleSave = (updatedexchanger) => { // EDIT: usar putData de httpRequests
-        putData(`${endPoints.employees}/${updatedexchanger.id}`, null, updatedexchanger)
-          .then(res => console.log(res))
-          
-        /*setexchangers(exchangers.map(exchanger =>
-          exchanger.id === updatedexchanger.id ? updatedexchanger : exchanger
-        ));*//*
-        setIsEditing(false);
-    };*/
-    const modalEditRef = useRef(null)
-    
-  const handleClickEditModal = (ev) => {
-    const target = ev ? ev.target : null
-    if (target == null || target.id && target.id == modalEditRef.current.id) {
-      modalEditRef.current.close()
-      setCurrentexchanger(null)
+            .then(() => setExchangers(prev => prev.filter(user => user.id !== id)))
     }
-  }
-  const handleSave = (updatedexchanger) => { 
-    if(updatedexchanger.password === "") {
-      updatedexchanger.password = null;
+
+    const handleSave = (updatedexchanger) => { 
+        if (updatedexchanger.password === "") updatedexchanger.password = null
+        
+        updatedexchanger.birthdate = "2000-02-02"//HUH?????
+        console.log('current exchange', currentexchanger)
+        putData(`${endPoints.exchanger}/${currentexchanger.id}`, null, {
+            ...updatedexchanger,
+            email: currentexchanger.email,
+            birthdate:"2000-02-02"
+        })
+        .then(res => console.log(res))
+        
+        setExchangers(exchangers.map(exchanger =>
+            exchanger.id === updatedexchanger.id ? updatedexchanger : exchanger
+        ));
     }
-    updatedexchanger.birthdate="2000-02-02"
-    console.log(updatedexchanger)
-    putData(`${endPoints.exchanger}/${currentexchanger.id}`, null, {
-      ...updatedexchanger,
-      email: currentexchanger.email,
-      birthdate:"2000-02-02"
-    })
-      .then(res => console.log(res))
-      
-    /*setexchangers(exchangers.map(exchanger =>
-      exchanger.id === updatedexchanger.id ? updatedexchanger : exchanger
-    ));*/
-  };
+
     return (<>
-    
-        <dialog className="modal bg-gray-500/50" id='editExchangerAsAdminModal' onClick={handleClickEditModal} ref={modalEditRef}>
-        <EditExchangerAsAdminModal closeModal={handleClickEditModal} helper={currentexchanger} onSave={handleSave} />
-        </dialog>
         <div className="bg-gray-100 flex items-center justify-center min-h-screen">
             <section className="w-full py-12">
                 <div className="max-w-4xl mx-auto px-4">
@@ -132,7 +100,7 @@ export default function ManagerUsers() {
                                 <button
                                     type="submit"
                                     className="px-4 py-2 text-white bg-red-600 rounded hover:bg-red-500"
-                                    onClick={filterUsers}
+                                    onClick={filterExchangers}
                                 >
                                     Filtrar
                                 </button>
@@ -147,10 +115,8 @@ export default function ManagerUsers() {
                         </div>
                     )}
                     <div className="justify-center items-center text-[100%] grid grid-cols-3 gap-6 md:gap-8 mt-8 min-h-[300px]">
-                        {users.map((exchanger) => (
-                            <div className={`${!exchanger.visible && 'hidden'}`} key={exchanger.id}>
-                                <PersonCard person={exchanger} onEdit={handleEdit} onDelete={handleDelete} key={exchanger.id} />
-                            </div>
+                        {exchangers.map((exchanger) => (
+                            <ExchangerCard cardData={exchanger} onEdit={handleEdit} onDelete={handleDelete} key={exchanger.id} />
                         ))}
                     </div>
                 </div>
