@@ -33,3 +33,6 @@ export type ExchangerCardProps = {
     onEdit: (data:ExchangerData) => void
     onDelete: (id:string) => void
 }
+export type ProfileProps = {
+    id: string
+}

@@ -12,4 +12,10 @@ function validString(str:string)
 {
     return str != null && str != ''
 }
-export {getElementValue, validString}
+
+function formatDate(_date: string) {
+    const date = new Date(_date)
+    return date.toDateString()
+  }
+
+export {getElementValue, validString, formatDate}

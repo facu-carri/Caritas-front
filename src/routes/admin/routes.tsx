@@ -6,10 +6,10 @@ import AdminLayout from "./components/Navbar/Layout";
 import HelpersManager from "src/routes/admin/components/HelpersManager";
 import Maps from "../maps/Map";
 import AuthEmployeeProvider from "src/context/AuthEmployee";
-import Profile from "src/routes/exchanger/components/Profile";
 import RoutesHandler from "src/utils/routesHandler";
-import { EmployeeProfile } from "../helper/components/Profile";
+import { EmployeeProfile } from "../helper/pages/Profile";
 import ExchangersManager from "./pages/ExchangersManager";
+import Profile from "../exchanger/pages/Profile";
 
 export function AdminRouter() {
 
@@ -25,7 +25,7 @@ export function AdminRouter() {
       path: routes.main,
       element: <AuthEmployeeProvider><AdminLayout /></AuthEmployeeProvider>,
       children: [
-        { path: routes.main, element: <AdminMain/> },
+      { path: routes.main, element: <AdminMain/> },
         { path: routes.admin.gestionarFiliales, element: <Maps /> },
         { path: routes.admin.gestionarIntercambiadores, element: <ExchangersManager/>},
         { path: routes.admin.gestionarAyudantes, element: <HelpersManager /> },

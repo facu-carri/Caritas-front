@@ -11,8 +11,19 @@ export type ExchangerData = {
     photo: string
     stars: number
     password?: string,
-    birdthdate?: string
+    birthdate?: string
     absentees: number
+}
+export type HelperData = {
+    id: string
+    name: string
+    email: string
+    dni: string
+    phone: string
+    photo: string
+    password?: string
+    birthdate: string
+    employeeLocation: LocationResponse
 }
 export type GeoPosition = {
     lat: number,
