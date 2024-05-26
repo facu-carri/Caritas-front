@@ -10,9 +10,10 @@ import { endPoints, roles } from "src/utils/constants";
 import { deleteData, getData } from "src/utils/request/httpRequests";
 import StoreIcon from '@images/StoreIcon.png'
 import EditarFilialModal from "src/components/modals/EditarFilial";
+import ConfirmationModal from "src/components/modals/Confirmation";
 
 function Maps() {
-    const { showModal, isOpen, dialogId } = useCustomModal()
+    const { showModal, isOpen, dialogId, closeModal } = useCustomModal()
     const [currentMarker, setCurrentMarker] = useState<Location>(null)
     const [locations, setLocations] = useState<Location[]>([])
     const { getRole } = User()
@@ -78,6 +79,10 @@ function Maps() {
         return isSamePosition(currentMarker.geoPosition, position)
     }
 
+    const showEliminationConfirmation = () => {
+        showModal(<ConfirmationModal onAccept={eliminarFilial} onCancel={closeModal}/>)
+    }
+    
     const eliminarFilial = () => {
         deleteData(`${endPoints.location}/${currentMarker.id}`, null)
             .then(() => removeLocation(currentMarker))
@@ -100,8 +105,8 @@ function Maps() {
                     <div className="ml-2 flex flex-col justify-center items-center text-[100%]">
                         <h2 className="font-bold text-base">{location.description ?? ''}</h2>
                         <div className="flex flex-row mt-2 gap-2">
-                                <Button visible={canEdit()} onClick={editarFilial}>Editar</Button>
-                            <Button visible={canEdit()} onClick={eliminarFilial}>Eliminar</Button>
+                            <Button visible={canEdit()} onClick={editarFilial}>Editar</Button>
+                            <Button visible={canEdit()} onClick={showEliminationConfirmation}>Eliminar</Button>
                         </div>
                     </div>
                 </InfoWindow>

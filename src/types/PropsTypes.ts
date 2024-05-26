@@ -19,3 +19,8 @@ export type ButtonProps = {
     onClick?: () => void,
     attrs?: string
 } & React.ButtonHTMLAttributes<HTMLButtonElement>
+export type ConfirmationProps = {
+    title?: string,
+    onAccept: () => void
+    onCancel: () => void
+}
