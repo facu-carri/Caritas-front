@@ -65,4 +65,4 @@ export default function AuthenticationCodeInput() {
       </div>
     </div>
   );
-};
+}
