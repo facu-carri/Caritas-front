@@ -15,23 +15,20 @@ export default function CustomModalProvider({ children }) {
     const defaultDialogId = 'customModal'
     const dialogRef = useRef(null)
     const [modal, setModal] = useState(null)
-    const [isOpen, setOpen] = useState(false)
-    const [id, setId] = useState(defaultDialogId)
+    const [onClose, setOnClose] = useState<() =>void>(null)
 
     const dialogElement = () => dialogRef?.current ? (dialogRef?.current as HTMLDialogElement) : null
 
-    const showModal = (modalContent: JSX.Element, id: string) => {
+    const showModal = (modalContent: JSX.Element, onCloseFn: () => void) => {
+        if(onClose) onClose()
         setModal(modalContent)
-        if(id) setId(id)
+        if(onCloseFn) setOnClose(onCloseFn)
         dialogElement()?.showModal()
-        setOpen(true)
     }
 
     const closeModal = () => {
         dialogElement()?.close()
         setModal(null)
-        setOpen(false)
-        setId(defaultDialogId)
     }
 
     const handleClickOutside = (ev:any) => {
@@ -40,8 +37,8 @@ export default function CustomModalProvider({ children }) {
     }
 
     return (
-        <customModalContext.Provider value={{ showModal, isOpen, dialogId: id, closeModal }}>
-            <dialog className="modal bg-gray-500/50" id={id} open={isOpen} onClick={handleClickOutside} ref={dialogRef}>
+        <customModalContext.Provider value={{ showModal, closeModal }}>
+            <dialog className="modal bg-gray-500/50" id={defaultDialogId} onClose={closeModal} onClick={handleClickOutside} ref={dialogRef}>
                 {modal}
             </dialog>
             {children}
