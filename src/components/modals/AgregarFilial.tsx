@@ -16,7 +16,7 @@ export default function AgregarFilialModal({ geoPosition, handleSuccess }: Agreg
   const { closeModal } = useCustomModal()
 
   const handleError = (errCode: number) => {
-    const err = new ErrorCode(errCode, ErrorTypes.REGISTER_HELPER_ERROR)
+    const err = new ErrorCode(errCode, ErrorTypes.FILIALES_ERROR)
     setError(err)
     setTimeout(hiddeError, 5000)
   }
@@ -34,7 +34,7 @@ export default function AgregarFilialModal({ geoPosition, handleSuccess }: Agreg
   }
 
   const campos: Array<FormField> = [
-    { nombre: 'Descripcion', value:'', etiqueta: 'description', tipo: 'text' }
+    { nombre: 'Nombre', value:'', etiqueta: 'name', tipo: 'text' }
   ]
 
   return <GenericForm id="agregar-filial-modal" campos={campos} listener={handleRegister} error={error} />;

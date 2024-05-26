@@ -16,7 +16,7 @@ export default function EditarFilialModal({ location, handleSuccess }: EditarFil
   const { closeModal } = useCustomModal()
 
   const handleError = (errCode: number) => {
-    const err = new ErrorCode(errCode, ErrorTypes.REGISTER_HELPER_ERROR)
+    const err = new ErrorCode(errCode, ErrorTypes.FILIALES_ERROR)
     setError(err)
     setTimeout(hiddeError, 5000)
   }
@@ -26,7 +26,7 @@ export default function EditarFilialModal({ location, handleSuccess }: EditarFil
   }
 
     const handleRegister = (data: LocationFields) => {
-        const newLocation = Object.assign(location, data)
+      const newLocation = {...location, ...data}
         putData(endPoints.location + `/${location.id}`, null, newLocation)
         .then((responseData) => handleSuccess(responseData))
         .then(() => closeModal())
@@ -34,7 +34,7 @@ export default function EditarFilialModal({ location, handleSuccess }: EditarFil
   }
 
   const campos: Array<FormField> = [
-    { nombre: 'Descripcion', value:location.description, etiqueta: 'description', tipo: 'text' }
+    { nombre: 'Nombre', value:location.name, etiqueta: 'name', tipo: 'text' }
   ]
 
   return <GenericForm id="agregar-filial-modal" campos={campos} listener={handleRegister} error={error} btnText="Editar" />;

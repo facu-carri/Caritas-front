@@ -37,7 +37,7 @@ export default function EditExchangerModal({exchanger, onSave, closeModal}: Prop
     return [
       { nombre: 'Nombre completo', etiqueta: 'name', value: exchanger.name, tipo: 'text' },
       { nombre: 'Teléfono', etiqueta: 'phone', value: exchanger.phone, tipo: 'tel' },
-      { nombre: 'Fecha de nacimiento', etiqueta: 'birthdate', value: exchanger.birdthdate, tipo: 'date'}
+      { nombre: 'Fecha de nacimiento', etiqueta: 'birthdate', value: exchanger.birthdate, tipo: 'date'}
     ]
   }
 
