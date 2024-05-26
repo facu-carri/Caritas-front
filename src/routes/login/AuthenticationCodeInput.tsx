@@ -9,6 +9,10 @@ const AuthenticationCodeInput = () => {
   const { setRoute } = RoutesHandler()
 
   const handleChange = (e) => {
+    const value = e.target.value
+    if (isNaN(value)) {
+      return
+    }
     setCode(e.target.value);
   };
 
