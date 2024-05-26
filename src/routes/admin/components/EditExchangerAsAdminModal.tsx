@@ -2,27 +2,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import GenericForm, { FormField } from "../../../components/GenericForm";
 import { useEffect, useState } from "react";
+import { ExchangerData } from "src/types/Types";
 import { ErrorCode } from "src/utils/Error/ErrorCode";
 import { ErrorTypes } from "src/utils/Error/ErrorTypes";
 
-type Helper = {
-  id: number,
-  name: string,
-  dni: string,
-  phone: string,
-  email: string,
-  password: string,
-  birthdate: string,
-  employeeLocationId: string
-}
-
 type Props = {
-  helper: Helper,
+  exchanger: ExchangerData,
   onSave: (ev) => void,
-  closeModal: (ev) => void
 }
 
-export default function EditExchangerAsAdminModal({helper, onSave, closeModal}: Props) {
+export default function EditExchangerAsAdminModal({exchanger, onSave}: Props) {
 
   const [error, setError] = useState<ErrorCode>(null)
   const [campos, setCampos] = useState([])
@@ -37,7 +26,7 @@ export default function EditExchangerAsAdminModal({helper, onSave, closeModal}: 
     setError(null)
   }
 
-  const handleEdit = (data: Helper) => {
+  const handleEdit = (data: ExchangerData) => {
     console.log(data)
     onSave(data)
     /*postData(endPoints.registerHelper, null, data)
@@ -47,19 +36,19 @@ export default function EditExchangerAsAdminModal({helper, onSave, closeModal}: 
 
   function getDefaultFileds(): Array<FormField> {
     return [
-      { nombre: 'Nombre completo', etiqueta: 'name', value: helper.name, tipo: 'text' },
-      { nombre: 'Contraseña', etiqueta: 'password', value: helper.password, tipo: 'password' },
-      { nombre: 'DNI', etiqueta: 'dni', value: helper.dni, tipo: 'text' },
-      { nombre: 'Teléfono', etiqueta: 'phone', value: helper.phone, tipo: 'tel' },
+      { nombre: 'Nombre completo', etiqueta: 'name', value: exchanger.name, tipo: 'text' },
+      { nombre: 'Contraseña', etiqueta: 'password', value: exchanger.password, tipo: 'password' },
+      { nombre: 'DNI', etiqueta: 'dni', value: exchanger.dni, tipo: 'text' },
+      { nombre: 'Teléfono', etiqueta: 'phone', value: exchanger.phone, tipo: 'tel' },
     ]
   }
 
   useEffect(() => {
-    if (!helper) return
+    if (!exchanger) return
     console.log(getDefaultFileds())
 
     setCampos([...getDefaultFileds()])
-  }, [helper])
+  }, [exchanger])
 
   return campos && campos.length > 0 && <GenericForm id="edit-helpers-modal" campos={campos} listener={handleEdit} error={error} btnText="Aplicar cambios" />;
 }

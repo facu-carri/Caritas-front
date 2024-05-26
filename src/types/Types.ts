@@ -48,3 +48,6 @@ export type LocationFields = {
     description: string
 }
 export type NotificationType = 'error' | 'warning'
+export type ExchangerCardData = {
+    visible: boolean
+} & ExchangerData

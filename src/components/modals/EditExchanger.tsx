@@ -1,18 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import GenericForm, { FormField } from "../../../components/GenericForm";
+import GenericForm, { FormField } from "../GenericForm";
 import { useEffect, useState } from "react";
+import { ExchangerData } from "src/types/Types";
 import { ErrorCode } from "src/utils/Error/ErrorCode";
 import { ErrorTypes } from "src/utils/Error/ErrorTypes";
 
-type Exchanger = {
-  name: string,
-  phone: string,
-  birthdate: string
-}
-
 type Props = {
-  exchanger: Exchanger,
+  exchanger: ExchangerData,
   onSave: (ev) => void,
   closeModal: (ev) => void
 }
@@ -32,7 +27,7 @@ export default function EditExchangerModal({exchanger, onSave, closeModal}: Prop
     setError(null)
   }
 
-  const handleEdit = (data: Exchanger) => {
+  const handleEdit = (data: ExchangerData) => {
     console.log('data', data)
     onSave(data)
     closeModal(null);
@@ -42,7 +37,7 @@ export default function EditExchangerModal({exchanger, onSave, closeModal}: Prop
     return [
       { nombre: 'Nombre completo', etiqueta: 'name', value: exchanger.name, tipo: 'text' },
       { nombre: 'Teléfono', etiqueta: 'phone', value: exchanger.phone, tipo: 'tel' },
-      { nombre: 'Fecha de nacimiento', etiqueta: 'birthdate', value: exchanger.birthdate, tipo: 'date'}
+      { nombre: 'Fecha de nacimiento', etiqueta: 'birthdate', value: exchanger.birdthdate, tipo: 'date'}
     ]
   }
 

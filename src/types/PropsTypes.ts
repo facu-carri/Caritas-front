@@ -1,4 +1,4 @@
-import { ExchangerData, GeoPosition, Location, LocationResponse, MouseEvent, Tab } from "./Types"
+import { ExchangerCardData, ExchangerData, GeoPosition, Location, LocationResponse, MouseEvent, Tab } from "./Types"
 
 export type AgregarFilialProps = {
     geoPosition: GeoPosition
@@ -29,7 +29,7 @@ export type InformativeTextProps = {
     attrs?: string
 } & React.HTMLAttributes<HTMLParagraphElement>
 export type ExchangerCardProps = {
-    exchangerData: ExchangerData
+    cardData: ExchangerCardData
     onEdit: (data:ExchangerData) => void
     onDelete: (id:string) => void
 }
