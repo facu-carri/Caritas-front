@@ -16,3 +16,8 @@ export type UserDataContextType = {
     userData: any,
     setUserData: (data) => void
 }
+export type NotificationContextType = {
+    showNotification: (content: JSX.Element) => void
+    onClick: () => void
+    closeNotification: () => void
+}

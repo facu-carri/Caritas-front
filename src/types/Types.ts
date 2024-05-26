@@ -43,3 +43,4 @@ export type Dropdown = {
 export type LocationFields = {
     description: string
 }
+export type NotificationType = 'error' | 'warning'

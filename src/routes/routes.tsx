@@ -4,6 +4,7 @@ import Login from "./login/Login";
 import RoleBasedRouting from "../utils/RoleRouting";
 import { routes } from "../utils/constants";
 import Registro from "./register/Registro";
+import NotificationProvider from "src/context/NotificationContext";
 
 export function MainRouter() {
   return [
@@ -12,7 +13,9 @@ export function MainRouter() {
       element: (
           <AuthProvider>
             <CustomModalProvider>
-              <RoleBasedRouting/>
+              <NotificationProvider>
+                <RoleBasedRouting/>
+              </NotificationProvider>
             </CustomModalProvider>
           </AuthProvider>
       ),
