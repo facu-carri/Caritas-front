@@ -19,6 +19,14 @@ export default {
       animation: {
         spin: 'spin 3s linear infinite',
       },
+      dropShadow: {
+        'white-multi': [
+          '2px 0 0 rgba(0, 0, 0, 1)',
+          '0 2px 0 rgba(0, 0, 0, 1)',
+          '-2px 0 0 rgba(0, 0, 0, 1)',
+          '0 -2px 0 rgba(0, 0, 0, 1)',
+        ],
+      },
     }
   },
   daisyui: {
