@@ -1,11 +1,11 @@
-import { GeoPosition, Location, LocationResponse, Tab } from "./Types"
+import { ExchangerData, GeoPosition, Location, LocationResponse, MouseEvent, Tab } from "./Types"
 
 export type AgregarFilialProps = {
-    geoPosition: GeoPosition,
+    geoPosition: GeoPosition
     handleSuccess: (loation: LocationResponse) => void
 }
 export type EditarFilialProps = {
-    location: Location,
+    location: Location
     handleSuccess: (loation: LocationResponse) => void
 }
 export type NavbarProps = {
@@ -14,13 +14,22 @@ export type NavbarProps = {
     endTabs?: Tab[]
 }
 export type ButtonProps = {
-    active?: boolean,
-    visible?: boolean,
-    onClick?: () => void,
+    active?: boolean
+    visible?: boolean
+    onClick?: (ev:MouseEvent) => void
     attrs?: string
 } & React.ButtonHTMLAttributes<HTMLButtonElement>
 export type ConfirmationProps = {
     title?: string,
-    onAccept: () => void
-    onCancel: () => void
+    onAccept: (ev:MouseEvent) => void
+    onCancel: (ev:MouseEvent) => void
+}
+export type InformativeTextProps = {
+    icon?: JSX.Element
+    attrs?: string
+} & React.HTMLAttributes<HTMLParagraphElement>
+export type ExchangerCardProps = {
+    exchangerData: ExchangerData
+    onEdit: (data:ExchangerData) => void
+    onDelete: (id:string) => void
 }

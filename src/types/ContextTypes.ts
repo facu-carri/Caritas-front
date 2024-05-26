@@ -1,19 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export type AuthEmployeeContextType = {
-    auth: boolean,
+    auth: boolean
     setAuth: (auth:boolean) => void
 }
 export type AuthContextType = {
-    token: string,
+    token: string
 }
 export type CustomModalContextType = {
-    showModal: (content:JSX.Element, id?:string) => void,
-    closeModal: () => void,
-    isOpen: boolean,
-    dialogId: string
+    showModal: (content:JSX.Element, onCloseFn?:() => void) => void
+    closeModal: () => void
 }
 export type UserDataContextType = {
-    userData: any,
+    userData: any
     setUserData: (data) => void
 }
 export type NotificationContextType = {
