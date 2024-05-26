@@ -13,7 +13,7 @@ import EditarFilialModal from "src/components/modals/EditarFilial";
 import ConfirmationModal from "src/components/modals/Confirmation";
 
 function Maps() {
-    const { showModal, isOpen, dialogId, closeModal } = useCustomModal()
+    const { showModal, closeModal } = useCustomModal()
     const [currentMarker, setCurrentMarker] = useState<Location>(null)
     const [locations, setLocations] = useState<Location[]>([])
     const { getRole } = User()
@@ -28,10 +28,6 @@ function Maps() {
                 setLocations(filtered)
             })
     }, [])
-
-    useEffect(() => {
-        if (dialogId == 'agregarFilial' && !isOpen) setCurrentMarker(null)
-    }, [isOpen])
 
     const canEdit = () => getRole() == roles.ADMIN
 
@@ -67,7 +63,7 @@ function Maps() {
     }
 
     const agregarFilial = (position:GeoPosition) => {
-        showModal(<AgregarFilialModal geoPosition={position} handleSuccess={addLocation} />, 'agregarFilial')
+        showModal(<AgregarFilialModal geoPosition={position} handleSuccess={addLocation} />, () => setCurrentMarker(null))
     }
 
     const isSamePosition = (pos1: GeoPosition, pos2: GeoPosition) => {
@@ -80,7 +76,7 @@ function Maps() {
     }
 
     const showEliminationConfirmation = () => {
-        showModal(<ConfirmationModal onAccept={eliminarFilial} onCancel={closeModal}/>)
+        showModal(<ConfirmationModal title="Se eliminaran todos los ayudantes de esta filial" onAccept={eliminarFilial} onCancel={closeModal}/>)
     }
     
     const eliminarFilial = () => {
@@ -90,27 +86,32 @@ function Maps() {
             //.catch((errCode: number) => handleError(errCode))
     }
 
+    const editLocation = (locationResponse: LocationResponse) => {
+        const searched = locations.find(location => location.id == locationResponse.id)
+        Object.assign(searched, locationResponse)
+    }
+
     const editarFilial = () => {
-        showModal(<EditarFilialModal location={currentMarker} handleSuccess={addLocation}/>)
+        showModal(<EditarFilialModal location={currentMarker} handleSuccess={editLocation}/>)
     }
 
     const getLocationsMarkers = () => {
         return locations && locations.map((location, index) => (
             <div key={index}>
-            <AdvancedMarker position={location.geoPosition} title={location.description ?? ''} onClick={() => setCurrentMarker(location)} key={index}>
+            <AdvancedMarker position={location.geoPosition} title={location.name ?? ''} onClick={() => setCurrentMarker(location)} key={index}>
                 <img src={StoreIcon} className="scale-[.9] drop-shadow-white-multi"></img>
             </AdvancedMarker>
                 {showMarkerInfo(location.geoPosition) && 
                 <InfoWindow pixelOffset={[1,-35]} className="p-1" position={location.geoPosition} onCloseClick={() => setCurrentMarker(null)}>
                     <div className="ml-2 flex flex-col justify-center items-center text-[100%]">
-                        <h2 className="font-bold text-base">{location.description ?? ''}</h2>
+                        <h2 className="font-bold text-base">{location.name ?? ''}</h2>
                         <div className="flex flex-row mt-2 gap-2">
                             <Button visible={canEdit()} onClick={editarFilial}>Editar</Button>
                             <Button visible={canEdit()} onClick={showEliminationConfirmation}>Eliminar</Button>
                         </div>
                     </div>
                 </InfoWindow>
-            }
+                }
             </div>
         ))
     }
@@ -128,6 +129,7 @@ function Maps() {
                 defaultCenter={defaultPosition}
                 fullscreenControl={false}
                 onClick={handleMapClick}
+                onDragstart={() => setCurrentMarker(null)}
             >
             {getLocationsMarkers()}
             </Map>
