@@ -4,7 +4,7 @@ export const InformativeText = ({ icon, attrs, children, ...props }: Informative
     return (
         <div className="flex gap-2 items-center">
             {icon}
-            <p className={`text-gray-400 ${attrs}`} {...props}>{children}</p>
+            <div className={`text-gray-400 ${attrs}`} {...props}>{children}</div>
         </div>
     )
 }
