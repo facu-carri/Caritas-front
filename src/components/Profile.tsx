@@ -25,7 +25,7 @@ export default function UserProfile({ userData, profileInfo, showPhoto, handleEd
         <div className="bg-gray-900 min-h-screen">
             <header className="py-5 px-6 md:px-12 pt-[100px] bg-gradient-to-r from-red-500 to-blue-500 ">
                 <div className="flex space-x-4">
-                    <div className="h-16 w-16 mask mask-circle">
+                    <div className="mt-1 h-16 w-16 mask mask-circle rounded-full overflow-hidden flex items-center">
                     {
                         showPhoto ? <img src={`data:image/jpeg;base64,${userData.photo}`} alt={userData.name}/> :
                         <Avatar name={userData.name} size="48" round={true}/>
