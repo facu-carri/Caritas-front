@@ -7,14 +7,10 @@ export default function Rating({ max = MaxStars, qty }: RatingProps) {
     const getStars = () => {
         const stars: JSX.Element[] = []
         for (let i = 1; i <= max; i++){
-            stars.push(<FaStar fill={i <= qty ? 'orange' : 'grey'} />)
+            stars.push(<FaStar fill={i <= qty ? 'orange' : 'grey'} key={`Star_${i}`} />)
         }
         return stars
     }
 
-    return <div className="flex flex-row">
-    {
-        getStars()
-    }
-    </div>
+    return <div className="flex flex-row">{getStars()}</div>
 }
