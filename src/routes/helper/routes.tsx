@@ -4,7 +4,7 @@ import ErrorPage from "../error/ErrorPage";
 import { routes } from "src/utils/constants";
 import AuthEmployeeProvider from "src/context/AuthEmployee";
 import HelperLayout from "./components/Navbar/Layout";
-import { EmployeeProfile } from "./pages/Profile";
+import EmployeeProfile from "./pages/Profile";
 
 export function HelperRouter() {
   return useRoutes([

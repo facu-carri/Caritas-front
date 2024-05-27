@@ -7,25 +7,20 @@ import HelpersManager from "src/routes/admin/components/HelpersManager";
 import Maps from "../maps/Map";
 import AuthEmployeeProvider from "src/context/AuthEmployee";
 import RoutesHandler from "src/utils/routesHandler";
-import { EmployeeProfile } from "../helper/pages/Profile";
 import ExchangersManager from "./pages/ExchangersManager";
 import Profile from "../exchanger/pages/Profile";
+import EmployeeProfile from "../helper/pages/Profile";
 
 export function AdminRouter() {
 
-  const { location } = RoutesHandler()
-
-  const getId = () => {
-    const split = location.pathname.split('/')
-    return split[split.length - 1]
-  }
+  const { getId } = RoutesHandler()
 
   return useRoutes([
     {
       path: routes.main,
       element: <AuthEmployeeProvider><AdminLayout /></AuthEmployeeProvider>,
       children: [
-      { path: routes.main, element: <AdminMain/> },
+        { path: routes.main, element: <AdminMain/> },
         { path: routes.admin.gestionarFiliales, element: <Maps /> },
         { path: routes.admin.gestionarIntercambiadores, element: <ExchangersManager/>},
         { path: routes.admin.gestionarAyudantes, element: <HelpersManager /> },
