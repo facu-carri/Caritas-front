@@ -46,6 +46,7 @@ export const roles = {
     'HELPER': 'AYUDANTE',
     'EXCHANGER': 'INTERCAMBIADOR'
 }
+export const MaxStars = 10
 export const colors = {
     'white': '#FFFFFF'
 }

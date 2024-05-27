@@ -68,7 +68,7 @@ export type ExchangerHeaderProps = {
     children?: JSX.Element[] | JSX.Element
 }
 export type RatingProps = {
-    max: number
+    max?: number
     qty: number
 }
 export type ImageProps = {

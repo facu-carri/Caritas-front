@@ -1,14 +1,15 @@
 import { FaStar } from "react-icons/fa";
 import { RatingProps } from "src/types/PropsTypes";
+import { MaxStars } from "src/utils/constants";
 
-export default function Rating({ max, qty }: RatingProps) {
+export default function Rating({ max = MaxStars, qty }: RatingProps) {
     
     const getStars = () => {
-        const starts: JSX.Element[] = []
+        const stars: JSX.Element[] = []
         for (let i = 1; i <= max; i++){
-            starts.push(<FaStar fill={i <= qty ? 'orange' : 'grey'} />)
+            stars.push(<FaStar fill={i <= qty ? 'orange' : 'grey'} />)
         }
-        return starts
+        return stars
     }
 
     return <div className="flex flex-row">

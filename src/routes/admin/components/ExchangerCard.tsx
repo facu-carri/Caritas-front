@@ -29,7 +29,7 @@ export default function ExchangerCard({ cardData, onEdit, onDelete }: ExchangerC
                 <InformativeText icon={<BsTelephone/>}>{cardData.phone}</InformativeText>
                 <InformativeText icon={<BsPersonVcard />}>{cardData.dni}</InformativeText>
                 <InformativeText icon={<BsCalendar />}>{cardData.birthdate}</InformativeText>
-                <InformativeText icon={<BsStar />}>{<Rating max={5} qty={cardData.stars} />}</InformativeText>
+                <InformativeText icon={<BsStar />}>{<Rating qty={cardData.stars} />}</InformativeText>
                 <InformativeText icon={"Inasistencias:"}>{cardData.absentees}</InformativeText>
             </div>
             <div className="flex space-x-2 p-2">
