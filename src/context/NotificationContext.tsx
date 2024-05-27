@@ -28,7 +28,6 @@ export default function NotificationProvider({ children }) {
 
     return (
         <notificationContext.Provider value={{ showNotification, onClick, closeNotification }}>
-            <div onClick={onClick}>Notification</div>
             {children}
         </notificationContext.Provider>
     )
