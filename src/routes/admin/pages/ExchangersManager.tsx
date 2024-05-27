@@ -9,6 +9,7 @@ import EditExchangerAsAdminModal from 'src/routes/admin/components/EditExchanger
 import { useEffect, useState } from 'react';
 import { useCustomModal } from "src/context/CustomModalContext";
 import { ExchangerCardData } from "src/types/Types";
+import ExchangersManagerHeader from "../components/ExchangersManagerHeader";
 
 export default function ExchangersManager() {
     
@@ -56,15 +57,18 @@ export default function ExchangersManager() {
     }
     
     const handleDelete = (id) => {
-        deleteData(`${endPoints.exchanger}/${id}`, null)
-            .then(() => setExchangers(prev => prev.filter(user => user.id !== id)))
+        deleteData(`${endPoints.exchanger}/${id}`, null).then(() => setExchangers(prev => prev.filter(user => user.id !== id)))
+    }
+
+    const getExchangersCards = () => {
+        return exchangers.map((exchanger) => (
+            <ExchangerCard cardData={exchanger} onEdit={handleEdit} onDelete={handleDelete} key={exchanger.id} />
+        ))
     }
 
     const handleSave = (updatedexchanger) => { 
         if (updatedexchanger.password === "") updatedexchanger.password = null
         
-        updatedexchanger.birthdate = "2000-02-02"//HUH?????
-        console.log('current exchange', currentexchanger)
         putData(`${endPoints.exchanger}/${currentexchanger.id}`, null, {
             ...updatedexchanger,
             email: currentexchanger.email,
@@ -74,50 +78,34 @@ export default function ExchangersManager() {
         
         setExchangers(exchangers.map(exchanger =>
             exchanger.id === updatedexchanger.id ? updatedexchanger : exchanger
-        ));
+        ))
     }
 
-    return (<>
-        <div className="bg-gray-100 flex items-center justify-center min-h-screen">
-            <section className="w-full py-12">
-                <div className="max-w-4xl mx-auto px-4">
-                    <div className="flex flex-col items-center gap-4">
-                        <div className="space-y-2 sticky top-0 bg-gray-100 py-4">
-                            <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Listado de Usuarios</h1>
-                            <p className="mx-auto max-w-[700px] md:text-xl text-gray-400">
-                                Filtra por nombre, email, teléfono o DNI.
-                            </p>
-                        </div>
-                        <div className="w-full max-w-md space-y-2">
-                            <form className="flex space-x-2" onSubmit={(e) => e.preventDefault()}>
-                                <input
-                                    className="max-w-lg flex-1 p-2 border border-gray-300 rounded-md"
-                                    placeholder="Buscar..."
-                                    type="text"
-                                    value={searchQuery}
-                                    onChange={handleSearch}
-                                />
-                                <button type="submit" className="px-4 py-2 text-white bg-red-600 rounded hover:bg-red-500" onClick={filterExchangers}>
-                                    Filtrar
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                    {error && (
-                        <div className="mt-5">
-                            <ErrorAlert show={error != null}>
-                                <span>{error.getMessage()}</span>
-                            </ErrorAlert>
-                        </div>
-                    )}
-                    <div className="justify-center items-center text-[100%] grid grid-cols-3 gap-6 md:gap-8 mt-8 min-h-[300px]">
-                        {exchangers.map((exchanger) => (
-                            <ExchangerCard cardData={exchanger} onEdit={handleEdit} onDelete={handleDelete} key={exchanger.id} />
-                        ))}
-                    </div>
-                </div>
-            </section>
-        </div>
-        </>
+    return (
+        <section className="bg-gray-100 flex flex-col items-center justify-center min-h-screen">
+            <div className="flex flex-col items-center gap-4">
+                <ExchangersManagerHeader/>
+                <form className="w-full max-w-md space-y-2 flex space-x-2" onSubmit={(e) => e.preventDefault()}>
+                    <input
+                        className="max-w-lg flex-1 p-2 border border-gray-300 rounded-md"
+                        placeholder="Buscar..."
+                        type="text"
+                        value={searchQuery}
+                        onChange={handleSearch}
+                    />
+                    <button type="submit" className="px-4 py-2 text-white bg-red-600 rounded hover:bg-red-500" onClick={filterExchangers}>
+                        Filtrar
+                    </button>
+                </form>
+            </div>
+            {
+                error && (<ErrorAlert attrs="mt-5" show={error != null}>{error.getMessage()}</ErrorAlert>)
+            }
+            <div className="justify-center items-center text-[100%] grid grid-cols-3 gap-6 md:gap-8 mt-8 min-h-[300px]">
+            {
+                getExchangersCards()
+            }
+            </div>
+        </section>
     );
 }

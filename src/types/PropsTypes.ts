@@ -25,7 +25,7 @@ export type ConfirmationProps = {
     onCancel: (ev:MouseEvent) => void
 }
 export type InformativeTextProps = {
-    icon?: JSX.Element
+    icon?: JSX.Element | JSX.Element[] | string
     attrs?: string
 } & React.HTMLAttributes<HTMLParagraphElement>
 export type ExchangerCardProps = {
@@ -67,3 +67,11 @@ export type ExchangerHeaderProps = {
     attrs?: string
     children?: JSX.Element[] | JSX.Element
 }
+export type RatingProps = {
+    max: number
+    qty: number
+}
+export type ImageProps = {
+    photo: string
+    alt?: string
+} & React.ImgHTMLAttributes<HTMLImageElement>
