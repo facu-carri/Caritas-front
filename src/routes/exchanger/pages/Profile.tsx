@@ -56,31 +56,27 @@ export default function Profile({ id }: ProfileProps) {
             { title: "Absentees", value: exchangerData.absentees, color: "text-red-500" },
             { title: "Birthdate", value: formatDate(exchangerData.birthdate), color: "text-red-500" },
         ]
-        return (id || !isAdmin) ? profileInfo.filter(field => !["Email", "DNI", "Phone"].includes(field.title)) : profileInfo
+        return (id && !isAdmin) ? profileInfo.filter(field => !["Email", "DNI", "Phone"].includes(field.title)) : profileInfo
     }
 
-  return (
-        <UserProfile userData={exchangerData} profileInfo={info} handleEdit={showEditModal}>
-            <section>
-                <h2 className="text-2xl font-bold mb-4 text-white">Publicaciones de productos</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                {
-                    !(inventory) || inventory.length == 0 ?
-                    <p className="text-gray-400 line-clamp-2">No hay elementos</p>:
-                    inventory.map((item, index) => (<ItemCard key={index} item={item} hiddeBtns={true} />))
-                }
-                </div>
-            </section>
-            <section>
-                <h2 className="text-2xl font-bold mb-4 text-white">Comentarios</h2>
-                <div className="space-y-4">
-                {
-                    !(reviews) || reviews.length == 0 ?
-                    <p className="text-gray-400 line-clamp-2">No hay elementos</p> :
-                    <p> TODO: HACER REVIEWS </p>
-                }
-                </div>
-            </section>
+    return (
+        <UserProfile userData={exchangerData} profileInfo={info} handleEdit={showEditModal} showPhoto={!id && isAdmin}>
+            <h2 className="text-2xl font-bold mb-4 text-white">Publicaciones de productos</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            {
+                (!inventory || inventory.length == 0) ?
+                <p className="text-gray-400 line-clamp-2">No hay elementos</p>:
+                inventory.map((item, index) => (<ItemCard key={index} item={item} hiddeBtns={true} />))
+            }
+            </div>
+            <h2 className="text-2xl font-bold mb-4 text-white">Comentarios</h2>
+            <div className="space-y-4">
+            {
+                (!reviews || reviews.length == 0) ?
+                <p className="text-gray-400 line-clamp-2">No hay elementos</p> :
+                <p> TODO: HACER REVIEWS </p>
+            }
+            </div>
         </UserProfile>
     )
 }

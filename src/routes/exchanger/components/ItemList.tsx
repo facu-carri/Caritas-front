@@ -46,7 +46,7 @@ export default function ItemListInventory({ ruta, item, children }: ItemListInve
     <div className="bg-gray-200 py-8 container mx-auto px-4 relative">
       <div className="flex flex-row gap-2 mb-4">
         {
-            (categories || categories.length == 0) ? 
+            (!categories || categories.length == 0) ? 
             <span className="p-2 border rounded-lg">No hay categorias cargadas</span> :
             <select className="p-2 border border-gray-700 rounded-lg" value={category} onChange={(e) => setCategory(e.target.value)}>
               <option value="default">Todas las Categorías</option>
