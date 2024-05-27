@@ -61,7 +61,7 @@ export default function Profile({ id }: ProfileProps) {
     }
 
     return (
-        <UserProfile userData={exchangerData} profileInfo={info} handleEdit={showEditModal} showPhoto={!id && isAdmin}>
+        <UserProfile userData={exchangerData} profileInfo={info} handleEdit={!id || isAdmin ? showEditModal : null} showPhoto={!id && isAdmin}>
             <h2 className="text-2xl font-bold mb-4 text-white">Publicaciones de productos</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {
