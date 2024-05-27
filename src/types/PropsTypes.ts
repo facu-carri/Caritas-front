@@ -1,4 +1,4 @@
-import { ExchangerCardData, ExchangerData, GeoPosition, ItemData, Location, LocationResponse, MouseEvent, Tab } from "./Types"
+import { ExchangerCardData, ExchangerData, GeoPosition, ItemData, Location, LocationResponse, MouseEvent, Tab, UserData, UserInfoFields } from "./Types"
 
 export type AgregarFilialProps = {
     geoPosition: GeoPosition
@@ -49,4 +49,11 @@ export type ItemListInventoryProps = {
     text: string
     subText: string
     item?: ItemData
+}
+export type UserProfileProps = {
+    userData: UserData
+    profileInfo: UserInfoFields[]
+    handleEdit?: VoidFunction
+    showPhoto?: boolean
+    children?: JSX.Element[]
 }

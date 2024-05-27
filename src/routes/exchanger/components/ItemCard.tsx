@@ -13,9 +13,7 @@ export default function ItemCard({ item, onClick, hiddeBtns}:ItemCardProps) {
   }
   return (
     <div className="bg-white p-4 rounded shadow-lg max-w-sm cursor-pointer transform transition-transform duration-200 hover:scale-105" onClick={onClick}>
-      <div className="mb-4">
-        <img src={`data:image/jpeg;base64,${photo ?? ''}`} alt={name} className="w-full rounded shadow-2xl" />
-      </div>
+      <img src={`data:image/jpeg;base64,${photo ?? ''}`} alt={name} className="mb-4 w-full rounded shadow-2xl" />
       <h2 className="text-xl font-bold mb-2">{name}</h2>
       <p className="text-sm text-gray-500 mb-2">Categoria: {itemCategory.name}</p>
       <p className="text-sm text-gray-500 mb-2">Descripcion: {description}</p>

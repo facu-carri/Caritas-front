@@ -2,29 +2,23 @@ import { ButtonProps } from "./PropsTypes"
 
 export type VoidFunction = () => void
 export type MouseEvent = React.MouseEvent<HTMLElement>
-export type ExchangerData = {
-    id: string
-    name: string
-    email: string
-    dni: string
-    phone: string
-    photo: string
-    stars: number
-    password?: string,
-    birthdate?: string
-    absentees: number
-}
-export type HelperData = {
-    id: string
-    name: string
-    email: string
-    dni: string
-    phone: string
-    photo: string
+export type UserData = {
+    name: string,
+    dni: string,
+    photo: string,
+    phone: string,
+    email: string,
+    id: string,
+    birthdate: string,
     password?: string
-    birthdate: string
-    employeeLocation: LocationResponse
 }
+export type ExchangerData = {
+    stars: number
+    absentees: number
+} & UserData
+export type HelperData = {
+    employeeLocation: LocationResponse
+} & UserData
 export type GeoPosition = {
     lat: number,
     lng: number
@@ -81,4 +75,9 @@ export type Review = {
     description: string
     stars: number
     date: string
+}
+export type UserInfoFields = {
+    title: string
+    value: string|number
+    color: string
 }
