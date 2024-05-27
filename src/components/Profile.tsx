@@ -28,7 +28,7 @@ export default function UserProfile({ userData, profileInfo, showPhoto, handleEd
                     <div className="mt-1 h-16 w-16 mask mask-circle rounded-full overflow-hidden flex items-center">
                     {
                         showPhoto ? <img src={`data:image/jpeg;base64,${userData.photo}`} alt={userData.name}/> :
-                        <Avatar name={userData.name} size="48" round={true}/>
+                        <Avatar name={userData.name} size="56" round={true}/>
                     }
                     </div>
                     <div className="text-white mt-2">
