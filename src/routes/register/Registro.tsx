@@ -45,17 +45,6 @@ function RegistrationFields() {
 
   function handleSubmit(event) {
     event.preventDefault()
-    /*postData(endPoints.registerExchanger, null, {
-      name,
-      birthdate,
-      dni,
-      phone,
-      email,
-      password
-    })
-      .then(() => setRoute(routes.login))
-      .catch((errCode: number) => handleError(errCode))*/
-
     fetch(`${serverAddress}/${endPoints.registerExchanger}`, {
         method: 'POST',
         cache: 'no-cache',
@@ -73,16 +62,13 @@ function RegistrationFields() {
         })
     })
         .then(res => {
-            if(!res.ok) {
-              handleError(res.status)
-            }
+            if(!res.ok) handleError(res.status)
             return res.json()
         })
         .then(() => setRoute(routes.login))
   }
 
   return (
-    <>
       <form className="space-y-4">
       {<ErrorAlert show={error != null} attrs='w-full'>
         <span>{error && error.getMessage()}</span>
@@ -119,8 +105,7 @@ function RegistrationFields() {
         Registrarse
       </button>
     </form>
-    </>
-  );
+  )
 }
 
 // Componente de etiqueta de formulario
