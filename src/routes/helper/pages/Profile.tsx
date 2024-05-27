@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { formatDate } from 'src/utils/api';
 import { ProfileProps } from 'src/types/PropsTypes';
 import { HelperData, UserInfoFields } from 'src/types/Types';
-import UserProfile from 'src/components/Profile';
+import UserProfile from 'src/components/UserProfile';
 
 export default function EmployeeProfile({ id }: ProfileProps) {
     const [helperData, setHelperData] = useState<HelperData>();

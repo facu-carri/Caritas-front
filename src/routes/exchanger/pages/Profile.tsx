@@ -10,7 +10,7 @@ import { ExchangerData, ItemData, Review, UserInfoFields } from 'src/types/Types
 import { formatDate } from 'src/utils/api';
 import ItemCard from '../components/ItemCard';
 import { ProfileProps } from 'src/types/PropsTypes';
-import UserProfile from 'src/components/Profile';
+import UserProfile from "src/components/UserProfile";
 
 export default function Profile({ id }: ProfileProps) {
     const [exchangerData, setUserData] = useState<ExchangerData>();
