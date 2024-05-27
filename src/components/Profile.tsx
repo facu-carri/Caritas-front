@@ -2,6 +2,7 @@ import Avatar from "react-avatar";
 import LoadingAnimation from "./LoadingAnimation";
 import RoutesHandler from "src/utils/routesHandler";
 import { UserProfileProps } from "src/types/PropsTypes";
+import Image from "./Image";
 
 export default function UserProfile({ userData, profileInfo, showPhoto, handleEdit, children }: UserProfileProps) {
     
@@ -23,11 +24,11 @@ export default function UserProfile({ userData, profileInfo, showPhoto, handleEd
     return (!userData || !profileInfo) ? <LoadingAnimation /> :
     (
         <div className="bg-gray-900 min-h-screen">
-            <header className="py-5 px-6 md:px-12 pt-[100px] bg-gradient-to-r from-red-500 to-blue-500 ">
+            <header className="flex flex-row gap-2 py-5 px-6 md:px-12 pt-[100px] bg-gradient-to-r from-red-500 to-blue-500 ">
                 <div className="flex space-x-4">
                     <div className="mt-1 h-16 w-16 mask mask-circle rounded-full overflow-hidden flex items-center">
                     {
-                        showPhoto ? <img src={`data:image/jpeg;base64,${userData.photo}`} alt={userData.name}/> :
+                        showPhoto ? <Image photo={userData.photo} alt={userData.name}/>:
                         <Avatar name={userData.name} size="56" round={true}/>
                     }
                     </div>
@@ -37,7 +38,7 @@ export default function UserProfile({ userData, profileInfo, showPhoto, handleEd
                     </div>
                 </div>
                 {
-                    (!id && !!handleEdit) && <button onClick={handleEdit} className="mt-4 text-black hover:bg-black/20 border border-black py-2 px-4 rounded">Editar Perfil</button>
+                    (!id && !!handleEdit) && <button onClick={handleEdit} className="mb-2 mt-5 ml-2 py-2 px-4 rounded text-black hover:bg-black/20 border border-black">Editar Perfil</button>
                 }
             </header>
             <section className="py-8 md:px-12 grid gap-8">

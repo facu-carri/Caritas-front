@@ -1,3 +1,4 @@
+import Image from 'src/components/Image';
 import { ItemCardProps } from 'src/types/PropsTypes';
 import { routes } from 'src/utils/constants';
 import RoutesHandler from 'src/utils/routesHandler';
@@ -13,7 +14,7 @@ export default function ItemCard({ item, onClick, hiddeBtns}:ItemCardProps) {
   }
   return (
     <div className="bg-white p-4 rounded shadow-lg max-w-sm cursor-pointer transform transition-transform duration-200 hover:scale-105" onClick={onClick}>
-      <img src={`data:image/jpeg;base64,${photo ?? ''}`} alt={name} className="mb-4 w-full rounded shadow-2xl" />
+      <Image photo={photo} alt={name} className="mb-4 w-full rounded shadow-2xl" />
       <h2 className="text-xl font-bold mb-2">{name}</h2>
       <p className="text-sm text-gray-500 mb-2">Categoria: {itemCategory.name}</p>
       <p className="text-sm text-gray-500 mb-2">Descripcion: {description}</p>
