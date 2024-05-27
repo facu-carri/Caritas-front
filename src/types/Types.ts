@@ -78,6 +78,6 @@ export type Review = {
 }
 export type UserInfoFields = {
     title: string
-    value: string|number
+    value: string|number|JSX.Element
     color: string
 }

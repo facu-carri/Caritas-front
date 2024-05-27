@@ -1,4 +1,4 @@
-import { ExchangerCardData, ExchangerData, GeoPosition, ItemData, Location, LocationResponse, MouseEvent, Tab, UserData, UserInfoFields } from "./Types"
+import { ExchangerCardData, ExchangerData, GeoPosition, HelperData, ItemData, Location, LocationResponse, MouseEvent, Tab, UserData, UserInfoFields } from "./Types"
 
 export type AgregarFilialProps = {
     geoPosition: GeoPosition
@@ -41,12 +41,13 @@ export type ItemModalProps = {
 }
 export type ItemCardProps = {
     item: ItemData
-    onClick?: VoidFunction
+    onClick?: (ev:MouseEvent) => void
     hiddeBtns?: boolean
 }
 export type ItemListInventoryProps = {
     ruta: string
     item?: ItemData
+    canEdit?: boolean
     children?: JSX.Element[] | JSX.Element
 }
 export type UserProfileProps = {
@@ -75,3 +76,9 @@ export type ImageProps = {
     photo: string
     alt?: string
 } & React.ImgHTMLAttributes<HTMLImageElement>
+export type HelpersListProps = {
+    helpers: HelperData[]
+    onEdit: (helper:HelperData) => void
+    onSelect: (id:number|string) => void
+    onDelete: (id:number|string) => void
+}
