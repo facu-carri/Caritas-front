@@ -14,7 +14,7 @@ export const Information = () => {
           El principal beneficio para nuestros usuarios es la facilidad y seguridad con la que pueden llevar a cabo sus intercambios.
         </p>
         <h3 className="mt-4 text-2xl font-serif font-bold tracking-tight text-gray-100">
-            Nuestras ubicaciones
+          Nuestras ubicaciones
         </h3>
         <Maps/>
       </div>
