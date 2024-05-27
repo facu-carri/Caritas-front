@@ -7,8 +7,9 @@ import { ItemCategory, ItemData } from "src/types/Types";
 import ItemCard from "./ItemCard";
 import { ItemListInventoryProps } from "src/types/PropsTypes";
 import { useCustomModal } from "src/context/CustomModalContext";
+import ItemModal from "src/components/modals/Item";
 
-export default function ItemListInventory({ ruta, item, children }: ItemListInventoryProps) {
+export default function ItemList({ ruta, item, canEdit, children }: ItemListInventoryProps) {
   const [category, setCategory] = useState('');
   const [inventory, setInventory] = useState<ItemData[]>();
   const [categories, setCategories] = useState<ItemCategory[]>();
@@ -37,9 +38,13 @@ export default function ItemListInventory({ ruta, item, children }: ItemListInve
   
   const deleteItem = () => !selectedItem && deleteData(`${endPoints.addItem}/${selectedItem?.id}`, null).then(() => closeModal())
 
-  const onClickItem = (item:ItemData) => {
-    setselectedItem(item)
-    showEditModal(item)
+  const onClickItem = (item: ItemData) => {
+    if (canEdit) {
+      setselectedItem(item)
+      showEditModal(item) 
+    } else {
+      showModal(<ItemModal item={item}/>)
+    }
   }
 
   return (

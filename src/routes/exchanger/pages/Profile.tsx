@@ -11,6 +11,7 @@ import { formatDate } from 'src/utils/api';
 import ItemCard from '../components/ItemCard';
 import { ProfileProps } from 'src/types/PropsTypes';
 import UserProfile from "src/components/UserProfile";
+import Rating from "src/components/Rating";
 
 export default function Profile({ id }: ProfileProps) {
     const [exchangerData, setUserData] = useState<ExchangerData>();
@@ -48,15 +49,15 @@ export default function Profile({ id }: ProfileProps) {
 
     const getProfileInfo = (): UserInfoFields[] => {
         const profileInfo = [
-            { title: "Name", value: exchangerData.name, color: "text-red-500" },
-            { title: "Email", value: exchangerData.email, color: "text-red-500" },
+            { title: "Nombre", value: exchangerData.name, color: "text-red-500" },
+            { title: "Correo electronico", value: exchangerData.email, color: "text-red-500" },
             { title: "DNI", value: exchangerData.dni, color: "text-blue-500" },
-            { title: "Phone", value: exchangerData.phone, color: "text-blue-500" },
-            { title: "Stars", value: exchangerData.stars + "/10", color: "text-blue-500" },
-            { title: "Absentees", value: exchangerData.absentees, color: "text-red-500" },
-            { title: "Birthdate", value: formatDate(exchangerData.birthdate), color: "text-red-500" },
+            { title: "Telefono", value: exchangerData.phone, color: "text-blue-500" },
+            { title: "Estrellas", value: <Rating qty={exchangerData.stars}/>, color: "text-blue-500" },
+            { title: "Inasistencias", value: exchangerData.absentees, color: "text-red-500" },
+            { title: "Fecha de nacimiento", value: formatDate(exchangerData.birthdate), color: "text-red-500" },
         ]
-        return (id && !isAdmin) ? profileInfo.filter(field => !["Email", "DNI", "Phone"].includes(field.title)) : profileInfo
+        return (id && !isAdmin) ? profileInfo.filter(field => !["Correo electronico", "DNI", "Telefono"].includes(field.title)) : profileInfo
     }
 
     return (
