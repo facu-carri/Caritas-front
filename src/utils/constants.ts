@@ -12,7 +12,7 @@ export const endPoints = {
     location: 'location',
     myReviews: 'reviews/myReviews',
     categories: 'itemCategory',
-    exchangeablesProducts: 'item',
+    exchangeablesItems: 'item',
     addItem: 'item',
     exchanger: 'exchanger',
     employees: 'employee',

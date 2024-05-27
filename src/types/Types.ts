@@ -62,3 +62,23 @@ export type NotificationType = 'error' | 'warning'
 export type ExchangerCardData = {
     visible: boolean
 } & ExchangerData
+export type ItemData = {
+    id: number
+    photo: string
+    name: string
+    description: string
+    owner: ExchangerData
+    itemCategory: ItemCategory
+    quantity:number
+}
+export type ItemCategory = {
+    id: number
+    name: string
+}
+export type Review = {
+    id: number
+    name: string
+    description: string
+    stars: number
+    date: string
+}

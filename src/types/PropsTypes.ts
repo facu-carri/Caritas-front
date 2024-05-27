@@ -1,4 +1,4 @@
-import { ExchangerCardData, ExchangerData, GeoPosition, Location, LocationResponse, MouseEvent, Tab } from "./Types"
+import { ExchangerCardData, ExchangerData, GeoPosition, ItemData, Location, LocationResponse, MouseEvent, Tab } from "./Types"
 
 export type AgregarFilialProps = {
     geoPosition: GeoPosition
@@ -34,5 +34,19 @@ export type ExchangerCardProps = {
     onDelete: (id:string) => void
 }
 export type ProfileProps = {
-    id: string
+    id?: string
+}
+export type ItemModalProps = {
+    item: ItemData
+}
+export type ItemCardProps = {
+    item: ItemData
+    onClick?: VoidFunction
+    hiddeBtns?: boolean
+}
+export type ItemListInventoryProps = {
+    ruta: string
+    text: string
+    subText: string
+    item?: ItemData
 }

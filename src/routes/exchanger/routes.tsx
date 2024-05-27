@@ -1,13 +1,13 @@
 import { useRoutes } from "react-router-dom";
 import { routes } from "src/utils/constants";
 import ExchangerLayout from "./components/Navbar/Layout";
-import Profile from "src/routes/exchanger/components/Profile";
-import ProductList from "src/routes/exchanger/components/ProductList";
 import Inventory from "src/routes/exchanger/components/inventory/Inventory";
 import { endPoints } from "src/utils/constants";
 import RoutesHandler from "src/utils/routesHandler";
 import ErrorPage from "../error/ErrorPage";
 import { Information } from "./pages/Information";
+import Profile from "./pages/Profile";
+import ItemList from "./pages/ItemList";
 
 export function ExchangerRouter() {
 
@@ -18,7 +18,7 @@ export function ExchangerRouter() {
       path: routes.main,
       element: <ExchangerLayout />,
       children: [
-        { path: routes.main, element: <ProductList ruta={endPoints.exchangeablesProducts} text='Descubre nuevos productos para intercambiar' subText='Explora nuestra selección de productos disponibles para intercambios.'/> },
+        { path: routes.main, element: <ItemList ruta={endPoints.exchangeablesItems} text='Descubre nuevos productos para intercambiar' subText='Explora nuestra selección de productos disponibles para intercambios.'/> },
         { path: routes.exchanger.inventory, element: <Inventory /> },
         { path: routes.exchanger.profile, element: <Profile/> },
         { path: routes.exchanger.information, element: <Information/> },
