@@ -84,7 +84,7 @@ export default function ExchangersManager() {
                     <div className="flex flex-col items-center gap-4">
                         <div className="space-y-2 sticky top-0 bg-gray-100 py-4">
                             <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Listado de Usuarios</h1>
-                            <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400">
+                            <p className="mx-auto max-w-[700px] md:text-xl text-gray-400">
                                 Filtra por nombre, email, teléfono o DNI.
                             </p>
                         </div>
@@ -97,11 +97,7 @@ export default function ExchangersManager() {
                                     value={searchQuery}
                                     onChange={handleSearch}
                                 />
-                                <button
-                                    type="submit"
-                                    className="px-4 py-2 text-white bg-red-600 rounded hover:bg-red-500"
-                                    onClick={filterExchangers}
-                                >
+                                <button type="submit" className="px-4 py-2 text-white bg-red-600 rounded hover:bg-red-500" onClick={filterExchangers}>
                                     Filtrar
                                 </button>
                             </form>

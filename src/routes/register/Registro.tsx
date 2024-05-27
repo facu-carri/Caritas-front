@@ -12,7 +12,7 @@ export default function Registro() {
     <div className="flex flex-col justify-center items-center h-[100vh] text-[100%]">
       <div className="space-y-2 text-center">
         <h1 className="text-3xl font-bold">Regístrate</h1>
-        <p className="text-gray-500 dark:text-gray-400">Completa el formulario para crear una nueva cuenta.</p>
+        <p className="text-gray-400">Completa el formulario para crear una nueva cuenta.</p>
       </div>
       <RegistrationFields />
     </div>

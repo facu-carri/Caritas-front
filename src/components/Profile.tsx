@@ -14,7 +14,7 @@ export default function UserProfile({ userData, profileInfo, showPhoto, handleEd
             profileInfo.map((info, index) => (
                 <div key={`info-${index}`} className="bg-gray-800 rounded-lg shadow p-4">
                     <h3 className={`text-lg font-bold mb-2 ${info.color}`}>{info.title}</h3>
-                    <p className="text-gray-600 dark:text-gray-400">{info.value}</p>
+                    <p className="text-gray-400">{info.value}</p>
                 </div>
             ))
         )

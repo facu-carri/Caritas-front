@@ -107,7 +107,7 @@ export default function ItemListInventory({ ruta, text, subText, item }: ItemLis
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {!(filteredItems)||filteredItems.length==0? 
                   <div >
-                    <p className="text-gray-600 dark:text-gray-400 line-clamp-2">No hay elementos</p>
+                    <p className="text-gray-400 line-clamp-2">No hay elementos</p>
                   </div>
                 : filteredItems.map(product => (
                     <ItemCard key={product.id} item={product} onClick={() => toggleModal(product)} />

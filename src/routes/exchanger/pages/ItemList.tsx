@@ -45,9 +45,9 @@ export default function ItemList({ruta, text, subText}) { // endPoints.exchangea
                     }
                 </select>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {
-                        filteredItems.length == 0 ? <p className="text-gray-600 dark:text-gray-400 line-clamp-2">No hay elementos</p> : getItems()
-                    }
+                {
+                    filteredItems.length == 0 ? <p className="text-gray-400 line-clamp-2">No hay elementos</p> : getItems()
+                }
                 </div>
             </div>
         </div>

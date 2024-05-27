@@ -66,7 +66,7 @@ export default function Profile({ id }: ProfileProps) {
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                 {
                     !(inventory) || inventory.length == 0 ?
-                    <p className="text-gray-600 dark:text-gray-400 line-clamp-2">No hay elementos</p>:
+                    <p className="text-gray-400 line-clamp-2">No hay elementos</p>:
                     inventory.map((item, index) => (<ItemCard key={index} item={item} hiddeBtns={true} />))
                 }
                 </div>
@@ -76,7 +76,7 @@ export default function Profile({ id }: ProfileProps) {
                 <div className="space-y-4">
                 {
                     !(reviews) || reviews.length == 0 ?
-                    <p className="text-gray-600 dark:text-gray-400 line-clamp-2">No hay elementos</p> :
+                    <p className="text-gray-400 line-clamp-2">No hay elementos</p> :
                     <p> TODO: HACER REVIEWS </p>
                 }
                 </div>
