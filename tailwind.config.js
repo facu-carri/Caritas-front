@@ -35,5 +35,6 @@ export default {
   plugins: [
     daisyui
   ],
+  important: true
 }
 

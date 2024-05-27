@@ -57,13 +57,13 @@ export type ExchangerCardData = {
     visible: boolean
 } & ExchangerData
 export type ItemData = {
-    id: number
+    id?: number|string
     photo: string
     name: string
     description: string
-    owner: ExchangerData
+    owner?: ExchangerData
     itemCategory: ItemCategory
-    quantity:number
+    quantity:number|string
 }
 export type ItemCategory = {
     id: number

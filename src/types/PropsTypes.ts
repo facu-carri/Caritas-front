@@ -46,14 +46,24 @@ export type ItemCardProps = {
 }
 export type ItemListInventoryProps = {
     ruta: string
-    text: string
-    subText: string
     item?: ItemData
+    children?: JSX.Element[] | JSX.Element
 }
 export type UserProfileProps = {
     userData: UserData
     profileInfo: UserInfoFields[]
     handleEdit?: VoidFunction
     showPhoto?: boolean
-    children?: JSX.Element[]
+    children?: JSX.Element[] | JSX.Element
+}
+export type EditItemModalProps = {
+    onEditItem: (data:ItemData) => void
+    onDeleteItem: VoidFunction
+    itemData: ItemData
+}
+export type ExchangerHeaderProps = {
+    title: string
+    text: string
+    attrs?: string
+    children?: JSX.Element[] | JSX.Element
 }
