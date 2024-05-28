@@ -10,17 +10,6 @@ export default function UserProfile({ userData, profileInfo, showPhoto, handleEd
 
     const id = !isNaN(parseInt(getId())) ? getId() : null
 
-    const getProfileInfo = () => {
-        return (
-            profileInfo.map((info, index) => (
-                <div key={`info-${index}`} className="bg-gray-800 rounded-lg shadow p-4">
-                    <h3 className={`text-lg font-bold mb-2 ${info.color}`}>{info.title}</h3>
-                    <div className="text-gray-400">{info.value}</div>
-                </div>
-            ))
-        )
-    }
-
     return (!userData || !profileInfo) ? <LoadingAnimation /> :
     (
         <div className="bg-gray-900 min-h-screen">
@@ -45,7 +34,12 @@ export default function UserProfile({ userData, profileInfo, showPhoto, handleEd
                 <h2 className="text-2xl font-bold mb-4 text-white">Informacion Personal</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {
-                    getProfileInfo()
+                    profileInfo.map((info, index) => (
+                        <div key={`info-${index}`} className="bg-gray-800 rounded-lg shadow p-4">
+                            <h3 className={`text-lg font-bold mb-2 ${info.color}`}>{info.title}</h3>
+                            <div className="text-gray-400">{info.value}</div>
+                        </div>
+                    ))
                 }
                 </div>
                 {children}

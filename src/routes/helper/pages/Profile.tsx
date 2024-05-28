@@ -19,12 +19,12 @@ export default function EmployeeProfile({ id }: ProfileProps) {
 
     const getProfileInfo = ():UserInfoFields[] => {
         return [
-            { title: "Name", value: helperData.name, color: "text-red-500" },
+            { title: "Nombre Completo", value: helperData.name, color: "text-red-500" },
             { title: "Email", value: helperData.email, color: "text-red-500" },
             { title: "DNI", value: helperData.dni, color: "text-red-500" },
-            { title: "Phone", value: helperData.phone, color: "text-red-500" },
-            { title: "Location", value: helperData.employeeLocation.id, color: "text-red-500" },
-            { title: "Birthdate", value: formatDate(helperData.birthdate), color: "text-red-500" },
+            { title: "Teléfono", value: helperData.phone, color: "text-red-500" },
+            { title: "Sede asignada", value: helperData.employeeLocation.name, color: "text-red-500" },
+            { title: "Fecha de nacimiento", value: formatDate(helperData.birthdate), color: "text-red-500" },
         ]
     }
 

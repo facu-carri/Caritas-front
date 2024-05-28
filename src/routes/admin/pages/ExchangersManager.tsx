@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useMemo, useState } from 'react';
+import { useQuery, useQueryClient } from "react-query";
+import { deleteData, getHeaders, putData } from 'src/utils/request/httpRequests';
+import { useCustomModal } from "src/context/CustomModalContext";
+import { endPoints, serverAddress } from "src/utils/constants";
 import { ErrorCode } from "src/utils/Error/ErrorCode";
 import { ErrorTypes } from "src/utils/Error/ErrorTypes";
-import { endPoints, serverAddress } from "src/utils/constants";
-import { deleteData, getHeaders, putData } from 'src/utils/request/httpRequests';
-import { useEffect, useMemo, useState } from 'react';
-import { useCustomModal } from "src/context/CustomModalContext";
 import { ExchangerCardData } from "src/types/Types";
-import { useQuery, useQueryClient } from "react-query";
 
 import EditExchangerAsAdminModal from 'src/routes/admin/components/EditExchangerAsAdminModal';
 import ExchangersManagerHeader from "../components/ExchangersManagerHeader";
@@ -44,6 +44,8 @@ export default function ExchangersManager() {
         });
         if(elements.length === 0 && exchangers.length > 0) {
             handleError(400)
+        } else {
+            hideError()
         }
         return elements;
 
@@ -52,10 +54,9 @@ export default function ExchangersManager() {
     function handleError(errCode: number) {
         const err = new ErrorCode(errCode, ErrorTypes.EXCHANGER_ERROR)
         setError(err)
-        setTimeout(hiddeError, 3000)
     }
 
-    function hiddeError() {
+    function hideError() {
         setError(null)
     }
 
