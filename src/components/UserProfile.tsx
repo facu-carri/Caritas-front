@@ -38,7 +38,7 @@ export default function UserProfile({ userData, profileInfo, showPhoto, handleEd
                     </div>
                 </div>
                 {
-                    (!id || !!handleEdit) && <button onClick={handleEdit} className="mb-2 mt-5 ml-2 py-2 px-4 rounded text-black hover:bg-black/20 border border-black">Editar Perfil</button>
+                    (!id || !!handleEdit) && <button onClick={handleEdit} className="mb-2 mt-5 ml-2 py-2 px-4 rounded text-black hover:bg-black/20 border border-black">Editar</button>
                 }
             </header>
             <section className="py-8 md:px-12 grid gap-8">
