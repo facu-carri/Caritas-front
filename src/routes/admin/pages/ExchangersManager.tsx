@@ -83,7 +83,7 @@ export default function ExchangersManager() {
     }
 
     return (
-        <div className="bg-gray-100 min-h-full">
+        <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-4 relative">
             <header className="py-2 px-6 md:px-12 ">
                 <div className="flex flex-col items-center gap-4 mt-36">
                     <ExchangersManagerHeader/>
