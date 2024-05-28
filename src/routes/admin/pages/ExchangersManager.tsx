@@ -15,7 +15,7 @@ export default function ExchangersManager() {
     
     const [searchQuery, setSearchQuery] = useState('');
     const [exchangers, setExchangers] = useState<ExchangerCardData[]>([])
-    const { showModal } = useCustomModal()
+    const { showModal, closeModal } = useCustomModal()
     const [error, setError] = useState<ErrorCode>(null)
     const [currentExchanger, setCurrentExchanger] = useState(null);
 
@@ -47,13 +47,18 @@ export default function ExchangersManager() {
             .catch((errorCode:number) => handleError(errorCode))
     }, [])
 
+    useEffect(() => {
+        if(currentExchanger !== null) {
+            showModal(<EditExchangerAsAdminModal exchanger={currentExchanger} onSave={handleSave} />, () => setCurrentExchanger(null))
+        }
+    }, [currentExchanger])
+
     const handleSearch = (event) => {
         setSearchQuery(event.target.value);
     }
 
     const handleEdit = (exchanger) => {
         setCurrentExchanger(exchanger);
-        showModal(<EditExchangerAsAdminModal exchanger={exchanger} onSave={handleSave} />, () => setCurrentExchanger(null))
     }
     
     const handleDelete = (id) => {
@@ -61,14 +66,16 @@ export default function ExchangersManager() {
     }
 
     const handleSave = (updatedexchanger) => { 
+        if(!currentExchanger?.id) return;
         if (updatedexchanger.password === "") updatedexchanger.password = null
-        
+
         putData(`${endPoints.exchanger}/${currentExchanger.id}`, null, {
             ...updatedexchanger,
             email: currentExchanger.email,
             birthdate:"2000-02-02"
         })
-        .then(res => console.log(res))
+            .then(res => console.log(res))
+            .then(() => closeModal())
         
         setExchangers(exchangers.map(exchanger =>
             exchanger.id === updatedexchanger.id ? updatedexchanger : exchanger
