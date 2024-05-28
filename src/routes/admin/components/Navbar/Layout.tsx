@@ -60,12 +60,12 @@ export default function AdminLayout() {
       active: btnActive(routes.admin.gestionarAyudantes)
     },
     {
-      text: 'Gestionar usuarios',
+      text: 'Gestionar Intercambiadores',
       onClick: () => setRoute(routes.admin.gestionarIntercambiadores),
       active: btnActive(routes.admin.gestionarIntercambiadores)
     },
     {
-      text: 'Gestionar filiales',
+      text: 'Gestionar Filiales',
       onClick: () => setRoute(routes.admin.gestionarFiliales),
       active: btnActive(routes.admin.gestionarFiliales)
     },
