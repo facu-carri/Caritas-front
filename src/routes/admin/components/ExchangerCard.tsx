@@ -17,7 +17,7 @@ export default function ExchangerCard({ cardData, onEdit, onDelete }: ExchangerC
     
     return (
         <div
-            className={`${!cardData.visible && 'hidden'} bg-white rounded-lg shadow-lg max-w-sm p-2 cursor-pointer transform transition-transform duration-200 hover:scale-105`}
+            className='bg-white rounded-lg shadow-lg max-w-sm p-2 cursor-pointer transform transition-transform duration-200 hover:scale-10'
             onClick={() => setRoute(`${routes.exchanger.profile}/${cardData.id}`)}
         >
             <div className="px-2 py-1">

@@ -1,25 +1,43 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import ErrorAlert from "src/components/ErrorAlert";
-import ExchangerCard from "src/routes/admin/components/ExchangerCard";
 import { ErrorCode } from "src/utils/Error/ErrorCode";
 import { ErrorTypes } from "src/utils/Error/ErrorTypes";
-import { endPoints } from "src/utils/constants";
-import { deleteData, getData, putData } from 'src/utils/request/httpRequests';
-import EditExchangerAsAdminModal from 'src/routes/admin/components/EditExchangerAsAdminModal';
+import { endPoints, serverAddress } from "src/utils/constants";
+import { deleteData, getHeaders, putData } from 'src/utils/request/httpRequests';
 import { useEffect, useMemo, useState } from 'react';
 import { useCustomModal } from "src/context/CustomModalContext";
 import { ExchangerCardData } from "src/types/Types";
+import { useQuery, useQueryClient } from "react-query";
+
+import EditExchangerAsAdminModal from 'src/routes/admin/components/EditExchangerAsAdminModal';
 import ExchangersManagerHeader from "../components/ExchangersManagerHeader";
+import ExchangerCard from "src/routes/admin/components/ExchangerCard";
+import LoadingSpinner from "src/components/LoadingSpinner";
+import ErrorAlert from "src/components/ErrorAlert";
 
 export default function ExchangersManager() {
     
     const [searchQuery, setSearchQuery] = useState('');
-    const [exchangers, setExchangers] = useState<ExchangerCardData[]>([])
     const { showModal, closeModal } = useCustomModal()
     const [error, setError] = useState<ErrorCode>(null)
     const [currentExchanger, setCurrentExchanger] = useState(null);
 
+    const queryClient = useQueryClient()
+
+    const { data: exchangers, isLoading } = useQuery({
+        queryKey: ['exchangers'],
+        queryFn: () => fetch(`${serverAddress}/${endPoints.exchanger}`, {
+            method: 'GET',
+            headers: getHeaders()
+        }).then(r => r.json()),
+        onError: () => {
+            handleError(500)
+        }
+    })
+
     const filteredExchangers = useMemo(() => {
+        if(!exchangers) {
+            return [];
+        }
         const value = searchQuery.toLowerCase()
         const elements = exchangers.filter((user: ExchangerCardData) => {
             return !value || user.name.toLowerCase().includes(value) || user.email.toLowerCase().includes(value) || user.dni.toLowerCase().includes(value) || user.phone.toLowerCase().includes(value)
@@ -34,7 +52,7 @@ export default function ExchangersManager() {
     function handleError(errCode: number) {
         const err = new ErrorCode(errCode, ErrorTypes.EXCHANGER_ERROR)
         setError(err)
-        setTimeout(hiddeError, 5000)
+        setTimeout(hiddeError, 3000)
     }
 
     function hiddeError() {
@@ -42,30 +60,21 @@ export default function ExchangersManager() {
     }
 
     useEffect(() => {
-        getData(endPoints.exchanger)
-            .then((exchangers: ExchangerCardData[]) => setExchangers(exchangers.map(exchanger => { exchanger.visible = true;  return exchanger})))
-            .catch((errorCode:number) => handleError(errorCode))
-    }, [])
-
-    useEffect(() => {
         if(currentExchanger !== null) {
             showModal(<EditExchangerAsAdminModal exchanger={currentExchanger} onSave={handleSave} />, () => setCurrentExchanger(null))
         }
     }, [currentExchanger])
 
-    const handleSearch = (event) => {
-        setSearchQuery(event.target.value);
-    }
-
-    const handleEdit = (exchanger) => {
+    function handleEdit(exchanger) {
         setCurrentExchanger(exchanger);
     }
     
-    const handleDelete = (id) => {
-        deleteData(`${endPoints.exchanger}/${id}`, null).then(() => setExchangers(prev => prev.filter(user => user.id !== id)))
+    function handleDelete(id) {
+        deleteData(`${endPoints.exchanger}/${id}`, null)
+            .then(() => queryClient.invalidateQueries(['exchangers']))
     }
 
-    const handleSave = (updatedexchanger) => { 
+    function handleSave(updatedexchanger) { 
         if(!currentExchanger?.id) return;
         if (updatedexchanger.password === "") updatedexchanger.password = null
 
@@ -76,10 +85,6 @@ export default function ExchangersManager() {
         })
             .then(res => console.log(res))
             .then(() => closeModal())
-        
-        setExchangers(exchangers.map(exchanger =>
-            exchanger.id === updatedexchanger.id ? updatedexchanger : exchanger
-        ))
     }
 
     return (
@@ -93,18 +98,21 @@ export default function ExchangersManager() {
                             placeholder="Buscar..."
                             type="text"
                             value={searchQuery}
-                            onChange={handleSearch}
+                            onChange={e=>setSearchQuery(e.target.value)}
                         />
                     </form>
                 </div>
             </header>
-            <section className="bg-gray-100 flex flex-col items-center justify-center ">
+            <section>
                 {
                     error && (<ErrorAlert attrs="mt-5 w-fit" show={error != null}>{error.getMessage()}</ErrorAlert>)
                 }
                 <div className="justify-center items-center text-[100%] grid grid-cols-3 gap-6 md:gap-8 mt-8 min-h-[300px]">
                 {
-                    filteredExchangers.map((exchanger) => (
+                    isLoading ?
+                    <LoadingSpinner />
+                    :
+                    filteredExchangers.map(exchanger => (
                         <ExchangerCard cardData={exchanger} onEdit={handleEdit} onDelete={handleDelete} key={exchanger.id} />
                     ))
                 }
