@@ -8,12 +8,15 @@ import { ErrorTypes } from "src/utils/Error/ErrorTypes";
 import { useCustomModal } from "src/context/CustomModalContext";
 import { AgregarFilialProps } from "src/types/PropsTypes";
 import { LocationResponse } from "src/types/Types";
+import { useQueryClient } from "react-query";
 
 // Componente de Registro de Ayudante
 export default function AgregarFilialModal({ geoPosition, handleSuccess }: AgregarFilialProps) {
 
   const [error, setError] = useState<ErrorCode>(null)
   const { closeModal } = useCustomModal()
+
+  const queryClient = useQueryClient()
 
   const handleError = (errCode: number) => {
     const err = new ErrorCode(errCode, ErrorTypes.FILIALES_ERROR)
@@ -30,6 +33,7 @@ export default function AgregarFilialModal({ geoPosition, handleSuccess }: Agreg
     postData(endPoints.location, null, data)
       .then((responseData) => handleSuccess(responseData))
       .then(() => closeModal())
+      .then(() => queryClient.invalidateQueries(['location']))
       .catch((errCode: number) => handleError(errCode))
   }
 

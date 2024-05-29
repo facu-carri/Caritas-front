@@ -11,6 +11,7 @@ import { deleteData, getData } from "src/utils/request/httpRequests";
 import StoreIcon from '@images/StoreIcon.png'
 import EditarFilialModal from "src/components/modals/EditarFilial";
 import ConfirmationModal from "src/components/modals/Confirmation";
+import { useQueryClient } from "react-query";
 
 function Maps() {
     const { showModal, closeModal } = useCustomModal()
@@ -19,6 +20,8 @@ function Maps() {
     const { getRole } = User()
     const minZoom = 12
     const defaultPosition = { lat: -34.9042364, lng: -57.9399872 };
+
+    const queryClient = useQueryClient()
 
     useEffect(() => {
         getData(endPoints.location)
@@ -83,6 +86,7 @@ function Maps() {
         deleteData(`${endPoints.location}/${currentMarker.id}`, null)
             .then(() => removeLocation(currentMarker))
             .then(() => setCurrentMarker(null))
+            .then(() => queryClient.invalidateQueries(['location']))
             //.catch((errCode: number) => handleError(errCode))
     }
 

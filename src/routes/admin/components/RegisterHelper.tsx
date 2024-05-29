@@ -1,22 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { getData, postData } from "src/utils/request/httpRequests";
-import GenericForm, { FormField, ListItem } from "../../../components/GenericForm";
-import { endPoints } from "src/utils/constants";
-import { useEffect, useState } from "react";
-import { ErrorCode } from "src/utils/Error/ErrorCode";
+import { useState } from "react";
+import { useQuery } from "react-query";
+import { getHeaders, postData } from "src/utils/request/httpRequests";
+import { endPoints, serverAddress } from "src/utils/constants";
 import { ErrorTypes } from "src/utils/Error/ErrorTypes";
-import { Location } from "../../../components/modals/EliminarFilial";
-
-type Type = {
-  photo: string,
-  name: string,
-  dni: string,
-  phone: string,
-  email: string,
-  password: string,
-  helperLocation: string
-}
+import { ErrorCode } from "src/utils/Error/ErrorCode";
+import { HelperData, Location } from "src/types/Types"
+import GenericForm, { FormField, ListItem } from "../../../components/GenericForm";
 
 const campos_default: Array<FormField> = [
   { nombre: 'Nombre completo', etiqueta: 'name', tipo: 'text' },
@@ -29,8 +20,9 @@ const campos_default: Array<FormField> = [
 ]
 
 // Componente de Registro de Ayudante
-export default function RegisterHelper({modalId}) {
+export default function RegisterHelper({ modalId }) {
 
+  const [campos, setCampos] = useState(campos_default)
   const [error, setError] = useState<ErrorCode>(null)
   
   const closeModal = () => {
@@ -48,32 +40,33 @@ export default function RegisterHelper({modalId}) {
     setError(null)
   }
 
-  const handleRegister = (data: Type) => {
-    postData(endPoints.registerHelper, null, data)
+  function handleRegister(helper: HelperData) {
+    postData(endPoints.registerHelper, null, helper)
       .then(() => closeModal())
       .catch((errCode: number) => handleError(errCode))
   }
 
-  function generateFields(employeeLocationids: Location[]): FormField{
-    const field:FormField = { nombre: 'Selecciona una filial', etiqueta: 'employeeLocationId', tipo: 'list' }
-    const items: ListItem[] = employeeLocationids.map((employeeLocationid) => ({
-      key: employeeLocationid.id,
-      value: employeeLocationid.description
+  function generateLocationSelect(locations: Location[]): FormField{
+    const items: ListItem[] = locations.map(location => ({
+      key: location.id,
+      value: location.name
     }))
-    field.items = items
-    return field
+    return { nombre: 'Selecciona una filial', etiqueta: 'employeeLocationId', tipo: 'list', items }
   }
 
-  useEffect(() => {
-    if(campos.map(campo => campo.etiqueta).includes('employeeLocationId')) {
-      return;
+  useQuery({
+    queryKey: ['location'],
+    queryFn: () => fetch(`${serverAddress}/${endPoints.location}`, {
+      method: 'GET',
+      headers: getHeaders()
+    }).then(r => r.json()),
+    onSuccess: data => {
+      const locationSelector = generateLocationSelect(data);
+      setCampos(prev => [...prev, locationSelector])
     }
-    getData(endPoints.location)
-      .then((employeeLocationids: Location[]) => generateFields(employeeLocationids))
-      .then((fields) => setCampos([...campos, fields]))
-  }, [])
+  })
 
-  const [campos, setCampos] = useState(campos_default)
-
-  return <GenericForm id="register-helper" campos={campos} listener={handleRegister} error={error} />;
+  return (
+    <GenericForm id="register-helper" campos={campos} listener={handleRegister} error={error} />
+  )
 }
