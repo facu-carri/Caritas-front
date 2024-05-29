@@ -2,10 +2,11 @@ import { useEffect, useRef, useState } from 'react';
 import EditHelperModal from './EditHelperModal';
 import Button from '../../../components/Button';
 import RegisterHelper from './RegisterHelper';
-import { deleteData, getData, putData } from 'src/utils/request/httpRequests';
-import { endPoints, routes } from "src/utils/constants";
+import { deleteData, getData, getHeaders, putData } from 'src/utils/request/httpRequests';
+import { endPoints, routes, serverAddress } from "src/utils/constants";
 import RoutesHandler from 'src/utils/routesHandler';
 import HelpersList from 'src/routes/helper/components/HelpersList';
+import { useQuery } from 'react-query';
 
 //tiene toda la logica de eliminar y editar ayudantes listados y su estado.
 export default function HelpersManager() {
@@ -13,6 +14,14 @@ export default function HelpersManager() {
   const [currentHelper, setCurrentHelper] = useState(null);
 
   const { setRoute } = RoutesHandler()
+
+  const { data: locations, isLoading: isLoadingLocations } = useQuery({
+    queryKey: ['location'],
+    queryFn: () => fetch(`${serverAddress}/${endPoints.location}`, {
+      method: 'GET',
+      headers: getHeaders()
+    }).then(r => r.json())
+  })
 
   useEffect(() => {
     getData(endPoints.employees)
@@ -39,10 +48,6 @@ export default function HelpersManager() {
       email: currentHelper.email
     })
       .then(res => console.log(res))
-      
-    /*setHelpers(helpers.map(helper =>
-      helper.id === updatedHelper.id ? updatedHelper : helper
-    ));*/
   };
 
   const modalRef = useRef(null)
@@ -87,7 +92,7 @@ export default function HelpersManager() {
     </dialog>
     <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-4 relative">
       <div className="absolute top-1/2 transform -translate-y-1/2 flex flex-col items-center gap-4">
-        <Button onClick={handleRegisterHelper}>Registrar ayudante</Button>
+        <Button onClick={handleRegisterHelper} disabled={!locations?.length || isLoadingLocations}>Registrar ayudante</Button>
         <div className="w-full max-w-2xl bg-white shadow-lg rounded-lg p-6">
           <h1 className="text-2xl font-bold text-blue-700 mb-4">Listado de Ayudantes</h1>
           <HelpersList helpers={helpers} onEdit={handleEdit} onDelete={handleDelete} onSelect={handleSelect} />

@@ -35,21 +35,24 @@ export default function ExchangersManager() {
     })
 
     const filteredExchangers = useMemo(() => {
-        if(!exchangers) {
+        if(isLoading) {
             return [];
         }
         const value = searchQuery.toLowerCase()
         const elements = exchangers.filter((user: ExchangerCardData) => {
             return !value || user.name.toLowerCase().includes(value) || user.email.toLowerCase().includes(value) || user.dni.toLowerCase().includes(value) || user.phone.toLowerCase().includes(value)
         });
-        if(elements.length === 0 && exchangers.length > 0) {
+
+        if(exchangers.length > 0 && elements.length === 0) {
             handleError(400)
+        } else if(!isLoading && exchangers.length === 0) {
+            handleError(404)
         } else {
             hideError()
         }
         return elements;
 
-    }, [exchangers, searchQuery])
+    }, [isLoading, exchangers, searchQuery])
 
     function handleError(errCode: number) {
         const err = new ErrorCode(errCode, ErrorTypes.EXCHANGER_ERROR)
@@ -82,7 +85,7 @@ export default function ExchangersManager() {
         putData(`${endPoints.exchanger}/${currentExchanger.id}`, null, {
             ...updatedexchanger,
             email: currentExchanger.email,
-            birthdate:"2000-02-02"
+            birthdate: "2000-02-02"
         })
             .then(res => console.log(res))
             .then(() => closeModal())
