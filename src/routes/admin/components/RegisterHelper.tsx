@@ -8,6 +8,7 @@ import { ErrorTypes } from "src/utils/Error/ErrorTypes";
 import { ErrorCode } from "src/utils/Error/ErrorCode";
 import { HelperData, Location } from "src/types/Types"
 import GenericForm, { FormField, ListItem } from "../../../components/GenericForm";
+import { useCustomModal } from "src/context/CustomModalContext";
 
 const campos_default: Array<FormField> = [
   { nombre: 'Nombre completo', etiqueta: 'name', tipo: 'text' },
@@ -20,15 +21,11 @@ const campos_default: Array<FormField> = [
 ]
 
 // Componente de Registro de Ayudante
-export default function RegisterHelper({ modalId }) {
+export default function RegisterHelper() {
 
   const [campos, setCampos] = useState(campos_default)
   const [error, setError] = useState<ErrorCode>(null)
-  
-  const closeModal = () => {
-    const elem = modalId && (document.getElementById(modalId) as HTMLDialogElement)
-    elem?.close()
-  }
+  const { closeModal } = useCustomModal()
 
   const handleError = (errCode: number) => {
     const err = new ErrorCode(errCode, ErrorTypes.REGISTER_HELPER_ERROR)
@@ -46,7 +43,7 @@ export default function RegisterHelper({ modalId }) {
       .catch((errCode: number) => handleError(errCode))
   }
 
-  function generateLocationSelect(locations: Location[]): FormField{
+  function generateLocationSelect(locations: Location[]): FormField {
     const items: ListItem[] = locations.map(location => ({
       key: location.id,
       value: location.name

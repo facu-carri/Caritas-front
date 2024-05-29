@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import EditHelperModal from './EditHelperModal';
 import Button from '../../../components/Button';
 import RegisterHelper from './RegisterHelper';
@@ -8,12 +8,13 @@ import RoutesHandler from 'src/utils/routesHandler';
 import HelpersList from 'src/routes/helper/components/HelpersList';
 import { useQuery } from 'react-query';
 import ErrorAlert from 'src/components/ErrorAlert';
+import { useCustomModal } from 'src/context/CustomModalContext';
 
 //tiene toda la logica de eliminar y editar ayudantes listados y su estado.
 export default function HelpersManager() {
   const [helpers, setHelpers] = useState([]);
   const [currentHelper, setCurrentHelper] = useState(null);
-
+  const { showModal } = useCustomModal()
   const { setRoute } = RoutesHandler()
 
   const { data: locations, isLoading: isLoadingLocations } = useQuery({
@@ -51,31 +52,12 @@ export default function HelpersManager() {
       .then(res => console.log(res))
   };
 
-  const modalRef = useRef(null)
-
   const handleRegisterHelper = () => {
-    const elem = (document.getElementById('registerModal') as HTMLDialogElement)
-    elem.showModal()
+    showModal(<RegisterHelper/>)
   }
-
-  const handleClickModal = (ev) => {
-    const target = ev.target
-    if(target.id && target.id == modalRef.current.id)  modalRef.current.close()
-  }
-  
-  const modalEditRef = useRef(null)
 
   const handleEditHelper = () => {
-    const elem = (document.getElementById('editarHelperModal') as HTMLDialogElement)
-    elem.showModal()
-  }
-
-  const handleClickEditModal = (ev) => {
-    const target = ev ? ev.target : null
-    if (target == null || target.id && target.id == modalEditRef.current.id) {
-      modalEditRef.current.close()
-      setCurrentHelper(null)
-    }
+      showModal(<EditHelperModal closeModal={() => setCurrentHelper(null)} helper={currentHelper} onSave={handleSave}/>)
   }
 
   const handleSelect = (id) => {
@@ -84,13 +66,6 @@ export default function HelpersManager() {
   }
 
   return (
-  <>
-    <dialog className="modal" id='registerModal' onClick={handleClickModal} ref={modalRef}>
-        <RegisterHelper modalId={'registerModal'} />
-    </dialog>
-    <dialog className="modal bg-gray-500/50" id='editarHelperModal' onClick={handleClickEditModal} ref={modalEditRef}>
-      <EditHelperModal closeModal={handleClickEditModal} helper={currentHelper} onSave={handleSave} />
-    </dialog>
     <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-4 relative">
       <div className="absolute top-1/2 transform -translate-y-1/2 flex flex-col items-center gap-4">
         {
@@ -103,6 +78,5 @@ export default function HelpersManager() {
         </div>
       </div>
     </div>
-  </>
-  );
+  )
 }
