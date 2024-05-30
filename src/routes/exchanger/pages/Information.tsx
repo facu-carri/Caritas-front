@@ -18,7 +18,7 @@ export const Information = () => {
         </h3>
         <Maps/>
       </div>
-      <footer className="mb-8 text-lg font-medium leading-relaxed text-gray-400">Para más información, contáctenos en: SoySolutions@gmail.com</footer>
+      <footer className="mb-8 text-lg font-medium leading-relaxed text-gray-400">Para más información, contáctenos en: soysolutions@gmail.com</footer>
     </div>
   )
 }
