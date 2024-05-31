@@ -31,7 +31,7 @@ export default function ItemList({ ruta, item, canEdit, children }: ItemListInve
   const filteredItems = category ? inventory.filter(item => item.itemCategory.name === category) : inventory;
 
   const getCategories = () => categories.map((cat) => <option key={cat.id} value={cat.name}>{cat.name}</option>)
-  const getItemCards = () => filteredItems.map(item => <ItemCard key={item.id} item={item} onClick={() => onClickItem(item)} />)
+  const getItemCards = () => filteredItems.map(item => <ItemCard hiddeBtns={canEdit} key={item.id} item={item} onClick={() => onClickItem(item)} />)
 
   const editItem = (item:ItemData) => !selectedItem && putData(`${endPoints.addItem}/${selectedItem?.id}`, null, item).then(res => console.log(res))
   const showEditModal = (item:ItemData) => showModal(<EditItemModal onEditItem={editItem} onDeleteItem={deleteItem} itemData={item}/>)

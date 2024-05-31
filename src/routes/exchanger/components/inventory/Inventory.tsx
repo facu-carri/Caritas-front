@@ -18,7 +18,7 @@ export default function Inventory() {
     return (
         <div className="bg-gray-100 min-h-screen">
             <ExchangerHeader title="Mi inventario" text="Ayuda: Para intercambiar con un producto tienes que tener un producto de la misma cartegoria cargado"/>
-            <ItemList item={newItem} ruta={endPoints.inventory}>
+            <ItemList canEdit={true} item={newItem} ruta={endPoints.inventory}>
                 <button onClick={handleModal} className="p-2 flex flex-row items-center space-x-2 px-2 gap-2 text-sm font-medium text-white bg-red-600 rounded hover:bg-red-500">
                     <BsPlus className='h-4 w-4'/>
                     Agregar Item
