@@ -15,15 +15,15 @@ export default function UserProfile({ userData, profileInfo, showPhoto, handleEd
         <div className="bg-gray-900 min-h-screen">
             <header className="flex flex-row gap-2 py-5 px-6 md:px-12 pt-[100px] bg-gradient-to-r from-red-500 to-blue-500 ">
                 <div className="flex flex-row items-center justify-center space-x-4">
-                    <div className="mt-1 h-16 w-16 mask mask-circle rounded-full overflow-hidden flex items-center">
+                    <div className="mt-1 h-14 w-14 max-w-14 max-h-14 mask mask-circle rounded-full overflow-hidden flex items-center">
                     {
-                        showPhoto ? <Image photo={userData.photo} alt={userData.name}/>:
-                        <Avatar name={userData.name} size="56" round={true}/>
+                        showPhoto && userData.photo ? <Image className="select-none" photo={userData.photo} alt={userData.name}/>:
+                        <Avatar className="select-none" name={userData.name} size="56" round={true}/>
                     }
                     </div>
                     <div className="text-white flex flex-col justify-center mt-1">
                         <h1 className="text-2xl font-bold">{userData.name}</h1>
-                        {userData.email && <p className="text-sm">@{userData.email}</p>}
+                        {userData.email && <p className="text-sm">{userData.email}</p>}
                     </div>
                 </div>
                 {

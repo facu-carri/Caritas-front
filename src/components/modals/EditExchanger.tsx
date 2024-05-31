@@ -35,6 +35,7 @@ export default function EditExchangerModal({exchanger, onSave, closeModal}: Prop
 
   function getDefaultFileds(): Array<FormField> {
     return [
+      { nombre: 'Foto de perfil', etiqueta: 'photo', value: '', tipo: 'file' },
       { nombre: 'Nombre completo', etiqueta: 'name', value: exchanger.name, tipo: 'text' },
       { nombre: 'Teléfono', etiqueta: 'phone', value: exchanger.phone, tipo: 'tel' },
       { nombre: 'Fecha de nacimiento', etiqueta: 'birthdate', value: exchanger.birthdate, tipo: 'date'}

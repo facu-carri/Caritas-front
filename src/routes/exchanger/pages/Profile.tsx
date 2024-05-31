@@ -61,13 +61,13 @@ export default function Profile({ id }: ProfileProps) {
     }
 
     return (
-        <UserProfile userData={exchangerData} profileInfo={info} handleEdit={!id || isAdmin ? showEditModal : null} showPhoto={!id && isAdmin}>
+        <UserProfile userData={exchangerData} profileInfo={info} handleEdit={!id || isAdmin ? showEditModal : null} showPhoto={!id || isAdmin}>
             <h2 className="text-2xl font-bold mb-4 text-white">Publicaciones de productos</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {
                 (!inventory || inventory.length == 0) ?
                 <p className="text-gray-400 line-clamp-2">No hay elementos</p>:
-                inventory.map((item, index) => (<ItemCard key={index} item={item} hiddeBtns={true} />))
+                inventory.map((item, index) => (<ItemCard key={index} item={item} hiddeBtns={!id || isAdmin} hiddeOwner={!!id} />))
             }
             </div>
             <h2 className="text-2xl font-bold mb-4 text-white">Comentarios</h2>

@@ -1,12 +1,6 @@
-type Type = {
-    text?: string,
-    icon?: JSX.Element,
-    showError?: boolean,
-    errorMsg?: string,
-    file?: boolean
-} & React.InputHTMLAttributes<HTMLInputElement>
+import { InputTypeProps } from "src/types/PropsTypes";
 
-export default function Input({ text, icon, showError = false, errorMsg, file, children, ...props }: Type) {
+export default function Input({ text, icon, showError = false, errorMsg, file, children, ...props }: InputTypeProps) {
     return (
         <>
             {!file ?

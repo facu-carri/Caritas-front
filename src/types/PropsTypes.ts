@@ -43,6 +43,7 @@ export type ItemCardProps = {
     item: ItemData
     onClick?: (ev:MouseEvent) => void
     hiddeBtns?: boolean
+    hiddeOwner?: boolean
 }
 export type ItemListInventoryProps = {
     ruta: string
@@ -82,3 +83,10 @@ export type HelpersListProps = {
     onSelect: (id:number|string) => void
     onDelete: (id:number|string) => void
 }
+export type InputTypeProps = {
+    text?: string,
+    icon?: JSX.Element,
+    showError?: boolean,
+    errorMsg?: string,
+    file?: boolean
+} & React.InputHTMLAttributes<HTMLInputElement>

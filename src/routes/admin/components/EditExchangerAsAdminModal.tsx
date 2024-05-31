@@ -29,17 +29,15 @@ export default function EditExchangerAsAdminModal({exchanger, onSave}: Props) {
   const handleEdit = (data: ExchangerData) => {
     console.log(data)
     onSave(data)
-    /*postData(endPoints.registerHelper, null, data)
-      .then(() => closeModal(null))
-      .catch((errCode: number) => handleError(errCode))*/
   }
 
   function getDefaultFileds(): Array<FormField> {
     return [
+      { nombre: 'Foto de perfil', etiqueta: 'photo', value: '', tipo: 'file' },
       { nombre: 'Nombre completo', etiqueta: 'name', value: exchanger.name, tipo: 'text' },
       { nombre: 'Contraseña', etiqueta: 'password', value: exchanger.password, tipo: 'password' },
       { nombre: 'DNI', etiqueta: 'dni', value: exchanger.dni, tipo: 'text' },
-      { nombre: 'Teléfono', etiqueta: 'phone', value: exchanger.phone, tipo: 'tel' },
+      { nombre: 'Teléfono', etiqueta: 'phone', value: exchanger.phone, tipo: 'text' },
     ]
   }
 

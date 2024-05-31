@@ -7,6 +7,7 @@ import {BsCalendar, BsPersonVcard, BsStar, BsTelephone} from 'react-icons/bs'
 import { MouseEvent } from "src/types/Types";
 import Rating from "src/components/Rating";
 import Image from "src/components/Image";
+import Avatar from "react-avatar";
 
 export default function ExchangerCard({ cardData, onEdit, onDelete }: ExchangerCardProps) {
 
@@ -21,9 +22,14 @@ export default function ExchangerCard({ cardData, onEdit, onDelete }: ExchangerC
             onClick={() => setRoute(`${routes.exchanger.profile}/${cardData.id}`)}
         >
             <div className="px-2 py-1">
-                <div className="flex flex-row gap-2">
-                    <Image photo={cardData.photo}/>
-                    <h3 className="text-lg font-semibold">{cardData.name}</h3>
+                <div className="flex flex-row gap-2 py-2">
+                    <div className="h-14 w-14 max-w-14 max-h-14 mask mask-circle rounded-full overflow-hidden flex items-center">
+                    {
+                        cardData.photo ? <Image className="select-none" photo={cardData.photo} alt={cardData.name}/>:
+                        <Avatar className="select-none" name={cardData.name} size="56" round={true}/>
+                    }
+                    </div>
+                    <h3 className="text-black flex flex-col justify-center text-lg font-semibold">{cardData.name}</h3>
                 </div>
                 <InformativeText icon={Icons.email()}>{cardData.email}</InformativeText>
                 <InformativeText icon={<BsTelephone/>}>{cardData.phone}</InformativeText>

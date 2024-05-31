@@ -25,7 +25,7 @@ type Props = {
   closeModal: (ev) => void
 }
 
-export default function EditHelpersModal({helper, onSave, closeModal}: Props) {
+export default function EditHelpersModal({helper, onSave}: Props) {
 
   const [error, setError] = useState<ErrorCode>(null)
   const [campos, setCampos] = useState([])
