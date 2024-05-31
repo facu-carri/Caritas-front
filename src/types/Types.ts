@@ -81,3 +81,6 @@ export type UserInfoFields = {
     value: string|number|JSX.Element
     color: string
 }
+export type CategoryListParam = {
+    data: ItemCategory[]
+}

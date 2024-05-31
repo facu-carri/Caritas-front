@@ -46,7 +46,7 @@ export type ItemCardProps = {
 }
 export type ItemListInventoryProps = {
     ruta: string
-    item?: ItemData
+    inventory?: ItemData[]
     canEdit?: boolean
     children?: JSX.Element[] | JSX.Element
 }

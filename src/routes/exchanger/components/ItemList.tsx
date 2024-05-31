@@ -1,42 +1,52 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { deleteData, getData, putData } from "src/utils/request/httpRequests";
-import { endPoints } from "src/utils/constants";
-import { useEffect, useState } from 'react';
+import { deleteData, getData, getHeaders, putData } from "src/utils/request/httpRequests";
+import { endPoints, serverAddress } from "src/utils/constants";
+import { useEffect, useMemo, useState } from 'react';
 import EditItemModal from './inventory/EditItemModal';
-import { ItemCategory, ItemData } from "src/types/Types";
+import { CategoryListParam, ItemCategory, ItemData } from "src/types/Types";
 import ItemCard from "./ItemCard";
 import { ItemListInventoryProps } from "src/types/PropsTypes";
 import { useCustomModal } from "src/context/CustomModalContext";
 import ItemModal from "src/components/modals/Item";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 
-export default function ItemList({ ruta, item, canEdit, children }: ItemListInventoryProps) {
+export default function ItemList({ ruta, inventory, canEdit, children }: ItemListInventoryProps) {
   const [category, setCategory] = useState('');
-  const [inventory, setInventory] = useState<ItemData[]>();
-  const [categories, setCategories] = useState<ItemCategory[]>();
   const [selectedItem, setselectedItem] = useState<ItemData>();
   const { showModal, closeModal } = useCustomModal()
   
-  const resetInvetory = (error:number) => error == 404 && setInventory([])
-  const resetCategories = () => setCategories([])
+  const queryClient = useQueryClient()
 
-  useEffect(() => {
-    getData(ruta).then(inventory => setInventory(inventory)).catch(error => resetInvetory(error));
-    getData(endPoints.categories).then(categories => setCategories(categories)).catch(() => resetCategories());
-  }, [ruta]);
 
-  useEffect(() => {
-    item && setInventory(inventory.concat(item))
-  }, [item])
+  const { data: categories = [] }: CategoryListParam = useQuery({
+    queryKey: ['categories'],
+    queryFn: () => fetch(`${serverAddress}/${endPoints.categories}`, {
+      method: 'GET',
+      headers: getHeaders()
+    }).then(r => r.json()),
+  })
 
-  const filteredItems = category ? inventory.filter(item => item.itemCategory.name === category) : inventory;
+  const filteredItems = useMemo(() => {
+    if(!category) {
+      return inventory
+    }
+    return inventory.filter(item => item.itemCategory.name === category)
+  }, [category, inventory])
 
-  const getCategories = () => categories.map((cat) => <option key={cat.id} value={cat.name}>{cat.name}</option>)
-  const getItemCards = () => filteredItems.map(item => <ItemCard hiddeBtns={canEdit} key={item.id} item={item} onClick={() => onClickItem(item)} />)
 
   const editItem = (item:ItemData) => !selectedItem && putData(`${endPoints.addItem}/${selectedItem?.id}`, null, item).then(res => console.log(res))
   const showEditModal = (item:ItemData) => showModal(<EditItemModal onEditItem={editItem} onDeleteItem={deleteItem} itemData={item}/>)
   
-  const deleteItem = () => !selectedItem && deleteData(`${endPoints.addItem}/${selectedItem?.id}`, null).then(() => closeModal())
+  const { mutate: deleteItem } = useMutation({
+    mutationFn: () => fetch(`${serverAddress}/${endPoints.addItem}/${selectedItem?.id}`, {
+      method: 'DELETE',
+      headers: getHeaders()
+    }),
+    onSuccess: () => {
+      queryClient.invalidateQueries([ruta])
+      closeModal()
+    }
+  })
 
   const onClickItem = (item: ItemData) => {
     if (canEdit) {
@@ -55,7 +65,11 @@ export default function ItemList({ ruta, item, canEdit, children }: ItemListInve
             <span className="p-2 border rounded-lg">No hay categorias cargadas</span> :
             <select className="p-2 border border-gray-700 rounded-lg" value={category} onChange={(e) => setCategory(e.target.value)}>
               <option value="default">Todas las Categorías</option>
-              {getCategories()}
+              {
+                categories?.map(cat =>
+                  <option key={cat.id} value={cat.name}>{cat.name}</option>
+                )
+              }
             </select>
         }
         {children}
@@ -64,7 +78,9 @@ export default function ItemList({ ruta, item, canEdit, children }: ItemListInve
         {
           (!filteredItems || filteredItems.length == 0) ? 
           <p className="text-gray-400 line-clamp-2">No hay elementos</p> :
-          getItemCards()
+          filteredItems.map(item =>
+            <ItemCard hiddeBtns={canEdit} key={item.id} item={item} onClick={() => onClickItem(item)} />
+          )
         }
       </div>
     </div>
