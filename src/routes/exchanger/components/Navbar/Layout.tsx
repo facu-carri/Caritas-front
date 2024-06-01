@@ -8,6 +8,7 @@ import { useCustomModal } from "src/context/CustomModalContext"
 import LogoutModal from "src/components/modals/Logout"
 import { DropdownItem, Tab } from "src/types/Types"
 import Navbar from "src/components/Navbar"
+import { BellNotification } from "../BellNotification"
 
 export default function ExchangerLayout() {
 
@@ -46,6 +47,10 @@ export default function ExchangerLayout() {
     {
       icon: Icons.username(colors.white),
       customElement: <CircularDropdown icon={Icons.username()} items={dropdownItems}/>
+    },
+    {
+      
+      customElement: <BellNotification />
     }
   ]
 
