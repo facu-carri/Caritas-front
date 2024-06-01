@@ -63,8 +63,8 @@ export default function ItemList({ ruta, inventory, canEdit, children }: ItemLis
         {
             (!categories || categories.length == 0) ? 
             <span className="p-2 border rounded-lg">No hay categorias cargadas</span> :
-            <select className="p-2 border border-gray-700 rounded-lg" value={category} onChange={(e) => setCategory(e.target.value)}>
-              <option value="default">Todas las Categorías</option>
+            <select className="p-2 border border-gray-700 rounded-lg" value={category} onChange={e => setCategory(e.target.value)}>
+              <option value="">Todas las Categorías</option>
               {
                 categories?.map(cat =>
                   <option key={cat.id} value={cat.name}>{cat.name}</option>
