@@ -63,10 +63,13 @@ export default function EditItemModal({ onEditItem, onDeleteItem, itemData }: Ed
           <Input type="number" min="1" text="Cantidad" onChange={(e) => setQuantity(parseInt(e.target.value) ?? 1)} value={Number.isNaN(quantity) ? 1 : quantity}></Input>
         </div>
       </div>
+      {
+        false && // preguntar a Cacho
       <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse gap-5">
         <Button attrs="!bg-blue-600" onClick={handleAddItem}>Aplicar cambios</Button>
         <Button onClick={closeModal}>Cancelar</Button>
       </div>
+      }
     </div>
   );
 }
