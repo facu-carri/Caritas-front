@@ -77,7 +77,7 @@ export default function ItemList({ ruta, inventory, canEdit, children }: ItemLis
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {
           (!filteredItems || filteredItems.length == 0) ? 
-          <p className="text-gray-400 line-clamp-2">No hay elementos</p> :
+          <p className="text-gray-400 line-clamp-2">No hay productos intercambiables</p> :
           filteredItems.map(item =>
             <ItemCard hiddeBtns={canEdit} key={item.id} item={item} onClick={() => onClickItem(item)} />
           )
