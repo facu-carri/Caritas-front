@@ -90,3 +90,6 @@ export type InputTypeProps = {
     errorMsg?: string,
     file?: boolean
 } & React.InputHTMLAttributes<HTMLInputElement>
+export type HiddePasswordProps = {
+    showIcon?: boolean
+} & InputTypeProps & React.InputHTMLAttributes<HTMLInputElement>

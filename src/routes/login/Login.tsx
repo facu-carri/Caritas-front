@@ -11,10 +11,10 @@ import BotonARuta from "src/components/BotonARuta"
 import { RequestStatus } from "src/types/RequestStatus"
 import { LoginQuery } from "src/types/LoginQuery"
 import { Icons } from "src/utils/Icons"
+import HiddePassword from "src/components/HiddePassword"
 
 const Login = () => {
 
-    const [showPassword, setShowPassword] = useState(false)
     const [reqStatus, setReqStatus] = useState<RequestStatus>(RequestStatus.INITIAL)
     const { setUser } = User()
     const { setRoute } = RoutesHandler()
@@ -79,9 +79,7 @@ const Login = () => {
                     <span>Los datos son incorrectos</span>
                 </ErrorAlert>}
                 <Input id='email' text={'Email'} icon={Icons.username()}/>
-                <Input id='password' text={'Contraseña'} icon={Icons.password()} type={ showPassword ? "text" : "password"}>
-                    {<button className="bg-transparent p-1" onClick={() => setShowPassword(!showPassword)}>{showPassword ? Icons.eyeHidden() : Icons.eye()}</button>}
-                </Input> 
+                <HiddePassword showIcon={true} />
                 <button className="btn btn-primary" onClick={handleLogin}>
                     {reqStatus == RequestStatus.PENDING ? <span className="loading loading-spinner"></span> : 'Ingresar'}
                 </button>

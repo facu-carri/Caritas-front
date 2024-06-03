@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { deleteData, getData, getHeaders, putData } from "src/utils/request/httpRequests";
+import { getHeaders, putData } from "src/utils/request/httpRequests";
 import { endPoints, serverAddress } from "src/utils/constants";
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import EditItemModal from './inventory/EditItemModal';
-import { CategoryListParam, ItemCategory, ItemData } from "src/types/Types";
+import { CategoryListParam, ItemData } from "src/types/Types";
 import ItemCard from "./ItemCard";
 import { ItemListInventoryProps } from "src/types/PropsTypes";
 import { useCustomModal } from "src/context/CustomModalContext";

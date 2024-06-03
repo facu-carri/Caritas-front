@@ -39,7 +39,7 @@ export default function ExchangersManager() {
             return [];
         }
         const value = searchQuery.toLowerCase()
-        const elements = exchangers.filter((user: ExchangerCardData) => {
+        const elements = exchangers && exchangers.filter((user: ExchangerCardData) => {
             return !value || user.name.toLowerCase().includes(value) || user.email.toLowerCase().includes(value) || user.dni.toLowerCase().includes(value) || user.phone.toLowerCase().includes(value)
         });
 
