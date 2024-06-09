@@ -58,8 +58,11 @@ export default function RegisterHelper() {
       headers: getHeaders()
     }).then(r => r.json()),
     onSuccess: data => {
+      if(campos.find(campo => campo.etiqueta === 'employeeLocationId')) {
+        return; // evitar que se agreguen campos de filial duplicados
+      }
       const locationSelector = generateLocationSelect(data);
-      setCampos(prev => [...prev, locationSelector])
+      setCampos(prev => [...prev, locationSelector]);
     }
   })
 
