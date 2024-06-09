@@ -7,10 +7,10 @@ import { MouseEvent } from 'src/types/Types';
 import { endPoints, routes, serverAddress } from 'src/utils/constants';
 import RoutesHandler from 'src/utils/routesHandler';
 
-import { FaRegTrashAlt } from 'react-icons/fa';
+import { FaRegTrashAlt, FaEdit } from 'react-icons/fa';
 //la publicacion particular del producto a intercambiar
 
-export default function ItemCard({ item, onClick, hiddeOwner, canDelete, queryInvalidator }: ItemCardProps) {
+export default function ItemCard({ item, onClick, hiddeOwner, canDelete, queryInvalidator, isEditable }: ItemCardProps) {
   
   const { photo, name, description, owner, itemCategory, quantity } = item
   const { closeModal } = useCustomModal()
@@ -45,10 +45,16 @@ export default function ItemCard({ item, onClick, hiddeOwner, canDelete, queryIn
       <p className="text-sm text-gray-500 mb-2">Descripcion: {description}</p>
       <div className='flex items-center justify-between'>
         <p className="text-sm text-gray-500 mb-2">Cantidad restante: {quantity}</p>
-        {
-          canDelete &&
-          <button onClick={() => deleteItem()} className='btn btn-error'><FaRegTrashAlt/></button>
-        }
+        <div className='flex gap-2'>
+          {
+            isEditable &&
+            <button className='btn'><FaEdit/></button>
+          }
+          {
+            canDelete &&
+            <button onClick={() => deleteItem()} className='btn btn-error'><FaRegTrashAlt/></button>
+          }
+        </div>
       </div>
       {
         !canDelete &&

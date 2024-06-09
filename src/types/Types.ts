@@ -63,7 +63,8 @@ export type ItemData = {
     description: string
     owner?: ExchangerData
     itemCategory: ItemCategory
-    quantity:number|string
+    quantity:number|string,
+    editable: boolean
 }
 export type ItemCategory = {
     id: number

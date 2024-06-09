@@ -45,7 +45,8 @@ export type ItemCardProps = {
     //hiddeBtns?: boolean
     hiddeOwner?: boolean,
     canDelete?: boolean
-    queryInvalidator?: () => void
+    queryInvalidator?: () => void,
+    isEditable?: boolean
 }
 export type ItemListInventoryProps = {
     ruta: string
