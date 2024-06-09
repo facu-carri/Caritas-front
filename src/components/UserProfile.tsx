@@ -17,8 +17,10 @@ export default function UserProfile({ userData, profileInfo, showPhoto, handleEd
                 <div className="flex flex-row items-center justify-center space-x-4">
                     <div className="mt-1 h-14 w-14 max-w-14 max-h-14 mask mask-circle rounded-full overflow-hidden flex items-center">
                     {
-                        showPhoto && userData.photo ? <Image className="select-none" photo={userData.photo} alt={userData.name}/>:
-                        <Avatar className="select-none" name={userData.name} size="56" round={true}/>
+                        showPhoto && userData.photo ?
+                        <Image className="select-none" photo={userData.photo} alt={userData.name} />
+                        :
+                        <Avatar className="select-none" name={userData.name} size="56" round={true} />
                     }
                     </div>
                     <div className="text-white flex flex-col justify-center mt-1">
