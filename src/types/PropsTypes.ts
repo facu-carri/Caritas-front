@@ -42,8 +42,10 @@ export type ItemModalProps = {
 export type ItemCardProps = {
     item: ItemData
     onClick?: (ev:MouseEvent) => void
-    hiddeBtns?: boolean
-    hiddeOwner?: boolean
+    //hiddeBtns?: boolean
+    hiddeOwner?: boolean,
+    canDelete?: boolean
+    queryInvalidator?: () => void
 }
 export type ItemListInventoryProps = {
     ruta: string

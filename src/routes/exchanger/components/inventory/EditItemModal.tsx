@@ -1,3 +1,7 @@
+/*
+
+SIN USO
+
 import { useEffect, useState } from "react";
 import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
@@ -72,4 +76,4 @@ export default function EditItemModal({ onEditItem, onDeleteItem, itemData }: Ed
       }
     </div>
   );
-}
+}*/

@@ -1,12 +1,16 @@
 import Image from 'src/components/Image';
+import { useMutation } from 'react-query';
+import { getHeaders } from 'src/utils/request/httpRequests';
 import { useCustomModal } from 'src/context/CustomModalContext';
 import { ItemCardProps } from 'src/types/PropsTypes';
 import { MouseEvent } from 'src/types/Types';
-import { routes } from 'src/utils/constants';
+import { endPoints, routes, serverAddress } from 'src/utils/constants';
 import RoutesHandler from 'src/utils/routesHandler';
+
+import { FaRegTrashAlt } from 'react-icons/fa';
 //la publicacion particular del producto a intercambiar
 
-export default function ItemCard({ item, onClick, hiddeBtns, hiddeOwner }: ItemCardProps) {
+export default function ItemCard({ item, onClick, hiddeOwner, canDelete, queryInvalidator }: ItemCardProps) {
   
   const { photo, name, description, owner, itemCategory, quantity } = item
   const { closeModal } = useCustomModal()
@@ -23,15 +27,31 @@ export default function ItemCard({ item, onClick, hiddeBtns, hiddeOwner }: ItemC
     console.log('Intercambiar')
   }
 
+  const { mutate: deleteItem } = useMutation({
+    mutationFn: () => fetch(`${serverAddress}/${endPoints.addItem}/${item.id}`, {
+      method: 'DELETE',
+      headers: getHeaders()
+    }),
+    onSuccess: () => {
+      queryInvalidator()
+    }
+  })
+
   return (
     <div className="bg-white p-4 rounded shadow-lg max-w-sm cursor-pointer transform transition-transform duration-200 hover:scale-105" onClick={onClick}>
       <Image photo={photo} alt={name} className="mb-4 w-full rounded shadow-2xl" />
       <h2 className="text-xl font-bold mb-2">{name}</h2>
       <p className="text-sm text-gray-500 mb-2">Categoria: {itemCategory.name}</p>
       <p className="text-sm text-gray-500 mb-2">Descripcion: {description}</p>
-      <p className="text-sm text-gray-500 mb-2">Cantidad restante: {quantity}</p>
+      <div className='flex items-center justify-between'>
+        <p className="text-sm text-gray-500 mb-2">Cantidad restante: {quantity}</p>
+        {
+          canDelete &&
+          <button onClick={() => deleteItem()} className='btn btn-error'><FaRegTrashAlt/></button>
+        }
+      </div>
       {
-        !hiddeBtns &&
+        !canDelete &&
         <div className="flex flex-col items-start">
             <button onClick={onClickExchange} className="bg-red-500 text-white px-4 py-2 rounded mb-2 transform transition-transform duration-200 hover:scale-105">
               Intercambiar

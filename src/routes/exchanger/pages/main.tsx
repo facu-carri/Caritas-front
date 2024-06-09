@@ -20,7 +20,7 @@ export const ExchangerMain = () => {
     return (
         <div className="bg-gray-100 min-h-screen">
             <ExchangerHeader title="Descubre nuevos productos para intercambiar" text="Explora nuestra selección de productos disponibles para intercambios"/>
-            <ItemList canEdit={false} inventory={inventory} ruta={endPoints.exchangeablesItems} />
+            <ItemList inventory={inventory} ruta={endPoints.exchangeablesItems} />
         </div>
     )
 }
