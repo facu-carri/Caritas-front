@@ -11,6 +11,7 @@ import { FaRegTrashAlt, FaEdit } from 'react-icons/fa';
 import EditItemModal from './inventory/EditItemModal';
 import ConfirmationModal from 'src/components/modals/Confirmation';
 import { useState } from 'react';
+import SelectItemModal from './SelectItemModal';
 //la publicacion particular del producto a intercambiar
 
 export default function ItemCard({ item, onClick, hiddeOwner, queryInvalidator, hiddeBtns, isEditable }: ItemCardProps) {
@@ -27,7 +28,7 @@ export default function ItemCard({ item, onClick, hiddeOwner, queryInvalidator, 
 
   const onClickExchange = (ev: MouseEvent) => {
     ev.stopPropagation()
-    console.log('Intercambiar')
+    showModal(<SelectItemModal itemId={item.id} categoryId={item.itemCategory.id} showConfirmation={confirmation} closeModal={closeModal} />)
   }
 
   const onClickEdit = () => {

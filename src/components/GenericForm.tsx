@@ -125,22 +125,31 @@ function GenericForm({ id, campos, listener, error, btnText }: Type) {
 
     for (const inputField of inputs) {
       const input: any = inputField
-      const opt = isOptional(input)
-      
+      const optional = isOptional(input)
+      if(optional) {
+        continue;
+      }
+
       switch (input.type) {
         case 'file':
-          const img = opt ? true : input.files[0]
-          if(!img) return false
+          const img = input.files[0]
+          if(!img) {
+            return false
+          }
           break;
         case 'select-one':
-          const { value: selectValue } = opt ? true : input.options[input.selectedIndex]
-          if(!selectValue) return false;
-          break
+          const { value: selectValue } = input.options[input.selectedIndex]
+          if(!selectValue) {
+            return false;
+          }
+          break;
         case 'password':
-          if(!checkVerifyPassword(input)) return false
-          break
+          if(!checkVerifyPassword(input)) {
+            return false;
+          }
+          break;
         default:
-          const { value } = opt ? true : input
+          const { value } = input
           if(!value) return false;
       }
     }
