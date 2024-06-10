@@ -16,6 +16,7 @@ export const endPoints = {
     addItem: 'item',
     exchanger: 'exchanger',
     employees: 'employee',
+    exchange: 'exchange',
 }
 const adminRoutes = {
     'estadisticas': '/estadisticas',
