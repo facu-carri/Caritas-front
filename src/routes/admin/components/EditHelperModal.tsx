@@ -1,26 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { getData } from "src/utils/request/httpRequests";
-import GenericForm, { FormField, ListItem } from "../../../components/GenericForm";
+import GenericForm, { FormField } from "../../../components/GenericForm";
 import { endPoints } from "src/utils/constants";
 import { useEffect, useState } from "react";
 import { ErrorCode } from "src/utils/Error/ErrorCode";
 import { ErrorTypes } from "src/utils/Error/ErrorTypes";
-import { Location } from "../../../components/modals/EliminarFilial";
-
-type Helper = {
-  id: number,
-  name: string,
-  dni: string,
-  phone: string,
-  email: string,
-  password: string,
-  birthdate: string,
-  employeeLocationId: string
-}
+import { HelperData } from "src/types/Types";
+import { selectLocations } from "src/components/modals/modalOptions";
 
 type Props = {
-  helper: Helper,
+  helper: HelperData,
   onSave: (ev) => void,
   closeModal: (ev) => void
 }
@@ -40,22 +30,13 @@ export default function EditHelpersModal({helper, onSave}: Props) {
     setError(null)
   }
 
-  const handleEdit = (data: Helper) => {
-    console.log(data)
-    onSave(data)
-    /*postData(endPoints.registerHelper, null, data)
-      .then(() => closeModal(null))
-      .catch((errCode: number) => handleError(errCode))*/
-  }
-
-  function generateFields(employeeLocationids: Location[]): FormField{
-    const field:FormField = { nombre: 'Selecciona una filial', etiqueta: 'employeeLocationId', tipo: 'list' }
-    const items: ListItem[] = employeeLocationids.map((employeeLocationid) => ({
-      key: employeeLocationid.id,
-      value: employeeLocationid.description
-    }))
-    field.items = items
-    return field
+  const handleEdit = (data: HelperData) => {
+    try {
+      console.log(data)
+      onSave(data)
+    } catch (err) {
+      handleError(err)
+    }
   }
 
   function getDefaultFileds(): Array<FormField> {
@@ -72,8 +53,7 @@ export default function EditHelpersModal({helper, onSave}: Props) {
     if (!helper) return
     console.log(getDefaultFileds())
     getData(endPoints.location)
-      .then((employeeLocationids: Location[]) => generateFields(employeeLocationids))
-      .then((fields) => setCampos([...getDefaultFileds(), fields]))
+      .then((locations) => setCampos([...getDefaultFileds(), selectLocations(locations)]))
   }, [helper])
 
   return campos && campos.length > 0 && <GenericForm id="edit-helpers-modal" campos={campos} listener={handleEdit} error={error} btnText="Aplicar cambios" />;

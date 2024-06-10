@@ -1,4 +1,4 @@
-import { ExchangerCardData, ExchangerData, GeoPosition, HelperData, ItemData, Location, LocationResponse, MouseEvent, Tab, UserData, UserInfoFields } from "./Types"
+import { ExchangerCardData, GeoPosition, HelperData, ItemData, Location, LocationResponse, MouseEvent, Tab, UserData, UserInfoFields } from "./Types"
 
 export type AgregarFilialProps = {
     geoPosition: GeoPosition
@@ -22,7 +22,7 @@ export type ButtonProps = {
 export type ConfirmationProps = {
     title?: string,
     onAccept: (ev:MouseEvent) => void
-    onCancel: (ev:MouseEvent) => void
+    onCancel?: (ev:MouseEvent) => void
 }
 export type InformativeTextProps = {
     icon?: JSX.Element | JSX.Element[] | string
@@ -30,8 +30,6 @@ export type InformativeTextProps = {
 } & React.HTMLAttributes<HTMLParagraphElement>
 export type ExchangerCardProps = {
     cardData: ExchangerCardData
-    onEdit: (data:ExchangerData) => void
-    onDelete: (id:string) => void
 }
 export type ProfileProps = {
     id?: string
@@ -42,7 +40,7 @@ export type ItemModalProps = {
 export type ItemCardProps = {
     item: ItemData
     onClick?: (ev:MouseEvent) => void
-    //hiddeBtns?: boolean
+    hiddeBtns?: boolean
     hiddeOwner?: boolean,
     canDelete?: boolean
     queryInvalidator?: () => void,
@@ -58,12 +56,16 @@ export type UserProfileProps = {
     userData: UserData
     profileInfo: UserInfoFields[]
     handleEdit?: VoidFunction
+    canEdit: boolean
+    handleDelete?: VoidFunction
+    canDelete: boolean
+    canDeletePhoto?: boolean
     showPhoto?: boolean
     children?: JSX.Element[] | JSX.Element
 }
 export type EditItemModalProps = {
     onEditItem: (data:ItemData) => void
-    onDeleteItem: VoidFunction
+    //onDeleteItem: VoidFunction
     itemData: ItemData
 }
 export type ExchangerHeaderProps = {
@@ -82,9 +84,7 @@ export type ImageProps = {
 } & React.ImgHTMLAttributes<HTMLImageElement>
 export type HelpersListProps = {
     helpers: HelperData[]
-    onEdit: (helper:HelperData) => void
     onSelect: (id:number|string) => void
-    onDelete: (id:number|string) => void
 }
 export type InputTypeProps = {
     text?: string,

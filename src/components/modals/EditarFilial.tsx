@@ -8,12 +8,13 @@ import { ErrorTypes } from "src/utils/Error/ErrorTypes";
 import { useCustomModal } from "src/context/CustomModalContext";
 import { EditarFilialProps } from "src/types/PropsTypes";
 import { LocationFields } from "src/types/Types";
+import ConfirmationModal from "./Confirmation";
 
 // Componente de Registro de Ayudante
 export default function EditarFilialModal({ location, handleSuccess }: EditarFilialProps) {
 
   const [error, setError] = useState<ErrorCode>(null)
-  const { closeModal } = useCustomModal()
+  const { showModal, closeModal } = useCustomModal()
 
   const handleError = (errCode: number) => {
     const err = new ErrorCode(errCode, ErrorTypes.FILIALES_ERROR)
@@ -25,17 +26,19 @@ export default function EditarFilialModal({ location, handleSuccess }: EditarFil
     setError(null)
   }
 
-    const handleRegister = (data: LocationFields) => {
-      const newLocation = {...location, ...data}
-        putData(endPoints.location + `/${location.id}`, null, newLocation)
-        .then((responseData) => handleSuccess(responseData))
-        .then(() => closeModal())
-        .catch((errCode: number) => handleError(errCode))
+  const confirmation = (fn) => showModal(<ConfirmationModal onAccept={fn} />)
+
+  const handleRegister = (data: LocationFields) => {
+    const newLocation = {...location, ...data}
+      putData(endPoints.location + `/${location.id}`, null, newLocation)
+      .then((responseData) => handleSuccess(responseData))
+      .then(() => closeModal())
+      .catch((errCode: number) => handleError(errCode))
   }
 
   const campos: Array<FormField> = [
     { nombre: 'Nombre', value:location.name, etiqueta: 'name', tipo: 'text' }
   ]
 
-  return <GenericForm id="agregar-filial-modal" campos={campos} listener={handleRegister} error={error} btnText="Editar" />;
+  return <GenericForm id="agregar-filial-modal" campos={campos} listener={(data) => confirmation(() => handleRegister(data as any))} error={error} btnText="Editar" />;
 }

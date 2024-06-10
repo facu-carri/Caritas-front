@@ -20,18 +20,17 @@ export default function ConfirmationModal({ title, onAccept, onCancel }: Confirm
     return (
         <div className="modal-box text-[100%]">
             <h3 className="font-bold text-lg text-center">
-            <h3>¿Está seguro de que quiere proceder?</h3>
-            {
-                title && processTitle()
-            }
-            {`Esta acción no se puede deshacer`}
-        </h3>
-        <div className="flex justify-center items-center mt-3">
-            <div className="flex flex-row gap-4">
-                <Button onClick={onCancel}>Cancelar</Button>
-                <Button onClick={(ev:MouseEvent) => { onAccept(ev); closeModal() }}>Aceptar</Button>
+                ¿Está seguro de que quiere proceder?<br/>
+                {title && processTitle()}
+                Esta acción no se puede deshacer
+            </h3>
+            <div className="flex justify-center items-center mt-3">
+                <div className="flex flex-row gap-4">
+                    <Button onClick={onCancel ?? closeModal}>Cancelar</Button>
+                    <Button onClick={(ev: MouseEvent) => { onAccept(ev); closeModal(); }}>Aceptar</Button>
+                </div>
             </div>
         </div>
-        </div>
-    )
+    );
+    
 }

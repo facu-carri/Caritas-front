@@ -5,6 +5,7 @@ import { RegisterHelperErrorMsgs } from "./ErrorMessages/RegisterHelper"
 import { RegisterExchangerErrorMsgs } from "./ErrorMessages/RegisterExchanger"
 import { FilialesErrorMsgs } from "./ErrorMessages/Filiales"
 import { ExchangerErrorMsgs } from "./ErrorMessages/Exchanger"
+import { EditItemErrorMsgs } from "./ErrorMessages/EditItem"
 
 const DefaultErrors: IErrorCodesMsgs = {
     [ErrorTypes.UNKNOWN_ERROR]: {
@@ -18,5 +19,6 @@ export const ErrorsMsgs = {
     ...RegisterHelperErrorMsgs,
     ...RegisterExchangerErrorMsgs,
     ...FilialesErrorMsgs,
-    ...ExchangerErrorMsgs
+    ...ExchangerErrorMsgs,
+    ...EditItemErrorMsgs
 }

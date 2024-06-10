@@ -6,7 +6,8 @@ import logo from '@images/LogoCaritas.png'
 import Input from './Input';
 import { ErrorCode } from 'src/utils/Error/ErrorCode';
 import ErrorAlert from './ErrorAlert';
-import { useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
+import HiddePassword from './HiddePassword';
 
 export type ListItem = {
   key: string|number,
@@ -17,9 +18,10 @@ export type FormField = {
   nombre: string,
   etiqueta: string,
   tipo: string,
-  value?: string,
+  value?: string|number,
   image?: boolean,
-  items?: ListItem[]
+  items?: ListItem[],
+  optional?: boolean
 }
 
 type Type = {
@@ -30,10 +32,10 @@ type Type = {
   btnText?: string
 }
 
-export async function getImageBase64(img:File) {
+export async function getImageBase64(img: File) {
   return new Promise((resolve, reject) => {
+    if (!img) reject(null)
     const reader = new FileReader();
-    if(!img) return null
     reader.readAsDataURL(img)
     reader.onload = (() => {
       const base64String = (reader.result as string).split(',')[1];
@@ -51,19 +53,16 @@ function GenericForm({ id, campos, listener, error, btnText }: Type) {
   // posible futuro refactor para el manejo de los valores
   // de los campos del componente GenericForm
   const [fields, setFields] = useState(campos.map(campo => campo.value))
-  const [lastChange, setLastChange] = useState('')
  
   function setField(fieldName, value) {
-    setLastChange(value)
-    setFields(prev => { 
-      prev[fieldName] = value
-      return prev
-    })
+    setFields(prevFields => ({
+      ...prevFields,
+      [fieldName]: value // Correctly set value using immutability
+    }));
   }
 
   async function getInputValues(): Promise<Record<string, any>> {
     const inputs = document.getElementsByName(id)
-    console.log(inputs, inputs.length)
     const obj = {}
 
     for (const inputField of inputs) {
@@ -71,18 +70,22 @@ function GenericForm({ id, campos, listener, error, btnText }: Type) {
 
       switch (input.type) {
         case 'file':
-          const img = (input as HTMLInputElement).files[0]
-          const imageData = await getImageBase64(img)
-          if(imageData) obj[input.id] = imageData
+          const img = (input as HTMLInputElement).files[0] ?? null
+          if(img) await getImageBase64(img)
+            .then(img => obj[input.id] = img)
+            .catch(() => {})
           break
         case 'select-one':
           const select = input as HTMLSelectElement
-          obj[input.id] = select.options[select.selectedIndex].value
+          obj[input.id] = select.options[select.selectedIndex].value ?? null
+          break
+        case 'password':
+          if (input.id.lastIndexOf('-check') == -1) obj[input.id] = input.value
           break
         default:
-          console.log('default', input.id, input.value)
           obj[input.id] = input.value
       }
+      if(!obj[input.id]) delete obj[input.id]
     }
     return obj
   }
@@ -93,37 +96,76 @@ function GenericForm({ id, campos, listener, error, btnText }: Type) {
     listener(data)
   }
 
-  const areFieldsEmpty = useMemo(() => {
+  const isOptional = (field) => {
+    const attr = (field as HTMLElement).getAttribute('optional-attr')
+    const values = { undefined: undefined, null: null, true: true, false: false }
+    const value = values[attr]
+    return !!value
+  }
+
+  const checkVerifyPassword = (input:HTMLInputElement) => {
+    const id = input.id
+    const key = '-check'
+    const isCheck = id.lastIndexOf(key) != -1
+    const checkInput: HTMLInputElement = (!isCheck ? document.getElementById(`${id}${key}`) : input) as HTMLInputElement
+    const realInput: HTMLInputElement = (isCheck ? document.getElementById(id.substring(0, id.length - key.length)) : input) as HTMLInputElement
+    
+    const optional = !realInput?.value && !checkInput?.value ? isOptional(realInput) : false// si tengo algun valor no es opcional
+
+    if(optional && (!realInput?.value || !checkInput?.value)) return isOptional(realInput)
+    if(!checkInput) return realInput.value
+
+    return !optional ? realInput.value.length > 0 ? checkInput.value == realInput.value : optional : true
+  }
+
+  const [ areFieldsEmpty, setFieldsEmpty ] = useState(true)
+
+  const checkFieldsValue = () => {
     const inputs = document.getElementsByName(id)
-    if(inputs?.length === 0) {
-      return false;
-    }
+
     for (const inputField of inputs) {
       const input: any = inputField
+      const opt = isOptional(input)
+      
       switch (input.type) {
         case 'file':
-          const img = (input as HTMLInputElement).files[0]
-          if(!img) {
-            return false;
-          }
+          const img = opt ? true : input.files[0]
+          if(!img) return false
           break;
         case 'select-one':
-          const select = input as HTMLSelectElement
-          const { value: selectValue } = select.options[select.selectedIndex]
-          if(!selectValue) {
-            return false;
-          }
+          const { value: selectValue } = opt ? true : input.options[input.selectedIndex]
+          if(!selectValue) return false;
+          break
+        case 'password':
+          if(!checkVerifyPassword(input)) return false
           break
         default:
-          const { value } = input
-          if(!value) {
-            return false;
-          }
+          const { value } = opt ? true : input
+          if(!value) return false;
       }
     }
     return true
-  }, [lastChange])
+  }
 
+  useEffect(() => {
+    const empty = checkFieldsValue()
+    setFieldsEmpty(empty)
+  }, [fields])
+
+  const getField = (campo: FormField) => {
+    switch (campo.tipo) {
+      case 'list':
+        return <select optional-attr={String(campo.optional)} name={id} id={campo.etiqueta} className="select select-bordered w-full max-w-xs" onChange={(e) => setField(campo.etiqueta, e.target.value)}>
+          {
+            campo?.items.map(({ key, value }) => <option key={key} value={key}>{value}</option>)
+          }
+        </select>
+      case 'password':
+        return <HiddePassword optional-attr={String(campo.optional)} defaultValue={campo.value} name={id} id={campo.etiqueta} onChange={(e)=> setField(campo.etiqueta, e.target.value)} />
+      default:
+        return <Input optional-attr={String(campo.optional)} file={campo.tipo == 'file'} defaultValue={campo.value} name={id} id={campo.etiqueta} type={campo.tipo} onChange={(e)=> setField(campo.etiqueta, e.target.value)} />
+    }
+  }
 
   return (
     <div className="modal-box rounded-lg max-w-md mx-auto p-8 my-8 transition-transform hover:scale-105 shadow-2xl bg-navbar-blue">
@@ -136,27 +178,18 @@ function GenericForm({ id, campos, listener, error, btnText }: Type) {
       <form className="text-center">
         {campos.map((campo) => (
           <div key={campo.nombre} className="mb-4">
-            <label className="block font-semibold mb-2 text-blue-900">{campo.nombre}</label>
+            <label className="block font-semibold mb-4 text-blue-900">{campo.nombre}</label>
             {
-              campo.tipo === 'list' ?
-                <select name={id} id={campo.etiqueta} className="select select-bordered w-full max-w-xs" onChange={(e)=>setField(campo.etiqueta, e.target.value)}>{
-                  campo?.items.map(({ key, value }) => (
-                    <option key={key} value={key}>
-                        {value}
-                    </option>
-                  ))
-                }</select>
-              :
-              campo.tipo === 'date' ?
-                <Input file={campo.tipo == 'date'} defaultValue={campo.value} name={id} id={campo.etiqueta} type={'date'} onChange={(e)=>setField(campo.etiqueta, e.target.value)} />
-                :
-                <Input file={campo.tipo == 'file'} defaultValue={campo.value} name={id} id={campo.etiqueta} type={campo.tipo} onChange={(e)=>setField(campo.etiqueta, e.target.value)} />
+              getField(campo)
             }
           </div>
         ))}
-        {error == null && <button disabled={!areFieldsEmpty} onClick={handleSubmit} className="bg-red-500 disabled:bg-gray-200 text-white px-4 py-2 rounded-lg font-bold transition-colors duration-300 hover:bg-red-700 transform hover:-translate-y-1 hover:scale-105">
-          {btnText ?? 'Enviar'}
-        </button>}
+        {
+          error == null &&
+          <button disabled={!areFieldsEmpty} onClick={handleSubmit} className="bg-red-500 disabled:bg-gray-200 text-white px-4 py-2 rounded-lg font-bold transition-colors duration-300 hover:bg-red-700 transform hover:-translate-y-1 hover:scale-105">
+            {btnText ?? 'Enviar'}
+          </button>
+        }
       </form>
     </div>
   );

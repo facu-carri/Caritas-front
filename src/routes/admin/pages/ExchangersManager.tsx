@@ -1,18 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useMemo, useState } from 'react';
 import { useQuery, useQueryClient } from "react-query";
-import { deleteData, getHeaders, putData } from 'src/utils/request/httpRequests';
+import { getHeaders, putData } from 'src/utils/request/httpRequests';
 import { useCustomModal } from "src/context/CustomModalContext";
 import { endPoints, serverAddress } from "src/utils/constants";
 import { ErrorCode } from "src/utils/Error/ErrorCode";
 import { ErrorTypes } from "src/utils/Error/ErrorTypes";
-import { ExchangerCardData } from "src/types/Types";
+import { ExchangerCardData, ExchangerData } from "src/types/Types";
 
-import EditExchangerAsAdminModal from 'src/routes/admin/components/EditExchangerAsAdminModal';
 import ExchangersManagerHeader from "../components/ExchangersManagerHeader";
 import ExchangerCard from "src/routes/admin/components/ExchangerCard";
 import LoadingSpinner from "src/components/LoadingSpinner";
 import ErrorAlert from "src/components/ErrorAlert";
+import ConfirmationModal from 'src/components/modals/Confirmation';
+import EditExchangerModal from 'src/components/modals/EditExchanger';
+import { getAdminFields } from '../components/ExchangerFields';
 
 export default function ExchangersManager() {
     
@@ -43,9 +45,9 @@ export default function ExchangersManager() {
             return !value || user.name.toLowerCase().includes(value) || user.email.toLowerCase().includes(value) || user.dni.toLowerCase().includes(value) || user.phone.toLowerCase().includes(value)
         });
 
-        if(exchangers.length > 0 && elements.length === 0) {
+        if(exchangers && elements && exchangers.length > 0 && elements.length === 0) {
             handleError(400)
-        } else if(!isLoading && exchangers.length === 0) {
+        } else if(!isLoading && exchangers && exchangers.length === 0) {
             handleError(404)
         } else {
             hideError()
@@ -65,18 +67,29 @@ export default function ExchangersManager() {
 
     useEffect(() => {
         if(currentExchanger !== null) {
-            showModal(<EditExchangerAsAdminModal exchanger={currentExchanger} onSave={handleSave} />, () => setCurrentExchanger(null))
+            showModal(<EditExchangerModal campos={getAdminFields(currentExchanger)} onSave={(data) => confirmation(() => handleSave(data))} />, () => setCurrentExchanger(null))
         }
     }, [currentExchanger])
 
-    function handleEdit(exchanger) {
-        setCurrentExchanger(exchanger);
-    }
-    
+    /*
+    //onDelete = {(data) => confirmation(() => handleDelete(data))
+
     function handleDelete(id) {
         deleteData(`${endPoints.exchanger}/${id}`, null)
             .then(() => queryClient.invalidateQueries(['exchangers']))
-    }
+    }*/
+
+    const confirmation = (fn) => showModal(<ConfirmationModal onAccept={fn}/>)
+
+    const updateExchanger = (newData) => {
+      
+        // Actualización optimista de la caché
+        queryClient.setQueryData(['exchangers'], oldData => {
+          return (oldData as ExchangerData[]).map(exchanger => 
+            exchanger.id === newData.id ? { ...exchanger, ...newData } : exchanger
+          );
+        });
+      };
 
     function handleSave(updatedexchanger) { 
         if(!currentExchanger?.id) return;
@@ -85,9 +98,8 @@ export default function ExchangersManager() {
         putData(`${endPoints.exchanger}/${currentExchanger.id}`, null, {
             ...updatedexchanger,
             email: currentExchanger.email,
-            birthdate: "2000-02-02"
         })
-            .then(res => console.log(res))
+            .then(res => updateExchanger(res))
             .then(() => closeModal())
     }
 
@@ -114,10 +126,9 @@ export default function ExchangersManager() {
                 <div className="justify-center items-center text-[100%] grid grid-cols-3 gap-6 md:gap-8 mt-8 min-h-[300px]">
                 {
                     isLoading ?
-                    <LoadingSpinner />
-                    :
-                    filteredExchangers.map(exchanger => (
-                        <ExchangerCard cardData={exchanger} onEdit={handleEdit} onDelete={handleDelete} key={exchanger.id} />
+                    <LoadingSpinner />:
+                    filteredExchangers && filteredExchangers.map(exchanger => (
+                        <ExchangerCard cardData={exchanger} key={exchanger.id} />
                     ))
                 }
                 </div>

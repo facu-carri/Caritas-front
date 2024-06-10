@@ -3,6 +3,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import React, { useContext, useRef, useState } from "react";
 import { CustomModalContextType } from "src/types/ContextTypes";
+import { MouseEvent } from "src/types/Types";
 
 const customModalContext = React.createContext<CustomModalContextType>(undefined)
 
@@ -12,34 +13,46 @@ export function useCustomModal(){
 
 export default function CustomModalProvider({ children }) {
 
-    const defaultDialogId = 'customModal'
-    const dialogRef = useRef(null)
-    const [modal, setModal] = useState(null)
-    const [onClose, setOnClose] = useState<() =>void>(null)
+    const dialogRef = useRef(null);
+    const [modals, setModals] = useState([]); // Usar un array para manejar múltiples modales
 
-    const dialogElement = () => dialogRef?.current ? (dialogRef?.current as HTMLDialogElement) : null
+    const dialogElement = () => dialogRef.current;
 
-    const showModal = (modalContent: JSX.Element, onCloseFn: () => void) => {
-        if(onClose) onClose()
-        setModal(modalContent)
-        if(onCloseFn) setOnClose(onCloseFn)
-        dialogElement()?.showModal()
-    }
+    const showModal = (modalContent: JSX.Element, onCloseFn?: () => void) => {
+        setModals(prevModals => [...prevModals, { content: modalContent, onClose: onCloseFn }]);
+        dialogElement()?.showModal();
+    };
 
     const closeModal = () => {
-        dialogElement()?.close()
-        setModal(null)
-    }
+        setModals(prevModals => {
+            const modalsCopy = [...prevModals];
+            const lastModal = modalsCopy.pop();
+            if (lastModal?.onClose) {
+                lastModal.onClose();
+            }
+            return modalsCopy;
+        });
+        if (modals.length <= 1) {
+            dialogElement()?.close();
+        }
+    };
 
-    const handleClickOutside = (ev:any) => {
+    const handleClickOutside = (ev:MouseEvent) => {
         const target = ev.target
-        if (target.id && target.id == dialogRef.current.id) closeModal()
+        if (target == ev.currentTarget) closeModal()
     }
 
     return (
         <customModalContext.Provider value={{ showModal, closeModal }}>
-            <dialog className="modal bg-gray-500/50" id={defaultDialogId} onClose={closeModal} onClick={handleClickOutside} ref={dialogRef}>
-                {modal}
+            <dialog className="modal bg-gray-500/50 flex justify-center items-center h-[100vh] text-[100%]" id={'customModal'} onClose={closeModal} onClick={handleClickOutside} ref={dialogRef}>
+                {modals.map((modal, index) => (
+                    <div
+                        key={index}
+                        className={`absolute inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center h-full z-[10+${index}]`}
+                        onClick={handleClickOutside}>
+                        {modal.content}
+                    </div>
+                ))}
             </dialog>
             {children}
         </customModalContext.Provider>

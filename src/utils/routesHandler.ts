@@ -11,7 +11,8 @@ export default function RoutesHandler() {
 
     const getId = () => {
         const split = location.pathname.split('/')
-        return split[split.length - 1]
+        const id = split[split.length - 1]
+        return !isNaN(parseInt(id)) ? id : null
     }
 
     return { getRoute, setRoute, location, getId }

@@ -12,10 +12,13 @@ import { RequestStatus } from "src/types/RequestStatus"
 import { LoginQuery } from "src/types/LoginQuery"
 import { Icons } from "src/utils/Icons"
 import HiddePassword from "src/components/HiddePassword"
+import { ErrorCode } from "src/utils/Error/ErrorCode"
+import { ErrorTypes } from "src/utils/Error/ErrorTypes"
 
 const Login = () => {
 
     const [reqStatus, setReqStatus] = useState<RequestStatus>(RequestStatus.INITIAL)
+    const [error, setError] = useState<ErrorCode>(null)
     const { setUser } = User()
     const { setRoute } = RoutesHandler()
 
@@ -29,6 +32,16 @@ const Login = () => {
                 break
         }
     }, [reqStatus])
+
+    function handleError(errCode: number) {
+        const err = new ErrorCode(errCode, ErrorTypes.LOGIN_ERROR)
+        setError(err)
+        setTimeout(hideError, 5000)
+    }
+
+    function hideError() {
+        setError(null)
+    }
 
     function resetState() {
         setTimeout(() => setReqStatus(RequestStatus.INITIAL), 5000)
@@ -44,7 +57,10 @@ const Login = () => {
             password: getElementValue('password')
         }
 
-        if (isInvalid(query)) return
+        if (isInvalid(query)) {
+            handleError(404)
+            return
+        }
 
         setReqStatus(RequestStatus.PENDING)
 
@@ -69,15 +85,20 @@ const Login = () => {
             })
             .then(data => setUser(data))
             .then(() => setReqStatus(RequestStatus.SUCCESS))
-            .catch(() => setReqStatus(RequestStatus.FAILED))
+            .catch(() => {
+                setReqStatus(RequestStatus.FAILED)
+                handleError(405)
+            })
     }
 
     return (
         <div className="flex justify-center items-center h-[100vh] text-[100%]">
             <div className="flex flex-col gap-4">
-                {<ErrorAlert show={reqStatus == RequestStatus.FAILED}>
-                    <span>Los datos son incorrectos</span>
-                </ErrorAlert>}
+                {
+                    <ErrorAlert show={error != null}>
+                        <span>{error && error.getMessage()}</span>
+                    </ErrorAlert>
+                }
                 <Input id='email' text={'Email'} icon={Icons.username()}/>
                 <HiddePassword showIcon={true} />
                 <button className="btn btn-primary" onClick={handleLogin}>

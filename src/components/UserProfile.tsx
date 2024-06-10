@@ -1,21 +1,29 @@
 import Avatar from "react-avatar";
 import LoadingAnimation from "./LoadingAnimation";
-import RoutesHandler from "src/utils/routesHandler";
 import { UserProfileProps } from "src/types/PropsTypes";
 import Image from "./Image";
+import { endPoints } from "src/utils/constants";
+import { putData } from "src/utils/request/httpRequests";
+import ConfirmationModal from "./modals/Confirmation";
+import { useCustomModal } from "src/context/CustomModalContext";
 
-export default function UserProfile({ userData, profileInfo, showPhoto, handleEdit, children }: UserProfileProps) {
+export default function UserProfile({ userData, profileInfo, showPhoto, canDeletePhoto, canEdit, handleEdit, canDelete, handleDelete, children }: UserProfileProps) {
     
-    const { getId } = RoutesHandler()
+    const { showModal } = useCustomModal()
 
-    const id = !isNaN(parseInt(getId())) ? getId() : null
+    const handleDeletePhoto = () => {
+        putData(`${endPoints.exchanger}/${userData.id}`, null, { ...userData, photo: '' })
+        .then(() => userData.photo = '')
+    }
+
+    const confirmation = (fn) => showModal(<ConfirmationModal onAccept={fn}/>)
 
     return (!userData || !profileInfo) ? <LoadingAnimation /> :
     (
         <div className="bg-gray-900 min-h-screen">
             <header className="flex flex-row gap-2 py-5 px-6 md:px-12 pt-[100px] bg-gradient-to-r from-red-500 to-blue-500 ">
                 <div className="flex flex-row items-center justify-center space-x-4">
-                    <div className="mt-1 h-14 w-14 max-w-14 max-h-14 mask mask-circle rounded-full overflow-hidden flex items-center">
+                <div className="mt-1 h-14 w-14 max-w-14 max-h-14 mask mask-circle rounded-full overflow-hidden flex items-center">
                     {
                         showPhoto && userData.photo ?
                         <Image className="select-none" photo={userData.photo} alt={userData.name} />
@@ -28,8 +36,14 @@ export default function UserProfile({ userData, profileInfo, showPhoto, handleEd
                         {userData.email && <p className="text-sm">{userData.email}</p>}
                     </div>
                 </div>
-                {
-                    (!id || !!handleEdit) && <button onClick={handleEdit} className="mb-2 mt-5 ml-2 py-2 px-4 rounded text-black hover:bg-black/20 border border-black">Editar</button>
+                {//borrar foto
+                    (canDeletePhoto) && <button onClick={() => confirmation(handleDeletePhoto)} className="mb-2 mt-5 ml-2 py-2 px-4 rounded text-black hover:bg-black/20 border border-black">Borrar foto</button>
+                }
+                {//borrar perfil
+                    (canEdit) && <button onClick={() => confirmation(handleDelete)} className="mb-2 mt-5 ml-2 py-2 px-4 rounded text-black hover:bg-black/20 border border-black">Borrar perfil</button>
+                }
+                {//editar
+                    (canDelete) && <button onClick={handleEdit} className="mb-2 mt-5 ml-2 py-2 px-4 rounded text-black hover:bg-black/20 border border-black">Editar</button>
                 }
             </header>
             <section className="py-8 md:px-12 grid gap-8">

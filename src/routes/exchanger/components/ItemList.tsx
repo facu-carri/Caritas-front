@@ -11,11 +11,9 @@ import { useQuery, useQueryClient } from "react-query";
 
 export default function ItemList({ ruta, inventory, children }: ItemListInventoryProps) {
   const [category, setCategory] = useState('');
-  //const [selectedItem, setSelectedItem] = useState<ItemData>();
-  const { showModal, closeModal } = useCustomModal()
+  const { showModal } = useCustomModal()
   
   const queryClient = useQueryClient()
-
 
   const { data: categories = [] }: CategoryListParam = useQuery({
     queryKey: ['categories'],
@@ -33,33 +31,28 @@ export default function ItemList({ ruta, inventory, children }: ItemListInventor
   }, [category, inventory])
 
 
-  //const editItem = (item:ItemData) => !selectedItem && putData(`${endPoints.addItem}/${selectedItem?.id}`, null, item).then(res => console.log(res))
-  //const showEditModal = (item:ItemData) => showModal(<EditItemModal onEditItem={editItem} onDeleteItem={deleteItem} itemData={item}/>
-
   const queryInvalidator = () => queryClient.invalidateQueries([ruta])
 
   const isInventory = ruta === endPoints.inventory
 
   const onClickItem = (item: ItemData) => {
-    if (!isInventory) {
-      showModal(<ItemModal item={item}/>)
-    }
+    if (!isInventory) showModal(<ItemModal item={item}/>)
   }
   
   return (
     <div className="bg-gray-200 py-8 container mx-auto px-4 relative">
       <div className="flex flex-row gap-2 mb-4">
         {
-            (!categories || categories.length == 0) ? 
-            <span className="p-2 border rounded-lg">No hay categorias cargadas</span> :
-            <select className="p-2 border border-gray-700 rounded-lg" value={category} onChange={e => setCategory(e.target.value)}>
-              <option value="">Todas las Categorías</option>
-              {
-                categories?.map(cat =>
-                  <option key={cat.id} value={cat.name}>{cat.name}</option>
-                )
-              }
-            </select>
+          (!categories || categories.length == 0) ? 
+          <span className="p-2 border rounded-lg">No hay categorias cargadas</span> :
+          <select className="p-2 border border-gray-700 rounded-lg" value={category} onChange={e => setCategory(e.target.value)}>
+            <option value="">Todas las Categorías</option>
+            {
+              categories?.map(cat =>
+                <option key={cat.id} value={cat.name}>{cat.name}</option>
+              )
+            }
+          </select>
         }
         {children}
       </div>
@@ -73,6 +66,7 @@ export default function ItemList({ ruta, inventory, children }: ItemListInventor
               item={item}
               isEditable={item.editable}
               canDelete={isInventory}
+              hiddeBtns={true}
               onClick={() => onClickItem(item)}
               queryInvalidator={queryInvalidator}
             />

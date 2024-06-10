@@ -6,6 +6,7 @@ export const RegisterExchangerErrorMsgs = {
         403: 'Todos los campos son obligatorios',
         406: 'La persona debe ser mayor de edad',
         409: 'Email ya registrado',
-        //: 'El email pertenece a una cuenta suspendida' 
+        451: 'Email invalido',
+        418: 'Email suspendido'
     }
 }

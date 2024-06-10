@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import AddItemModal from './AddItemModal';
 import { endPoints, serverAddress } from "src/utils/constants";
 import { getHeaders, postData } from 'src/utils/request/httpRequests';

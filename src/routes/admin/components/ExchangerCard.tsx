@@ -4,18 +4,14 @@ import { Icons } from "src/utils/Icons";
 import { routes } from "src/utils/constants";
 import RoutesHandler from "src/utils/routesHandler";
 import {BsCalendar, BsPersonVcard, BsStar, BsTelephone} from 'react-icons/bs'
-import { MouseEvent } from "src/types/Types";
 import Rating from "src/components/Rating";
 import Image from "src/components/Image";
 import Avatar from "react-avatar";
 
-export default function ExchangerCard({ cardData, onEdit, onDelete }: ExchangerCardProps) {
+export default function ExchangerCard({ cardData }: ExchangerCardProps) {
 
     const { setRoute } = RoutesHandler()
 
-    const handleEdit = (ev: MouseEvent) => { ev.stopPropagation(); onEdit(cardData) }
-    const handleDelete = (ev: MouseEvent) => { ev.stopPropagation(); onDelete(cardData.id) }
-    
     return (
         <div
             className='bg-white rounded-lg shadow-lg max-w-sm p-2 cursor-pointer transform transition-transform duration-200 hover:scale-10'
@@ -37,14 +33,6 @@ export default function ExchangerCard({ cardData, onEdit, onDelete }: ExchangerC
                 <InformativeText icon={<BsCalendar />}>{cardData.birthdate}</InformativeText>
                 <InformativeText icon={<BsStar />}>{<Rating qty={cardData.stars} />}</InformativeText>
                 <InformativeText icon={"Inasistencias:"}>{cardData.absentees}</InformativeText>
-            </div>
-            <div className="flex space-x-2 p-2">
-                <button onClick={handleEdit} className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
-                    Editar
-                </button>
-                <button onClick={handleDelete} className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700">
-                    Eliminar
-                </button>
             </div>
         </div>
     )

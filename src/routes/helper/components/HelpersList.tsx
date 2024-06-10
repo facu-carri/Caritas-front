@@ -2,11 +2,11 @@
 import { HelpersListProps } from 'src/types/PropsTypes';
 import HelperItem from './HelperItem';
 
-export default function HelpersList({ helpers, onEdit, onDelete, onSelect }: HelpersListProps){
+export default function HelpersList({ helpers, onSelect }: HelpersListProps){
 
   const getHelpers = () => {
     return helpers.map(helper => (
-      <HelperItem key={helper.id} helper={helper} onEdit={onEdit} onDelete={onDelete} onSelect={onSelect} />
+      <HelperItem key={helper.id} helper={helper} onSelect={onSelect} />
     ))
   }
 
