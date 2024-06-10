@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { deleteData, getData, putData } from "src/utils/request/httpRequests";
-import { endPoints, roles, routes } from "src/utils/constants";
+import { useQuery } from "react-query";
+import { deleteData, getData, getHeaders, putData } from "src/utils/request/httpRequests";
+import { endPoints, roles, routes, serverAddress } from "src/utils/constants";
 import { useEffect, useState } from 'react';
 import { useCustomModal } from 'src/context/CustomModalContext';
 import { User } from 'src/utils/User';
@@ -16,7 +17,6 @@ import RoutesHandler from "src/utils/routesHandler";
 
 export default function Profile({ id }: ProfileProps) {
     const [exchangerData, setUserData] = useState<ExchangerData>();
-    const [inventory, setInventory] = useState<ItemData[]>();
     const [reviews, setReviews] = useState<Review[]>();
     const [info, setInfo] = useState(null)
 
@@ -24,18 +24,23 @@ export default function Profile({ id }: ProfileProps) {
     const { showModal, closeModal } = useCustomModal()
     const { setRoute, getId } = RoutesHandler()
     
-    const resetInvetory = (error: number) => error == 404 && setInventory([])
     const resetReviews = (error: number) => error && setReviews([])
 
     useEffect(() => {
         getProfile()
-        getInventory()
         getReviews()
     }, [id]);
 
     const getProfile = () => getData(`${id ? `${endPoints.otherProfile}${id}` : endPoints.profile}`).then(exchangerData => setUserData(exchangerData))
-    const getInventory = () => getData(`${id ? `${endPoints.inventory}/${id}` : endPoints.inventory }`).then(inventory => setInventory(inventory)).catch(error => resetInvetory(error))
     const getReviews = () => getData(endPoints.myReviews).then(reviews => setReviews(reviews)).catch(error => resetReviews(error))
+
+    const { data: inventory = [] } = useQuery({
+        queryKey: ['inventory', id],
+        queryFn: () => fetch(`${serverAddress}/${endPoints.inventory}${id ? `/${id}` : ''}`, {
+            method: 'GET',
+            headers: getHeaders()
+        }).then(r => r.json())
+    })
 
     function handleEditProfile(newData: ExchangerData) {
         let errorCode: number
@@ -94,8 +99,9 @@ export default function Profile({ id }: ProfileProps) {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {
                 (!inventory || inventory.length == 0) ?
-                <p className="text-gray-400 line-clamp-2">No hay elementos</p>:
-                inventory.map((item, index) => (<ItemCard key={index} item={item} hiddeBtns={true} hiddeOwner={!!id} />))
+                    <p className="text-gray-400 line-clamp-2">No hay elementos</p>
+                :
+                    inventory.map(item => <ItemCard key={item.id} item={item} hiddeBtns={true} hiddeOwner={!!id} />)
             }
             </div>
             <h2 className="text-2xl font-bold mb-4 text-white">Comentarios</h2>
