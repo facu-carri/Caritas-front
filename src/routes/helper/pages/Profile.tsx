@@ -42,7 +42,7 @@ export default function EmployeeProfile({ id }: ProfileProps) {
 
     const handleSave = (updatedHelper) => { // EDIT: usar putData de httpRequests
         let errorCode: number
-        
+
         putData(`${endPoints.employees}/${helperData.id}`, null, {
           ...updatedHelper,
           email: helperData.email
@@ -69,26 +69,3 @@ export default function EmployeeProfile({ id }: ProfileProps) {
         />
     )
 }
-
-/*
-
-const handleEditHelper = () => showModal(<EditHelperModal closeModal={() => setCurrentHelper(null)} helper={currentHelper} onSave={handleSave}/>)
-
-  const handleDelete = (id) => {
-    deleteData(`${endPoints.employees}/${id}`, null)
-      .then(() => setHelpers(helpers.filter(helper => helper.id !== id)))
-  };
-
-  const handleSave = (updatedHelper) => { // EDIT: usar putData de httpRequests
-    if(updatedHelper.password === "") {
-      updatedHelper.password = null;
-    }
-    console.log(updatedHelper)
-    putData(`${endPoints.employees}/${currentHelper.id}`, null, {
-      ...updatedHelper,
-      email: currentHelper.email
-    })
-      .then(res => console.log(res))
-  };
-
-*/

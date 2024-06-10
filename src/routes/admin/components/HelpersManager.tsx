@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
-import EditHelperModal from './EditHelperModal';
 import Button from '../../../components/Button';
 import RegisterHelper from './RegisterHelper';
-import { deleteData, getData, getHeaders, putData } from 'src/utils/request/httpRequests';
+import { getData, getHeaders } from 'src/utils/request/httpRequests';
 import { endPoints, routes, serverAddress } from "src/utils/constants";
 import RoutesHandler from 'src/utils/routesHandler';
 import HelpersList from 'src/routes/helper/components/HelpersList';
