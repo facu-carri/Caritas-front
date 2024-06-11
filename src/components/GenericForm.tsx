@@ -127,7 +127,7 @@ function GenericForm({ id, campos, listener, error, btnText, hideImg, showConfir
           }
           break;
         case 'select-one':
-          const { value: selectValue } = input.options[input.selectedIndex]
+          const selectValue = input.options[input.selectedIndex]?.value
           if(!selectValue) {
             return false;
           }

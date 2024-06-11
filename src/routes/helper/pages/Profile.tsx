@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { deleteData, getData, putData } from "src/utils/request/httpRequests";
 import { endPoints, roles, routes } from "src/utils/constants";
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { formatDate } from 'src/utils/api';
 import { ProfileProps } from 'src/types/PropsTypes';
-import { HelperData, Location, UserInfoFields } from 'src/types/Types';
+import { HelperData, UserInfoFields } from 'src/types/Types';
 import UserProfile from 'src/components/UserProfile';
 import { User } from "src/utils/User";
 import RoutesHandler from "src/utils/routesHandler";
@@ -15,14 +15,22 @@ import { selectLocations } from "src/components/modals/modalOptions";
 
 export default function EmployeeProfile({ id }: ProfileProps) {
     const [helperData, setHelperData] = useState<HelperData>();
+    const [filiales, setFiliales] = useState();
     const [info, setInfo] = useState(null)
-    const [campos, setCampos] = useState(null)
+    //const [campos, setCampos] = useState(null)
     const { getRole } = User()
     const { setRoute } = RoutesHandler()
     const { showModal } = useCustomModal()
 
     useEffect(() => {
-        getData(`${id ? `${endPoints.otherProfileHelper}${id}` : endPoints.profileHelper}`).then(helperData => setHelperData(helperData));
+        getData(`${id ? `${endPoints.otherProfileHelper}${id}` : endPoints.profileHelper}`)
+            .then(helperData => {
+                setHelperData(helperData);
+                getData(endPoints.location)
+                    .then(data => {
+                        setFiliales(data)
+                    })
+            });
     }, []);
 
     useEffect(() => helperData && setInfo(getProfileInfo()), [helperData])
@@ -38,13 +46,19 @@ export default function EmployeeProfile({ id }: ProfileProps) {
         ]
     }
 
-    getData(endPoints.categories).then(data => setFields(data))//catch no hay sedes cargadas
     
-    const setFields = (fiales:Location[]) => setCampos([...getAdminFields(helperData), selectLocations(fiales)])
+    const campos = useMemo(() => {
+        if(!helperData || !filiales) {
+            return []
+        }
+        return [...getAdminFields(helperData), selectLocations(filiales)]
+    }, [helperData, filiales]);
 
     const handleDelete = () => deleteData(`${endPoints.employees}/${id}`, null).then(() => setRoute(routes.admin.gestionarAyudantes))
 
-    const handleEditHelper = () => showModal(<EditExchangerModal campos={campos} onSave={handleSave}/>)
+    const handleEditHelper = () => {
+        showModal(<EditExchangerModal campos={campos} onSave={handleSave}/>)
+    }
 
     const handleSave = (updatedHelper) => { // EDIT: usar putData de httpRequests
         return putData(`${endPoints.employees}/${helperData.id}`, null, {
@@ -65,7 +79,7 @@ export default function EmployeeProfile({ id }: ProfileProps) {
             handleDelete={handleDelete}
             canDeletePhoto={false}
             canDelete={canDoActions}
-            canEdit={canDoActions}
+            canEdit={!!(canDoActions && campos.length)}
             canBan={false}
         />
     )
