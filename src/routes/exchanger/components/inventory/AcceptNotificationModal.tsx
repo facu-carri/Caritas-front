@@ -39,7 +39,6 @@ export default function EditItemModal({ notificationData, onEditNotification }) 
   }
 
   const handleGetNextDay = (data:string) => {
-    console.log("aaaaaaaaaaaaaaaaaaa")
     setNextFreeDay(data)
     getData(endPoints.freeLocations+"/"+data)
     .then(data => setFreeLocations(data))
