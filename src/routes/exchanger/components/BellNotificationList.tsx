@@ -47,7 +47,7 @@ export function BellNotificationList() {
 
   
   return (
-    <div className="relative inline-block text-right" ref={dropdownRef}>
+    <div className="relative inline-block text-right " ref={dropdownRef}>
       <div>
         <button
           type="button"
@@ -56,14 +56,14 @@ export function BellNotificationList() {
           aria-expanded={isOpen}
           aria-haspopup="true"
         >
-          <FaBell className="w-6 h-6 text-gray-800" />
+          <FaBell className="w-6 h-6 text-gray-800 " />
         </button>
       </div>
 
       {isOpen && (
-        <div className="origin-top-right absolute right-0 mt-2 w-80 rounded-md shadow-lg bg-blue-500 text-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <div className="origin-top-right absolute right-0 mt-2 w-80 rounded-md shadow-lg bg-blue-500 text-white ring-1 ring-black ring-opacity-5 focus:outline-none overflow-y-auto	h-96">
           <div className="py-1 px-4 text-left" role="none">
-            <div className="mb-4 text-lg font-medium">Solicitudes de intercambio</div>
+            <div className="mb-4 text-lg font-medium ">Solicitudes de intercambio</div>
             <div className="space-y-4">
               { (notifications && notifications.length > 0) ? (
                 notifications.map(notification =>
