@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useQuery } from "react-query";
 import { deleteData, getData, getHeaders, putData } from "src/utils/request/httpRequests";
-import { endPoints, roles, routes, serverAddress } from "src/utils/constants";
+import { endPoints, roles, serverAddress } from "src/utils/constants";
 import { useEffect, useState } from 'react';
 import { useCustomModal } from 'src/context/CustomModalContext';
 import { User } from 'src/utils/User';
-import { ExchangerData, ItemData, Review, UserInfoFields } from 'src/types/Types';
+import { ExchangerData, Review, UserInfoFields } from 'src/types/Types';
 import { formatDate } from 'src/utils/api';
 import ItemCard from '../components/ItemCard';
 import { ProfileProps } from 'src/types/PropsTypes';
@@ -16,102 +16,102 @@ import EditExchangerModal from "src/components/modals/EditExchanger";
 import RoutesHandler from "src/utils/routesHandler";
 
 export default function Profile({ id }: ProfileProps) {
-    const [exchangerData, setUserData] = useState<ExchangerData>();
-    const [reviews, setReviews] = useState<Review[]>();
-    const [info, setInfo] = useState(null)
+  const [userData, setUserData] = useState<ExchangerData>();
+  const [reviews, setReviews] = useState<Review[]>();
+  const [info, setInfo] = useState(null)
 
-    const { getRole, logout } = User()
-    const { showModal, closeModal } = useCustomModal()
-    const { setRoute, getId } = RoutesHandler()
-    
-    const resetReviews = (error: number) => error && setReviews([])
+  const { getRole, logout } = User()
+  const { showModal, closeModal } = useCustomModal()
+  const { setRoute, getId } = RoutesHandler()
+  
+  const resetReviews = (error: number) => error && setReviews([])
 
-    useEffect(() => {
-        getProfile()
-        getReviews()
-    }, [id]);
+  useEffect(() => {
+    getProfile()
+    getReviews()
+  }, [id]);
 
-    const getProfile = () => getData(`${id ? `${endPoints.otherProfile}${id}` : endPoints.profile}`).then(exchangerData => setUserData(exchangerData))
-    const getReviews = () => getData(endPoints.myReviews).then(reviews => setReviews(reviews)).catch(error => resetReviews(error))
+  const getProfile = () => getData(`${id ? `${endPoints.otherProfile}${id}` : endPoints.profile}`).then(userData => setUserData(userData))
+  const getReviews = () => getData(endPoints.myReviews).then(reviews => setReviews(reviews)).catch(error => resetReviews(error))
 
-    const { data: inventory = [] } = useQuery({
-        queryKey: ['inventory', id],
-        queryFn: () => fetch(`${serverAddress}/${endPoints.inventory}${id ? `/${id}` : ''}`, {
-            method: 'GET',
-            headers: getHeaders()
-        }).then(r => r.json())
+  const { data: inventory = [] } = useQuery({
+    queryKey: ['inventory', id],
+    queryFn: () => fetch(`${serverAddress}/${endPoints.inventory}${id ? `/${id}` : ''}`, {
+      method: 'GET',
+      headers: getHeaders()
+    }).then(r => r.json())
+  })
+
+  function handleEditProfile(newData: ExchangerData) {
+    let errorCode: number
+    putData(`${endPoints.exchanger}/${userData.id}`, null, {
+      ...newData,
+      email: userData.email
     })
-
-    function handleEditProfile(newData: ExchangerData) {
-        let errorCode: number
-        putData(`${endPoints.exchanger}/${exchangerData.id}`, null, {
-            ...newData,
-            email: exchangerData.email
-        })
-        .then(data => setUserData(data))
-        .catch(err => errorCode = err)
-        
-        if (errorCode) throw new Error(errorCode.toString())
-        else closeModal()
-    }
-
-    const isAdmin = getRole() == roles.ADMIN
+    .then(data => setUserData(data))
+    .catch(err => errorCode = err)
     
-    const showEditModal = () => showModal(<EditExchangerModal campos={isAdmin ? getAdminFields(exchangerData) : getExchangerFields(exchangerData)} onSave={handleEditProfile} />)
+    if (errorCode) throw new Error(errorCode.toString())
+    else closeModal()
+  }
 
-    useEffect(() => exchangerData && setInfo(getProfileInfo()), [exchangerData])
+  const isAdmin = getRole() == roles.ADMIN
+  
+  const showEditModal = () => showModal(<EditExchangerModal campos={isAdmin ? getAdminFields(userData) : getExchangerFields(userData)} onSave={handleEditProfile} />)
 
-    const getProfileInfo = (): UserInfoFields[] => {
-        const profileInfo = [
-            { title: "Nombre", value: exchangerData.name, color: "text-red-500" },
-            { title: "Correo electronico", value: exchangerData.email, color: "text-red-500" },
-            { title: "DNI", value: exchangerData.dni, color: "text-blue-500" },
-            { title: "Telefono", value: exchangerData.phone, color: "text-blue-500" },
-            { title: "Estrellas", value: <Rating qty={exchangerData.stars}/>, color: "text-blue-500" },
-            { title: "Inasistencias", value: exchangerData.absentees, color: "text-red-500" },
-            { title: "Fecha de nacimiento", value: formatDate(exchangerData.birthdate), color: "text-red-500" },
-        ]
-        return (id && !isAdmin) ? profileInfo.filter(field => !["Correo electronico", "DNI", "Telefono"].includes(field.title)) : profileInfo
-    }
+  useEffect(() => userData && setInfo(getProfileInfo()), [userData])
 
-    function handleDelete() {
-        getData(`exchanger/myProfile`)
-            .then(({ id: profileId }) => {
-                deleteData(`${endPoints.exchanger}/${profileId}`, null)
-                    .then(logout)
-            })
-    }
+  const getProfileInfo = (): UserInfoFields[] => {
+    const profileInfo = [
+      { title: "Nombre", value: userData.name, color: "text-red-500" },
+      { title: "Correo electronico", value: userData.email, color: "text-red-500" },
+      { title: "DNI", value: userData.dni, color: "text-blue-500" },
+      { title: "Telefono", value: userData.phone, color: "text-blue-500" },
+      { title: "Estrellas", value: <Rating qty={userData.stars}/>, color: "text-blue-500" },
+      { title: "Inasistencias", value: userData.absentees, color: "text-red-500" },
+      { title: "Fecha de nacimiento", value: formatDate(userData.birthdate), color: "text-red-500" },
+    ]
+    return (id && !isAdmin) ? profileInfo.filter(field => !["Correo electronico", "DNI", "Telefono"].includes(field.title)) : profileInfo
+  }
 
-    const canDoActions =  !getId() || getRole() == roles.ADMIN
+  function handleDelete() {
+    getData(`exchanger/myProfile`)
+      .then(({ id: profileId }) => {
+        deleteData(`${endPoints.exchanger}/${profileId}`, null)
+          .then(logout)
+      })
+  }
 
-    return (
-        <UserProfile
-            userData={exchangerData}
-            profileInfo={info}
-            handleEdit={!id || isAdmin ? showEditModal : null}
-            showPhoto={!id || isAdmin}
-            handleDelete={handleDelete}
-            canDeletePhoto={!getId()}
-            canEdit={canDoActions}
-            canDelete={canDoActions}
-        >
-            <h2 className="text-2xl font-bold mb-4 text-white">Publicaciones de productos</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {
-                (!inventory || inventory.length == 0) ?
-                    <p className="text-gray-400 line-clamp-2">No hay elementos</p>
-                :
-                    inventory.map(item => <ItemCard key={item.id} item={item} hiddeBtns={true} hiddeOwner={!!id} />)
-            }
-            </div>
-            <h2 className="text-2xl font-bold mb-4 text-white">Comentarios</h2>
-            <div className="space-y-4">
-            {
-                (!reviews || reviews.length == 0) ?
-                <p className="text-gray-400 line-clamp-2">No hay elementos</p> :
-                <p> TODO: HACER REVIEWS </p>
-            }
-            </div>
-        </UserProfile>
-    )
+  const canDoActions =  !getId() || getRole() == roles.ADMIN
+
+  return (
+    <UserProfile
+      userData={userData}
+      profileInfo={info}
+      handleEdit={!id || isAdmin ? showEditModal : null}
+      showPhoto={!id || isAdmin}
+      handleDelete={handleDelete}
+      canDeletePhoto={!!(!getId() && userData?.photo)}
+      canEdit={canDoActions}
+      canDelete={canDoActions}
+    >
+      <h2 className="text-2xl font-bold mb-4 text-white">Publicaciones de productos</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      {
+        (!inventory || inventory.length == 0) ?
+          <p className="text-gray-400 line-clamp-2">No hay elementos</p>
+        :
+          inventory.map(item => <ItemCard key={item.id} item={item} hiddeBtns={true} hiddeOwner={!!id} />)
+      }
+      </div>
+      <h2 className="text-2xl font-bold mb-4 text-white">Comentarios</h2>
+      <div className="space-y-4">
+      {
+        (!reviews || reviews.length == 0) ?
+        <p className="text-gray-400 line-clamp-2">No hay elementos</p> :
+        <p> TODO: HACER REVIEWS </p>
+      }
+      </div>
+    </UserProfile>
+  )
 }
