@@ -1,12 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
-import { getData, putData } from "src/utils/request/httpRequests";
-import { endPoints } from "src/utils/constants";
+import { getData, getHeaders, putData } from "src/utils/request/httpRequests";
+import { endPoints, serverAddress } from "src/utils/constants";
 import GenericForm from "src/components/GenericForm";
 import { ErrorTypes } from "src/utils/Error/ErrorTypes";
 import { ErrorCode } from "src/utils/Error/ErrorCode";
 import { selectLocations } from "src/components/modals/modalOptions";
 import { FormField } from "src/types/PropsTypes";
+import { useQuery } from "react-query";
 
 export default function EditItemModal({ notificationData, onEditNotification }) {
 
@@ -46,7 +47,6 @@ export default function EditItemModal({ notificationData, onEditNotification }) 
     .catch(err => handleError(err))
   }
 
-
   useEffect(() => {
     getData(endPoints.nextFreeDay)
     .then(data => handleGetNextDay(data))
@@ -56,6 +56,7 @@ export default function EditItemModal({ notificationData, onEditNotification }) 
     if(freeLocations.length == 0 || !notificationData) return
     setCampos([...getDefaultFileds(), selectLocations(freeLocations)])
   }, [freeLocations])
+
 
   return ( campos && campos.length > 0 && 
     <div>

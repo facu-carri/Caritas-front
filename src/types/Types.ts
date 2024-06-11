@@ -94,4 +94,5 @@ export type Exchange = {
     date: string;
     state: string;
     location: Location;
+    authenticationCode: string;
 }

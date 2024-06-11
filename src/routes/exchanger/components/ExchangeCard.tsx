@@ -4,12 +4,13 @@ export const ExchangeCard = ({ exchange }) => {
     const exchangeDetails = [
         { label: "Fecha del intercambio", value: exchange.date },
         { label: "Sede", value: exchange.location?.name },
-        { label: "Intercambiador 1", value: `${exchange.hostItem.owner?.name} | ${exchange.hostItem.owner?.email}` },
-        { label: "Item intercambiador 1", value: exchange.hostItem.name },
-        { label: "Intercambiador 2", value: `${exchange.guestItem.owner?.name} | ${exchange.guestItem.owner?.email}` },
-        { label: "Item intercambiador 2", value: exchange.guestItem.name },
+        { label: "Solicitante", value: `${exchange.hostItem.owner?.name} | ${exchange.hostItem.owner?.email}` },
+        { label: "Item del solicitante", value: exchange.hostItem.name },
+        { label: "Solicitado", value: `${exchange.guestItem.owner?.name} | ${exchange.guestItem.owner?.email}` },
+        { label: "Item solicitado", value: exchange.guestItem.name },
         { label: "Estado", value: exchange.state },
-    ];
+        { label: "Codigo", value: exchange.authenticationCode },
+    ].filter(detail => detail.value);
 
     return (
         <div className="bg-gray-700 w-full rounded-lg shadow-lg hover:shadow-xl transition-transform duration-300 ease-in-out transform scale-100 hover:scale-105">
