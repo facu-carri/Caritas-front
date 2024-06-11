@@ -76,13 +76,14 @@ export default function ExchangersManager() {
                 {
                     error && (<ErrorAlert attrs="mt-5 w-fit" show={error != null}>{error.getMessage()}</ErrorAlert>)
                 }
-                <div className="justify-center items-center text-[100%] grid grid-cols-3 gap-6 md:gap-8 mt-8 min-h-[300px]">
+                <div className="justify-center items-center text-[100%]">
                 {
-                    isLoading ?
-                    <LoadingSpinner />:
-                    filteredExchangers && filteredExchangers.map(exchanger => (
-                        <ExchangerCard cardData={exchanger} key={exchanger.id} />
-                    ))
+                    isLoading ? <LoadingSpinner/>:
+                    <div className='grid grid-cols-3 gap-6 md:gap-8 mt-8 min-h-[300px]'>
+                        {filteredExchangers && filteredExchangers.map(exchanger => (
+                            <ExchangerCard cardData={exchanger} key={exchanger.id} />
+                        ))}
+                    </div>
                 }
                 </div>
             </section>
