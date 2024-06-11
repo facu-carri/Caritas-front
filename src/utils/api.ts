@@ -1,5 +1,6 @@
 function getElementValue(name:string){
     const elem = document.getElementById(name)
+    if(!elem) return null
     switch (elem.tagName) {
         case 'INPUT':
             return (elem as HTMLInputElement).value
