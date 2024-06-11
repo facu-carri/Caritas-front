@@ -71,17 +71,13 @@ export default function Profile({ id }: ProfileProps) {
 
   function handleBan() {
     deleteData(`${endPoints.exchanger}/ban/${userData.id}`)
-      .then(({ id: profileId }) => {
-        deleteData(`${endPoints.exchanger}/${profileId}`, null)
-          .then(logout)
-      })
   }
 
   function handleDelete() {
     deleteData(`${endPoints.exchanger}/${userData.id}`)
-      .then(({ id: profileId }) => {
-        deleteData(`${endPoints.exchanger}/${profileId}`, null)
-          .then(logout)
+      .then(() => {
+        if(canDoActions) return //TODO: Si sos admin que te redirija al apartado de intercambiadores o ayudante (depende de a cual elimino)
+        logout()
       })
   }
 
