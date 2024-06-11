@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useQuery } from "react-query";
 import { deleteData, getData, getHeaders, putData } from "src/utils/request/httpRequests";
-import { endPoints, roles, routes, serverAddress } from "src/utils/constants";
+import { endPoints, roles, serverAddress } from "src/utils/constants";
 import { useEffect, useState } from 'react';
 import { useCustomModal } from 'src/context/CustomModalContext';
 import { User } from 'src/utils/User';
@@ -69,6 +69,14 @@ export default function Profile({ id }: ProfileProps) {
     return (id && !isAdmin) ? profileInfo.filter(field => !["Correo electronico", "DNI", "Telefono"].includes(field.title)) : profileInfo
   }
 
+  function handleBan() {
+    deleteData(`${endPoints.exchanger}/ban/${userData.id}`)
+      .then(({ id: profileId }) => {
+        deleteData(`${endPoints.exchanger}/${profileId}`, null)
+          .then(logout)
+      })
+  }
+
   function handleDelete() {
     deleteData(`${endPoints.exchanger}/${userData.id}`)
       .then(({ id: profileId }) => {
@@ -89,6 +97,8 @@ export default function Profile({ id }: ProfileProps) {
       canDeletePhoto={!!(!getId() && userData?.photo)}
       canEdit={canDoActions}
       canDelete={canDoActions}
+      canBan={isAdmin}
+      handleBan={handleBan}
     >
       <h2 className="text-2xl font-bold mb-4 text-white">Publicaciones de productos</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">

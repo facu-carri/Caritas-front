@@ -69,6 +69,8 @@ export type UserProfileProps = {
     profileInfo: UserInfoFields[]
     handleEdit?: VoidFunction
     canEdit: boolean
+    handleBan?: VoidFunction
+    canBan?: boolean
     handleDelete?: VoidFunction
     canDelete: boolean
     canDeletePhoto?: boolean

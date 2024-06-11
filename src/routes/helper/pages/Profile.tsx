@@ -66,6 +66,7 @@ export default function EmployeeProfile({ id }: ProfileProps) {
             canDeletePhoto={false}
             canDelete={canDoActions}
             canEdit={canDoActions}
+            canBan={false}
         />
     )
 }
