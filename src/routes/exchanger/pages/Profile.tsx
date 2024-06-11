@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useQuery } from "react-query";
 import { deleteData, getData, getHeaders, putData } from "src/utils/request/httpRequests";
-import { endPoints, roles, serverAddress } from "src/utils/constants";
+import { endPoints, roles, routes, serverAddress } from "src/utils/constants";
 import { useEffect, useState } from 'react';
 import { useCustomModal } from 'src/context/CustomModalContext';
 import { User } from 'src/utils/User';
@@ -70,7 +70,7 @@ export default function Profile({ id }: ProfileProps) {
   }
 
   function handleDelete() {
-    getData(`exchanger/myProfile`)
+    deleteData(`${endPoints.exchanger}/${userData.id}`)
       .then(({ id: profileId }) => {
         deleteData(`${endPoints.exchanger}/${profileId}`, null)
           .then(logout)
