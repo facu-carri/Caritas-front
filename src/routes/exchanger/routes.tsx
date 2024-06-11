@@ -7,6 +7,7 @@ import ErrorPage from "../error/ErrorPage";
 import { Information } from "./pages/Information";
 import Profile from "./pages/Profile";
 import { ExchangerMain } from "./pages/main";
+import ExchangesHistory from "./pages/ExchangesHistory";
 
 export function ExchangerRouter() {
 
@@ -17,7 +18,8 @@ export function ExchangerRouter() {
       path: routes.main,
       element: <ExchangerLayout />,
       children: [
-        { path: routes.main, element: <ExchangerMain/> },
+        { path: routes.main, element: <ExchangerMain /> },
+        { path: routes.exchanger.history, element: <ExchangesHistory /> },
         { path: routes.exchanger.inventory, element: <Inventory /> },
         { path: routes.exchanger.profile, element: <Profile/> },
         { path: routes.exchanger.information, element: <Information/> },

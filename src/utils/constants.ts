@@ -34,6 +34,7 @@ const helperRoutes = {
     profile: '/perfilAyudante'
 }
 const exchangerRoutes = {
+    'history': '/historial',
     'inventory': '/inventario',
     'profile': '/perfil',
     'information':'/informacion'

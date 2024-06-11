@@ -30,12 +30,16 @@ export default function ExchangerLayout() {
 
   const dropdownItems: DropdownItem[] = [
     {
+      text: 'Perfil',
+      onClick: () => setRoute(routes.exchanger.profile)
+    },
+    {
       text: 'Inventario',
       onClick: () => setRoute(routes.exchanger.inventory)
     },
     {
-      text: 'Perfil',
-      onClick: () => setRoute(routes.exchanger.profile)
+      text: 'Historial de intercambios',
+      onClick: () => setRoute(routes.exchanger.history)
     },
     {
       text: 'Cerrar sesion',

@@ -85,3 +85,13 @@ export type UserInfoFields = {
 export type CategoryListParam = {
     data: ItemCategory[]
 }
+export type Exchange = {
+    id: number;
+    guestAsistio: boolean;
+    hostAsistio: boolean;
+    guestItem: ItemData;
+    hostItem: ItemData;
+    date: string;
+    state: string;
+    location: Location;
+}
