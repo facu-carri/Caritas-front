@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useQuery } from "react-query";
 import { deleteData, getData, getHeaders, putData } from "src/utils/request/httpRequests";
-import { endPoints, roles, serverAddress } from "src/utils/constants";
+import { endPoints, roles, routes, serverAddress } from "src/utils/constants";
 import { useEffect, useState } from 'react';
 import { useCustomModal } from 'src/context/CustomModalContext';
 import { User } from 'src/utils/User';
@@ -58,7 +58,7 @@ export default function Profile({ id }: ProfileProps) {
 
   const getProfileInfo = (): UserInfoFields[] => {
     const profileInfo = [
-      { title: "Nombre", value: userData.name, color: "text-red-500" },
+      { title: "Nombre completo", value: userData.name, color: "text-red-500" },
       { title: "Correo electronico", value: userData.email, color: "text-red-500" },
       { title: "DNI", value: userData.dni, color: "text-blue-500" },
       { title: "Telefono", value: userData.phone, color: "text-blue-500" },
@@ -70,7 +70,7 @@ export default function Profile({ id }: ProfileProps) {
   }
 
   function handleDelete() {
-    getData(`exchanger/myProfile`)
+    deleteData(`${endPoints.exchanger}/${userData.id}`)
       .then(({ id: profileId }) => {
         deleteData(`${endPoints.exchanger}/${profileId}`, null)
           .then(logout)

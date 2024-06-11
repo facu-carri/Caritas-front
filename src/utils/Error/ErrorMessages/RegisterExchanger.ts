@@ -7,6 +7,6 @@ export const RegisterExchangerErrorMsgs = {
         406: 'La persona debe ser mayor de edad',
         409: 'Email ya registrado',
         451: 'Email invalido',
-        418: 'Email suspendido'
+        418: 'El email pertenece a una cuenta suspendida por infligir las normas de la comunidad'
     }
 }
