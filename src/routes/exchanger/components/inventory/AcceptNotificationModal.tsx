@@ -1,13 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
-import { getData, getHeaders, putData } from "src/utils/request/httpRequests";
-import { endPoints, serverAddress } from "src/utils/constants";
+import { getData, putData } from "src/utils/request/httpRequests";
+import { endPoints } from "src/utils/constants";
 import GenericForm from "src/components/GenericForm";
 import { ErrorTypes } from "src/utils/Error/ErrorTypes";
 import { ErrorCode } from "src/utils/Error/ErrorCode";
 import { selectLocations } from "src/components/modals/modalOptions";
 import { FormField } from "src/types/PropsTypes";
-import { useQuery } from "react-query";
 
 export default function EditItemModal({ notificationData, onEditNotification }) {
 
@@ -58,17 +57,29 @@ export default function EditItemModal({ notificationData, onEditNotification }) 
   }, [freeLocations])
 
 
-  return ( campos && campos.length > 0 && 
-    <div>
-      <GenericForm id="register-helper" campos={campos} listener={handleAcceptNotification} error={error} >
-        <p className="text-sm fond-bold text-black-500 mb-2">Solicitante: {notificationData.hostItem?.owner?.name}</p>
-        <p className="text-sm fond-bold text-black-500 mb-2">Item del solicitante: {notificationData.hostItem?.name}</p>
-        <p className="text-sm fond-bold text-black-500 mb-2">Tu item: {notificationData.guestItem?.name}</p>
-        <p className="text-sm fond-bold text-black-500 mb-2">Cantidad restante de tu item: {notificationData.guestItem?.quantity}</p>
-        <p className="text-sm fond-bold text-black-500 mb-2">Categoria: {notificationData.guestItem?.itemCategory?.name}</p>
-        <p className="text-sm fond-bold text-black-500 mb-2">La fecha sera: {nextFreeDay}</p>
-      </GenericForm>
-    </div>
-    
-  )
+  return (
+    campos && campos.length > 0 && (
+      <div>
+        <GenericForm id="register-helper" campos={campos} listener={handleAcceptNotification} error={error}>
+          {[
+            { label: "Solicitante", value: notificationData.hostItem?.owner?.name },
+            { label: "Item del solicitante", value: notificationData.hostItem?.name },
+            { label: "Tu item", value: notificationData.guestItem?.name },
+            { label: "Cantidad restante de tu item", value: notificationData.guestItem?.quantity },
+            { label: "Categoria", value: notificationData.guestItem?.itemCategory?.name },
+            { label: "La fecha sera", value: nextFreeDay },
+          ].map((item) => (
+            <div key={item.label} className="flex items-center mb-2">
+              <span key={item.label} className="text-sm font-bold text-gray-500 mr-2">
+                {item.label}:
+              </span>
+              <span className="text-sm font-bold text-gray-500 mr-2">
+                {item.value}
+              </span>
+            </div>
+          ))}
+        </GenericForm>
+      </div>
+    )
+  );
 }
