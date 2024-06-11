@@ -10,10 +10,10 @@ export default function ConfirmationModal({ title, onAccept, onCancel }: Confirm
     const processTitle = () => {
         const titleParts = title.split('\n')
         return titleParts.map((titlePart, index) => (
-            <h3>
+            <p key={titlePart}>
                 {titlePart}
                 {index < titleParts.length - 1 && <br />}
-            </h3>
+            </p>
         ))
     }
 
