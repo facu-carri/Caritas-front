@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect, useMemo } from "react";
 import ExchangerHeader from "src/components/ExchangerHeader";
 import LoadingSpinner from "src/components/LoadingSpinner";
@@ -11,7 +12,6 @@ export default function ExchangesHistory() {
     
     const [exchangeHistory, setExchangeHistory] = useState<Exchange[]>([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(false);
 
     useEffect(() => {
         setLoading(true)
