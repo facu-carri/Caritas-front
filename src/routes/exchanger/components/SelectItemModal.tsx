@@ -1,10 +1,13 @@
 import { useMemo } from "react";
 import { useQuery } from "react-query";
 import GenericForm from "src/components/GenericForm";
+import { useCustomModal } from "src/context/CustomModalContext";
 import { endPoints, serverAddress } from "src/utils/constants";
 import { getHeaders, postData } from "src/utils/request/httpRequests";
 
-export default function SelectItemModal({ itemId, categoryId, showConfirmation, closeModal }) {
+export default function SelectItemModal({ itemId, categoryId, showConfirmation }) {
+
+  const { closeModal } = useCustomModal()
 
   const { data: inventory = [] } = useQuery({
     queryKey: ['inventory'],
