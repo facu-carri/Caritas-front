@@ -32,6 +32,7 @@ function RegistrationFields() {
   const [phone, setPhone] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [photoFile, setPhotoFile] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<ErrorCode>(null)
@@ -44,7 +45,6 @@ function RegistrationFields() {
 
   const hiddeError = () => {
     setError(null)
-    setIsLoading(false)
   }
 
   async function handleSubmit(event:MouseEvent) {
@@ -71,6 +71,7 @@ function RegistrationFields() {
         return res.json()
     })
     .then(() => setRoute(routes.login))
+    .finally(() => setIsLoading(false))
   }
 
   const validateName = (name:string) => {
@@ -96,7 +97,7 @@ function RegistrationFields() {
     setPhone(phone)
   }
 
-  const isEmptyField =  !name || !birthdate || !dni || !phone || !email || !password
+  const isEmptyField =  !name || !birthdate || !dni || !phone || !email || !password || confirmPassword !== password
 
   return (
       <form className="space-y-4 mt-5">
@@ -125,13 +126,17 @@ function RegistrationFields() {
           <Input text={"Ingresa tu télefono"} value={phone} onChange={e=>validatePhone(e.target.value)}></Input>
         </div>
         <div className="space-y-2">
+          <FormLabel htmlFor="email">Correo electrónico</FormLabel>
+          <Input text={"Ingresa tu correo"} onChange={e=>setEmail(e.target.value)}></Input>
+        </div>
+        <div className="space-y-2">
           <FormLabel htmlFor="password">Contraseña</FormLabel>
           <Input text={"Ingresa tu contraseña"} type={"Password"} onChange={e=>setPassword(e.target.value)}></Input>
         </div>
-      </div>
-      <div className="space-y-2">
-        <FormLabel htmlFor="email">Correo electrónico</FormLabel>
-        <Input text={"Ingresa tu correo"} onChange={e=>setEmail(e.target.value)}></Input>
+        <div className="space-y-2">
+          <FormLabel htmlFor="confirm-password">Volver a ingresar contraseña</FormLabel>
+          <Input text={"Vuelve a ingresar tu contraseña"} type={"Password"} onChange={e=>setConfirmPassword(e.target.value)}></Input>
+        </div>
       </div>
       <button onClick={handleSubmit} disabled={isLoading || isEmptyField} type="submit" className={`btn ${!isLoading && !isEmptyField && 'bg-blue-500 hover:bg-blue-600'}  text-white font-semibold py-2 px-4 rounded-md w-full`}>
         {isLoading ? <span className="loading loading-spinner"></span> : 'Registrarse'}
