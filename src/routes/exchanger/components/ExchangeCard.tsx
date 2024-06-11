@@ -1,39 +1,35 @@
 import { Exchange } from "src/types/Types"
 
-export const ExchangeCard = ({ exchange }: { exchange: Exchange }) => {
+export const ExchangeCard = ({ exchange }) => {
+    const exchangeDetails = [
+        { label: "Fecha del intercambio", value: exchange.date },
+        { label: "Sede", value: exchange.location?.name },
+        { label: "Intercambiador 1", value: `${exchange.hostItem.owner?.name} | ${exchange.hostItem.owner?.email}` },
+        { label: "Item intercambiador 1", value: exchange.hostItem.name },
+        { label: "Intercambiador 2", value: `${exchange.guestItem.owner?.name} | ${exchange.guestItem.owner?.email}` },
+        { label: "Item intercambiador 2", value: exchange.guestItem.name },
+        { label: "Estado", value: exchange.state },
+    ];
+
     return (
         <div className="bg-gray-700 w-full rounded-lg shadow-lg hover:shadow-xl transition-transform duration-300 ease-in-out transform scale-100 hover:scale-105">
-            <div className="p-4 md:p-6 space-y-4">
+            <div className="p-4 md:p-6 space-y-4 w-full">
                 <span className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
                     {exchange.date}
                 </span>
-                <div className="flex flex-row gap-2">
-                    <div className="flex items-center justify-between">
-                        <span className="text-gray-500 dark:text-gray-400">
-                            Type:
-                        </span>
-                        <span className="font-medium text-white">
-                            {'type' || exchange.date}
-                        </span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                        <span className="text-gray-500 dark:text-gray-400">
-                            Amount:
-                        </span>
-                        <span className="font-medium text-white">
-                            {'33' || exchange.hostItem.quantity}
-                        </span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                        <span className="text-gray-500 dark:text-gray-400">
-                            Transaction:
-                        </span>
-                        <span className="font-medium text-white">
-                            {'test' || exchange.state}
-                        </span>
-                    </div>
+                <div className="flex flex-col gap-2">
+                    {exchangeDetails.map((detail, index) => (
+                        <div key={index} className="flex items-center justify-between">
+                            <span className="text-gray-500 dark:text-gray-400">
+                                {detail.label}:
+                            </span>
+                            <span className="font-medium text-white">
+                                {detail.value || 'N/A'}
+                            </span>
+                        </div>
+                    ))}
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
