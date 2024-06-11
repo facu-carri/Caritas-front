@@ -51,7 +51,7 @@ function RegistrationFields() {
     event.preventDefault()
 
     if(isLoading) return
-    if (!name || !birthdate || !dni || !phone || !email || !password) { handleError(403); return }
+    if (isEmptyField) { handleError(403); return }
 
     const photo = photoFile ? String(await getImageBase64(photoFile)) : ''
 
@@ -96,6 +96,8 @@ function RegistrationFields() {
     setPhone(phone)
   }
 
+  const isEmptyField =  !name || !birthdate || !dni || !phone || !email || !password
+
   return (
       <form className="space-y-4 mt-5">
       {<ErrorAlert show={error != null} attrs='w-full'>
@@ -131,7 +133,7 @@ function RegistrationFields() {
         <FormLabel htmlFor="email">Correo electrónico</FormLabel>
         <Input text={"Ingresa tu correo"} onChange={e=>setEmail(e.target.value)}></Input>
       </div>
-      <button onClick={handleSubmit} disabled={isLoading} type="submit" className="btn bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md w-full">
+      <button onClick={handleSubmit} disabled={isLoading || isEmptyField} type="submit" className={`btn ${!isLoading && !isEmptyField && 'bg-blue-500 hover:bg-blue-600'}  text-white font-semibold py-2 px-4 rounded-md w-full`}>
         {isLoading ? <span className="loading loading-spinner"></span> : 'Registrarse'}
       </button>
     </form>
