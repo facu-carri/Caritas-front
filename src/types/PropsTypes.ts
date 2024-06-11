@@ -119,7 +119,7 @@ export type HiddePasswordProps = {
 export type GenericFormProps = {
     id: string,
     campos: Array<FormField>,
-    listener?: (values: Record<string, unknown>) => void
+    listener?: (values: Record<string, unknown>|unknown) => void
     error?: ErrorCode,
     hideImg?: boolean
     btnText?: string

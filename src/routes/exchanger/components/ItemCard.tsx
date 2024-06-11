@@ -27,7 +27,7 @@ export default function ItemCard({ item, onClick, hiddeOwner, queryInvalidator, 
 
   const onClickExchange = (ev: MouseEvent) => {
     ev.stopPropagation()
-    showModal(<SelectItemModal itemId={item.id} categoryId={item.itemCategory.id} showConfirmation={confirmation} closeModal={closeModal} />)
+    showModal(<SelectItemModal itemId={item.id} categoryId={item.itemCategory.id} showConfirmation={confirmation} />)
   }
 
   const onClickEdit = () => {
