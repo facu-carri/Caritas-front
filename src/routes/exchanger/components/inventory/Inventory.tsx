@@ -16,7 +16,12 @@ export default function Inventory() {
     const queryClient = useQueryClient()
 
     const handleModal = () => showModal(<AddItemModal onClose={closeModal} onAddItem={addItem}/>)
-    const addItem = (item:ItemData) => postData(endPoints.addItem, null, item).then(() => queryClient.invalidateQueries([ruta]))
+    const addItem = (item:ItemData) => 
+        postData(endPoints.addItem, null, item)
+            .then(() => {
+                queryClient.invalidateQueries([ruta]);
+                queryClient.invalidateQueries(['inventory']);
+            })
     
     const { data: inventory = [] } = useQuery({
         queryKey: [ruta],

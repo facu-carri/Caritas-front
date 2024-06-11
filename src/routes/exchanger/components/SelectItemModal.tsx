@@ -1,15 +1,17 @@
 import { useMemo } from "react";
 import { useQuery } from "react-query";
-import GenericForm from "src/components/GenericForm";
+import { getHeaders, postData } from "src/utils/request/httpRequests";
 import { useCustomModal } from "src/context/CustomModalContext";
 import { endPoints, serverAddress } from "src/utils/constants";
-import { getHeaders, postData } from "src/utils/request/httpRequests";
+import LoadingSpinner from "src/components/LoadingSpinner";
+import GenericForm from "src/components/GenericForm";
+import ErrorAlert from "src/components/ErrorAlert";
 
 export default function SelectItemModal({ itemId, categoryId, showConfirmation }) {
 
   const { closeModal } = useCustomModal()
 
-  const { data: inventory = [] } = useQuery({
+  const { data: inventory = [], isLoading: isLoadingInventory } = useQuery({
     queryKey: ['inventory'],
     queryFn: () => fetch(`${serverAddress}/${endPoints.inventory}`, {
       method: 'GET',
@@ -34,8 +36,7 @@ export default function SelectItemModal({ itemId, categoryId, showConfirmation }
     ]
   }, [filteredInventory])
 
-
-  function fun({ item: hostItemId }) {
+  function handleSendExchange({ item: hostItemId }) {
     const guestItemId = itemId
     showConfirmation(() => sendExchange({ hostItemId, guestItemId }))
   }
@@ -48,6 +49,14 @@ export default function SelectItemModal({ itemId, categoryId, showConfirmation }
   }
 
   return (
-    <GenericForm id="select-item-modal" campos={campos} listener={fun} error={null} />
+    isLoadingInventory ?
+    <LoadingSpinner />
+    :
+    filteredInventory.length ?
+      <GenericForm id="select-item-modal" campos={campos} listener={handleSendExchange} error={null} />
+    :
+      <div>
+        <ErrorAlert show={true}>Usted no posee items de la misma categoria en su inventario</ErrorAlert>
+      </div>
   )
 }
