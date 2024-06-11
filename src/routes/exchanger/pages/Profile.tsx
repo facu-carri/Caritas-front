@@ -58,7 +58,7 @@ export default function Profile({ id }: ProfileProps) {
 
   const getProfileInfo = (): UserInfoFields[] => {
     const profileInfo = [
-      { title: "Nombre", value: userData.name, color: "text-red-500" },
+      { title: "Nombre completo", value: userData.name, color: "text-red-500" },
       { title: "Correo electronico", value: userData.email, color: "text-red-500" },
       { title: "DNI", value: userData.dni, color: "text-blue-500" },
       { title: "Telefono", value: userData.phone, color: "text-blue-500" },

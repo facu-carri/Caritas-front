@@ -35,7 +35,7 @@ export default function AuthenticationCodeInput() {
     }).then(data => {
       setUser(data);
       setRoute(routes.main);
-    }).catch(() => alert('Codigo incorrecto'))
+    }).catch(() => alert('Código incorrecto'))
   }
 
   const handleSubmit = () => {
