@@ -87,6 +87,7 @@ export default function ExchangesHistory() {
   }, [searchQuery, exchangeHistory])
 
   const exchangeDetails = (exchange: Exchange) => [
+      { label: "Sede", value: exchange.location?.name },
       { label: "Solicitante", value: `${exchange.hostItem.owner?.name} | ${exchange.hostItem.owner?.email}` },
       { label: "Item del solicitante", value: exchange.hostItem.name },
       { label: "Solicitado", value: `${exchange.guestItem.owner?.name} | ${exchange.guestItem.owner?.email}` },
