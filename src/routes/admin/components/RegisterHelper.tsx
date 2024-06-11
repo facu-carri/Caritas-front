@@ -14,11 +14,12 @@ import { FormField, ListItem } from "src/types/PropsTypes";
 const campos_default: Array<FormField> = [
   { nombre: 'Nombre completo', etiqueta: 'name', tipo: 'text' },
   { nombre: 'Email', etiqueta: 'email', tipo: 'email' },
-  { nombre: 'Contraseña', etiqueta: 'password', tipo: 'password' },
   { nombre: 'DNI', etiqueta: 'dni', tipo: 'text' },
   { nombre: 'Teléfono', etiqueta: 'phone', tipo: 'tel' },
   { nombre: 'Foto', etiqueta: 'photo', tipo: 'file'},
   { nombre: 'Fecha de nacimiento', etiqueta: 'birthdate', tipo: 'date' },
+  { nombre: 'Contraseña', etiqueta: 'password', tipo: 'password' },
+  { nombre: 'Repetir contraseña', etiqueta: 'password-check', tipo: 'password' }
 ]
 
 // Componente de Registro de Ayudante

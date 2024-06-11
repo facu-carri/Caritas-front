@@ -116,10 +116,8 @@ function GenericForm({ id, campos, listener, error, btnText, hideImg, showConfir
 
     for (const inputField of inputs) {
       const input: any = inputField
-      const optional = isOptional(input)
-      if(optional) {
-        continue;
-      }
+      
+      if(isOptional(input)) continue
 
       switch (input.type) {
         case 'file':
