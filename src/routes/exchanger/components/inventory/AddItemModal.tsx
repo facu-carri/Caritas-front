@@ -15,11 +15,7 @@ export default function AddItemModal({ onClose, onAddItem }) {
   const [categories, setCategories] = useState([]);
 
   const handleAddItem = () => {
-    if (!name || !description || !photoFile|| !itemCategoryId || !quantity)  {
-      alert('Por favor, completa todos los campos');
-      return;
-    }
-
+    if (isDisabled) return;
     getImageBase64(photoFile)
       .then(photo => {
         onAddItem({ name, description, itemCategoryId, photo, quantity });
@@ -32,12 +28,14 @@ export default function AddItemModal({ onClose, onAddItem }) {
       .then(data => setCategories(data))
       .catch(err => console.log(err))
   }, [])
-  
+
   const validateQty = (e) => {
     const value = parseInt(e.target.value);
     if (!isNaN(value) && value >= 0) setQuantity(value)
     else setQuantity(1)
   }
+
+  const isDisabled = !name || !description || !photoFile || !itemCategoryId || !quantity;
 
   return (
     <div className="w-2/5 items-center bg-white rounded-lg overflow-hidden shadow-xl transform transition-all">
@@ -57,11 +55,11 @@ export default function AddItemModal({ onClose, onAddItem }) {
               categories.map(({ id, name }) => <option key={id} value={id}>{name}</option>)
             }
           </select>
-          <Input type="number" min="1" text="Cantidad" value={quantity} onChange={validateQty}/>
+          <Input type="number" min="1" text="Cantidad" value={quantity} onChange={validateQty} />
         </div>
       </div>
       <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse gap-5">
-        <Button onClick={handleAddItem}>Agregar Artículo</Button>
+        <Button onClick={handleAddItem} disabled={isDisabled}>Agregar Artículo</Button>
         <Button onClick={onClose}>Cancelar</Button>
       </div>
     </div>
