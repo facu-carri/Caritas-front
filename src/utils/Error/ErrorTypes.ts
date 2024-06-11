@@ -6,4 +6,5 @@ export enum ErrorTypes{
     FILIALES_ERROR,
     EXCHANGER_ERROR,
     EDIT_ITEM_ERROR,
+    EDIT_PROFILE_ERROR
 }

@@ -14,7 +14,7 @@ export default function EditProfileModal({campos, onSave, showConfirm}: EditProf
   const { closeModal } = useCustomModal()
 
   const handleError = (errCode: number) => {
-    const err = new ErrorCode(errCode, ErrorTypes.REGISTER_HELPER_ERROR)
+    const err = new ErrorCode(errCode, ErrorTypes.EDIT_PROFILE_ERROR)
     setError(err)
     setTimeout(hiddeError, 5000)
   }
