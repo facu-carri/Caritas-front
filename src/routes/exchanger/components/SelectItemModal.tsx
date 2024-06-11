@@ -49,14 +49,13 @@ export default function SelectItemModal({ itemId, categoryId, showConfirmation }
   }
 
   return (
-    isLoadingInventory ?
-    <LoadingSpinner />
+    isLoadingInventory ? <LoadingSpinner />
     :
     filteredInventory.length ?
       <GenericForm id="select-item-modal" campos={campos} listener={handleSendExchange} error={null} />
     :
-      <div>
-        <ErrorAlert show={true}>Usted no posee items de la misma categoria en su inventario</ErrorAlert>
-      </div>
+    <div>
+      <ErrorAlert show={true}>Usted no posee items de la misma categoria en su inventario</ErrorAlert>
+    </div>
   )
 }
