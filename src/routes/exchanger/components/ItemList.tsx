@@ -64,7 +64,8 @@ export default function ItemList({ ruta, inventory, children }: ItemListInventor
             <ItemCard
               key={item.id}
               item={item}
-              isEditable={item.editable && isInventory}
+              canEdit={item.editable && isInventory}
+              canDelete={isInventory}
               hiddeBtns={true}
               onClick={() => onClickItem(item)}
               queryInvalidator={queryInvalidator}

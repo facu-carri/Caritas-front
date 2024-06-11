@@ -1,9 +1,6 @@
-import Image from 'src/components/Image';
 import { useMutation } from 'react-query';
 import { getHeaders } from 'src/utils/request/httpRequests';
 import { useCustomModal } from 'src/context/CustomModalContext';
-import { ItemCardProps } from 'src/types/PropsTypes';
-import { MouseEvent } from 'src/types/Types';
 import { endPoints, routes, serverAddress } from 'src/utils/constants';
 import RoutesHandler from 'src/utils/routesHandler';
 
@@ -11,7 +8,6 @@ import { AiOutlineCheck, AiOutlineClose  } from "react-icons/ai";
 import AcceptNotificationModal from './inventory/AcceptNotificationModal';
 import ConfirmationModal from 'src/components/modals/Confirmation';
 import { useState } from 'react';
-import SelectItemModal from './SelectItemModal';
 
 export default function BellNotificationCard({ notification }) {
   
@@ -19,9 +15,7 @@ export default function BellNotificationCard({ notification }) {
   const { showModal, closeModal } = useCustomModal()
   const { setRoute } = RoutesHandler()
 
-  const onClickOwner = (ev: MouseEvent) => {
-    console.log("aaaaaaaaaaa")
-    //ev.stopPropagation() //TODO: Que es esto?
+  const onClickOwner = () => {
     closeModal()
     setRoute(`${routes.exchanger.profile}/${notificationData.hostItem.owner?.id}`)
   }
@@ -34,22 +28,11 @@ export default function BellNotificationCard({ notification }) {
         notificationData={notification}
         onEditNotification={(data) => {
           setNotificationData({ ...notificationData, ...data });
-          //queryInvalidator(); TODO: Que es esto
           closeModal();
         }}
       />
     )
   }
-
-  const { mutate: acceptNotification } = useMutation({
-    mutationFn: () => fetch(`${serverAddress}/${endPoints.acceptNotification}/${notification.id}`, {
-      method: 'PUT',
-      headers: getHeaders()
-    }),
-    onSuccess: () => {
-      //queryInvalidator(); TODO: Que es esto
-    }
-  })
   
   const { mutate: rejectNotification } = useMutation({
     mutationFn: () => fetch(`${serverAddress}/${endPoints.rejectNotification}/${notification.id}`, {

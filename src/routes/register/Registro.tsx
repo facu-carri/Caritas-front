@@ -27,13 +27,13 @@ function RegistrationFields() {
   const { setRoute } = RoutesHandler()
 
   const [name, setName] = useState('')
-  const [birthdate, setBirthdate] = useState('')
+  const [birthdate, setBirthdate] = useState('');
   const [dni, setDni] = useState('')
   const [phone, setPhone] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [photoFile, setPhotoFile] = useState(null)
-
+  const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<ErrorCode>(null)
 
   const handleError = (errCode: number) => {
@@ -42,18 +42,20 @@ function RegistrationFields() {
     setTimeout(hiddeError, 5000)
   }
 
-  const hiddeError = () => setError(null)
+  const hiddeError = () => {
+    setError(null)
+    setIsLoading(false)
+  }
 
   async function handleSubmit(event:MouseEvent) {
     event.preventDefault()
 
+    if(isLoading) return
     if (!name || !birthdate || !dni || !phone || !email || !password) { handleError(403); return }
 
-    let photo
+    const photo = photoFile ? String(await getImageBase64(photoFile)) : ''
 
-    photoFile && await getImageBase64(photoFile).then(_photo => photo = String(_photo))
-
-    console.log('photo', photo)
+    setIsLoading(true)
 
     fetch(`${serverAddress}/${endPoints.registerExchanger}`, {
         method: 'POST',
@@ -81,6 +83,13 @@ function RegistrationFields() {
     setDni(dni)
   }
 
+  const validateBirthdate = (date: string) => {
+    const dateArr = date.split('-') ?? null
+    const year = dateArr && dateArr[0]
+    if (year && year.length > 4) return
+    setBirthdate(date)
+  };
+
   const validatePhone = (phone: string) => {
     if (phone.match(/[a-zA-Z]{1,}/)) return
     if (phone.match(/[ ]{2,}/)) return
@@ -103,7 +112,7 @@ function RegistrationFields() {
         </div>
         <div className="space-y-2">
           <FormLabel htmlFor="birthdate">Fecha Nacimiento</FormLabel>
-          <Input text={"Ingresa tu fecha de nacimiento"} type="date" onChange={e=>setBirthdate(e.target.value)}></Input>
+          <Input text={"Ingresa tu fecha de nacimiento"} value={birthdate} type="date" max={new Date().toISOString().split('T')[0]} onChange={e=>validateBirthdate(e.target.value)}></Input>
         </div>
         <div className="space-y-2">
           <FormLabel htmlFor="dni">DNI</FormLabel>
@@ -122,14 +131,13 @@ function RegistrationFields() {
         <FormLabel htmlFor="email">Correo electrónico</FormLabel>
         <Input text={"Ingresa tu correo"} onChange={e=>setEmail(e.target.value)}></Input>
       </div>
-      <button onClick={handleSubmit} type="submit" className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md w-full">
-        Registrarse
+      <button onClick={handleSubmit} disabled={isLoading} type="submit" className="btn bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md w-full">
+        {isLoading ? <span className="loading loading-spinner"></span> : 'Registrarse'}
       </button>
     </form>
   )
 }
 
-// Componente de etiqueta de formulario
 function FormLabel({ htmlFor, children }) {
   return <label htmlFor={htmlFor} className="block font-medium">{children}</label>;
 }

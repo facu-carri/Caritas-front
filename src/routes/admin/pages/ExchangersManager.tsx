@@ -1,29 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useMemo, useState } from 'react';
-import { useQuery, useQueryClient } from "react-query";
-import { getHeaders, putData } from 'src/utils/request/httpRequests';
-import { useCustomModal } from "src/context/CustomModalContext";
+import { useMemo, useState } from 'react';
+import { useQuery } from "react-query";
+import { getHeaders } from 'src/utils/request/httpRequests';
 import { endPoints, serverAddress } from "src/utils/constants";
 import { ErrorCode } from "src/utils/Error/ErrorCode";
 import { ErrorTypes } from "src/utils/Error/ErrorTypes";
-import { ExchangerCardData, ExchangerData } from "src/types/Types";
-
+import { ExchangerCardData } from "src/types/Types";
 import ExchangersManagerHeader from "../components/ExchangersManagerHeader";
 import ExchangerCard from "src/routes/admin/components/ExchangerCard";
 import LoadingSpinner from "src/components/LoadingSpinner";
 import ErrorAlert from "src/components/ErrorAlert";
-import ConfirmationModal from 'src/components/modals/Confirmation';
-import EditExchangerModal from 'src/components/modals/EditExchanger';
-import { getAdminFields } from '../components/ExchangerFields';
 
 export default function ExchangersManager() {
     
     const [searchQuery, setSearchQuery] = useState('');
-    const { showModal, closeModal } = useCustomModal()
     const [error, setError] = useState<ErrorCode>(null)
-    const [currentExchanger, setCurrentExchanger] = useState(null);
-
-    const queryClient = useQueryClient()
 
     const { data: exchangers, isLoading } = useQuery({
         queryKey: ['exchangers'],
@@ -63,44 +54,6 @@ export default function ExchangersManager() {
 
     function hideError() {
         setError(null)
-    }
-
-    useEffect(() => {
-        if(currentExchanger !== null) {
-            showModal(<EditExchangerModal campos={getAdminFields(currentExchanger)} onSave={(data) => confirmation(() => handleSave(data))} />, () => setCurrentExchanger(null))
-        }
-    }, [currentExchanger])
-
-    /*
-    //onDelete = {(data) => confirmation(() => handleDelete(data))
-
-    function handleDelete(id) {
-        deleteData(`${endPoints.exchanger}/${id}`, null)
-            .then(() => queryClient.invalidateQueries(['exchangers']))
-    }*/
-
-    const confirmation = (fn) => showModal(<ConfirmationModal onAccept={fn}/>)
-
-    const updateExchanger = (newData) => {
-      
-        // Actualización optimista de la caché
-        queryClient.setQueryData(['exchangers'], oldData => {
-          return (oldData as ExchangerData[]).map(exchanger => 
-            exchanger.id === newData.id ? { ...exchanger, ...newData } : exchanger
-          );
-        });
-      };
-
-    function handleSave(updatedexchanger) { 
-        if(!currentExchanger?.id) return;
-        if (updatedexchanger.password === "") updatedexchanger.password = null
-
-        putData(`${endPoints.exchanger}/${currentExchanger.id}`, null, {
-            ...updatedexchanger,
-            email: currentExchanger.email,
-        })
-            .then(res => updateExchanger(res))
-            .then(() => closeModal())
     }
 
     return (

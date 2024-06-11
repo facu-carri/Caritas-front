@@ -19,8 +19,20 @@ const Login = () => {
 
     const [reqStatus, setReqStatus] = useState<RequestStatus>(RequestStatus.INITIAL)
     const [error, setError] = useState<ErrorCode>(null)
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const { setUser } = User()
     const { setRoute } = RoutesHandler()
+
+    const handleEmailChange = (e) => setEmail(e.target.value);
+    const handlePasswordChange = (e) => setPassword(e.target.value);
+
+    useEffect(() => {
+        setTimeout(() => {
+            setEmail(getElementValue('email'))
+            setPassword(getElementValue('password'))
+        }, 5000)
+    }, [])
 
     useEffect(() => {
         switch (reqStatus) {
@@ -57,6 +69,8 @@ const Login = () => {
             password: getElementValue('password')
         }
 
+        if(reqStatus == RequestStatus.PENDING) return
+
         if (isInvalid(query)) {
             handleError(404)
             return
@@ -76,19 +90,19 @@ const Login = () => {
                 password: query.password
             })
         })
-            .then(res => {
-                if(!res.ok) {
-                    setReqStatus(RequestStatus.FAILED)
-                    throw new Error();
-                }
-                return res.json()
-            })
-            .then(data => setUser(data))
-            .then(() => setReqStatus(RequestStatus.SUCCESS))
-            .catch(() => {
+        .then(res => {
+            if(!res.ok) {
                 setReqStatus(RequestStatus.FAILED)
-                handleError(405)
-            })
+                throw new Error();
+            }
+            return res.json()
+        })
+        .then(data => setUser(data))
+        .then(() => setReqStatus(RequestStatus.SUCCESS))
+        .catch(() => {
+            setReqStatus(RequestStatus.FAILED)
+            handleError(405)
+        })
     }
 
     return (
@@ -99,9 +113,11 @@ const Login = () => {
                         <span>{error && error.getMessage()}</span>
                     </ErrorAlert>
                 }
-                <Input id='email' text={'Email'} icon={Icons.username()}/>
-                <HiddePassword showIcon={true} />
-                <button className="btn btn-primary" onClick={handleLogin}>
+
+                <Input id='email' text={'Email'} value={email} autoComplete="nope" onChange={handleEmailChange} icon={Icons.username()}/>
+                <HiddePassword showIcon={true} value={password} autoComplete="nope" onChange={handlePasswordChange} />
+
+                <button disabled={!email || !password || reqStatus == RequestStatus.PENDING} className="btn btn-primary" onClick={handleLogin}>
                     {reqStatus == RequestStatus.PENDING ? <span className="loading loading-spinner"></span> : 'Ingresar'}
                 </button>
                 <BotonARuta nombre="Registrarse" ruta="/register"/>

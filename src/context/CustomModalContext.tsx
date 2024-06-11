@@ -25,26 +25,27 @@ export default function CustomModalProvider({ children }) {
 
     const closeModal = () => {
         setModals(prevModals => {
-            const modalsCopy = [...prevModals];
-            const lastModal = modalsCopy.pop();
-            if (lastModal?.onClose) {
-                lastModal.onClose();
-            }
-            return modalsCopy;
+            const modalsCopy = [...prevModals]
+            const lastModal = modalsCopy.pop()
+            if (lastModal?.onClose) lastModal.onClose()
+            return modalsCopy
         });
-        if (modals.length <= 1) {
-            dialogElement()?.close();
-        }
+        if (modals.length <= 1) dialogElement()?.close()
     };
 
     const handleClickOutside = (ev:MouseEvent) => {
-        const target = ev.target
-        if (target == ev.currentTarget) closeModal()
+        if (ev.target == ev.currentTarget) closeModal()
     }
 
     return (
         <customModalContext.Provider value={{ showModal, closeModal }}>
-            <dialog className="modal bg-gray-500/50 flex justify-center items-center h-[100vh] text-[100%]" id={'customModal'} onClose={closeModal} onClick={handleClickOutside} ref={dialogRef}>
+            <dialog
+                className="modal bg-black/50 flex justify-center items-center h-[100vh] text-[100%]"
+                id={'customModal'}
+                onClose={closeModal}
+                onMouseDown={handleClickOutside}
+                ref={dialogRef}
+            >
                 {modals.map((modal, index) => (
                     <div
                         key={index}

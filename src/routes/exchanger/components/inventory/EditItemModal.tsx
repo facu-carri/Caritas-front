@@ -2,8 +2,8 @@
 import { useEffect, useState } from "react";
 import { getData, putData } from "src/utils/request/httpRequests";
 import { endPoints } from "src/utils/constants";
-import GenericForm, { FormField } from "src/components/GenericForm";
-import { EditItemModalProps } from "src/types/PropsTypes";
+import GenericForm from "src/components/GenericForm";
+import { EditItemModalProps, FormField } from "src/types/PropsTypes";
 import { ErrorTypes } from "src/utils/Error/ErrorTypes";
 import { ErrorCode } from "src/utils/Error/ErrorCode";
 import { selectCategories } from "src/components/modals/modalOptions";
@@ -33,9 +33,9 @@ export default function EditItemModal({ itemData, onEditItem }: EditItemModalPro
 
   function getDefaultFileds(): Array<FormField> {
     return [
+      { nombre: 'Foto', etiqueta: 'photo', value: '', tipo: 'file', optional:true },
       { nombre: 'Nombre', etiqueta: 'name', value: itemData.name, tipo: 'text' },
       { nombre: 'Descripcion', etiqueta: 'description', value: itemData.description, tipo: 'text' },
-      { nombre: 'Foto', etiqueta: 'photo', value: '', tipo: 'file', optional:true },
       { nombre: 'Cantidad', etiqueta: 'quantity', value: itemData.quantity, tipo: 'number' },
     ]
   }
@@ -52,6 +52,6 @@ export default function EditItemModal({ itemData, onEditItem }: EditItemModalPro
   }, [categories])
 
   return ( campos && campos.length > 0 &&
-    <GenericForm id="register-helper" campos={campos} listener={handleAddItem} error={error} />
+    <GenericForm id="register-helper" hideImg={true} campos={campos} listener={handleAddItem} error={error} />
   )
 }

@@ -1,5 +1,5 @@
+import { FormField, ListItem } from "src/types/PropsTypes"
 import { ItemCategory, Location } from "src/types/Types"
-import { FormField, ListItem } from "../GenericForm"
 
 export function selectLocations(locations: Location[]): FormField {
   const items: ListItem[] = locations.map(location =>(

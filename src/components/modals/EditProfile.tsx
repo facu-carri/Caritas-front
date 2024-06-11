@@ -1,19 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import GenericForm, { FormField } from "../GenericForm";
+import { useCustomModal } from "src/context/CustomModalContext";
+import GenericForm from "../GenericForm";
 import { useState } from "react";
 import { ExchangerData } from "src/types/Types";
 import { ErrorCode } from "src/utils/Error/ErrorCode";
 import { ErrorTypes } from "src/utils/Error/ErrorTypes";
+import { EditProfileProps } from "src/types/PropsTypes";
 
-type Props = {
-  campos: FormField[],
-  onSave: (ev) => void,
-}
-
-export default function EditExchangerModal({campos, onSave}: Props) {
+export default function EditProfileModal({campos, onSave, showConfirm}: EditProfileProps) {
 
   const [error, setError] = useState<ErrorCode>(null)
+  const { closeModal } = useCustomModal()
 
   const handleError = (errCode: number) => {
     const err = new ErrorCode(errCode, ErrorTypes.REGISTER_HELPER_ERROR)
@@ -26,12 +24,10 @@ export default function EditExchangerModal({campos, onSave}: Props) {
   }
 
   const handleEdit = (data: ExchangerData) => {
-    try {
-      onSave(data)
-    } catch (err) {
-      handleError(parseInt(err))
-    }
+    onSave(data)
+      .then(() => closeModal())
+      .catch((errCode: number) => handleError(errCode))
   }
 
-  return campos && campos.length > 0 && <GenericForm id="edit-helpers-modal" campos={campos} listener={handleEdit} error={error} btnText="Aplicar cambios" />;
+  return campos && campos.length > 0 && <GenericForm id="edit-helpers-modal" campos={campos} showConfirm={showConfirm} listener={handleEdit} error={error} btnText="Aplicar cambios" />;
 }

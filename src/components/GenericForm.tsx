@@ -4,35 +4,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import logo from '@images/LogoCaritas.png'
 import Input from './Input';
-import { ErrorCode } from 'src/utils/Error/ErrorCode';
 import ErrorAlert from './ErrorAlert';
 import { useEffect, useState } from 'react';
 import HiddePassword from './HiddePassword';
-
-export type ListItem = {
-  key: string|number,
-  value: string
-}
-
-export type FormField = {
-  nombre: string,
-  etiqueta: string,
-  tipo: string,
-  value?: string|number,
-  image?: boolean,
-  items?: ListItem[],
-  optional?: boolean
-}
-
-type Type = {
-  id: string,
-  campos: Array<FormField>,
-  listener?: (values: Record<string, any>) => void
-  error?: ErrorCode,
-  hideImg?: boolean
-  btnText?: string
-  children?: JSX.Element[] | JSX.Element
-}
+import { useCustomModal } from 'src/context/CustomModalContext';
+import { FormField, GenericFormProps } from 'src/types/PropsTypes';
+import ConfirmationModal from './modals/Confirmation';
+import { MouseEvent } from 'src/types/Types';
 
 export async function getImageBase64(img: File) {
   return new Promise((resolve, reject) => {
@@ -49,13 +27,19 @@ export async function getImageBase64(img: File) {
   })
 }
 
-function GenericForm({ id, campos, listener, error, btnText, hideImg, children }: Type) {
+function GenericForm({ id, campos, listener, error, btnText, hideImg, showConfirm, children }: GenericFormProps) {
 
   // state "fields" no utilizado por el momento, 
   // posible futuro refactor para el manejo de los valores
   // de los campos del componente GenericForm
   const [fields, setFields] = useState(campos.map(campo => campo.value))
- 
+  const [isLoading, setIsLoading] = useState(false)
+  const { showModal } = useCustomModal()
+
+  useEffect(() => {
+    if(error != null) setIsLoading(false)
+  }, [error])
+
   function setField(fieldName, value) {
     setFields(prevFields => ({
       ...prevFields,
@@ -73,9 +57,7 @@ function GenericForm({ id, campos, listener, error, btnText, hideImg, children }
       switch (input.type) {
         case 'file':
           const img = (input as HTMLInputElement).files[0] ?? null
-          if(img) await getImageBase64(img)
-            .then(img => obj[input.id] = img)
-            .catch(() => {})
+          if (img) await getImageBase64(img).then(img => obj[input.id] = img).catch(() => { })
           break
         case 'select-one':
           const select = input as HTMLSelectElement
@@ -92,8 +74,15 @@ function GenericForm({ id, campos, listener, error, btnText, hideImg, children }
     return obj
   }
 
-  async function handleSubmit(ev:any) {
+  async function handleSubmit(ev: MouseEvent) {
     ev.preventDefault()
+    if(isLoading) return
+    setIsLoading(true)
+    if(showConfirm) showModal(<ConfirmationModal onAccept={handleConfirm}/>)
+    else handleConfirm()
+  }
+
+  async function handleConfirm() {
     const data = await getInputValues()
     listener(data)
   }
@@ -198,8 +187,10 @@ function GenericForm({ id, campos, listener, error, btnText, hideImg, children }
         ))}
         {
           error == null &&
-          <button disabled={!areFieldsEmpty} onClick={handleSubmit} className="bg-red-500 disabled:bg-gray-200 text-white px-4 py-2 rounded-lg font-bold transition-colors duration-300 hover:bg-red-700 transform hover:-translate-y-1 hover:scale-105">
-            {btnText ?? 'Enviar'}
+          <button disabled={!areFieldsEmpty || isLoading} onClick={handleSubmit} className="bg-red-500 disabled:bg-gray-200 text-white px-4 py-2 rounded-lg font-bold transition-colors duration-300 hover:bg-red-700 transform hover:-translate-y-1 hover:scale-105">
+            {
+              isLoading ? <span className="loading loading-spinner"></span> : (btnText ?? 'Enviar')
+            }
           </button>
         }
       </form>

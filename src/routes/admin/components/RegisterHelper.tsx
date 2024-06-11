@@ -7,8 +7,9 @@ import { endPoints, serverAddress } from "src/utils/constants";
 import { ErrorTypes } from "src/utils/Error/ErrorTypes";
 import { ErrorCode } from "src/utils/Error/ErrorCode";
 import { HelperData, Location } from "src/types/Types"
-import GenericForm, { FormField, ListItem } from "../../../components/GenericForm";
+import GenericForm from "../../../components/GenericForm";
 import { useCustomModal } from "src/context/CustomModalContext";
+import { FormField, ListItem } from "src/types/PropsTypes";
 
 const campos_default: Array<FormField> = [
   { nombre: 'Nombre completo', etiqueta: 'name', tipo: 'text' },

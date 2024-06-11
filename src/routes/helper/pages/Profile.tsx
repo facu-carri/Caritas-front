@@ -9,7 +9,7 @@ import UserProfile from 'src/components/UserProfile';
 import { User } from "src/utils/User";
 import RoutesHandler from "src/utils/routesHandler";
 import { useCustomModal } from "src/context/CustomModalContext";
-import EditExchangerModal from "src/components/modals/EditExchanger";
+import EditExchangerModal from "src/components/modals/EditProfile";
 import { getAdminFields } from "../components/HelperFields";
 import { selectLocations } from "src/components/modals/modalOptions";
 
@@ -19,7 +19,7 @@ export default function EmployeeProfile({ id }: ProfileProps) {
     const [campos, setCampos] = useState(null)
     const { getRole } = User()
     const { setRoute } = RoutesHandler()
-    const { showModal, closeModal } = useCustomModal()
+    const { showModal } = useCustomModal()
 
     useEffect(() => {
         getData(`${id ? `${endPoints.otherProfileHelper}${id}` : endPoints.profileHelper}`).then(helperData => setHelperData(helperData));
@@ -47,17 +47,11 @@ export default function EmployeeProfile({ id }: ProfileProps) {
     const handleEditHelper = () => showModal(<EditExchangerModal campos={campos} onSave={handleSave}/>)
 
     const handleSave = (updatedHelper) => { // EDIT: usar putData de httpRequests
-        let errorCode: number
-
-        putData(`${endPoints.employees}/${helperData.id}`, null, {
+        return putData(`${endPoints.employees}/${helperData.id}`, null, {
           ...updatedHelper,
           email: helperData.email
         })
         .then(res => setHelperData(res))
-        .catch(err => errorCode = err)
-    
-        if (errorCode) throw new Error(errorCode.toString())
-        else closeModal()
     };
 
     const canDoActions = getRole() == roles.ADMIN

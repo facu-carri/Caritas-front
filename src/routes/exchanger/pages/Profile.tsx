@@ -12,7 +12,7 @@ import { ProfileProps } from 'src/types/PropsTypes';
 import UserProfile from "src/components/UserProfile";
 import Rating from "src/components/Rating";
 import { getAdminFields, getExchangerFields } from "src/routes/admin/components/ExchangerFields";
-import EditExchangerModal from "src/components/modals/EditExchanger";
+import EditExchangerModal from "src/components/modals/EditProfile";
 import RoutesHandler from "src/utils/routesHandler";
 
 export default function Profile({ id }: ProfileProps) {
@@ -21,7 +21,7 @@ export default function Profile({ id }: ProfileProps) {
   const [info, setInfo] = useState(null)
 
   const { getRole, logout } = User()
-  const { showModal, closeModal } = useCustomModal()
+  const { showModal } = useCustomModal()
   const { getId } = RoutesHandler()
   
   const resetReviews = (error: number) => error && setReviews([])
@@ -43,16 +43,11 @@ export default function Profile({ id }: ProfileProps) {
   })
 
   function handleEditProfile(newData: ExchangerData) {
-    let errorCode: number
-    putData(`${endPoints.exchanger}/${userData.id}`, null, {
+    return putData(`${endPoints.exchanger}/${userData.id}`, null, {
       ...newData,
       email: userData.email
     })
     .then(data => setUserData(data))
-    .catch(err => errorCode = err)
-    
-    if (errorCode) throw new Error(errorCode.toString())
-    else closeModal()
   }
 
   const isAdmin = getRole() == roles.ADMIN
@@ -82,14 +77,14 @@ export default function Profile({ id }: ProfileProps) {
       })
   }
 
-  const canDoActions =  !getId() || getRole() == roles.ADMIN
+  const canDoActions = !getId() || isAdmin
 
   return (
     <UserProfile
       userData={userData}
       profileInfo={info}
-      handleEdit={!id || isAdmin ? showEditModal : null}
-      showPhoto={!id || isAdmin}
+      handleEdit={canDoActions ? showEditModal : null}
+      showPhoto={canDoActions}
       handleDelete={handleDelete}
       canDeletePhoto={!!(!getId() && userData?.photo)}
       canEdit={canDoActions}
@@ -101,7 +96,7 @@ export default function Profile({ id }: ProfileProps) {
         (!inventory || inventory.length == 0) ?
           <p className="text-gray-400 line-clamp-2">No hay elementos</p>
         :
-          inventory.map(item => <ItemCard key={item.id} item={item} hiddeBtns={canDoActions} hiddeOwner={true} />)
+          inventory.map(item => <ItemCard key={item.id} item={item} canEdit={false} canDelete={false} hiddeBtns={canDoActions} hiddeOwner={true} />)
       }
       </div>
       <h2 className="text-2xl font-bold mb-4 text-white">Comentarios</h2>

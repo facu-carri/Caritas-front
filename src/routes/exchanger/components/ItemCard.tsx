@@ -13,7 +13,7 @@ import SelectItemModal from './SelectItemModal';
 import { FaRegTrashAlt, FaEdit } from 'react-icons/fa';
 //la publicacion particular del producto a intercambiar
 
-export default function ItemCard({ item, onClick, hiddeOwner, queryInvalidator, hiddeBtns, isEditable }: ItemCardProps) {
+export default function ItemCard({ item, onClick, hiddeOwner, queryInvalidator, hiddeBtns, canDelete, canEdit }: ItemCardProps) {
   
   const [ itemData, setItemData ] = useState(item)
   const { showModal, closeModal } = useCustomModal()
@@ -63,12 +63,10 @@ export default function ItemCard({ item, onClick, hiddeOwner, queryInvalidator, 
       <p className="text-sm text-gray-500 mb-2">Descripcion: {itemData.description}</p>
       <div className='flex items-center justify-between'>
         <p className="text-sm text-gray-500 mb-2">Cantidad restante: {itemData.quantity}</p>
-        {
-          isEditable && <div className='flex gap-2'>
-            <button className='btn' onClick={onClickEdit}><FaEdit/></button>
-            <button onClick={() => confirmation(deleteItem)} className='btn btn-error'><FaRegTrashAlt/></button>
-          </div>
-        }
+        <div className='flex gap-2'>
+          {canEdit && <button className='btn' onClick={onClickEdit}><FaEdit /></button>}
+          {canDelete && <button onClick={() => confirmation(deleteItem)} className='btn btn-error'><FaRegTrashAlt /></button>}
+        </div>
       </div>
       {
         !hiddeBtns && 

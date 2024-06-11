@@ -9,7 +9,7 @@ export default function AddItemModal({ onClose, onAddItem }) {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [itemCategoryId, setItemCategoryId] = useState(0);
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState(1);
   const [photoFile, setPhotoFile] = useState(null);
 
   const [categories, setCategories] = useState([]);
@@ -33,6 +33,12 @@ export default function AddItemModal({ onClose, onAddItem }) {
       .catch(err => console.log(err))
   }, [])
   
+  const validateQty = (e) => {
+    const value = parseInt(e.target.value);
+    if (!isNaN(value) && value >= 0) setQuantity(value)
+    else setQuantity(1)
+  }
+
   return (
     <div className="w-2/5 items-center bg-white rounded-lg overflow-hidden shadow-xl transform transition-all">
       <div className="mt-3 text-center sm:mt-0 sm:text-left bg-white px-6 py-8">
@@ -51,7 +57,7 @@ export default function AddItemModal({ onClose, onAddItem }) {
               categories.map(({ id, name }) => <option key={id} value={id}>{name}</option>)
             }
           </select>
-          <Input type="number" min="1" text="Cantidad" onChange={(e) => setQuantity(parseInt(e.target.value))}></Input>
+          <Input type="number" min="1" text="Cantidad" value={quantity} onChange={validateQty}/>
         </div>
       </div>
       <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse gap-5">

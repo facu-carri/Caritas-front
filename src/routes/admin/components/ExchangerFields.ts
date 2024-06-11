@@ -3,6 +3,7 @@ import { ExchangerData } from "src/types/Types"
 
 export const getAdminFields = (exchanger:ExchangerData): FormField[] => {
     return [
+        { nombre: 'Foto', etiqueta: 'photo', tipo: 'file', optional: true },
         { nombre: 'Nombre completo', etiqueta: 'name', value: exchanger.name, tipo: 'text' },
         { nombre: 'Fecha de nacimiento', etiqueta: 'birthdate', value: exchanger.birthdate, tipo: 'date'},
         { nombre: 'DNI', etiqueta: 'dni', value: exchanger.dni, tipo: 'text' },
@@ -14,7 +15,8 @@ export const getAdminFields = (exchanger:ExchangerData): FormField[] => {
 
 export const getExchangerFields = (exchanger:ExchangerData): FormField[] => {
     return [
+        { nombre: 'Foto', etiqueta: 'photo', tipo: 'file', optional: true },
         { nombre: 'Nombre completo', etiqueta: 'name', value: exchanger.name, tipo: 'text' },
         { nombre: 'DNI', etiqueta: 'dni', value: exchanger.dni, tipo: 'text' },
-      ]
+    ]
 }
