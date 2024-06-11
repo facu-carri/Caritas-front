@@ -29,7 +29,9 @@ type Type = {
   campos: Array<FormField>,
   listener?: (values: Record<string, any>) => void
   error?: ErrorCode,
+  hideImg?: boolean
   btnText?: string
+  children?: JSX.Element[] | JSX.Element
 }
 
 export async function getImageBase64(img: File) {
@@ -47,7 +49,7 @@ export async function getImageBase64(img: File) {
   })
 }
 
-function GenericForm({ id, campos, listener, error, btnText }: Type) {
+function GenericForm({ id, campos, listener, error, btnText, hideImg, children }: Type) {
 
   // state "fields" no utilizado por el momento, 
   // posible futuro refactor para el manejo de los valores
@@ -178,12 +180,13 @@ function GenericForm({ id, campos, listener, error, btnText }: Type) {
 
   return (
     <div className="modal-box rounded-lg max-w-md mx-auto p-8 my-8 transition-transform hover:scale-105 shadow-2xl bg-navbar-blue">
-      <img src={logo} alt="Logo" className="w-full h-auto mb-4 rounded-lg transition-transform duration-300 transform hover:scale-105 border-2 shadow-2xl" />
+      <img src={logo} alt="Logo" className={`${hideImg && 'hidden'} w-full h-auto mb-4 rounded-lg transition-transform duration-300 transform hover:scale-105 border-2 shadow-2xl`} />
       {
         <ErrorAlert show={error != null}>
           <span>{error && error.getMessage()}</span>
         </ErrorAlert>
       }
+      {children}
       <form className="text-center">
         {campos.map((campo) => (
           <div key={campo.nombre} className="mb-4">

@@ -22,7 +22,7 @@ export default function Profile({ id }: ProfileProps) {
 
   const { getRole, logout } = User()
   const { showModal, closeModal } = useCustomModal()
-  const { setRoute, getId } = RoutesHandler()
+  const { getId } = RoutesHandler()
   
   const resetReviews = (error: number) => error && setReviews([])
 
@@ -101,7 +101,7 @@ export default function Profile({ id }: ProfileProps) {
         (!inventory || inventory.length == 0) ?
           <p className="text-gray-400 line-clamp-2">No hay elementos</p>
         :
-          inventory.map(item => <ItemCard key={item.id} item={item} hiddeBtns={true} hiddeOwner={!!id} />)
+          inventory.map(item => <ItemCard key={item.id} item={item} hiddeBtns={canDoActions} hiddeOwner={true} />)
       }
       </div>
       <h2 className="text-2xl font-bold mb-4 text-white">Comentarios</h2>

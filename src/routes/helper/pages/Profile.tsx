@@ -4,17 +4,19 @@ import { endPoints, roles, routes } from "src/utils/constants";
 import { useEffect, useState } from 'react';
 import { formatDate } from 'src/utils/api';
 import { ProfileProps } from 'src/types/PropsTypes';
-import { HelperData, UserInfoFields } from 'src/types/Types';
+import { HelperData, Location, UserInfoFields } from 'src/types/Types';
 import UserProfile from 'src/components/UserProfile';
 import { User } from "src/utils/User";
 import RoutesHandler from "src/utils/routesHandler";
 import { useCustomModal } from "src/context/CustomModalContext";
 import EditExchangerModal from "src/components/modals/EditExchanger";
 import { getAdminFields } from "../components/HelperFields";
+import { selectLocations } from "src/components/modals/modalOptions";
 
 export default function EmployeeProfile({ id }: ProfileProps) {
     const [helperData, setHelperData] = useState<HelperData>();
     const [info, setInfo] = useState(null)
+    const [campos, setCampos] = useState(null)
     const { getRole } = User()
     const { setRoute } = RoutesHandler()
     const { showModal, closeModal } = useCustomModal()
@@ -36,9 +38,13 @@ export default function EmployeeProfile({ id }: ProfileProps) {
         ]
     }
 
+    getData(endPoints.categories).then(data => setFields(data))//catch no hay sedes cargadas
+    
+    const setFields = (fiales:Location[]) => setCampos([...getAdminFields(helperData), selectLocations(fiales)])
+
     const handleDelete = () => deleteData(`${endPoints.employees}/${id}`, null).then(() => setRoute(routes.admin.gestionarAyudantes))
 
-    const handleEditHelper = () => showModal(<EditExchangerModal campos={getAdminFields(helperData)} onSave={handleSave}/>)
+    const handleEditHelper = () => showModal(<EditExchangerModal campos={campos} onSave={handleSave}/>)
 
     const handleSave = (updatedHelper) => { // EDIT: usar putData de httpRequests
         let errorCode: number
