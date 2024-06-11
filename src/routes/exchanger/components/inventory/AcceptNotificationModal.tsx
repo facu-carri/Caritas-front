@@ -23,6 +23,8 @@ export default function EditItemModal({ notificationData, onEditNotification }) 
   const hiddeError = () => setError(null)
 
   const handleAcceptNotification = (data) => {
+    data.date=nextFreeDay
+    data.locationId=data.employeeLocationId
     putData(`${endPoints.acceptNotification}/${notificationData.id}`, null, data)
       .then(new_data => {
         console.log(new_data)
@@ -33,17 +35,13 @@ export default function EditItemModal({ notificationData, onEditNotification }) 
 
   function getDefaultFileds(): Array<FormField> {
     return [
-      { nombre: 'Nombre', etiqueta: 'name', value: notificationData.name, tipo: 'text' },
-      { nombre: 'Descripcion', etiqueta: 'description', value: notificationData.description, tipo: 'text' },
-      { nombre: 'Foto', etiqueta: 'photo', value: '', tipo: 'file', optional:true },
-      { nombre: 'Cantidad', etiqueta: 'quantity', value: notificationData.quantity, tipo: 'number' },
     ]
   }
 
   const handleGetNextDay = (data:string) => {
     console.log("aaaaaaaaaaaaaaaaaaa")
     setNextFreeDay(data)
-    getData(endPoints.freeLocations, null, nextFreeDay)
+    getData(endPoints.freeLocations+"/"+data)
     .then(data => setFreeLocations(data))
     .catch(err => handleError(err))
   }
@@ -55,18 +53,21 @@ export default function EditItemModal({ notificationData, onEditNotification }) 
     .catch(err => handleError(err))
   }, [])
   useEffect(() => {
-    if (!nextFreeDay) return
-
-    getData(endPoints.freeLocations, null, nextFreeDay)
-    .then(data => setFreeLocations(data))
-    .catch(err => handleError(err))
-  }, [nextFreeDay])
-  useEffect(() => {
     if(freeLocations.length == 0 || !notificationData) return
     setCampos([...getDefaultFileds(), selectLocations(freeLocations)])
   }, [freeLocations])
 
-  return ( campos && campos.length > 0 &&
-    <GenericForm id="register-helper" campos={campos} listener={handleAcceptNotification} error={error} />
+  return ( campos && campos.length > 0 && 
+    <div>
+      <GenericForm id="register-helper" campos={campos} listener={handleAcceptNotification} error={error} >
+        <p className="text-sm fond-bold text-black-500 mb-2">Solicitante: {notificationData.hostItem?.owner?.name}</p>
+        <p className="text-sm fond-bold text-black-500 mb-2">Item del solicitante: {notificationData.hostItem?.name}</p>
+        <p className="text-sm fond-bold text-black-500 mb-2">Tu item: {notificationData.guestItem?.name}</p>
+        <p className="text-sm fond-bold text-black-500 mb-2">Cantidad restante de tu item: {notificationData.guestItem?.quantity}</p>
+        <p className="text-sm fond-bold text-black-500 mb-2">Categoria: {notificationData.guestItem?.itemCategory?.name}</p>
+        <p className="text-sm fond-bold text-black-500 mb-2">La fecha sera: {nextFreeDay}</p>
+      </GenericForm>
+    </div>
+    
   )
 }
