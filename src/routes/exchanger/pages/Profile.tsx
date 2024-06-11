@@ -75,11 +75,11 @@ export default function Profile({ id }: ProfileProps) {
     }
 
     function handleDelete() {
-        deleteData(`${endPoints.exchanger}/${id}`, null)
-        .then(() => {
-            if(!id) logout()
-            else setRoute(routes.main)
-        })
+        getData(`exchanger/myProfile`)
+            .then(({ id: profileId }) => {
+                deleteData(`${endPoints.exchanger}/${profileId}`, null)
+                    .then(logout)
+            })
     }
 
     const canDoActions =  !getId() || getRole() == roles.ADMIN
