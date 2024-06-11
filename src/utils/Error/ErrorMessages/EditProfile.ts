@@ -5,6 +5,6 @@ export const EditProfileErrorMsgs = {
         400: 'Contraseña inválida',
         401: 'Acceso no autorizado',
         404: 'No existe el intercambiador',
-        406: 'Fecha de nacimiento debe ser mayor a 18 años',
+        406: 'La fecha de nacimiento debe ser mayor a 18 años',
     }
 }
