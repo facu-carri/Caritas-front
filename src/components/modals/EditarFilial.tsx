@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { putData } from "src/utils/request/httpRequests";
-import GenericForm, { FormField } from "../GenericForm";
+import GenericForm from "../GenericForm";
 import { endPoints } from "src/utils/constants";
 import { useState } from "react";
 import { ErrorCode } from "src/utils/Error/ErrorCode";
 import { ErrorTypes } from "src/utils/Error/ErrorTypes";
 import { useCustomModal } from "src/context/CustomModalContext";
-import { EditarFilialProps } from "src/types/PropsTypes";
+import { EditarFilialProps, FormField } from "src/types/PropsTypes";
 import { LocationFields } from "src/types/Types";
 import ConfirmationModal from "./Confirmation";
 

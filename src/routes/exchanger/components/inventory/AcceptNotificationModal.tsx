@@ -2,10 +2,11 @@
 import { useEffect, useState } from "react";
 import { getData, putData } from "src/utils/request/httpRequests";
 import { endPoints } from "src/utils/constants";
-import GenericForm, { FormField } from "src/components/GenericForm";
+import GenericForm from "src/components/GenericForm";
 import { ErrorTypes } from "src/utils/Error/ErrorTypes";
 import { ErrorCode } from "src/utils/Error/ErrorCode";
 import { selectLocations } from "src/components/modals/modalOptions";
+import { FormField } from "src/types/PropsTypes";
 
 export default function EditItemModal({ notificationData, onEditNotification }) {
 

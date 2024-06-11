@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { postData } from "src/utils/request/httpRequests";
-import GenericForm, { FormField } from "../GenericForm";
+import GenericForm from "../GenericForm";
 import { endPoints } from "src/utils/constants";
 import { useState } from "react";
 import { ErrorCode } from "src/utils/Error/ErrorCode";
 import { ErrorTypes } from "src/utils/Error/ErrorTypes";
 import { useCustomModal } from "src/context/CustomModalContext";
-import { AgregarFilialProps } from "src/types/PropsTypes";
+import { AgregarFilialProps, FormField } from "src/types/PropsTypes";
 import { LocationResponse } from "src/types/Types";
 import { useQueryClient } from "react-query";
 
