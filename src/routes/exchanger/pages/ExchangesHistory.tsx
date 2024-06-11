@@ -17,7 +17,7 @@ export default function ExchangesHistory() {
         setLoading(true)
         getData(endPoints.exchange)
           .then(data => setExchangeHistory(data))
-          .then(() => setLoading(false))
+          .finally(() => setLoading(false))
     }, []);
 
     const value = searchQuery.toLowerCase()
@@ -42,27 +42,28 @@ export default function ExchangesHistory() {
         <div className="bg-gray-100 min-h-screen">
             <ExchangerHeader title="Historial de intercambios" text=""/>
             <div className="flex flex-col justify-center items-center text-[100%] gap-6 md:gap-8 mt-8 min-h-[300px]">
-                <p className="mx-auto max-w-[700px] md:text-xl text-gray-400 text-center">
-                    Filtra por sede, estado o codigo
-                </p>
-                <form className="w-full max-w-md space-y-2 flex space-x-2" onSubmit={(e) => e.preventDefault()}>
-                            <input
-                                className="max-w-lg flex-1 p-2 border border-gray-300 rounded-md"
-                                placeholder="Buscar..."
-                                type="text"
-                                value={searchQuery}
-                                onChange={e=>setSearchQuery(e.target.value)}
-                            />
-                </form>
                 {
                     loading ? (<LoadingSpinner/>) :
-                    (!filteredExchanges || filteredExchanges.length==0) ? (<p>No hay intercambios</p>) : 
-                    (
-                        <div className="flex flex-col gap-2 w-1/2">
-                            {filteredExchanges.map((exchange, index) => (
-                                <ExchangeCard key={index} exchangeDetails={exchangeDetails(exchange)}/>
-                            ))}
-                        </div>
+                    (!filteredExchanges || filteredExchanges.length==0) ? (<p>No hay intercambios</p>) : (
+                        <>
+                            <p className="mx-auto max-w-[700px] md:text-xl text-gray-400 text-center">
+                                Filtra por sede, estado o codigo
+                            </p>
+                            <form className="w-full max-w-md space-y-2 flex space-x-2" onSubmit={(e) => e.preventDefault()}>
+                                <input
+                                    className="max-w-lg flex-1 p-2 border border-gray-300 rounded-md"
+                                    placeholder="Buscar..."
+                                    type="text"
+                                    value={searchQuery}
+                                    onChange={e=>setSearchQuery(e.target.value)}
+                                />
+                            </form>
+                            <div className="flex flex-col gap-2 w-1/2">
+                                {filteredExchanges.map((exchange, index) => (
+                                    <ExchangeCard key={index} exchangeDetails={exchangeDetails(exchange)}/>
+                                ))}
+                            </div>
+                        </>
                     )
                 }
             </div>
