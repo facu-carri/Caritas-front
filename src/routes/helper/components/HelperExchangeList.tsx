@@ -82,7 +82,7 @@ export default function ExchangesHistory() {
   const value = searchQuery.toLowerCase()
   const filteredExchanges = useMemo(() => {
       return exchangeHistory.filter((exchange) => {
-          return !value || exchange.state.toLowerCase().includes(value) || exchange.authenticationCode.toLowerCase().includes(value) || exchange.location.name.toLowerCase().includes(value)
+          return !value || exchange.state.toLowerCase().includes(value) || exchange.authenticationCode.toLowerCase().includes(value)
       });
   }, [searchQuery, exchangeHistory])
 
@@ -101,7 +101,7 @@ export default function ExchangesHistory() {
           <ExchangerHeader title="Intercambios" text=""/>
           <div className="flex flex-col justify-center items-center text-[100%] gap-6 md:gap-8 mt-8 min-h-[300px]">
               <p className="mx-auto max-w-[700px] md:text-xl text-gray-400 text-center">
-                  Filtra por sede, estado o codigo
+                  Filtra por estado o codigo
               </p>
               <form className="w-full max-w-md space-y-2 flex space-x-2" onSubmit={(e) => e.preventDefault()}>
                           <input
