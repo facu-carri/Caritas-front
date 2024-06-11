@@ -1,17 +1,16 @@
+import { useState } from 'react';
 import Image from 'src/components/Image';
 import { useMutation } from 'react-query';
-import { getHeaders } from 'src/utils/request/httpRequests';
-import { useCustomModal } from 'src/context/CustomModalContext';
 import { ItemCardProps } from 'src/types/PropsTypes';
 import { MouseEvent } from 'src/types/Types';
+import { getHeaders } from 'src/utils/request/httpRequests';
+import { useCustomModal } from 'src/context/CustomModalContext';
 import { endPoints, routes, serverAddress } from 'src/utils/constants';
 import RoutesHandler from 'src/utils/routesHandler';
-
-import { FaRegTrashAlt, FaEdit } from 'react-icons/fa';
 import EditItemModal from './inventory/EditItemModal';
 import ConfirmationModal from 'src/components/modals/Confirmation';
-import { useState } from 'react';
 import SelectItemModal from './SelectItemModal';
+import { FaRegTrashAlt, FaEdit } from 'react-icons/fa';
 //la publicacion particular del producto a intercambiar
 
 export default function ItemCard({ item, onClick, hiddeOwner, queryInvalidator, hiddeBtns, isEditable }: ItemCardProps) {
@@ -32,7 +31,16 @@ export default function ItemCard({ item, onClick, hiddeOwner, queryInvalidator, 
   }
 
   const onClickEdit = () => {
-    showModal(<EditItemModal itemData={item} onEditItem={(data) => setItemData({ ...itemData, ...data })} />)
+    showModal(
+      <EditItemModal
+        itemData={item}
+        onEditItem={(data) => {
+          setItemData({ ...itemData, ...data });
+          queryInvalidator();
+          closeModal();
+        }}
+      />
+    )
   }
 
   const { mutate: deleteItem } = useMutation({
