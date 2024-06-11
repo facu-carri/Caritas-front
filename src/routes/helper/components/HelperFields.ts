@@ -1,4 +1,4 @@
-import { FormField } from "src/components/GenericForm"
+import { FormField } from "src/types/PropsTypes"
 import { HelperData } from "src/types/Types"
 
 export const getAdminFields = (helper:HelperData): FormField[] => {
