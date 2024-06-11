@@ -5,6 +5,7 @@ export class ErrorCode {
     
     private code: number
     private type: ErrorTypes
+    private defaultError: string = ErrorsMsgs[ErrorTypes.UNKNOWN_ERROR][404]
 
     constructor(code: number | string = 0, type: ErrorTypes) {
         this.code = typeof(code) == 'string' ? parseInt(code as string) : code as number
@@ -16,8 +17,8 @@ export class ErrorCode {
     }
 
     getMessage(): string {
-        if(!this.isValid()) return `${this.code}: Error desconocido`
-        return ErrorsMsgs[this.type][this.code] ?? `${this.code}: Error desconocido`
+        if(!this.isValid()) return `${this.code}: ${this.defaultError}`
+        return ErrorsMsgs[this.type][this.code] ?? `${this.code}: ${this.defaultError}`
     }
 
     getCode(): number {

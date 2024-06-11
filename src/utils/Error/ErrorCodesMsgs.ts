@@ -7,10 +7,11 @@ import { FilialesErrorMsgs } from "./ErrorMessages/Filiales"
 import { ExchangerErrorMsgs } from "./ErrorMessages/Exchanger"
 import { EditItemErrorMsgs } from "./ErrorMessages/EditItem"
 import { EditProfileErrorMsgs } from "./ErrorMessages/EditProfile"
+import { AuthCodeErrorMsgs } from "./ErrorMessages/Auth"
 
 const DefaultErrors: IErrorCodesMsgs = {
     [ErrorTypes.UNKNOWN_ERROR]: {
-        404: 'Unknown error'
+        404: 'Error desconocido'
     }
 }
 
@@ -22,5 +23,6 @@ export const ErrorsMsgs = {
     ...FilialesErrorMsgs,
     ...ExchangerErrorMsgs,
     ...EditItemErrorMsgs,
-    ...EditProfileErrorMsgs
+    ...EditProfileErrorMsgs,
+    ...AuthCodeErrorMsgs,
 }
