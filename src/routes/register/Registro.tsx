@@ -37,6 +37,17 @@ function RegistrationFields() {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<ErrorCode>(null)
 
+  const fields = [
+    { label: "Nombre completo", text: "Ingresa nombre completo", value: name, onChange: (e) => validateName(e.target.value) },
+    { label: "Foto de perfil", file: true, onChange: (e) => setPhotoFile(e.target.files[0]) },
+    { label: "Fecha Nacimiento", text: "Ingresa tu fecha de nacimiento", value: birthdate, type: "date", max: new Date().toISOString().split('T')[0], onChange: (e) => validateBirthdate(e.target.value) },
+    { label: "DNI", text: "Ingresa tu DNI", value: dni, maxLength: 10, onChange: (e) => validateDni(e.target.value) },
+    { label: "Teléfono", text: "Ingresa tu télefono", value: phone, onChange: (e) => validatePhone(e.target.value) },
+    { label: "Correo electrónico", text: "Ingresa tu correo", onChange: (e) => setEmail(e.target.value) },
+    { label: "Contraseña", text: "Ingresa tu contraseña", type: "Password", onChange: (e) => setPassword(e.target.value) },
+    { label: "Volver a ingresar contraseña", text: "Vuelve a ingresar tu contraseña", type: "Password", onChange: (e) => setConfirmPassword(e.target.value) },
+  ]
+
   const handleError = (errCode: number) => {
     const err = new ErrorCode(errCode, ErrorTypes.REGISTER_EXCHANGER_ERROR)
     setError(err)
@@ -100,43 +111,19 @@ function RegistrationFields() {
   const isEmptyField =  !name || !birthdate || !dni || !phone || !email || !password || confirmPassword !== password
 
   return (
-      <form className="space-y-4 mt-5">
+    <form className="space-y-4 mt-5">
       {<ErrorAlert show={error != null} attrs='w-full'>
         <span>{error && error.getMessage()}</span>
       </ErrorAlert>}
       <div className="grid grid-cols-2 gap-4">
-        <div className="space-y-2">
-          <FormLabel htmlFor="first-name">Nombre completo</FormLabel>
-          <Input text={"Ingresa nombre completo"} value={name} onChange={e=>validateName(e.target.value)}></Input>
-        </div>
-        <div className='space-y-2'>
-          <FormLabel htmlFor="first-name">Foto de perfil</FormLabel>
-          <Input file={true} onChange={(e) => setPhotoFile(e.target.files[0])}></Input>
-        </div>
-        <div className="space-y-2">
-          <FormLabel htmlFor="birthdate">Fecha Nacimiento</FormLabel>
-          <Input text={"Ingresa tu fecha de nacimiento"} value={birthdate} type="date" max={new Date().toISOString().split('T')[0]} onChange={e=>validateBirthdate(e.target.value)}></Input>
-        </div>
-        <div className="space-y-2">
-          <FormLabel htmlFor="dni">DNI</FormLabel>
-          <Input text={"Ingresa tu DNI"} value={dni} maxLength={10} onChange={e=>validateDni(e.target.value)}></Input>
-        </div>
-        <div className="space-y-2">
-          <FormLabel htmlFor="phone">Teléfono</FormLabel>
-          <Input text={"Ingresa tu télefono"} value={phone} onChange={e=>validatePhone(e.target.value)}></Input>
-        </div>
-        <div className="space-y-2">
-          <FormLabel htmlFor="email">Correo electrónico</FormLabel>
-          <Input text={"Ingresa tu correo"} onChange={e=>setEmail(e.target.value)}></Input>
-        </div>
-        <div className="space-y-2">
-          <FormLabel htmlFor="password">Contraseña</FormLabel>
-          <Input text={"Ingresa tu contraseña"} type={"Password"} onChange={e=>setPassword(e.target.value)}></Input>
-        </div>
-        <div className="space-y-2">
-          <FormLabel htmlFor="confirm-password">Volver a ingresar contraseña</FormLabel>
-          <Input text={"Vuelve a ingresar tu contraseña"} type={"Password"} onChange={e=>setConfirmPassword(e.target.value)}></Input>
-        </div>
+        {
+          fields.map((field, index) => (
+          <div className="space-y-2" key={index}>
+            <FormLabel htmlFor={field.label.toLowerCase().replace(/ /g, "-")}>{field.label}</FormLabel>
+            <Input {...field}></Input>
+          </div>
+          ))
+        }
       </div>
       <button onClick={handleSubmit} disabled={isLoading || isEmptyField} type="submit" className={`btn ${!isLoading && !isEmptyField && 'bg-blue-500 hover:bg-blue-600'}  text-white font-semibold py-2 px-4 rounded-md w-full`}>
         {isLoading ? <span className="loading loading-spinner"></span> : 'Registrarse'}
