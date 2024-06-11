@@ -23,7 +23,7 @@ export default function ExchangesHistory() {
     const value = searchQuery.toLowerCase()
     const filteredExchanges = useMemo(() => {
         return exchangeHistory.filter((exchange) => {
-            return !value || exchange.state.toLowerCase().includes(value) || exchange.authenticationCode.toLowerCase().includes(value) || exchange.location.name.toLowerCase().includes(value)
+            return !value || exchange.state.toLowerCase().includes(value) || exchange.authenticationCode.toLowerCase().includes(value) || exchange.location?.name?.toLowerCase().includes(value)
         });
     }, [searchQuery, exchangeHistory])
 
