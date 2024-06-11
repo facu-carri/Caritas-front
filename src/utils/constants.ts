@@ -10,6 +10,7 @@ export const endPoints = {
     otherProfileHelper: 'employee/',
     inventory: 'item/myInventory',
     location: 'location',
+    freeLocations: 'freeLocations',
     myReviews: 'reviews/myReviews',
     categories: 'itemCategory',
     exchangeablesItems: 'item',
@@ -17,6 +18,10 @@ export const endPoints = {
     exchanger: 'exchanger',
     employees: 'employee',
     exchange: 'exchange',
+    notification: 'exchange/myNotifications',
+    acceptNotification: 'exchange/accept',
+    rejectNotification: 'exchange/reject',
+    nextFreeDay: 'exchange/nextFreeDay',
 }
 const adminRoutes = {
     'estadisticas': '/estadisticas',

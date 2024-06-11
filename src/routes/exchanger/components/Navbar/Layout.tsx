@@ -8,7 +8,7 @@ import { useCustomModal } from "src/context/CustomModalContext"
 import LogoutModal from "src/components/modals/Logout"
 import { DropdownItem, Tab } from "src/types/Types"
 import Navbar from "src/components/Navbar"
-import { BellNotification } from "../BellNotification"
+import { BellNotificationList } from "../BellNotificationList"
 
 export default function ExchangerLayout() {
 
@@ -50,7 +50,7 @@ export default function ExchangerLayout() {
     },
     {
       
-      customElement: <BellNotification />
+      customElement: <BellNotificationList />
     }
   ]
 
