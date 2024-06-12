@@ -167,7 +167,7 @@ function GenericForm({ id, campos, listener, error, btnText, hideImg, showConfir
   }
 
   return (
-    <div className="modal-box rounded-lg max-w-md mx-auto p-8 my-8 transition-transform hover:scale-105 shadow-2xl bg-navbar-blue">
+    <div className="modal-box rounded-lg max-w-fit w-full mx-auto p-8 my-8 transition-transform hover:scale-105 shadow-2xl bg-navbar-blue">
       <img src={logo} alt="Logo" className={`${hideImg && 'hidden'} w-full h-auto mb-4 rounded-lg transition-transform duration-300 transform hover:scale-105 border-2 shadow-2xl`} />
       {
         <ErrorAlert show={error != null}>
