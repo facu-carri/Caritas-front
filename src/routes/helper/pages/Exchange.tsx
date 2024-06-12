@@ -1,10 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { endPoints, serverAddress } from "src/utils/constants";
 import { getHeaders } from "src/utils/request/httpRequests";
-import LoadingSpinner from "src/components/LoadingSpinner";
-import Image from "src/components/Image";
 import { useCustomModal } from "src/context/CustomModalContext";
 import ConfirmationModal from "src/components/modals/Confirmation";
+import LoadingSpinner from "src/components/LoadingSpinner";
+import Image from "src/components/Image";
 
 export default function Exchange({ id }) {
 
@@ -41,14 +41,14 @@ export default function Exchange({ id }) {
     if(exchange.hostAsistio) {
       return;
     }
-    showModal(<ConfirmationModal onAccept={() => markAttendanceHost()} />)
+    showConfirmationModal(markAttendanceHost)
   }
 
   function handleCheckGuest() {
     if(exchange.guestAsistio) {
       return;
     }
-    showModal(<ConfirmationModal onAccept={() => markAttendanceGuest()} />)
+    showConfirmationModal(markAttendanceGuest)
   }
 
   const { mutate: completeExchange, isLoading: isMutatingComplete } = useMutation({
@@ -74,6 +74,10 @@ export default function Exchange({ id }) {
     }),
     onSuccess: () => queryClient.invalidateQueries(['exchange', id])
   })
+
+  function showConfirmationModal(onAccept) {
+    showModal(<ConfirmationModal onAccept={onAccept} />)
+  }
 
   const isMutating = isMutatingComplete || isMutatingDislike || isMutatingNonAttendence
 
@@ -108,7 +112,7 @@ export default function Exchange({ id }) {
               <button
                 className="btn"
                 disabled={!(exchange.hostAsistio && exchange.guestAsistio) || isMutating}
-                onClick={() => completeExchange()}
+                onClick={() => showConfirmationModal(completeExchange)}
               >
                 Intercambio Exitoso
               </button>
@@ -116,7 +120,7 @@ export default function Exchange({ id }) {
               <button
                 className="btn"
                 disabled={!(exchange.hostAsistio && exchange.guestAsistio) || isMutating}
-                onClick={() => rejectByDislike()}
+                onClick={() => showConfirmationModal(rejectByDislike)}
               >
                 Rechazar por Disgusto
               </button>
@@ -124,7 +128,7 @@ export default function Exchange({ id }) {
               <button
                 className="btn"
                 disabled={!(exchange.hostAsistio || exchange.guestAsistio) || (exchange.hostAsistio && exchange.guestAsistio) || isMutating}
-                onClick={() => rejectByNonAttendance()}  
+                onClick={() => showConfirmationModal(rejectByNonAttendance)}  
               >
                 Rechazar por Ausencia
               </button>
