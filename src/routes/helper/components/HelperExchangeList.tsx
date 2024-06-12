@@ -13,6 +13,7 @@ import { useCustomModal } from "src/context/CustomModalContext";
 import { ErrorCode } from "src/utils/Error/ErrorCode";
 import { ErrorTypes } from "src/utils/Error/ErrorTypes";
 import ErrorAlert from "src/components/ErrorAlert";
+import { parseExchangeStateName } from "src/utils/parser";
 
 export default function ExchangesHistory() {
 
@@ -53,7 +54,7 @@ export default function ExchangesHistory() {
     const value = searchQuery.toLowerCase()
     if(!exchangeHistory) return []
     return exchangeHistory.filter((exchange) => {
-      return !value || exchange.state.toLowerCase().includes(value) || exchange.authenticationCode.toLowerCase().includes(value)
+      return !value || parseExchangeStateName(exchange.state).toLowerCase().includes(value) || exchange.authenticationCode.toLowerCase().includes(value)
     })
   }, [searchQuery, exchangeHistory])
 
