@@ -21,6 +21,7 @@ export const endPoints = {
     notification: 'exchange/myNotifications',
     acceptNotification: 'exchange/accept',
     rejectNotification: 'exchange/reject',
+    cancelExchange: 'exchange/cancel',
     nextFreeDay: 'exchange/nextFreeDay',
     endDay: 'exchange/endDay',
     todayIsFinished: 'exchange/todayIsFinished',

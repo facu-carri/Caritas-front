@@ -86,6 +86,7 @@ export type CategoryListParam = {
     data: ItemCategory[],
     isLoading?: boolean
 }
+
 export type Exchange = {
     id: number;
     guestAsistio: boolean;
@@ -93,7 +94,7 @@ export type Exchange = {
     guestItem: ItemData;
     hostItem: ItemData;
     date: string;
-    state: string;
+    state?: 'NotConfirmed' | 'Rejected' | 'Accepted' | 'Canceled' | 'Completed' | 'NotComplitedByDislike' | 'NotComplitedByNonAttendance'
     location: Location;
     authenticationCode: string;
 }

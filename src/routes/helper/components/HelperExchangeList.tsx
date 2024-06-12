@@ -94,9 +94,7 @@ export default function ExchangesHistory() {
           (!dayEnded &&
             <div className="flex flex-col gap-2 items-center mb-2">
               {filteredExchanges.map((exchange) => (
-                <div key={exchange.id} className="cursor-pointer" onClick={()=>setRoute(`${routes.helper.exchange}/${exchange.id}`)}>
-                  <ExchangeCard exchange={exchange}/>
-                </div>
+                <ExchangeCard key={exchange.id} exchange={exchange} onClick={() => setRoute(`${routes.helper.exchange}/${exchange.id}`)}/>
               ))}
             </div>
           )

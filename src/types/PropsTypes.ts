@@ -1,5 +1,5 @@
 import { ErrorCode } from "src/utils/Error/ErrorCode"
-import { ExchangerCardData, GeoPosition, HelperData, ItemData, Location, LocationResponse, MouseEvent, Tab, UserData, UserInfoFields } from "./Types"
+import { Exchange, ExchangerCardData, GeoPosition, HelperData, ItemData, Location, LocationResponse, MouseEvent, Tab, UserData, UserInfoFields } from "./Types"
 
 export type AgregarFilialProps = {
     geoPosition: GeoPosition
@@ -153,4 +153,10 @@ export type AvatarPhotoProps = {
     photo: string;
     name: string;
     showAvatar?: boolean;
-};
+}
+
+export type ExchangeCardProps = {
+    exchange: Exchange;
+    onClick?: () => void;
+    children?: JSX.Element[] | JSX.Element
+}

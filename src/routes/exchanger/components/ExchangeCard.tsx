@@ -1,10 +1,11 @@
 import ExchangeInfo from "src/routes/helper/components/ExchangeInfo";
-import { Exchange } from "src/types/Types";
+import { ExchangeCardProps } from "src/types/PropsTypes";
 import { parseExchangeStateName } from "src/utils/parser";
 
-export const ExchangeCard = ({ exchange }: { exchange: Exchange }) => {
+export const ExchangeCard = ({ exchange, onClick, children }: ExchangeCardProps) => {
+    
     return (
-        <div className="bg-gray-700 w-fit p-4 md:p-6 space-y-5 gap-6 rounded-lg shadow-lg hover:shadow-xl transition-transform duration-300 ease-in-out transform scale-100 hover:scale-105">
+        <div onClick={onClick} className="cursor-pointer bg-gray-700 w-fit p-4 md:p-6 space-y-5 gap-6 rounded-lg shadow-lg hover:shadow-xl transition-transform duration-300 ease-in-out transform scale-100 hover:scale-105">
             <h1 className="text-2xl font-bold text-white">#{exchange.authenticationCode}</h1>
             <div className="grid grid-cols-2">
                 <section>
@@ -30,6 +31,7 @@ export const ExchangeCard = ({ exchange }: { exchange: Exchange }) => {
                 <p className="text-sm font-medium text-gray-400">Estado</p>
                 <p className="text-white font-medium">{parseExchangeStateName(exchange.state)}</p>
             </div>
+            {children}
         </div>
     );
 }

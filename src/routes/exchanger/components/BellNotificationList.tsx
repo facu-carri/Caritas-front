@@ -4,6 +4,7 @@ import { useQuery } from 'react-query';
 import { getHeaders } from "src/utils/request/httpRequests";
 import { endPoints, serverAddress } from 'src/utils/constants';
 import BellNotificationCard from "./BellNotificationCard";
+import LoadingSpinner from 'src/components/LoadingSpinner';
 
 const fetchNotifications = async () => {
   const response = await fetch(`${serverAddress}/${endPoints.notification}`,{
@@ -18,7 +19,7 @@ const fetchNotifications = async () => {
 
 
 export function BellNotificationList() {
-  const { data, error, isLoading } = useQuery('exchanges', fetchNotifications);
+  const { data, isLoading } = useQuery('exchanges', fetchNotifications);
   const notifications = data
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -61,11 +62,13 @@ export function BellNotificationList() {
       </div>
 
       {isOpen && (
-        <div className="origin-top-right absolute right-0 mt-2 w-80 rounded-md shadow-lg bg-blue-500 text-white ring-1 ring-black ring-opacity-5 focus:outline-none overflow-y-auto	h-96">
+        <div className="origin-top-right absolute right-0 mt-2 w-80 h-fit max-h-[96px] rounded-md shadow-lg bg-blue-500 text-white ring-1 ring-black ring-opacity-5 focus:outline-none overflow-y-auto">
           <div className="py-1 px-4 text-left" role="none">
-            <div className="mb-4 text-lg font-medium ">Solicitudes de intercambio</div>
+            <div className="mb-4 text-lg font-medium">Solicitudes de intercambio</div>
             <div className="space-y-4">
-              { (notifications && notifications.length > 0) ? (
+              {
+                isLoading ? <LoadingSpinner className='relative left-1/2 transform -translate-x-1/2'/> :
+                (notifications && notifications.length > 0) ? (
                 notifications.map(notification =>
                   <BellNotificationCard
                     key={notification.id}
