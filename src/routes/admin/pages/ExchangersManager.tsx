@@ -57,7 +57,8 @@ export default function ExchangersManager() {
     }
 
     return (
-        <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-4 relative">
+        <main className='min-h-screen bg-gray-100'>
+        <div className=" flex flex-col items-center justify-center p-4 relative">
             <header className="py-2 px-6 md:px-12 ">
                 <div className="flex flex-col items-center gap-4 mt-36">
                     <ExchangersManagerHeader/>
@@ -78,7 +79,7 @@ export default function ExchangersManager() {
                 }
                 <div className="justify-center items-center text-[100%]">
                 {
-                    isLoading ? <LoadingSpinner/>:
+                    isLoading ? <LoadingSpinner className='mt-7'/>:
                     <div className='grid grid-cols-3 gap-6 md:gap-8 mt-8 min-h-[300px]'>
                         {filteredExchangers && filteredExchangers.map(exchanger => (
                             <ExchangerCard cardData={exchanger} key={exchanger.id} />
@@ -88,5 +89,6 @@ export default function ExchangersManager() {
                 </div>
             </section>
         </div>
+        </main>
     );
 }

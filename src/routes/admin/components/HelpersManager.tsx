@@ -8,12 +8,14 @@ import HelpersList from 'src/routes/helper/components/HelpersList';
 import { useQuery } from 'react-query';
 import ErrorAlert from 'src/components/ErrorAlert';
 import { useCustomModal } from 'src/context/CustomModalContext';
+import LoadingSpinner from 'src/components/LoadingSpinner';
 
 //tiene toda la logica de eliminar y editar ayudantes listados y su estado.
 export default function HelpersManager() {
   const [helpers, setHelpers] = useState([]);
   const { showModal } = useCustomModal()
   const { setRoute } = RoutesHandler()
+  const [isLoadingHelpers, setIsLoadingHelpers] = useState(true)
 
   const { data: locations, isLoading: isLoadingLocations } = useQuery({
     queryKey: ['location'],
@@ -23,7 +25,11 @@ export default function HelpersManager() {
     }).then(r => r.json())
   })
 
-  useEffect(() => { getData(endPoints.employees).then(data => setHelpers(data)) }, [])
+  useEffect(() => {
+    getData(endPoints.employees)
+      .then(data => setHelpers(data))
+      .then(() => setIsLoadingHelpers(false))
+  }, [])
 
   const handleRegisterHelper = () => showModal(<RegisterHelper/>)
 
@@ -43,7 +49,9 @@ export default function HelpersManager() {
         <Button onClick={handleRegisterHelper} disabled={!locationEnabled() || isLoadingLocations}>Registrar ayudante</Button>
         <div className="w-full max-w-2xl bg-white shadow-lg rounded-lg p-6">
           <h1 className="text-2xl font-bold text-blue-700 mb-4">Listado de Ayudantes</h1>
-          <HelpersList helpers={helpers} onSelect={handleSelect} />
+          {
+            isLoadingHelpers ? <LoadingSpinner className='relative left-1/2 transform -translate-x-1/2' /> : < HelpersList helpers={helpers} onSelect={handleSelect} />
+          }
         </div>
       </div>
     </div>
