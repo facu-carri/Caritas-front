@@ -8,4 +8,5 @@ export enum ErrorTypes{
     EDIT_ITEM_ERROR,
     EDIT_PROFILE_ERROR,
     AUTH_CODE_ERROR,
+    END_DAY_ERROR,
 }

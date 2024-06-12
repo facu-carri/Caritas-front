@@ -22,6 +22,8 @@ export const endPoints = {
     acceptNotification: 'exchange/accept',
     rejectNotification: 'exchange/reject',
     nextFreeDay: 'exchange/nextFreeDay',
+    endDay: 'exchange/endDay',
+    todayIsFinished: 'exchange/todayIsFinished',
 }
 const adminRoutes = {
     'estadisticas': '/estadisticas',
