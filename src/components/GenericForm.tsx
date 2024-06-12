@@ -118,7 +118,7 @@ function GenericForm({ id, campos, listener, error, btnText, hideImg, showConfir
       const input: any = inputField
       
       if(isOptional(input)) continue
-      if (input.id == 'password-check' && !checkVerifyPassword(input)) return false
+      if (input.id.indexOf('password') != -1 && !checkVerifyPassword(input)) return false
       
       switch (input.type) {
         case 'file':
