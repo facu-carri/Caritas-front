@@ -4,9 +4,8 @@ import { routes } from "src/utils/constants";
 import RoutesHandler from "src/utils/routesHandler";
 import {BsCalendar, BsPersonVcard, BsStar, BsTelephone} from 'react-icons/bs'
 import Rating from "src/components/Rating";
-import Image from "src/components/Image";
-import Avatar from "react-avatar";
 import { ExchangerData } from "src/types/Types";
+import AvatarPhoto from "src/components/AvatarPhoto";
 
 type ExchangerCardProps = {
     cardData: ExchangerData,
@@ -25,12 +24,7 @@ export default function ExchangerCard({ cardData, removeClick, children }: Excha
         >
             <div className="px-2 py-1">
                 <div className="flex flex-row gap-2 py-2">
-                    <div className="h-14 w-14 max-w-14 max-h-14 mask mask-circle rounded-full overflow-hidden flex items-center">
-                    {
-                        cardData.photo ? <Image className="select-none" photo={cardData.photo} alt={cardData.name}/>:
-                        <Avatar className="select-none" name={cardData.name} size="56" round={true}/>
-                    }
-                    </div>
+                    <AvatarPhoto photo={cardData.photo} name={cardData.name}/>
                     <h3 className="text-black flex flex-col justify-center text-lg font-semibold">{cardData.name}</h3>
                 </div>
                 {cardData.email && <InformativeText icon={Icons.email()}>{cardData.email}</InformativeText>}

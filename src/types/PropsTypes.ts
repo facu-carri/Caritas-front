@@ -148,3 +148,9 @@ export type EditProfileProps = {
     onSave: (data) => Promise<unknown>,
     showConfirm?: boolean
 }
+
+export type AvatarPhotoProps = {
+    photo: string;
+    name: string;
+    showAvatar?: boolean;
+};
