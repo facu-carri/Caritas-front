@@ -1,9 +1,9 @@
 import { IoReturnDownBack } from "react-icons/io5";
 import Button from "src/components/Button";
 
-export default function ExchangeHeader({handleBack}) {
+export default function ExchangeHeader({code, handleBack}) {
     return <div className="flex items-center justify-between mb-6">
-    <h1 className="text-2xl font-bold text-white">Intercambio #AAA3356</h1>
+      <h1 className="text-2xl font-bold text-white">Intercambio #{code}</h1>
     <div className="flex items-center space-x-4">
       <Button
         attrs="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm"

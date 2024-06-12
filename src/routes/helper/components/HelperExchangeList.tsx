@@ -13,7 +13,6 @@ import { useCustomModal } from "src/context/CustomModalContext";
 import { ErrorCode } from "src/utils/Error/ErrorCode";
 import { ErrorTypes } from "src/utils/Error/ErrorTypes";
 import ErrorAlert from "src/components/ErrorAlert";
-import { parseExchangeStateName } from "src/utils/parser";
 
 export default function ExchangesHistory() {
 
@@ -58,17 +57,6 @@ export default function ExchangesHistory() {
     })
   }, [searchQuery, exchangeHistory])
 
-  const exchangeDetails = (exchange: Exchange) => [
-    { label: "Fecha del intercambio", value: exchange.date },
-    { label: "Sede", value: exchange.location?.name },
-    { label: "Solicitante", value: `${exchange.hostItem.owner?.name} | ${exchange.hostItem.owner?.email}` },
-    { label: "Item del solicitante", value: exchange.hostItem.name },
-    { label: "Solicitado", value: `${exchange.guestItem.owner?.name} | ${exchange.guestItem.owner?.email}` },
-    { label: "Item solicitado", value: exchange.guestItem.name },
-    { label: "Estado", value: parseExchangeStateName(exchange.state) },
-    { label: "Codigo", value: exchange.authenticationCode },
-  ].filter(detail => detail.value);
-
   const endDay = () => {
     putData(endPoints.endDay)
       .then(() => setRoute(routes.main))
@@ -104,10 +92,10 @@ export default function ExchangesHistory() {
           loading ? (<LoadingSpinner/>) : 
           (!filteredExchanges || filteredExchanges.length==0) ? (<p>No Hay intercambios registrados para el dia de la fecha</p>) : 
           (!dayEnded &&
-            <div className="flex flex-col gap-2 w-1/2 mb-2">
+            <div className="flex flex-col gap-2 items-center mb-2">
               {filteredExchanges.map((exchange) => (
                 <div key={exchange.id} className="cursor-pointer" onClick={()=>setRoute(`${routes.helper.exchange}/${exchange.id}`)}>
-                  <ExchangeCard exchangeDetails={exchangeDetails(exchange)}/>
+                  <ExchangeCard exchange={exchange}/>
                 </div>
               ))}
             </div>

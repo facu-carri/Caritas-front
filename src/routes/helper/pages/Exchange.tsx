@@ -90,7 +90,7 @@ export default function Exchange({ id }) {
     isLoading ? <LoadingAnimation /> :
     <main className="pt-48">
     <div className='bg-gray-700/50 rounded-2xl p-5 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8'>
-      <ExchangeHeader handleBack={handleBack}/>
+      <ExchangeHeader code={exchange.authenticationCode} handleBack={handleBack}/>
       <div className="w-full flex flex-col gap-8">
         <div className="flex justify-between px-16">
           <ExchangeInfo checked={exchange.hostAsistio} itemData={exchange.hostItem} onChange={handleCheckHost}/>
