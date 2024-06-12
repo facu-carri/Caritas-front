@@ -3,8 +3,12 @@ import { endPoints, serverAddress } from "src/utils/constants";
 import { getHeaders } from "src/utils/request/httpRequests";
 import LoadingSpinner from "src/components/LoadingSpinner";
 import Image from "src/components/Image";
+import { useCustomModal } from "src/context/CustomModalContext";
+import ConfirmationModal from "src/components/modals/Confirmation";
 
 export default function Exchange({ id }) {
+
+  const { showModal } = useCustomModal()
 
   const queryClient = useQueryClient()
 
@@ -37,14 +41,14 @@ export default function Exchange({ id }) {
     if(exchange.hostAsistio) {
       return;
     }
-    markAttendanceHost()
+    showModal(<ConfirmationModal onAccept={() => markAttendanceHost()} />)
   }
 
   function handleCheckGuest() {
     if(exchange.guestAsistio) {
       return;
     }
-    markAttendanceGuest()
+    showModal(<ConfirmationModal onAccept={() => markAttendanceGuest()} />)
   }
 
   const { mutate: completeExchange, isLoading: isMutatingComplete } = useMutation({
@@ -119,7 +123,7 @@ export default function Exchange({ id }) {
               
               <button
                 className="btn"
-                disabled={!(exchange.hostAsistio || exchange.guestAsistio) || isMutating}
+                disabled={!(exchange.hostAsistio || exchange.guestAsistio) || (exchange.hostAsistio && exchange.guestAsistio) || isMutating}
                 onClick={() => rejectByNonAttendance()}  
               >
                 Rechazar por Ausencia
