@@ -108,7 +108,7 @@ export default function Exchange({ id }) {
               Rechazar por Disgusto
             </button>
             
-            <button className="btn" disabled={btnsDisabled || (exchange.hostAsistio && exchange.guestAsistio)} onClick={() => showConfirmationModal(rejectByNonAttendance)}  >
+            <button className="btn" disabled={(!exchange.hostAsistio && !exchange.guestAsistio) || (exchange.hostAsistio && exchange.guestAsistio)} onClick={() => showConfirmationModal(rejectByNonAttendance)}  >
               Rechazar por Ausencia
             </button>
           </div>
