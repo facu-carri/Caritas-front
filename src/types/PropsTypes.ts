@@ -158,5 +158,6 @@ export type AvatarPhotoProps = {
 export type ExchangeCardProps = {
     exchange: Exchange;
     onClick?: () => void;
+    cancelAnim?: boolean;
     children?: JSX.Element[] | JSX.Element
 }
