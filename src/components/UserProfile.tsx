@@ -42,7 +42,7 @@ export default function UserProfile({ userData, profileInfo, showPhoto, canDelet
                         {userData.email && <p className="text-sm">{userData.email}</p>}
                     </div>
                 </div>
-                { canDeletePhoto && !isDeleting && 
+                { canDeletePhoto && !isDeleting && userData.photo && 
                     <button onClick={() => confirmation(handleDeletePhoto)} disabled={isDeleting} className="mb-2 mt-5 ml-2 py-2 px-4 rounded text-black hover:bg-black/20 border border-black">Borrar foto</button>
                 }
                 { canDelete &&
