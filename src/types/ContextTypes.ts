@@ -9,6 +9,7 @@ export type AuthContextType = {
 export type CustomModalContextType = {
     showModal: (content:JSX.Element, onCloseFn?:() => void) => void
     closeModal: () => void
+    setBlock: (block:boolean) => void
 }
 export type UserDataContextType = {
     userData: any

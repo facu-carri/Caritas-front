@@ -8,6 +8,7 @@ import { ErrorCode } from "src/utils/Error/ErrorCode";
 import GenericForm from "src/components/GenericForm";
 import { selectLocations } from "src/components/modals/modalOptions";
 import { ExchangeCard } from "../ExchangeCard";
+import { useCustomModal } from "src/context/CustomModalContext";
 
 export default function AcceptNotificationModal({ notificationData, onEditNotification }) {
 
@@ -15,10 +16,12 @@ export default function AcceptNotificationModal({ notificationData, onEditNotifi
   const [nextFreeDay, setNextFreeDay] = useState("");
   const [error, setError] = useState<ErrorCode>(null)
   const [campos, setCampos] = useState([])
+  const { setBlock } = useCustomModal()
 
   const handleError = (errCode: number) => {
     const err = new ErrorCode(errCode, ErrorTypes.EDIT_ITEM_ERROR)
     setError(err)
+    setBlock(false)
     setTimeout(hideError, 5000)
   }
 
@@ -26,10 +29,10 @@ export default function AcceptNotificationModal({ notificationData, onEditNotifi
 
   const handleAcceptNotification = (data) => {
     data.date=nextFreeDay
-    data.locationId=data.employeeLocationId
+    data.locationId = data.employeeLocationId
+    setBlock(true)
     putData(`${endPoints.acceptNotification}/${notificationData.id}`, null, data)
       .then(new_data => {
-        console.log(new_data)
         onEditNotification(new_data)
       })
       .catch(err => handleError(err))

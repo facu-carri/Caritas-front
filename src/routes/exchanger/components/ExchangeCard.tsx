@@ -19,11 +19,11 @@ export const ExchangeCard = ({ exchange, onClick, cancelAnim, children }: Exchan
             </div>
             <div className="flex gap-10">
                 <div>
-                    <p className="text-sm font-medium text-gray-400 mb-4">Solicitante</p>
+                    <p className="text-sm font-medium text-gray-400 mb-4 h-[40px]">Solicitante</p>
                     <ExchangeInfo checked={false} itemData={{ ...exchange.guestItem }}/>
                 </div>
                 <div>
-                    <p className="text-sm font-medium text-gray-400 mb-4">Solicitado</p>
+                    <p className="text-sm font-medium text-gray-400 mb-4 h-[40px]">Solicitado</p>
                     <ExchangeInfo checked={false} itemData={{ ...exchange.hostItem }}/>
                 </div>
             </div>
