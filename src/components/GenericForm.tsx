@@ -118,7 +118,8 @@ function GenericForm({ id, campos, listener, error, btnText, hideImg, showConfir
       const input: any = inputField
       
       if(isOptional(input)) continue
-
+      if (input.id == 'password-check' && !checkVerifyPassword(input)) return false
+      
       switch (input.type) {
         case 'file':
           const img = input.files[0]

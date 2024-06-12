@@ -62,7 +62,7 @@ export function BellNotificationList() {
       </div>
 
       {isOpen && (
-        <div className="origin-top-right absolute right-0 mt-2 w-80 h-fit max-h-[96px] rounded-md shadow-lg bg-blue-500 text-white ring-1 ring-black ring-opacity-5 focus:outline-none overflow-y-auto">
+        <div className="origin-top-right absolute right-0 mt-2 w-80 h-fit max-h-96 rounded-md shadow-lg bg-blue-500 text-white ring-1 ring-black ring-opacity-5 focus:outline-none overflow-y-auto">
           <div className="py-1 px-4 text-left" role="none">
             <div className="mb-4 text-lg font-medium">Solicitudes de intercambio</div>
             <div className="space-y-4">

@@ -4,15 +4,16 @@ import ExchangerHeader from "src/components/ExchangerHeader";
 import LoadingSpinner from "src/components/LoadingSpinner";
 import { Exchange } from "src/types/Types";
 import { ExchangeCard } from "../components/ExchangeCard";
-import { getData } from "src/utils/request/httpRequests";
+import { getData, putData } from "src/utils/request/httpRequests";
 import { endPoints } from "src/utils/constants";
 import { useCustomModal } from "src/context/CustomModalContext";
 import Button from "src/components/Button";
 import ConfirmationModal from "src/components/modals/Confirmation";
+import { parseExchangeStateName } from "src/utils/parser";
 
 export default function ExchangesHistory() {
     const [searchQuery, setSearchQuery] = useState('');
-    const { showModal } = useCustomModal()
+    const { showModal, closeModal } = useCustomModal()
     const [exchangeHistory, setExchangeHistory] = useState<Exchange[]>([]);
     const [loading, setLoading] = useState(true);
 
@@ -26,7 +27,7 @@ export default function ExchangesHistory() {
     const value = searchQuery.toLowerCase()
     const filteredExchanges = useMemo(() => {
         return exchangeHistory.filter((exchange) => {
-            return !value || exchange.state.toLowerCase().includes(value) || exchange.authenticationCode.toLowerCase().includes(value) || exchange.location?.name?.toLowerCase().includes(value)
+            return !value || parseExchangeStateName(exchange.state).toLowerCase().includes(value) || exchange.authenticationCode.toLowerCase().includes(value) || exchange.location?.name?.toLowerCase().includes(value)
         });
     }, [searchQuery, exchangeHistory])
 
@@ -36,8 +37,8 @@ export default function ExchangesHistory() {
         const date: Date = new Date(exchange.date)
         const currDate: Date = new Date()
         const validDate = date.getDate() - currDate.getDate() + 1 >= 1
-        const validState = exchange.state === 'NotConfirmed' || exchange.state === 'Accepted'
-        return validDate && validState
+        const validState = exchange.state === 'Accepted'
+        return exchange.state === 'NotConfirmed' || (validDate && validState)
     }
 
     const onClickExchange = (exchange: Exchange) => {
@@ -48,6 +49,11 @@ export default function ExchangesHistory() {
 
     const onCancelExchange = (exchange: Exchange) => {
         console.log('Cancel exchange', exchange)
+        putData(`${endPoints.exchange}/cancel/${exchange.id}`)
+        .then(() => {
+            setExchangeHistory(exchangeHistory.map(e => e.id === exchange.id ? {...e, state: 'Canceled'} : e))
+        })
+        .finally(() => closeModal())
     }
 
     return (
