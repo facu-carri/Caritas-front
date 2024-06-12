@@ -9,8 +9,8 @@ export default function Exchange({ id }) {
   const queryClient = useQueryClient()
 
   const { data: exchange = {}, isLoading } = useQuery({
-    queryKey: ['exchange', id],
     enabled: !!id,
+    queryKey: ['exchange', id],
     queryFn: () => fetch(`${serverAddress}/${endPoints.exchange}/${id}`, {
       method: 'GET',
       headers: getHeaders()
@@ -47,6 +47,32 @@ export default function Exchange({ id }) {
     markAttendanceGuest()
   }
 
+  const { mutate: completeExchange, isLoading: isMutatingComplete } = useMutation({
+    mutationFn: () => fetch(`${serverAddress}/${endPoints.exchange}/complete/${id}`, {
+      method: 'PUT',
+      headers: getHeaders()
+    }),
+    onSuccess: () => queryClient.invalidateQueries(['exchange', id])
+  })
+
+  const { mutate: rejectByDislike, isLoading: isMutatingDislike } = useMutation({
+    mutationFn: () => fetch(`${serverAddress}/${endPoints.exchange}/notComplitedByDislike/${id}`, {
+      method: 'PUT',
+      headers: getHeaders()
+    }),
+    onSuccess: () => queryClient.invalidateQueries(['exchange', id])
+  })
+
+  const { mutate: rejectByNonAttendance, isLoading: isMutatingNonAttendence } = useMutation({
+    mutationFn: () => fetch(`${serverAddress}/${endPoints.exchange}/notComplitedByNonAttendance/${id}`, {
+      method: 'PUT',
+      headers: getHeaders()
+    }),
+    onSuccess: () => queryClient.invalidateQueries(['exchange', id])
+  })
+
+  const isMutating = isMutatingComplete || isMutatingDislike || isMutatingNonAttendence
+
   console.log(exchange)
 
   return (
@@ -72,11 +98,34 @@ export default function Exchange({ id }) {
               <ItemInfo item={exchange.guestItem} />
             </div>
           </div>
-          <div className="flex justify-between">
-            <button className="btn" disabled={!(exchange.hostAsistio && exchange.guestAsistio)}>Intercambio Exitoso</button>
-            <button className="btn" disabled={!(exchange.hostAsistio && exchange.guestAsistio)}>Rechazar por Disgusto</button>
-            <button className="btn" disabled={!(exchange.hostAsistio || exchange.guestAsistio)}>Rechazar por Ausencia</button>
-          </div>
+          {
+            exchange.state === 'Accepted' &&
+            <div className="flex gap-2 justify-between">
+              <button
+                className="btn"
+                disabled={!(exchange.hostAsistio && exchange.guestAsistio) || isMutating}
+                onClick={() => completeExchange()}
+              >
+                Intercambio Exitoso
+              </button>
+
+              <button
+                className="btn"
+                disabled={!(exchange.hostAsistio && exchange.guestAsistio) || isMutating}
+                onClick={() => rejectByDislike()}
+              >
+                Rechazar por Disgusto
+              </button>
+              
+              <button
+                className="btn"
+                disabled={!(exchange.hostAsistio || exchange.guestAsistio) || isMutating}
+                onClick={() => rejectByNonAttendance()}  
+              >
+                Rechazar por Ausencia
+              </button>
+            </div>
+          }
         </div> 
       }
     </div>
