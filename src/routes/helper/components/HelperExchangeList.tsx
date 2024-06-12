@@ -87,9 +87,27 @@ export default function ExchangesHistory() {
   const value = searchQuery.toLowerCase()
   const filteredExchanges = useMemo(() => {
       return exchangeHistory.filter((exchange) => {
-          return !value || exchange.state.toLowerCase().includes(value) || exchange.authenticationCode.toLowerCase().includes(value)
+          return (
+            !value || 
+            exchange.state.toLowerCase().includes(value) ||
+            parseExchangeStateName(exchange.state).toLowerCase().includes(value) ||
+            exchange.authenticationCode.toLowerCase().includes(value)
+          )
       });
   }, [searchQuery, exchangeHistory])
+
+  function parseExchangeStateName(state) {
+    const mappedValues = {
+      'NotConfirmed': 'No Confirmado',
+      'Rejected': 'Rechazado',
+      'Accepted': 'Aceptado',
+      'Canceled': 'Cancelado',
+      'Completed': 'Completado',
+      'NotComplitedByDislike': 'No completado por disgusto de un producto del intercambio',
+      'NotComplitedByNonAttendance': 'No completado por ausencia de un intercambiador'
+    };
+    return mappedValues[state] || state;
+  }
 
   const exchangeDetails = (exchange: Exchange) => [
       { label: "Fecha del intercambio", value: exchange.date },
@@ -98,7 +116,7 @@ export default function ExchangesHistory() {
       { label: "Item del solicitante", value: exchange.hostItem.name },
       { label: "Solicitado", value: `${exchange.guestItem.owner?.name} | ${exchange.guestItem.owner?.email}` },
       { label: "Item solicitado", value: exchange.guestItem.name },
-      { label: "Estado", value: exchange.state },
+      { label: "Estado", value: parseExchangeStateName(exchange.state) },
       { label: "Codigo", value: exchange.authenticationCode },
   ].filter(detail => detail.value);
 
