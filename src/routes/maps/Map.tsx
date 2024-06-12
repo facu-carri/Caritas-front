@@ -121,7 +121,7 @@ function Maps() {
     }
 
     return (
-    <>
+    <main className="bg-grey-500 bg-gray-100">
         <div style={{ height: "100vh" }}>
         <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API}>
             <Map
@@ -139,7 +139,7 @@ function Maps() {
             </Map>
         </APIProvider>
         </div>
-    </>
+    </main>
     );
 }
 

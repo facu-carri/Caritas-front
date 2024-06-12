@@ -2,27 +2,7 @@ import Image from "src/components/Image"
 import ExchangerCard from "src/routes/admin/components/ExchangerCard"
 import { ItemData } from "src/types/Types"
 
-export default function ExchangeInfo({checked, itemData, onChange}: {checked: boolean, itemData: ItemData, onChange?: () => void}) {
-    return (
-      <section className="w-[300px]">
-        <ExchangerCard removeClick={true} cardData={{
-          name: itemData.owner.name,
-          email: itemData.owner.email,
-          photo: itemData.owner.photo,
-          id: itemData.owner.id,
-          stars: null, absentees: null, dni: '', phone: '', birthdate: ''
-        }}>
-          {!!onChange &&
-            <div className="flex items-center gap-2 absolute top-2 right-3">
-              <label>Asistencia</label>
-              <input type="checkbox" className="checkbox" checked={checked} onChange={onChange} />
-            </div>
-          }
-          <ItemInfo item={itemData} />
-        </ExchangerCard>
-      </section>
-    )
-  }
+export default function ExchangeInfo({ checked, itemData, onChange }: { checked: boolean, itemData: ItemData, onChange?: () => void }) {
   
   function ItemInfo({ item }) {
     return (
@@ -34,3 +14,24 @@ export default function ExchangeInfo({checked, itemData, onChange}: {checked: bo
       </section>
     )
   }
+
+  return (
+    <section className="w-[300px]">
+      <ExchangerCard removeClick={true} cardData={{
+        name: itemData.owner.name,
+        email: itemData.owner.email,
+        photo: itemData.owner.photo,
+        id: itemData.owner.id,
+        stars: null, absentees: null, dni: '', phone: '', birthdate: ''
+      }}>
+        {!!onChange &&
+          <div className="flex items-center gap-2 absolute top-2 right-3">
+            <label>Asistencia</label>
+            <input type="checkbox" className="checkbox" checked={checked} onChange={onChange} />
+          </div>
+        }
+        <ItemInfo item={itemData} />
+      </ExchangerCard>
+    </section>
+  )
+}
