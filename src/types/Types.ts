@@ -83,7 +83,8 @@ export type UserInfoFields = {
     color: string
 }
 export type CategoryListParam = {
-    data: ItemCategory[]
+    data: ItemCategory[],
+    isLoading?: boolean
 }
 export type Exchange = {
     id: number;

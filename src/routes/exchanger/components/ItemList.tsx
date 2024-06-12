@@ -8,14 +8,14 @@ import { ItemListInventoryProps } from "src/types/PropsTypes";
 import { useCustomModal } from "src/context/CustomModalContext";
 import ItemModal from "src/components/modals/Item";
 import { useQuery, useQueryClient } from "react-query";
+import LoadingSpinner from "src/components/LoadingSpinner";
 
 export default function ItemList({ ruta, inventory, children }: ItemListInventoryProps) {
   const [category, setCategory] = useState('');
   const { showModal } = useCustomModal()
-  
   const queryClient = useQueryClient()
 
-  const { data: categories = [] }: CategoryListParam = useQuery({
+  const { data: categories = [], isLoading: isLoadingCats }: CategoryListParam = useQuery({
     queryKey: ['categories'],
     queryFn: () => fetch(`${serverAddress}/${endPoints.categories}`, {
       method: 'GET',
@@ -24,12 +24,9 @@ export default function ItemList({ ruta, inventory, children }: ItemListInventor
   })
 
   const filteredItems = useMemo(() => {
-    if(!category) {
-      return inventory
-    }
+    if(!category) return inventory
     return inventory.filter(item => item.itemCategory.name === category)
   }, [category, inventory])
-
 
   const queryInvalidator = () => queryClient.invalidateQueries([ruta])
 
@@ -43,36 +40,40 @@ export default function ItemList({ ruta, inventory, children }: ItemListInventor
     <div className="bg-gray-200 py-8 container mx-auto px-4 relative">
       <div className="flex flex-row gap-2 mb-4">
         {
-          (!categories || categories.length == 0) ? 
-          <span className="p-2 border rounded-lg">No hay categorias cargadas</span> :
           <select className="p-2 border border-gray-700 rounded-lg" value={category} onChange={e => setCategory(e.target.value)}>
-            <option value="">Todas las Categorías</option>
+            <option value="">
             {
-              categories?.map(cat =>
-                <option key={cat.id} value={cat.name}>{cat.name}</option>
-              )
+                isLoadingCats ? 'Cargando categorias...' :
+                !categories || categories.length == 0 ? 'No hay categorias cargadas' :
+                'Todas las categorías'
+            }
+            </option>
+            {
+              categories?.map(cat =><option key={cat.id} value={cat.name}>{cat.name}</option>)
             }
           </select>
         }
         {children}
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {
-          (!filteredItems || filteredItems.length == 0) ? 
-          <p className="text-gray-400 line-clamp-2">No hay productos intercambiables</p> :
-          filteredItems.map(item =>
-            <ItemCard
-              key={item.id}
-              item={item}
-              canEdit={item.editable && isInventory}
-              canDelete={isInventory}
-              hiddeBtns={true}
-              onClick={() => onClickItem(item)}
-              queryInvalidator={queryInvalidator}
-            />
-          )
-        }
-      </div>
+      {!inventory ? <LoadingSpinner className="relative left-1/2 transform -translate-x-1/2" /> :
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {
+            ((!filteredItems || filteredItems.length == 0) ?
+              <p className="text-gray-400 line-clamp-2">No hay productos intercambiables</p> :
+              filteredItems.map(item =>
+                <ItemCard
+                  key={item.id}
+                  item={item}
+                  canEdit={item.editable && isInventory}
+                  canDelete={isInventory}
+                  hiddeBtns={true}
+                  onClick={() => onClickItem(item)}
+                  queryInvalidator={queryInvalidator}
+                />
+              ))
+          }
+        </div>
+      }
     </div>
   )
 }
