@@ -31,7 +31,8 @@ const adminRoutes = {
     'gestionarFiliales': '/gestionar-filiales',
 }
 const helperRoutes = {
-    profile: '/perfilAyudante'
+    profile: '/perfilAyudante',
+    exchange: '/exchange'
 }
 const exchangerRoutes = {
     'history': '/historial',

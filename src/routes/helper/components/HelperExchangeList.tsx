@@ -62,10 +62,15 @@ import ExchangerHeader from "src/components/ExchangerHeader";
 import LoadingSpinner from "src/components/LoadingSpinner";
 import { Exchange } from "src/types/Types";
 import { getData } from "src/utils/request/httpRequests";
-import { endPoints } from "src/utils/constants";
+import { endPoints, routes } from "src/utils/constants";
 import { ExchangeCard } from "src/routes/exchanger/components/ExchangeCard";
+import RoutesHandler from "src/utils/routesHandler";
 
 export default function ExchangesHistory() {
+
+  const { setRoute } = RoutesHandler()
+
+
   const [searchQuery, setSearchQuery] = useState('');
   
   const [exchangeHistory, setExchangeHistory] = useState<Exchange[]>([]);
@@ -118,8 +123,10 @@ export default function ExchangesHistory() {
                   (!filteredExchanges || filteredExchanges.length==0) ? (<p>No Hay intercambios registrados para el dia de la fecha</p>) : 
                   (
                       <div className="flex flex-col gap-2 w-1/2">
-                          {filteredExchanges.map((exchange, index) => (
-                              <ExchangeCard key={index} exchangeDetails={exchangeDetails(exchange)}/>
+                          {filteredExchanges.map((exchange) => (
+                              <div key={exchange.id} onClick={()=>setRoute(`${routes.helper.exchange}/${exchange.id}`)}>
+                                <ExchangeCard exchangeDetails={exchangeDetails(exchange)}/>
+                              </div>
                           ))}
                       </div>
                   )
