@@ -12,8 +12,8 @@ import { ProfileProps } from 'src/types/PropsTypes';
 import UserProfile from "src/components/UserProfile";
 import Rating from "src/components/Rating";
 import { getAdminFields, getExchangerFields } from "src/routes/admin/components/ExchangerFields";
-import EditExchangerModal from "src/components/modals/EditProfile";
 import RoutesHandler from "src/utils/routesHandler";
+import EditProfileModal from "src/components/modals/EditProfile";
 
 export default function Profile({ id }: ProfileProps) {
   const [userData, setUserData] = useState<ExchangerData>();
@@ -52,7 +52,7 @@ export default function Profile({ id }: ProfileProps) {
 
   const isAdmin = getRole() == roles.ADMIN
   
-  const showEditModal = () => showModal(<EditExchangerModal campos={isAdmin ? getAdminFields(userData) : getExchangerFields(userData)} onSave={handleEditProfile} />)
+  const showEditModal = () => showModal(<EditProfileModal campos={isAdmin ? getAdminFields(userData) : getExchangerFields(userData)} onSave={handleEditProfile} />)
 
   useEffect(() => userData && setInfo(getProfileInfo()), [userData])
 

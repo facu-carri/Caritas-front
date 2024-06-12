@@ -9,9 +9,9 @@ import UserProfile from 'src/components/UserProfile';
 import { User } from "src/utils/User";
 import RoutesHandler from "src/utils/routesHandler";
 import { useCustomModal } from "src/context/CustomModalContext";
-import EditExchangerModal from "src/components/modals/EditProfile";
 import { getAdminFields } from "../components/HelperFields";
 import { selectLocations } from "src/components/modals/modalOptions";
+import EditProfileModal from "src/components/modals/EditProfile";
 
 export default function EmployeeProfile({ id }: ProfileProps) {
     const [helperData, setHelperData] = useState<HelperData>();
@@ -57,7 +57,7 @@ export default function EmployeeProfile({ id }: ProfileProps) {
     const handleDelete = () => deleteData(`${endPoints.employees}/${id}`, null).then(() => setRoute(routes.admin.gestionarAyudantes))
 
     const handleEditHelper = () => {
-        showModal(<EditExchangerModal campos={campos} onSave={handleSave}/>)
+        showModal(<EditProfileModal campos={campos} onSave={handleSave}/>)
     }
 
     const handleSave = (updatedHelper) => { // EDIT: usar putData de httpRequests
