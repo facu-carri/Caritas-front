@@ -45,7 +45,7 @@ export default function ExchangesHistory() {
   const handleError = (errCode: number) => {
     const err = new ErrorCode(errCode, ErrorTypes.END_DAY_ERROR)
     setError(err)
-    setTimeout(hideError, 5000)
+    //setTimeout(hideError, 5000)
   }
 
   const hideError = () => setError(null)
@@ -65,6 +65,7 @@ export default function ExchangesHistory() {
   }
 
   const confirmation = (fn) => showModal(<ConfirmationModal onAccept={fn}/>)
+
 
   return (
     <div className="bg-gray-100 min-h-screen">
