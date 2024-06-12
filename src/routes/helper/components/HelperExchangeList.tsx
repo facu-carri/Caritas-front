@@ -65,6 +65,7 @@ import { getData } from "src/utils/request/httpRequests";
 import { endPoints, routes } from "src/utils/constants";
 import { ExchangeCard } from "src/routes/exchanger/components/ExchangeCard";
 import RoutesHandler from "src/utils/routesHandler";
+import { parseExchangeStateName } from "src/utils/parser";
 
 export default function ExchangesHistory() {
 
@@ -95,19 +96,6 @@ export default function ExchangesHistory() {
           )
       });
   }, [searchQuery, exchangeHistory])
-
-  function parseExchangeStateName(state) {
-    const mappedValues = {
-      'NotConfirmed': 'No Confirmado',
-      'Rejected': 'Rechazado',
-      'Accepted': 'Aceptado',
-      'Canceled': 'Cancelado',
-      'Completed': 'Completado',
-      'NotComplitedByDislike': 'No completado por disgusto de un producto del intercambio',
-      'NotComplitedByNonAttendance': 'No completado por ausencia de un intercambiador'
-    };
-    return mappedValues[state] || state;
-  }
 
   const exchangeDetails = (exchange: Exchange) => [
       { label: "Fecha del intercambio", value: exchange.date },

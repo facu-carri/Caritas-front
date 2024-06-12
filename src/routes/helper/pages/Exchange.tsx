@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { endPoints, serverAddress } from "src/utils/constants";
+import { parseExchangeStateName } from "src/utils/parser";
 import { getHeaders } from "src/utils/request/httpRequests";
 import { useCustomModal } from "src/context/CustomModalContext";
 import ConfirmationModal from "src/components/modals/Confirmation";
@@ -107,7 +108,7 @@ export default function Exchange({ id }) {
             </div>
           </div>
           {
-            exchange.state === 'Accepted' &&
+            exchange.state === 'Accepted' ?
             <div className="flex gap-2 justify-between">
               <button
                 className="btn"
@@ -133,6 +134,10 @@ export default function Exchange({ id }) {
                 Rechazar por Ausencia
               </button>
             </div>
+            :
+            <p className="text-center text-xl">
+              Intercambio: <span className={`font-bold ${exchange.state === 'Completed' ? 'text-green-500' : 'text-red-700'}`}>{parseExchangeStateName(exchange.state)}</span>
+            </p>
           }
         </div> 
       }
