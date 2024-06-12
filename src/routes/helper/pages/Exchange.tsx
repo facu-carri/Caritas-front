@@ -1,14 +1,17 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { endPoints, serverAddress } from "src/utils/constants";
+import { endPoints, routes, serverAddress } from "src/utils/constants";
 import { parseExchangeStateName } from "src/utils/parser";
 import { getHeaders } from "src/utils/request/httpRequests";
 import { useCustomModal } from "src/context/CustomModalContext";
 import ConfirmationModal from "src/components/modals/Confirmation";
 import LoadingSpinner from "src/components/LoadingSpinner";
 import Image from "src/components/Image";
+import RoutesHandler from "src/utils/routesHandler";
+import { FiRefreshCcw } from "react-icons/fi";
 
 export default function Exchange({ id }) {
 
+  const { setRoute } = RoutesHandler()
   const { showModal } = useCustomModal()
 
   const queryClient = useQueryClient()
@@ -85,62 +88,66 @@ export default function Exchange({ id }) {
   console.log(exchange)
 
   return (
-    <div className='w-full h-full pt-48 flex items-center justify-center'>
-      {
-        isLoading ?
-        <LoadingSpinner />
-        :
-        <div className="w-full mx-32 flex flex-col gap-8">
-          <div className="flex justify-between px-16">
-            <div>
-              <div className="flex items-center gap-2">
-                <label>Asistencia</label>
-                <input type="checkbox" className="checkbox" checked={exchange.hostAsistio} onChange={() => handleCheckHost()} />
+    <div className="w-full h-full pt-24">
+      <button className="btn ml-16" onClick={() => setRoute(routes.main)}>{"<- Atrás"}</button>
+      <div className='flex items-center justify-center'>
+        {
+          isLoading ?
+          <LoadingSpinner />
+          :
+          <div className="w-1/2 flex flex-col gap-16">
+            <div className="flex justify-between px-16">
+              <div>
+                <div className="flex items-center gap-2">
+                  <label>Asistencia</label>
+                  <input type="checkbox" className="checkbox" checked={exchange.hostAsistio} onChange={() => handleCheckHost()} />
+                </div>
+                <ItemInfo item={exchange.hostItem} />
               </div>
-              <ItemInfo item={exchange.hostItem} />
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <label>Asistencia</label>
-                <input type="checkbox" className="checkbox" checked={exchange.guestAsistio} onChange={() => handleCheckGuest()} />
+              <FiRefreshCcw className="self-center w-16 h-16 text-gray-700" />
+              <div>
+                <div className="flex items-center gap-2">
+                  <label>Asistencia</label>
+                  <input type="checkbox" className="checkbox" checked={exchange.guestAsistio} onChange={() => handleCheckGuest()} />
+                </div>
+                <ItemInfo item={exchange.guestItem} />
               </div>
-              <ItemInfo item={exchange.guestItem} />
             </div>
-          </div>
-          {
-            exchange.state === 'Accepted' ?
-            <div className="flex gap-2 justify-between">
-              <button
-                className="btn"
-                disabled={!(exchange.hostAsistio && exchange.guestAsistio) || isMutating}
-                onClick={() => showConfirmationModal(completeExchange)}
-              >
-                Intercambio Exitoso
-              </button>
+            {
+              exchange.state === 'Accepted' ?
+              <div className="flex gap-2 justify-between">
+                <button
+                  className="btn"
+                  disabled={!(exchange.hostAsistio && exchange.guestAsistio) || isMutating}
+                  onClick={() => showConfirmationModal(completeExchange)}
+                >
+                  Intercambio Exitoso
+                </button>
 
-              <button
-                className="btn"
-                disabled={!(exchange.hostAsistio && exchange.guestAsistio) || isMutating}
-                onClick={() => showConfirmationModal(rejectByDislike)}
-              >
-                Rechazar por Disgusto
-              </button>
-              
-              <button
-                className="btn"
-                disabled={!(exchange.hostAsistio || exchange.guestAsistio) || (exchange.hostAsistio && exchange.guestAsistio) || isMutating}
-                onClick={() => showConfirmationModal(rejectByNonAttendance)}  
-              >
-                Rechazar por Ausencia
-              </button>
-            </div>
-            :
-            <p className="text-center text-xl">
-              Intercambio: <span className={`font-bold ${exchange.state === 'Completed' ? 'text-green-500' : 'text-red-700'}`}>{parseExchangeStateName(exchange.state)}</span>
-            </p>
-          }
-        </div> 
-      }
+                <button
+                  className="btn"
+                  disabled={!(exchange.hostAsistio && exchange.guestAsistio) || isMutating}
+                  onClick={() => showConfirmationModal(rejectByDislike)}
+                >
+                  Rechazar por Disgusto
+                </button>
+                
+                <button
+                  className="btn"
+                  disabled={!(exchange.hostAsistio || exchange.guestAsistio) || (exchange.hostAsistio && exchange.guestAsistio) || isMutating}
+                  onClick={() => showConfirmationModal(rejectByNonAttendance)}  
+                >
+                  Rechazar por Ausencia
+                </button>
+              </div>
+              :
+              <p className="text-center text-xl">
+                Intercambio: <span className={`font-bold ${exchange.state === 'Completed' ? 'text-green-500' : 'text-red-700'}`}>{parseExchangeStateName(exchange.state)}</span>
+              </p>
+            }
+          </div> 
+        }
+      </div>
     </div>
   )
 }
