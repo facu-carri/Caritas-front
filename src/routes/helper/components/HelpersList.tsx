@@ -11,11 +11,16 @@ export default function HelpersList({ helpers, onSelect }: HelpersListProps){
   }
 
   return (
-    <>
+    <div className='flex flex-col'>
       {
-        helpers.length > 0 ? <ul>{getHelpers()}</ul> :
-        <p className="text-red-500 text-center">No hay ayudantes registrados en el sistema.</p>
+        helpers.length > 0 ? (
+          <ul className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
+            {getHelpers()}
+          </ul>
+        ) : (
+          <p className="text-red-500 text-center">No hay ayudantes registrados en el sistema.</p>
+        )
       }
-    </>
+    </div>
   )
 }
