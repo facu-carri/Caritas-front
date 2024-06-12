@@ -27,7 +27,7 @@ export default function ExchangersManager() {
         }
     })
 
-    const filteredExchangers = useMemo(() => {
+    const filteredExchangers: ExchangerCardData[] = useMemo(() => {
         if(isLoading) {
             return [];
         }

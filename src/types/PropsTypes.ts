@@ -86,7 +86,7 @@ export type EditItemModalProps = {
 
 export type ExchangerHeaderProps = {
     title: string
-    text: string
+    text?: string
     attrs?: string
     children?: JSX.Element[] | JSX.Element
 }

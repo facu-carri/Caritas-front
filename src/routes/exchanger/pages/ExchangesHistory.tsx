@@ -40,7 +40,7 @@ export default function ExchangesHistory() {
 
     return (
         <div className="bg-gray-100 min-h-screen">
-            <ExchangerHeader title="Historial de intercambios" text=""/>
+            <ExchangerHeader title="Historial de intercambios"/>
             <div className="flex flex-col justify-center items-center text-[100%] gap-6 md:gap-8 mt-8 min-h-[300px]">
                 {
                     loading ? (<LoadingSpinner/>) :
