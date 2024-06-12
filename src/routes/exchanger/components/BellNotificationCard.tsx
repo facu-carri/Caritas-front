@@ -27,6 +27,7 @@ export default function BellNotificationCard({ notification }) {
       <AcceptNotificationModal
         notificationData={notification}
         onEditNotification={(data) => {
+          console.log(data)
           setNotificationData({ ...notificationData, ...data });
           closeModal();
         }}

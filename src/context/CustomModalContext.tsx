@@ -15,7 +15,7 @@ export default function CustomModalProvider({ children }) {
 
     const dialogRef = useRef(null);
     const [modals, setModals] = useState([]); // Usar un array para manejar múltiples modales
-
+    const [block, setBlock] = useState(false); // Usar un bloqueo para evitar que se cierre el modal
     const dialogElement = () => dialogRef.current;
 
     const showModal = (modalContent: JSX.Element, onCloseFn?: () => void) => {
@@ -24,6 +24,7 @@ export default function CustomModalProvider({ children }) {
     };
 
     const closeModal = () => {
+        setBlock(false)
         setModals(prevModals => {
             const modalsCopy = [...prevModals]
             const lastModal = modalsCopy.pop()
@@ -33,12 +34,13 @@ export default function CustomModalProvider({ children }) {
         if (modals.length <= 1) dialogElement()?.close()
     };
 
-    const handleClickOutside = (ev:MouseEvent) => {
+    const handleClickOutside = (ev: MouseEvent) => {
+        if(block) return
         if (ev.target == ev.currentTarget) closeModal()
     }
 
     return (
-        <customModalContext.Provider value={{ showModal, closeModal }}>
+        <customModalContext.Provider value={{ showModal, setBlock, closeModal }}>
             <dialog
                 className="modal bg-black/50 flex justify-center items-center h-[100vh] text-[100%]"
                 id={'customModal'}
