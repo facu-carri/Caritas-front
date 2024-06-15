@@ -12,7 +12,7 @@ export const User = () => {
 
     const TOKEN: string = 'token'
     const ROLE: string = 'role'
-    const ID: string = 'Id'
+    const ID: string = 'id'
 
     const { setRoute } = RoutesHandler()
 
