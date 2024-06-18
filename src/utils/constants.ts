@@ -50,7 +50,8 @@ export const routes = {
     register: '/register',
     admin: adminRoutes,
     helper: helperRoutes,
-    exchanger: exchangerRoutes
+    exchanger: exchangerRoutes,
+    item: 'item'
 }
 export const roles = {
     'ADMIN': 'ADMIN',

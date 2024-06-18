@@ -8,6 +8,7 @@ import { Information } from "./pages/Information";
 import Profile from "./pages/Profile";
 import { ExchangerMain } from "./pages/main";
 import ExchangesHistory from "./pages/ExchangesHistory";
+import Item from "./pages/Item";
 
 export function ExchangerRouter() {
 
@@ -23,7 +24,8 @@ export function ExchangerRouter() {
         { path: routes.exchanger.inventory, element: <Inventory /> },
         { path: routes.exchanger.profile, element: <Profile/> },
         { path: routes.exchanger.information, element: <Information/> },
-        { path: `${routes.exchanger.profile}/*`, element: <Profile id={getId()}/>}
+        { path: `${routes.exchanger.profile}/*`, element: <Profile id={getId()}/>},
+        { path: `${routes.item}/*`, element: <Item id={getId()}/>}
       ]
     },
     {
