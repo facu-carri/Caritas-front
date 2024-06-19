@@ -11,7 +11,7 @@ import Button from "src/components/Button";
 import ConfirmationModal from "src/components/modals/Confirmation";
 import { parseExchangeStateName } from "src/utils/parser";
 
-export default function ExchangesHistory() {
+export default function ExchangesHistory({route, title}) {
     const [searchQuery, setSearchQuery] = useState('');
     const { showModal, closeModal } = useCustomModal()
     const [exchangeHistory, setExchangeHistory] = useState<Exchange[]>([]);
@@ -19,7 +19,7 @@ export default function ExchangesHistory() {
 
     useEffect(() => {
         setLoading(true)
-        getData(endPoints.exchange)
+        getData(route)
           .then(data => setExchangeHistory(data))
           .finally(() => setLoading(false))
     }, []);
@@ -58,7 +58,7 @@ export default function ExchangesHistory() {
 
     return (
         <div className="bg-gray-100 min-h-screen">
-            <ExchangerHeader title="Historial de intercambios"/>
+            <ExchangerHeader title={title}/>
             <div className="flex flex-col justify-center items-center text-[100%] gap-6 md:gap-8 mt-8 min-h-[300px]">
             {
                 loading ? (<LoadingSpinner/>) :

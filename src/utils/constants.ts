@@ -18,6 +18,7 @@ export const endPoints = {
     exchanger: 'exchanger',
     employees: 'employee',
     exchange: 'exchange',
+    requestsSent: 'exchange/requestsSent',
     notification: 'exchange/myNotifications',
     acceptNotification: 'exchange/accept',
     rejectNotification: 'exchange/reject',
@@ -37,7 +38,8 @@ const helperRoutes = {
     profile: '/perfilAyudante',
     exchange: '/exchange'
 }
-const exchangerRoutes = {
+const exchangerRoutes = { 
+    'requestsSent': '/requestsSent',
     'history': '/historial',
     'inventory': '/inventario',
     'profile': '/perfil',

@@ -38,8 +38,8 @@ export default function ExchangerLayout() {
       onClick: () => setRoute(routes.exchanger.inventory)
     },
     {
-      text: 'Historial de intercambios',
-      onClick: () => setRoute(routes.exchanger.history)
+      text: 'Solicitudes enviadas',
+      onClick: () => setRoute(routes.exchanger.requestsSent)
     },
     {
       text: 'Cerrar sesion',
