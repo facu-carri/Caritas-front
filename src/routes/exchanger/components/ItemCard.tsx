@@ -62,7 +62,7 @@ export default function ItemCard({ item, onClick, hiddeOwner, queryInvalidator, 
       <p className="text-sm text-gray-500 mb-2">Categoria: {itemData.itemCategory.name}</p>
       <p className="text-sm text-gray-500 mb-2">Descripcion: {itemData.description}</p>
       <div className='flex items-center justify-between'>
-        <p className="text-sm text-gray-500 mb-2">Cantidad restante: {itemData.quantity}</p>
+        { canDelete && <p className="text-sm text-gray-500 mb-2">Cantidad restante: {itemData.quantity}</p>}
         <div className='flex gap-2'>
           {canEdit && <button className='btn' onClick={onClickEdit}><FaEdit /></button>}
           {canDelete && <button onClick={() => confirmation(deleteItem)} className='btn btn-error'><FaRegTrashAlt /></button>}
