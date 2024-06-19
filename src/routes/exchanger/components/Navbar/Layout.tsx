@@ -52,10 +52,10 @@ export default function ExchangerLayout() {
       icon: Icons.username(colors.white),
       customElement: <CircularDropdown icon={Icons.username()} items={dropdownItems}/>
     },
-    {
+    /*{
       
       customElement: <BellNotificationList />
-    }
+    }*/
   ]
 
   return (
