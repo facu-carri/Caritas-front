@@ -20,7 +20,7 @@ export default function SelectItemModal({ itemId, categoryId, showConfirmation }
   })
 
   const filteredInventory = useMemo(() => {
-    return inventory.filter(item => item.itemCategory.id === categoryId)
+    return inventory.filter(item => item.itemCategory.id === categoryId).filter(item => item.quantity != 0)
   }, [inventory, categoryId])
 
   const campos = useMemo(() => {
