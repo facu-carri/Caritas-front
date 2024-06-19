@@ -22,7 +22,9 @@ export function ExchangerRouter() {
       children: [
         { path: routes.main, element: <ExchangerMain /> },
         { path: routes.exchanger.requestsSent, element: <ExchangesHistory route={endPoints.requestsSent} title={"Solicitudes enviadas pendientes"}/> },
-        { path: routes.exchanger.history, element: <ExchangesHistory route={endPoints.exchange} title={"Historial de intercambios"}/> },
+        { path: `${routes.exchanger.requestsReceived}/*`, element: <ExchangesHistory route={endPoints.requestsReceived+"/"+getId()} title={"Solicitudes recibidas pendientes"}/> },
+        { path: `${routes.exchanger.exchangesHistory}/*`, element: <ExchangesHistory route={endPoints.exchangesHistory+"/"+getId()} title={"Historial de intercambios"}/> },
+        //{ path: routes.exchanger.history, element: <ExchangesHistory route={endPoints.exchange} title={"Historial de intercambios"}/> },
         { path: routes.exchanger.inventory, element: <Inventory /> },
         { path: routes.exchanger.profile, element: <Profile/> },
         { path: routes.exchanger.information, element: <Information/> },

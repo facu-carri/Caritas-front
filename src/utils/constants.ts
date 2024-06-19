@@ -19,6 +19,8 @@ export const endPoints = {
     employees: 'employee',
     exchange: 'exchange',
     requestsSent: 'exchange/requestsSent',
+    requestsReceived: 'exchange/requestsReceived',
+    exchangesHistory: 'exchange/exchangesHistory',
     notification: 'exchange/myNotifications',
     acceptNotification: 'exchange/accept',
     rejectNotification: 'exchange/reject',
@@ -40,6 +42,8 @@ const helperRoutes = {
 }
 const exchangerRoutes = { 
     'requestsSent': '/requestsSent',
+    'requestsReceived': '/requestsReceived',
+    'exchangesHistory': '/exchangesHistory',
     'history': '/historial',
     'inventory': '/inventario',
     'profile': '/perfil',
