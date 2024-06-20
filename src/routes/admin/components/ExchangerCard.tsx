@@ -32,7 +32,7 @@ export default function ExchangerCard({ cardData, removeClick, children }: Excha
                 {cardData.dni && <InformativeText icon={<BsPersonVcard />}>{cardData.dni}</InformativeText>}
                 {cardData.birthdate && <InformativeText icon={<BsCalendar />}>{cardData.birthdate}</InformativeText>}
                 {cardData.stars && <InformativeText icon={<BsStar />}>{<Rating qty={cardData.stars} />}</InformativeText>}
-                {cardData.absentees && <InformativeText icon={"Inasistencias:"}>{cardData.absentees}</InformativeText>}
+                {(cardData.absentees != null) && <InformativeText icon={"Inasistencias:"}>{cardData.absentees}</InformativeText>}
                 {children}
             </div>
         </div>
