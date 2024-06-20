@@ -44,6 +44,7 @@ const exchangerRoutes = {
     'requestsSent': '/requestsSent',
     'requestsReceived': '/requestsReceived',
     'exchangesHistory': '/exchangesHistory',
+    'exchange':'/exchange',
     'history': '/historial',
     'inventory': '/inventario',
     'profile': '/perfil',

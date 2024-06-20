@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import Image from 'src/components/Image';
 import { useMutation } from 'react-query';
 import { ItemCardProps } from 'src/types/PropsTypes';
@@ -12,7 +11,11 @@ import ConfirmationModal from 'src/components/modals/Confirmation';
 import SelectItemModal from './SelectItemModal';
 import { FaRegTrashAlt, FaEdit } from 'react-icons/fa';
 import { BiAlarm } from "react-icons/bi";
+import { Exchange } from "src/types/Types";
 import { BiAlarmExclamation } from "react-icons/bi";
+import { BiBellPlus } from "react-icons/bi";
+import { useState, useEffect, useMemo } from "react";
+import { getData, putData } from "src/utils/request/httpRequests";
 
 //la publicacion particular del producto a intercambiar
 
@@ -69,6 +72,17 @@ export default function ItemCard({ item, onClick, hiddeOwner, queryInvalidator, 
 
   const confirmation = (fn) => showModal(<ConfirmationModal onAccept={fn}/>)
 
+  const [exchangeHistory, setExchangeHistory] = useState<Exchange[]>([]);
+
+  useEffect(() => {
+    //setLoading(true)
+    getData(endPoints.requestsReceived+"/"+itemData.id)
+      .then(data => setExchangeHistory(data))
+      .finally(/*() => setLoading(false)*/)
+  }, [/*TODO: QUE SE PONE ACA*/]);
+
+  const checkThereAreNotRequestsReceived = exchangeHistory.length == 0
+
   return (
     <div className="bg-white p-4 rounded shadow-lg max-w-sm cursor-pointer transform transition-transform duration-200 hover:scale-105" onClick={onClick}>
       <Image photo={itemData.photo} alt={itemData.name} className="mb-4 w-full rounded shadow-2xl max-h-64" />
@@ -80,7 +94,7 @@ export default function ItemCard({ item, onClick, hiddeOwner, queryInvalidator, 
         <div className='flex gap-2'>
           {canEdit && <button className='btn' onClick={onClickEdit}><FaEdit /></button>}
           {canDelete && !canEdit && <button onClick={onClickExchangesHistory} className='btn btn-error'><BiAlarm  /></button>}
-          {canDelete && !canEdit && <button onClick={onClickRequestsReceived} className='btn btn-error'><BiAlarmExclamation  /></button>}
+          {canDelete && !canEdit && <button disabled={checkThereAreNotRequestsReceived} onClick={onClickRequestsReceived} className='btn btn-error'><BiBellPlus   /></button>}
           {canDelete && <button onClick={() => confirmation(deleteItem)} className='btn btn-error'><FaRegTrashAlt /></button>}
           </div>
       </div>

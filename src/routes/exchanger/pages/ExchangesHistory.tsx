@@ -5,24 +5,26 @@ import LoadingSpinner from "src/components/LoadingSpinner";
 import { Exchange } from "src/types/Types";
 import { ExchangeCard } from "../components/ExchangeCard";
 import { getData, putData } from "src/utils/request/httpRequests";
-import { endPoints } from "src/utils/constants";
 import { useCustomModal } from "src/context/CustomModalContext";
 import Button from "src/components/Button";
 import ConfirmationModal from "src/components/modals/Confirmation";
 import { parseExchangeStateName } from "src/utils/parser";
+import RoutesHandler from "src/utils/routesHandler";
+import { endPoints, routes } from "src/utils/constants";
 
 export default function ExchangesHistory({route, title}) {
     const [searchQuery, setSearchQuery] = useState('');
     const { showModal, closeModal } = useCustomModal()
     const [exchangeHistory, setExchangeHistory] = useState<Exchange[]>([]);
     const [loading, setLoading] = useState(true);
+    const { setRoute } = RoutesHandler()
 
     useEffect(() => {
         setLoading(true)
         getData(route)
           .then(data => setExchangeHistory(data))
           .finally(() => setLoading(false))
-    }, []);
+    }, [route]);
 
     const value = searchQuery.toLowerCase()
     const filteredExchanges = useMemo(() => {
@@ -42,9 +44,10 @@ export default function ExchangesHistory({route, title}) {
     }
 
     const onClickExchange = (exchange: Exchange) => {
-        showModal(<ExchangeCard exchange={exchange}>
+        /*showModal(<ExchangeCard exchange={exchange}>
             {canDeleteExchange(exchange) && <Button onClick={() => confirmation(() => onCancelExchange(exchange))}>Cancelar intercambio</Button>}
-        </ExchangeCard>)
+        </ExchangeCard>)*/
+        setRoute(`${routes.exchanger.exchange}/${exchange.id}`)
     }
 
     const onCancelExchange = (exchange: Exchange) => {

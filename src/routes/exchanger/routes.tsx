@@ -10,6 +10,7 @@ import { ExchangerMain } from "./pages/main";
 import ExchangesHistory from "./pages/ExchangesHistory";
 import Item from "./pages/Item";
 import { endPoints } from "src/utils/constants";
+import Exchange from "./pages/Exchange";
 
 export function ExchangerRouter() {
 
@@ -24,6 +25,7 @@ export function ExchangerRouter() {
         { path: routes.exchanger.requestsSent, element: <ExchangesHistory route={endPoints.requestsSent} title={"Solicitudes enviadas pendientes"}/> },
         { path: `${routes.exchanger.requestsReceived}/*`, element: <ExchangesHistory route={endPoints.requestsReceived+"/"+getId()} title={"Solicitudes recibidas pendientes"}/> },
         { path: `${routes.exchanger.exchangesHistory}/*`, element: <ExchangesHistory route={endPoints.exchangesHistory+"/"+getId()} title={"Historial de intercambios"}/> },
+        { path: `${routes.exchanger.exchange}/*`, element: <Exchange id={getId()}/> },
         //{ path: routes.exchanger.history, element: <ExchangesHistory route={endPoints.exchange} title={"Historial de intercambios"}/> },
         { path: routes.exchanger.inventory, element: <Inventory /> },
         { path: routes.exchanger.profile, element: <Profile/> },
