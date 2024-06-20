@@ -18,6 +18,7 @@ export const endPoints = {
     exchanger: 'exchanger',
     employees: 'employee',
     exchange: 'exchange',
+    addReview: 'exchange/review',
     requestsSent: 'exchange/requestsSent',
     requestsReceived: 'exchange/requestsReceived',
     exchangesHistory: 'exchange/exchangesHistory',

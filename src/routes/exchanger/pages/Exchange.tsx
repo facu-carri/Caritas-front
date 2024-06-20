@@ -15,6 +15,8 @@ import {User} from "src/utils/User.tsx";
 import AcceptNotificationModal from '../components/inventory/AcceptNotificationModal';
 import { useEffect, useState } from "react";
 import { getData, putData } from "src/utils/request/httpRequests";
+import { format, parseISO } from 'date-fns';
+import StarRating from "../components/StarRating";
 
 export default function Exchange({ id }) {
   const { showModal, closeModal } = useCustomModal()
@@ -75,10 +77,6 @@ export default function Exchange({ id }) {
     setInputValue(event.target.value);
   };
 
-  const handleButtonClick = () => {
-    console.log(inputValue);
-    //TODO
-  };
 
   
   const onCancelExchange = (exchange: Exchange) => {
@@ -104,18 +102,16 @@ export default function Exchange({ id }) {
     )
   }
   const [freeLocations, setFreeLocations] = useState([]);
-  const [nextFreeDay, setNextFreeDay] = useState("");
   
   useEffect(() => {
     getData(endPoints.nextFreeDay)
-    .then(data => handleGetNextDay(data))
+    .then(nextFreeDay => handleGetNextDay(nextFreeDay))
     .catch(/*err => handleError(err)*/)
   }, [])
 
-  const handleGetNextDay = (data:string) => {
-    setNextFreeDay(data)
-    getData(endPoints.freeLocations+"/"+data)
-    .then(data => setFreeLocations(data))
+  const handleGetNextDay = (nextFreeDay:string) => {
+    getData(endPoints.freeLocations+"/"+nextFreeDay)
+    .then(freeLocations => setFreeLocations(freeLocations))
     .catch(/*err => handleError(err)*/)
   }
   const { mutate: rejectNotification } = useMutation({
@@ -127,8 +123,36 @@ export default function Exchange({ id }) {
       //queryInvalidator() TODO: Que es esto?
     }
   })
+
+  const soyGuest = () => { return exchange.guestItem.owner?.id == user.getId()}
+  const soyHost = () => { return exchange.hostItem.owner?.id == user.getId()}
+  const pertenezcoAlIntercambio = () => {return soyGuest() || soyHost()}
+
+  const [cantEstrellas, setCantEstrellas] = useState(5);
+  const onRatingChange = (nro) => {
+    setCantEstrellas(nro)
+  }
+
+  const handleSendReview = () => {
+    const today = format(Date(), 'yyyy-MM-dd')
+    if (soyGuest()) {
+      exchange.dateReviewGuest = today
+      exchange.reviewGuest = inputValue
+      exchange.starsGuest = cantEstrellas
+    } else {
+      exchange.dateReviewHost = today
+      exchange.reviewHost = inputValue
+      exchange.starsHost = cantEstrellas
+    }
+    putData(`${endPoints.addReview}`, null, { ...exchange })
+    .then(() => {
+    })
+  };
+
   return (
+    
     isLoading ? <LoadingAnimation /> :
+    
     <main className="pt-48">
     <div className='bg-gray-700/50 rounded-2xl p-5 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8'>
       <ExchangeHeader exchange={exchange} handleBack={handleBack}/>
@@ -144,44 +168,62 @@ export default function Exchange({ id }) {
               Intercambio: <span className={`font-bold ${exchange.state === 'Completed' ? 'text-700' : 'text-700'}`}>{parseExchangeStateName(exchange.state)}</span>
             </p>
 
-          {
-            exchange.state === 'NotConfirmed' ?
+          { pertenezcoAlIntercambio() &&
             <div>
-              { exchange.guestItem.owner?.id == user.getId() ?
-                <div className="flex gap-2 justify-between">
-                  <button className="btn" disabled={!freeLocations || freeLocations.length == 0} onClick={onClickAccept}>
-                    Aceptar
-                  </button>
-                  <button className="btn" onClick={() => showConfirmationModal(rejectNotification)}  >
-                    Rechazar
-                  </button>
-                </div>
-                :
-                <div className="flex gap-2 justify-between">
-                  <button className="btn" onClick={() => showConfirmationModal(() => onCancelExchange(exchange))}>
-                    Cancelar
-                  </button>
-                </div>
-              } 
-            </div>
-            : 
-            <div>
-              { exchange.state === 'Accepted' ?
-                <div className="flex gap-2 justify-between">
-                  { faltanMasDe24Hs ?
-                    <button className="btn" onClick={() => showConfirmationModal(() => onCancelExchange(exchange))}>
-                      Cancelar
-                    </button>
+              {exchange.state === 'NotConfirmed' ?
+                <div>
+                  { soyGuest() ?
+                    <div className="flex gap-2 justify-between">
+                      <button className="btn" disabled={!freeLocations || freeLocations.length == 0} onClick={onClickAccept}>
+                        Aceptar
+                      </button>
+                      <button className="btn" onClick={() => showConfirmationModal(rejectNotification)}  >
+                        Rechazar
+                      </button>
+                    </div>
                     :
-                    <p className="text font-bold text-white"> Faltan menos de 24 hs para el intercambio, por favor no se ausente. Este atento a la sede y horarios decididos</p>
-                  }
+                    <div className="flex gap-2 justify-between">
+                      <button className="btn" onClick={() => showConfirmationModal(() => onCancelExchange(exchange))}>
+                        Cancelar
+                      </button>
+                    </div>
+                  } 
                 </div>
                 : 
                 <div>
-                  { exchange.state === 'Completed' &&
-                    <div className="flex gap-2 justify-between"> 
-                      <input type="text" placeholder="Por favor ingrese una reseña del intercambio" className="input input-bordered w-full max-w-xs" value={inputValue} onChange={handleInputChange}/>
-                      <button className="btn" onClick={() => showConfirmationModal(handleButtonClick)}>Enviar</button>
+                  { exchange.state === 'Accepted' ?
+                    <div className="flex gap-2 justify-between">
+                      { faltanMasDe24Hs ?
+                        <button className="btn" onClick={() => showConfirmationModal(() => onCancelExchange(exchange))}>
+                          Cancelar
+                        </button>
+                        :
+                        <p className="text font-bold text-white"> Faltan menos de 24 hs para el intercambio, por favor no se ausente. Este atento a la sede y horarios decididos</p>
+                      }
+                    </div>
+                    : 
+                    <div>
+                      { exchange.state === 'Completed' &&
+                        <div>
+                        { ((soyGuest() && (exchange.reviewGuest == null)) || (soyHost() && (exchange.reviewHost == null))) ?
+                          <div>
+                            <div className="flex gap-2 justify-between"> 
+                              <textarea placeholder="Por favor ingrese una reseña del intercambio" className="textarea textarea-bordered w-full max-w-xs" value={inputValue} onChange={handleInputChange}/>
+                              <button className="btn" disabled={inputValue == ''} onClick={() => showConfirmationModal(handleSendReview)}>Enviar</button>
+                            </div>
+                            <StarRating onRatingChange={onRatingChange}></StarRating>
+                          </div>
+                          :
+                          <div>
+                            { soyGuest() ? 
+                              <p> Su reseña fue: {exchange.reviewGuest}, con fecha: {exchange.dateReviewGuest}. Su puntaje dado fue: {exchange.starsGuest} </p>
+                              :
+                              <p> Su reseña fue: {exchange.reviewHost}, con fecha: {exchange.dateReviewHost}. Su puntaje dado fue: {exchange.starsHost} </p>
+                            }
+                          </div>
+                        }
+                        </div>
+                      }
                     </div>
                   }
                 </div>

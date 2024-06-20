@@ -97,4 +97,11 @@ export type Exchange = {
     state?: 'NotConfirmed' | 'Rejected' | 'Accepted' | 'Canceled' | 'Completed' | 'NotComplitedByDislike' | 'NotComplitedByNonAttendance'
     location: Location;
     authenticationCode: string;
+    
+    reviewHost: string
+    reviewGuest: string
+    starsHost: number
+    starsGuest: number
+    dateReviewHost: string
+    dateReviewGuest: string
 }

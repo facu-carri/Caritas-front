@@ -105,7 +105,7 @@ export default function Profile({ id }: ProfileProps) {
           inventory.map(item => <ItemCard key={item.id} item={item} canEdit={false} canDelete={false} hiddeBtns={canDoActions} hiddeOwner={true} />)
       }
       </div>
-      <h2 className="text-2xl font-bold mb-4 text-white">Comentarios</h2>
+      <h2 className="text-2xl font-bold mb-4 text-white">Reseña</h2>
       <div className="space-y-4">
       {
         (!reviews || reviews.length == 0) ?
