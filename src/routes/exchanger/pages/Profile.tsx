@@ -14,11 +14,14 @@ import Rating from "src/components/Rating";
 import { getAdminFields, getExchangerFields } from "src/routes/admin/components/ExchangerFields";
 import RoutesHandler from "src/utils/routesHandler";
 import EditProfileModal from "src/components/modals/EditProfile";
+import ReviewCard from "../components/ReviewCard";
 
 export default function Profile({ id }: ProfileProps) {
   const [userData, setUserData] = useState<ExchangerData>();
   const [reviews, setReviews] = useState<Review[]>();
   const [info, setInfo] = useState(null)
+  const user = User();
+  const userId = user.getId();
 
   const { getRole, logout } = User()
   const { showModal } = useCustomModal()
@@ -32,7 +35,7 @@ export default function Profile({ id }: ProfileProps) {
   }, [id]);
 
   const getProfile = () => getData(`${id ? `${endPoints.otherProfile}${id}` : endPoints.profile}`).then(userData => setUserData(userData))
-  const getReviews = () => getData(endPoints.myReviews).then(reviews => setReviews(reviews)).catch(error => resetReviews(error))
+  const getReviews = () => getData(`${id ? `${endPoints.reviews}${id}` : `${endPoints.reviews}${userId}`}`).then(reviews => setReviews(reviews)).catch(error => resetReviews(error))
 
   const { data: inventory = [] } = useQuery({
     queryKey: ['inventory', id],
@@ -105,12 +108,14 @@ export default function Profile({ id }: ProfileProps) {
           inventory.map(item => <ItemCard key={item.id} item={item} canEdit={false} canDelete={false} hiddeBtns={canDoActions} hiddeOwner={true} />)
       }
       </div>
-      <h2 className="text-2xl font-bold mb-4 text-white">Reseña</h2>
+      <h2 className="text-2xl font-bold mb-4 text-white">Reseñas</h2>
       <div className="space-y-4">
       {
         (!reviews || reviews.length == 0) ?
-        <p className="text-gray-400 line-clamp-2">No hay elementos</p> :
-        <p> TODO: HACER REVIEWS </p>
+        <p className="text-gray-400 line-clamp-2">No hay elementos</p> 
+        :
+        //<p className="text-gray-400 line-clamp-2">No hay CACAAAAAAAAAAAAAAAAAAAAAAA</p> 
+        reviews.map(review => <ReviewCard key={review.id} review={review} />)
       }
       </div>
     </UserProfile>

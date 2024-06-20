@@ -11,7 +11,7 @@ export const endPoints = {
     inventory: 'item/myInventory',
     location: 'location',
     freeLocations: 'freeLocations',
-    myReviews: 'reviews/myReviews',
+    reviews: 'reviewsOf/',
     categories: 'itemCategory',
     exchangeablesItems: 'item',
     addItem: 'item',
