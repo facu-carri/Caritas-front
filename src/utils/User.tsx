@@ -1,5 +1,5 @@
-import { roles, routes } from "./constants"
-import { getItem, removeItem, setItem } from "./localStorage"
+import { routes } from "./constants"
+import { getItem, removeItem, setID, setItem } from "./localStorage"
 import RoutesHandler from "./routesHandler"
 
 type UserData = {
@@ -17,6 +17,7 @@ export const User = () => {
     const { setRoute } = RoutesHandler()
 
     const setUser = (data: UserData) => {
+        setID()
         setItem(TOKEN, data.token)
         setItem(ROLE, data.role)
         setItem(ID, data.id)
