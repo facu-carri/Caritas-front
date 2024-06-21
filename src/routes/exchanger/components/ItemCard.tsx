@@ -85,7 +85,7 @@ export default function ItemCard({ item, onClick, hiddeOwner, queryInvalidator, 
 
   return (
     <div className="bg-white p-4 rounded shadow-lg max-w-sm cursor-pointer transform transition-transform duration-200 hover:scale-105" onClick={onClick}>
-      <Image photo={itemData.photo} alt={itemData.name} className="mb-4 w-full rounded shadow-2xl max-h-64" />
+      <Image photo={itemData.photo} alt={itemData.name} className="mb-4 w-full rounded shadow-2xl h-64" />
       <h2 className="text-xl font-bold mb-2">{itemData.name}</h2>
       <p className="text-sm text-gray-500 mb-2">Categoria: {itemData.itemCategory.name}</p>
       <p className="text-sm text-gray-500 mb-2">Descripcion: {itemData.description}</p>
