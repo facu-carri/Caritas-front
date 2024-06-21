@@ -11,6 +11,7 @@ import ExchangesHistory from "./pages/ExchangesHistory";
 import Item from "./pages/Item";
 import { endPoints } from "src/utils/constants";
 import Exchange from "./pages/Exchange";
+import MakeDonation from "./pages/MakeDonation";
 
 export function ExchangerRouter() {
 
@@ -31,7 +32,8 @@ export function ExchangerRouter() {
         { path: routes.exchanger.profile, element: <Profile/> },
         { path: routes.exchanger.information, element: <Information/> },
         { path: `${routes.exchanger.profile}/*`, element: <Profile id={getId()}/>},
-        { path: `${routes.item}/*`, element: <Item id={getId()}/>}
+        { path: `${routes.item}/*`, element: <Item id={getId()} /> },
+        { path: `${routes.exchanger.donations}`, element: <MakeDonation/> }
       ]
     },
     {

@@ -29,6 +29,7 @@ export const endPoints = {
     nextFreeDay: 'exchange/nextFreeDay',
     endDay: 'exchange/endDay',
     todayIsFinished: 'exchange/todayIsFinished',
+    donation: 'donation',
 }
 const adminRoutes = {
     'estadisticas': '/estadisticas',
@@ -41,13 +42,14 @@ const helperRoutes = {
     profile: '/perfilAyudante',
     exchange: '/exchange'
 }
-const exchangerRoutes = { 
+const exchangerRoutes = {
     'requestsSent': '/requestsSent',
     'requestsReceived': '/requestsReceived',
     'exchangesHistory': '/exchangesHistory',
     'exchange':'/exchange',
     'history': '/historial',
     'inventory': '/inventario',
+    'donations': '/donaciones',
     'profile': '/perfil',
     'information':'/informacion'
 }
