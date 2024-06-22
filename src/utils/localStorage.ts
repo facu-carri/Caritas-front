@@ -1,15 +1,14 @@
-const ID: string = 'uuid'
-let id: number = 0
+//const ID: string = 'uuid'
+const id: number = null
 
 const setID = () => {
-  const localId = getItem(ID, true)
-  id = localId != null ? parseInt(localId) + 1 : 1
-  console.log('Set id', localId, id)
-  setItem(ID, id.toString(), true)
+  //const localId = getItem(ID, true)
+  //id = localId != null ? parseInt(localId) + 1 : 1
+  //setItem(ID, id.toString(), true)
 }
 
 const getKey = (key: string) => {
-  return `${id.toString()}_${key}`
+  return id != null ? `${id.toString()}_${key}` : key
 }
 
 const setItem = (key: string, value: string, force?: boolean) => {

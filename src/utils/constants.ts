@@ -3,15 +3,18 @@ export const endPoints = {
     login: 'v1/auth/authenticate',
     verificationCode: 'v1/auth/verificationCode',
     registerHelper: 'employee', 
-    registerExchanger: 'v1/auth/register', 
+    registerExchanger: 'v1/auth/register',
+
     profile: 'exchanger/myProfile',
     otherProfile: 'exchanger/',
     profileHelper: 'employee/myProfile',
     otherProfileHelper: 'employee/',
     inventory: 'item/myInventory',
+    reviews: 'reviewsOf/',
+
     location: 'location',
     freeLocations: 'freeLocations',
-    reviews: 'reviewsOf/',
+
     categories: 'itemCategory',
     exchangeablesItems: 'item',
     addItem: 'item',
@@ -19,17 +22,22 @@ export const endPoints = {
     employees: 'employee',
     exchange: 'exchange',
     addReview: 'exchange/review',
+    
     requestsSent: 'exchange/requestsSent',
     requestsReceived: 'exchange/requestsReceived',
     exchangesHistory: 'exchange/exchangesHistory',
+
     notification: 'exchange/myNotifications',
     acceptNotification: 'exchange/accept',
     rejectNotification: 'exchange/reject',
+
     cancelExchange: 'exchange/cancel',
     nextFreeDay: 'exchange/nextFreeDay',
     endDay: 'exchange/endDay',
     todayIsFinished: 'exchange/todayIsFinished',
+
     donation: 'donation',
+    trackDonation: 'trackDonation',
 }
 const adminRoutes = {
     'estadisticas': '/estadisticas',
@@ -50,6 +58,8 @@ const exchangerRoutes = {
     'history': '/historial',
     'inventory': '/inventario',
     'donations': '/donaciones',
+    'donationsSucess': '/donaciones/sucess',
+    'donationsFailure': '/donaciones/failure',
     'profile': '/perfil',
     'information':'/informacion'
 }

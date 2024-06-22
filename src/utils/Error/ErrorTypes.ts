@@ -9,4 +9,5 @@ export enum ErrorTypes{
     EDIT_PROFILE_ERROR,
     AUTH_CODE_ERROR,
     END_DAY_ERROR,
+    DONATION_ERROR,
 }
