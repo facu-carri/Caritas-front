@@ -82,25 +82,3 @@ export default function MakeDonation() {
     </div>
   )
 }
-
-/*
-
-<Wallet
-            initialization={{
-              preferenceId: _preferenceId,
-              redirectMode: 'modal',
-            }}
-            customization={{
-              texts: {
-                action: 'pay',
-                actionComplement: 'amount',
-                valueProp: 'payment_methods_logos'
-              },
-              visual: {
-                hideValueProp: true,
-              },
-              
-            }}
-          />
-
-*/
