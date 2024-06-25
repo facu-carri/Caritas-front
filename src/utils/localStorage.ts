@@ -12,16 +12,16 @@ const getKey = (key: string) => {
 }
 
 const setItem = (key: string, value: string, force?: boolean) => {
-  localStorage.setItem(force ? key : getKey(key), value);
+  sessionStorage.setItem(force ? key : getKey(key), value);
 }
 
 const getItem = (key: string, force?: boolean) => {
-  const value = localStorage.getItem(force ? key : getKey(key));
+  const value = sessionStorage.getItem(force ? key : getKey(key));
   return value;
 }
 
 const removeItem = (key: string) => {
-  localStorage.removeItem(getKey(key));
+  sessionStorage.removeItem(getKey(key));
 }
 
 export { setID, setItem, getItem, removeItem}
