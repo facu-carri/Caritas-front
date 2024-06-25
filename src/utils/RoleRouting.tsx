@@ -8,9 +8,11 @@ import { ExchangerRouter } from "src/routes/exchanger/routes"
 import ErrorPage from "src/routes/error/ErrorPage"
 
 export default function RoleBasedRouting() {
-  const { getRole, logout } = User()
+  const { setPageTitle, getRole, logout } = User()
   const role = getRole()
 
+  setPageTitle()
+  
   switch (role) {
     case roles.ADMIN:
       return <AdminRouter/>

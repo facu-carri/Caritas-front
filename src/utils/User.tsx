@@ -1,5 +1,6 @@
-import { routes } from "./constants"
+import { endPoints, roles, routes } from "./constants"
 import { getItem, removeItem, setID, setItem } from "./localStorage"
+import { getData } from "./request/httpRequests"
 import RoutesHandler from "./routesHandler"
 
 type UserData = {
@@ -15,6 +16,13 @@ export const User = () => {
     const ID: string = 'id'
 
     const { setRoute } = RoutesHandler()
+
+    const setPageTitle = () => {
+        const route = getRole() == roles.EXCHANGER ? endPoints.profile : endPoints.profileHelper
+        getData(route)
+            .then((data) => document.title = `${data.name} - ${getRole()}`)
+            .catch(() => document.title = getRole())
+    }
 
     const setUser = (data: UserData) => {
         setID()
@@ -41,5 +49,5 @@ export const User = () => {
         setRoute(routes.login)
     }
 
-    return { setUser, getToken, getRole, getId, logout }
+    return { setPageTitle, setUser, getToken, getRole, getId, logout }
 }
