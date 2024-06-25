@@ -14,14 +14,21 @@ export const User = () => {
     const TOKEN: string = 'token'
     const ROLE: string = 'role'
     const ID: string = 'id'
+    const CUSTOM_NAME: string = 'windowName'
 
     const { setRoute } = RoutesHandler()
 
     const setPageTitle = () => {
         const route = getRole() == roles.EXCHANGER ? endPoints.profile : endPoints.profileHelper
-        getData(route)
+        const custom_name = getItem(CUSTOM_NAME)
+
+        if (custom_name) {
+            document.title = `${custom_name} - ${getRole()}`
+        } else {
+            getData(route)
             .then((data) => document.title = `${data.name} - ${getRole()}`)
             .catch(() => document.title = getRole())
+        }
     }
 
     const setUser = (data: UserData) => {
