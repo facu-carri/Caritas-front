@@ -37,7 +37,7 @@ export const endPoints = {
     todayIsFinished: 'exchange/todayIsFinished',
 
     donation: 'donation',
-    trackDonation: 'trackDonation',
+    trackDonation: 'saveDonation',
 }
 const adminRoutes = {
     'estadisticas': '/estadisticas',
