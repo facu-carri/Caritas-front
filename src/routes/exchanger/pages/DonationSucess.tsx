@@ -11,9 +11,10 @@ export default function DonationSucess() {
 
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
-        const price = urlParams.get('price')
-        if (price) {
-            postData(endPoints.trackDonation, null, { price: price })
+        const amount = urlParams.get('amount')
+        const isAnon = urlParams.get('isAnon')
+        if (amount) {
+            postData(endPoints.trackDonation, null, { amount: amount, isAnon: isAnon})
         }
     }, [])
 
