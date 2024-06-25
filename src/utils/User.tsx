@@ -23,7 +23,7 @@ export const User = () => {
         const custom_name = getItem(CUSTOM_NAME)
 
         if (custom_name) {
-            document.title = `${custom_name} - ${getRole()}`
+            document.title = custom_name
         } else {
             getData(route)
             .then((data) => document.title = `${data.name} - ${getRole()}`)
