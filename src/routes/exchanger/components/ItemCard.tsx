@@ -12,7 +12,6 @@ import SelectItemModal from './SelectItemModal';
 import { FaRegTrashAlt, FaEdit } from 'react-icons/fa';
 import { BiAlarm } from "react-icons/bi";
 import { Exchange } from "src/types/Types";
-import { BiAlarmExclamation } from "react-icons/bi";
 import { BiBellPlus } from "react-icons/bi";
 import { useState, useEffect, useMemo } from "react";
 import { getData, putData } from "src/utils/request/httpRequests";
@@ -91,12 +90,12 @@ export default function ItemCard({ item, onClick, hiddeOwner, queryInvalidator, 
       <p className="text-sm text-gray-500 mb-2">Descripcion: {itemData.description}</p>
       <div className='flex items-center justify-between'>
         { canDelete && <p className="text-sm text-gray-500 mb-2">Cantidad restante: {itemData.quantity}</p>}
-        <div className='flex gap-2'>
+      </div>
+      <div className='flex gap-2 justify-end'>
           {canEdit && <button className='btn' onClick={onClickEdit}><FaEdit /></button>}
-          {canDelete && !canEdit && <button onClick={onClickExchangesHistory} className='btn btn-error'><BiAlarm  /></button>}
-          {canDelete && !canEdit && <button disabled={checkThereAreNotRequestsReceived} onClick={onClickRequestsReceived} className='btn btn-error'><BiBellPlus   /></button>}
+          {canDelete && !canEdit && <button onClick={onClickExchangesHistory} className='btn btn-error'>Historial</button>}
+          {canDelete && !canEdit && <button disabled={checkThereAreNotRequestsReceived} onClick={onClickRequestsReceived} className='btn btn-error'>Solicitudes</button>}
           {canDelete && <button onClick={() => confirmation(deleteItem)} className='btn btn-error'><FaRegTrashAlt /></button>}
-          </div>
       </div>
       {
         !hiddeBtns && 
