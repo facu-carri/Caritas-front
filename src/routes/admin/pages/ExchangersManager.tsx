@@ -6,7 +6,7 @@ import { endPoints, serverAddress } from "src/utils/constants";
 import { ErrorCode } from "src/utils/Error/ErrorCode";
 import { ErrorTypes } from "src/utils/Error/ErrorTypes";
 import { ExchangerCardData } from "src/types/Types";
-import ExchangersManagerHeader from "../components/ExchangersManagerHeader";
+import ManagerHeader from "../components/ManagerHeader";
 import ExchangerCard from "src/routes/admin/components/ExchangerCard";
 import LoadingSpinner from "src/components/LoadingSpinner";
 import ErrorAlert from "src/components/ErrorAlert";
@@ -61,7 +61,7 @@ export default function ExchangersManager() {
         <div className=" flex flex-col items-center justify-center p-4 relative">
             <header className="py-2 px-6 md:px-12 ">
                 <div className="flex flex-col items-center gap-4 mt-36">
-                    <ExchangersManagerHeader/>
+                    <ManagerHeader entidad={"intercambiadores"} listaFiltrados = {"nombre, email, teléfono o DNI"}/>
                     <form className="w-full max-w-md space-y-2 flex space-x-2" onSubmit={(e) => e.preventDefault()}>
                         <input
                             className="max-w-lg flex-1 p-2 border border-gray-300 rounded-md"

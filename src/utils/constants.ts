@@ -19,6 +19,7 @@ export const endPoints = {
     exchangeablesItems: 'item',
     addItem: 'item',
     exchanger: 'exchanger',
+    getAllDonations: 'allDonations',
     employees: 'employee',
     exchange: 'exchange',
     addReview: 'exchange/review',
