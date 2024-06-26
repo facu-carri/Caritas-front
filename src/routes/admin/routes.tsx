@@ -11,6 +11,7 @@ import ExchangersManager from "./pages/ExchangersManager";
 import Profile from "../exchanger/pages/Profile";
 import EmployeeProfile from "../helper/pages/Profile";
 import DonationsManager from "./pages/DonationsManager";
+import Estadisticas from "./pages/Estadisticas";
 
 export function AdminRouter() {
 
@@ -28,6 +29,7 @@ export function AdminRouter() {
         { path: `${routes.exchanger.profile}/*`, element: <Profile id={getId()}/>},
         { path: `${routes.helper.profile}/*`, element: <EmployeeProfile id={getId()}/>},
         { path: routes.admin.listarDonaciones, element: <DonationsManager/>},
+        { path: routes.admin.estadisticas, element: <Estadisticas/>},
       ]
     },
     {

@@ -4,6 +4,7 @@ export const endPoints = {
     verificationCode: 'v1/auth/verificationCode',
     registerHelper: 'employee', 
     registerExchanger: 'v1/auth/register',
+    estadisticas: 'estadisticas',
 
     profile: 'exchanger/myProfile',
     otherProfile: 'exchanger/',

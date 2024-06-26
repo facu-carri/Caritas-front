@@ -2,6 +2,31 @@ import { ButtonProps } from "./PropsTypes"
 
 export type VoidFunction = () => void
 export type MouseEvent = React.MouseEvent<HTMLElement>
+export type EstadisticasData = {
+    userCount: number,
+    bannedUserCount: number,
+    averageUserRating: number,
+    donationCount: number,
+    totalDonations: number,
+    itemCount: number,
+    availableItemCount: number,
+    itemCategorysData: ItemCategoryData[],
+    exchangesData: ExchangeData[],
+    locationsData: LocationData[]
+}
+export type LocationData = {
+    name: string,
+    exchangesCount: number
+}
+export type ItemCategoryData = {
+    name: string,
+    itemsCount: number
+}
+export type ExchangeData = {
+    stateName: string,
+    exchangesCount: number
+}
+
 export type UserData = {
     name: string,
     dni: string,

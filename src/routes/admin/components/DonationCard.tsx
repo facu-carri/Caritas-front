@@ -24,15 +24,3 @@ export default function DonationCard({ cardData }) {
         </div>
     )
 }
-/* 
-                <div className="flex flex-row gap-2 py-2">
-                    <AvatarPhoto photo={cardData.photo} name={cardData.name}/>
-                    <h3 className="text-black flex flex-col justify-center text-lg font-semibold">{cardData.name}</h3>
-                </div>
-                {cardData.email && <InformativeText icon={Icons.email()}>{cardData.email}</InformativeText>}
-                {cardData.phone && <InformativeText icon={<BsTelephone/>}>{cardData.phone}</InformativeText>}
-                {cardData.dni && <InformativeText icon={<BsPersonVcard />}>{cardData.dni}</InformativeText>}
-                {cardData.birthdate && <InformativeText icon={<BsCalendar />}>{cardData.birthdate}</InformativeText>}
-                {cardData.stars && <InformativeText icon={<BsStar />}>{<Rating qty={cardData.stars} />}</InformativeText>}
-                {(cardData.absentees != null) && <InformativeText icon={"Inasistencias:"}>{cardData.absentees}</InformativeText>}
-            */
