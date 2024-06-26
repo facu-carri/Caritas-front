@@ -15,7 +15,7 @@ import {User} from "src/utils/User.tsx";
 import AcceptNotificationModal from '../components/inventory/AcceptNotificationModal';
 import { useEffect, useState } from "react";
 import { getData, putData } from "src/utils/request/httpRequests";
-import { format, parseISO } from 'date-fns';
+import { format } from 'date-fns';
 import StarRating from "../components/StarRating";
 
 export default function Exchange({ id }) {
@@ -198,7 +198,7 @@ export default function Exchange({ id }) {
                           Cancelar
                         </button>
                         :
-                        <p className="text font-bold text-white"> Faltan menos de 24 hs para el intercambio, por favor no se ausente. Este atento a la sede y horarios decididos</p>
+                        <p className="text font-bold text-white"> Faltan menos de 24 hs para el intercambio, por favor no se ausente. <br/>Este atento a la sede y horarios decididos</p>
                       }
                     </div>
                     : 
