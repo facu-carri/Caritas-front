@@ -50,7 +50,9 @@ const Estadisticas = () => {
 
   const stateOrder = [
     'NotConfirmed',
-    'Rejected',
+    'RejectedByDislike',
+    'RejectedByPreference',
+    'RejectedByTrust',
     'Accepted',
     'Canceled',
     'Completed',

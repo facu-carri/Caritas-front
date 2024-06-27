@@ -9,7 +9,8 @@ import { AiOutlineCheck, AiOutlineClose  } from "react-icons/ai";
 import AcceptNotificationModal from './inventory/AcceptNotificationModal';
 import ConfirmationModal from 'src/components/modals/Confirmation';
 
-export default function BellNotificationCard({ notification }) {
+/// Este archivo es viejo y ya no se usa mas
+export default function BellNotificationCard({ notification }) { // Este archivo es viejo y ya no se usa mas
   
   const [ notificationData, setNotificationData ] = useState(notification)
   const { showModal, closeModal } = useCustomModal()
@@ -35,9 +36,9 @@ export default function BellNotificationCard({ notification }) {
     )
   }
   
-  const { mutate: rejectNotification } = useMutation({
+  const { mutate: rejectNotification } = useMutation({ // Este archivo es viejo y ya no se usa mas
     mutationFn: () => fetch(`${serverAddress}/${endPoints.rejectNotification}/${notification.id}`, {
-      method: 'PUT',
+      method: 'PUT', 
       headers: getHeaders()
     }),
     onSuccess: () => {

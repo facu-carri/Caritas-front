@@ -17,6 +17,7 @@ import { useEffect, useState } from "react";
 import { getData, putData } from "src/utils/request/httpRequests";
 import { format } from 'date-fns';
 import StarRating from "../components/StarRating";
+import RejectExchangeModal from "src/routes/admin/components/RejectExchangeModal";
 
 export default function Exchange({ id }) {
   const { showModal, closeModal } = useCustomModal()
@@ -114,15 +115,6 @@ export default function Exchange({ id }) {
     .then(freeLocations => setFreeLocations(freeLocations))
     .catch(/*err => handleError(err)*/)
   }
-  const { mutate: rejectNotification } = useMutation({
-    mutationFn: () => fetch(`${serverAddress}/${endPoints.rejectNotification}/${exchange.id}`, {
-      method: 'PUT',
-      headers: getHeaders()
-    }),
-    onSuccess: () => {
-      //queryInvalidator() TODO: Que es esto?
-    }
-  })
 
   const soyGuest = () => { return exchange.guestItem.owner?.id == user.getId()}
   const soyHost = () => { return exchange.hostItem.owner?.id == user.getId()}
@@ -148,6 +140,9 @@ export default function Exchange({ id }) {
     .then(() => {
     })
   };
+
+  const handleCancel = () => showModal(<RejectExchangeModal onClose={closeModal} exchangeId={exchange.id}/>)
+  
 
   return (
     
@@ -177,7 +172,7 @@ export default function Exchange({ id }) {
                       <button className="btn" disabled={!freeLocations || freeLocations.length == 0} onClick={onClickAccept}>
                         Aceptar
                       </button>
-                      <button className="btn" onClick={() => showConfirmationModal(rejectNotification)}  >
+                      <button className="btn" onClick={handleCancel}  >
                         Rechazar
                       </button>
                     </div>
