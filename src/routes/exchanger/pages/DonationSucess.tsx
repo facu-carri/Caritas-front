@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react"
 import Button from "src/components/Button"
-import { endPoints, routes } from "src/utils/constants"
+import { endPoints, routes, serverAddress } from "src/utils/constants"
 import { postData } from "src/utils/request/httpRequests"
 import RoutesHandler from "src/utils/routesHandler"
 
@@ -15,9 +15,21 @@ export default function DonationSucess() {
         const isAnon = urlParams.get('isAnon')
         amount = amount.replace("?isAnon", "&isAnon");
         if (amount) {
-            postData(endPoints.trackDonation, {amount})
+            handleSaveDonation(amount)
         }
     }, [])
+    const handleSaveDonation = (amount) => {
+        postData(endPoints.trackDonation, {amount}) // Esto envia 2 veces y se guarda repetido
+        
+        /*fetch(`${serverAddress}/${endPoints.trackDonation}?amount=${amount}`, { // Esto no funciona no se xq
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*'
+            },
+        })*/
+    }
 
     return(
         <div className="flex flex-col items-center justify-center min-h-[100dvh] bg-gray-100 dark:bg-gray-900 p-4">
