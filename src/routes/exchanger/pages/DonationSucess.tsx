@@ -2,7 +2,7 @@
 import { useEffect } from "react"
 import Button from "src/components/Button"
 import { endPoints, routes, serverAddress } from "src/utils/constants"
-import { postData } from "src/utils/request/httpRequests"
+import { getHeaders, postData } from "src/utils/request/httpRequests"
 import RoutesHandler from "src/utils/routesHandler"
 
 export default function DonationSucess() {
@@ -19,16 +19,13 @@ export default function DonationSucess() {
         }
     }, [])
     const handleSaveDonation = (amount) => {
-        postData(endPoints.trackDonation, {amount}) // Esto envia 2 veces y se guarda repetido
+        //postData(endPoints.trackDonation, {amount}) // Esto envia 2 veces y se guarda repetido
         
-        /*fetch(`${serverAddress}/${endPoints.trackDonation}?amount=${amount}`, { // Esto no funciona no se xq
+        fetch(`${serverAddress}/${endPoints.trackDonation}?amount=${amount}`, { // Esto no funciona no se xq
             method: 'POST',
             cache: 'no-cache',
-            headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*'
-            },
-        })*/
+            headers: getHeaders(),
+        })
     }
 
     return(
