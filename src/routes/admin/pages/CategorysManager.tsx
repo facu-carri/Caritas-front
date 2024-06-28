@@ -38,13 +38,13 @@ export default function CategorysManager() {
     
     return (
         <div className="bg-gray-100 min-h-screen">
-            <ExchangerHeader title="Categorias" text="Aviso: Si elimina una categoria se eliminaran todas las publicaciones que tengan esta categoria asignada. Le recomendamos nunca eliminar una categoria. Una categoria eliminada no se podra volver a cargar."/>
+            <ExchangerHeader title="Categorias" text="Aviso: Si elimina una categoria se eliminaran todas las publicaciones que tengan esta categoria asignada. Le recomendamos nunca eliminar una categoria."/>
             <CategorysList >
                 <button onClick={handleModal} className="p-2 flex flex-row items-center space-x-2 px-2 gap-2 text-sm font-medium text-white bg-red-600 rounded hover:bg-red-500">
                     <BsPlus className='h-4 w-4'/>
                     Agregar Categoria
                 </button>
-                {error && <p>La categoria ingresada ya existe o existio y fue eliminada. </p>}
+                {error && <p>La categoria ingresada ya existe </p>}
             </CategorysList>
         </div>
     )

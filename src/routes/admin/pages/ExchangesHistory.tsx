@@ -23,8 +23,9 @@ export default function ExchangesHistory() {
   const [error, setError] = useState<ErrorCode>(null)
   const { showModal } = useCustomModal()
   const [loading, setLoading] = useState(true);
+  const [location, setLocation] = useState('');
   const [dayEnded, setDayEnded] = useState(false);
-
+  const [locations, setLocations] = useState([]);
   useEffect(() => {
     setLoading(true)
     getData(endPoints.exchange)
@@ -32,6 +33,8 @@ export default function ExchangesHistory() {
       .catch(() => setExchangeHistory([]))
     getData(endPoints.todayIsFinished)
       .then(value => setDayEnded(value))
+    getData(endPoints.location)
+      .then(value => setLocations(value))
   }, [])
 
   useEffect(() => {
@@ -53,10 +56,14 @@ export default function ExchangesHistory() {
   const filteredExchanges = useMemo(() => {
     const value = searchQuery.toLowerCase()
     if(!exchangeHistory) return []
-    return exchangeHistory.filter((exchange) => {
-      return !value || parseExchangeStateName(exchange.state).toLowerCase().includes(value) || exchange.authenticationCode.toLowerCase().includes(value) || exchange.date?.toLowerCase().includes(value) || exchange.location?.name.toLowerCase().includes(value)
-    })
-  }, [searchQuery, exchangeHistory])
+    return exchangeHistory.filter(exchange => {
+                      if(!location) return true
+                      return exchange.location && exchange.location.name === location
+                  })
+                          .filter((exchange) => {
+                      return !value || parseExchangeStateName(exchange.state).toLowerCase().includes(value) || exchange.authenticationCode.toLowerCase().includes(value) || exchange.date?.toLowerCase().includes(value)
+                  })
+  }, [searchQuery, exchangeHistory, location])
 
   const endDay = () => {
     putData(endPoints.endDay)
@@ -72,8 +79,21 @@ export default function ExchangesHistory() {
       <ExchangerHeader title="Intercambios">
       </ExchangerHeader>
       <div className="flex flex-col justify-center items-center text-[100%] gap-6 md:gap-8 mt-8 min-h-[300px]">
+      {
+          <select className="p-2 border border-gray-700 rounded-lg" value={location} onChange={e => setLocation(e.target.value)}>
+            <option value="">
+            {
+                !locations || locations.length == 0 ? 'No hay sedes cargadas' :
+                'Todas las sedes'
+            }
+            </option>
+            {
+              locations?.map(location =><option key={location.id} value={location.name}>{location.name}</option>)
+            }
+          </select>
+        }
         <p className="mx-auto max-w-[700px] md:text-xl text-gray-400 text-center">
-          Filtra por fecha, sede, estado o código
+          Filtra por fecha, estado o código
         </p>
         <form className="w-full max-w-md space-y-2 flex space-x-2" onSubmit={(e) => e.preventDefault()}>
           <input
@@ -91,7 +111,7 @@ export default function ExchangesHistory() {
         }
         {
           loading ? (<LoadingSpinner/>) : 
-          (!filteredExchanges || filteredExchanges.length==0) ? (<p>No Hay intercambios registrados para el dia de la fecha</p>) : 
+          (!filteredExchanges || filteredExchanges.length==0) ? (<p>No Hay intercambios registrados</p>) : 
           (!dayEnded &&
             <div className="flex flex-col gap-2 items-center mb-2">
               {filteredExchanges.map((exchange) => (
