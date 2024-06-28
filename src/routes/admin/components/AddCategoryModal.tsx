@@ -22,7 +22,7 @@ export default function AddCategoryModal({ onClose, onAddItemCategory }) {
         </div>
       </div>
       <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse gap-5">
-        <Button onClick={handleAddItem} disabled={isDisabled}>Agregar Categoria</Button>
+        <Button onClick={handleAddItem} disabled={isDisabled}>Aceptar</Button>
         <Button onClick={onClose}>Cancelar</Button>
       </div>
     </div>
