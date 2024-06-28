@@ -46,7 +46,9 @@ const adminRoutes = {
     'gestionarIntercambiadores': '/gestionar-intercambiadores',
     'gestionarAyudantes': '/gestionar-ayudantes',
     'listarDonaciones': '/donaciones',
+    'listarIntercambios': '/intercambios',
     'gestionarFiliales': '/gestionar-filiales',
+    exchange: '/exchange'
 }
 const helperRoutes = {
     profile: '/perfilAyudante',

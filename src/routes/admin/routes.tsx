@@ -12,6 +12,8 @@ import Profile from "../exchanger/pages/Profile";
 import EmployeeProfile from "../helper/pages/Profile";
 import DonationsManager from "./pages/DonationsManager";
 import Estadisticas from "./pages/Estadisticas";
+import ExchangesHistory from "./pages/ExchangesHistory";
+import Exchange from "./components/Exchange";
 
 export function AdminRouter() {
 
@@ -28,7 +30,9 @@ export function AdminRouter() {
         { path: routes.admin.gestionarAyudantes, element: <HelpersManager /> },
         { path: `${routes.exchanger.profile}/*`, element: <Profile id={getId()}/>},
         { path: `${routes.helper.profile}/*`, element: <EmployeeProfile id={getId()}/>},
+        { path: `${routes.admin.exchange}/*`, element: <Exchange id={getId()}/>},
         { path: routes.admin.listarDonaciones, element: <DonationsManager/>},
+        { path: routes.admin.listarIntercambios, element: <ExchangesHistory/>},
         { path: routes.admin.estadisticas, element: <Estadisticas/>},
       ]
     },
