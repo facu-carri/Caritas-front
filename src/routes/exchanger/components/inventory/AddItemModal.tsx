@@ -24,7 +24,7 @@ export default function AddItemModal({ onClose, onAddItem }) {
   };
 
   useEffect(() => {
-    getData(endPoints.categories, null)
+    getData(endPoints.itemCategories, null)
       .then(data => setCategories(data))
       .catch(err => console.log(err))
   }, [])

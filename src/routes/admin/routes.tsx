@@ -14,6 +14,7 @@ import DonationsManager from "./pages/DonationsManager";
 import Estadisticas from "./pages/Estadisticas";
 import ExchangesHistory from "./pages/ExchangesHistory";
 import Exchange from "./components/Exchange";
+import CategorysManager from "./pages/CategorysManager";
 
 export function AdminRouter() {
 
@@ -26,6 +27,7 @@ export function AdminRouter() {
       children: [
         { path: routes.main, element: <AdminMain/> },
         { path: routes.admin.gestionarFiliales, element: <Maps /> },
+        { path: routes.admin.gestionarCategorias, element: <CategorysManager /> },
         { path: routes.admin.gestionarIntercambiadores, element: <ExchangersManager/>},
         { path: routes.admin.gestionarAyudantes, element: <HelpersManager /> },
         { path: `${routes.exchanger.profile}/*`, element: <Profile id={getId()}/>},

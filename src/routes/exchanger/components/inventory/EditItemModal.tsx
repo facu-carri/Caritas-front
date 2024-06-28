@@ -41,7 +41,7 @@ export default function EditItemModal({ itemData, onEditItem }: EditItemModalPro
   }
 
   useEffect(() => {
-    getData(endPoints.categories)
+    getData(endPoints.itemCategories)
       .then(data => setCategories(data))
       .catch(err => handleError(err))
   }, [])

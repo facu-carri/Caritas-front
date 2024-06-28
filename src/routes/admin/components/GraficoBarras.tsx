@@ -21,13 +21,13 @@ const GraficoBarras = ({ nombreEntidades, nombreEjeY, data }) => {
 
   return (
     <div>
+    <div className="flex flex-col items-center gap-4 mt-36">
+        <div className="space-y-2 sticky top-0 py-4">
+            <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">{"Información sobre " + nombreEntidades}</h1>
+        </div>
+    </div>
       {data && data.length !== 0 ? (
         <div style={{ width: '100%', height: 800, marginBottom: 40 }}>
-          <div className="flex flex-col items-center gap-4 mt-36 mb-8">
-            <div className="space-y-2 sticky top-0 py-4">
-              <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-5xl">{"Información sobre " + nombreEntidades}</h1>
-            </div>
-          </div>
           <ResponsiveContainer>
             <BarChart data={data} margin={{ top: 20, right: 30, left: 80, bottom: 250 }}>
               <CartesianGrid strokeDasharray="3 3" />
@@ -54,7 +54,7 @@ const GraficoBarras = ({ nombreEntidades, nombreEjeY, data }) => {
       ) : (
         <div className="flex flex-col items-center gap-4 mt-36">
           <div className="space-y-2 sticky top-0 py-4">
-            <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl">{"Información sobre No hay " + nombreEntidades + " registrados"}</h1>
+              <h2 className="text-3xl tracking-tighter sm:text-4xl md:text-2xl">{"No hay " + nombreEntidades + " registrados"}</h2>
           </div>
         </div>
       )}

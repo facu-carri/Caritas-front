@@ -70,6 +70,11 @@ export default function AdminLayout() {
       active: btnActive(routes.admin.gestionarFiliales)
     },
     {
+      text: 'Gestionar Categorias',
+      onClick: () => setRoute(routes.admin.gestionarCategorias),
+      active: btnActive(routes.admin.gestionarCategorias)
+    },
+    {
       text: 'Lista de intercambios',
       onClick: () => setRoute(routes.admin.listarIntercambios),
       active: btnActive(routes.admin.listarIntercambios)

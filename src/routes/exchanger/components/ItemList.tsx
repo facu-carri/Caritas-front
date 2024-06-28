@@ -24,7 +24,7 @@ export default function ItemList({ ruta, inventory, children, showQuantityZero}:
 
   const { data: categories = [], isLoading: isLoadingCats }: CategoryListParam = useQuery({
     queryKey: ['categories'],
-    queryFn: () => fetch(`${serverAddress}/${endPoints.categories}`, {
+    queryFn: () => fetch(`${serverAddress}/${endPoints.itemCategories}`, {
       method: 'GET',
       headers: getHeaders()
     }).then(r => r.json()),

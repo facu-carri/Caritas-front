@@ -16,7 +16,7 @@ export const endPoints = {
     location: 'location',
     freeLocations: 'freeLocations',
 
-    categories: 'itemCategory',
+    itemCategories: 'itemCategory',
     exchangeablesItems: 'item',
     addItem: 'item',
     exchanger: 'exchanger',
@@ -45,9 +45,10 @@ const adminRoutes = {
     'estadisticas': '/estadisticas',
     'gestionarIntercambiadores': '/gestionar-intercambiadores',
     'gestionarAyudantes': '/gestionar-ayudantes',
-    'listarDonaciones': '/donaciones',
+    'listarDonaciones': '/donaciones', 
     'listarIntercambios': '/intercambios',
     'gestionarFiliales': '/gestionar-filiales',
+    'gestionarCategorias': '/gestionar-categorias',
     exchange: '/exchange'
 }
 const helperRoutes = {
