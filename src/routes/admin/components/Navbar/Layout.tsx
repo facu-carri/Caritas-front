@@ -69,11 +69,11 @@ export default function AdminLayout() {
       onClick: () => setRoute(routes.admin.gestionarFiliales),
       active: btnActive(routes.admin.gestionarFiliales)
     },
-    {
+    /*{
       text: 'Lista de donaciones',
       onClick: () => setRoute(routes.admin.listarDonaciones),
       active: btnActive(routes.admin.listarDonaciones)
-    }
+    }*/
   ]
 
   const dropdownItems: DropdownItem[] = [

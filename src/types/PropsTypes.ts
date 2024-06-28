@@ -45,9 +45,11 @@ export type ProfileProps = {
 
 export type ItemModalProps = {
     item: ItemData
+    userStars:number
 }
 
 export type ItemCardProps = {
+    userStars:number
     item: ItemData
     hiddeBtns?: boolean
     hiddeOwner?: boolean

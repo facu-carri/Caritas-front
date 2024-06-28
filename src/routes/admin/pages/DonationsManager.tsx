@@ -61,7 +61,8 @@ export default function DonationsManager() {
         <div className=" flex flex-col items-center justify-center p-4 relative">
             <header className="py-2 px-6 md:px-12 ">
                 <div className="flex flex-col items-center gap-4 mt-36">
-                    <ManagerHeader entidad={"donaciones"} listaFiltrados = {"nombre, email, teléfono o DNI del donador"}/>
+                    <ManagerHeader entidad={"donaciones"} listaFiltrados = {false && "nombre, email, teléfono o DNI del donador"}/>
+                    {false &&
                     <form className="w-full max-w-md space-y-2 flex space-x-2" onSubmit={(e) => e.preventDefault()}>
                         <input
                             className="max-w-lg flex-1 p-2 border border-gray-300 rounded-md"
@@ -70,7 +71,7 @@ export default function DonationsManager() {
                             value={searchQuery}
                             onChange={e=>setSearchQuery(e.target.value)}
                         />
-                    </form>
+                    </form>}
                 </div>
             </header>
             <section>

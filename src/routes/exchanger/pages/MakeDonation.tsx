@@ -17,7 +17,7 @@ export default function MakeDonation() {
   const [_preferenceId, setPreferenceId] = useState(null)
   const [quantity, setQuantity] = useState<string | number>(100)
   const [loading, setLoading] = useState(false)
-  const [isAnon, setIsAnon] = useState(false)
+  const [isAnon, setIsAnon] = useState(true)
   const [error, setError] = useState<ErrorCode>(null)
   
   useEffect(() => {
@@ -83,12 +83,6 @@ export default function MakeDonation() {
           <div className="grid gap-2">
             <label htmlFor="donation-amount">Monto de la donación</label>
             <Input icon={<MdOutlineAttachMoney/>} type="number" placeholder="0" min="0" value={quantity} onChange={validateQty} />
-          </div>
-          <div className="form-control">
-            <label className="label cursor-pointer w-fit">
-              <input type="checkbox" defaultChecked={isAnon} className="checkbox" onClick={() => setIsAnon(!isAnon)} />
-              <span className="label-text px-2">Donacion anonima</span>
-            </label>
           </div>
           <ErrorAlert show={error != null}>{error?.getMessage()}</ErrorAlert>
           {

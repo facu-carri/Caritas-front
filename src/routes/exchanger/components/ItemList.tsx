@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { getHeaders } from "src/utils/request/httpRequests";
+import { getData, getHeaders } from "src/utils/request/httpRequests";
 import { endPoints, serverAddress } from "src/utils/constants";
-import { useMemo, useState } from 'react';
-import { CategoryListParam, ItemData } from "src/types/Types";
+import { useEffect, useMemo, useState } from 'react';
+import { CategoryListParam, ExchangerData, ItemData } from "src/types/Types";
 import ItemCard from "./ItemCard";
 import { ItemListInventoryProps } from "src/types/PropsTypes";
 import { useCustomModal } from "src/context/CustomModalContext";
@@ -14,6 +14,13 @@ export default function ItemList({ ruta, inventory, children }: ItemListInventor
   const [category, setCategory] = useState('');
   const { showModal } = useCustomModal()
   const queryClient = useQueryClient()
+  const [userData, setUserData] = useState<ExchangerData>();
+
+  const getProfile = () => getData(`${endPoints.profile}`).then(userData => setUserData(userData))
+  
+  useEffect(() => {
+    getProfile()
+  }, [ruta]);
 
   const { data: categories = [], isLoading: isLoadingCats }: CategoryListParam = useQuery({
     queryKey: ['categories'],
@@ -33,7 +40,7 @@ export default function ItemList({ ruta, inventory, children }: ItemListInventor
   const isInventory = ruta === endPoints.inventory
 
   const onClickItem = (item: ItemData) => {
-    if (!isInventory) showModal(<ItemModal item={item}/>)
+    if (!isInventory) showModal(<ItemModal item={item} userStars={userData?.stars}/>)
   }
   
   return (
@@ -63,6 +70,7 @@ export default function ItemList({ ruta, inventory, children }: ItemListInventor
               filteredItems.map(item =>
                 <ItemCard
                   key={item.id}
+                  userStars={userData?.stars}
                   item={item}
                   canEdit={item.editable && isInventory}
                   canDelete={isInventory}

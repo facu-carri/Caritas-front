@@ -22,6 +22,7 @@ export default function Profile({ id }: ProfileProps) {
   const [info, setInfo] = useState(null)
   const user = User();
   const userId = user.getId();
+  const [contextUserData, setContextUserData] = useState<ExchangerData>();
 
   const { getRole, logout } = User()
   const { showModal } = useCustomModal()
@@ -34,7 +35,14 @@ export default function Profile({ id }: ProfileProps) {
     getReviews()
   }, [id]);
 
-  const getProfile = () => getData(`${id ? `${endPoints.otherProfile}${id}` : endPoints.profile}`).then(userData => setUserData(userData))
+  const getProfile = () => {
+    if (id) getData(`${endPoints.otherProfile}${id}`).then(userData => setUserData(userData))
+    
+    getData(`${endPoints.profile}`).then(userData => { 
+      if(!id) setUserData(userData)
+      setContextUserData(userData)
+    })
+  }
   const getReviews = () => getData(`${id ? `${endPoints.reviews}${id}` : `${endPoints.reviews}${userId}`}`).then(reviews => setReviews(reviews)).catch(error => resetReviews(error))
 
   const { data: inventory = [] } = useQuery({
@@ -105,7 +113,7 @@ export default function Profile({ id }: ProfileProps) {
         (!inventory || inventory.length == 0) ?
           <p className="text-gray-400 line-clamp-2">No hay elementos</p>
         :
-          inventory.map(item => <ItemCard key={item.id} item={item} canEdit={false} canDelete={false} hiddeBtns={canDoActions} hiddeOwner={true} />)
+          inventory.map(item => <ItemCard userStars={contextUserData?.stars} key={item.id} item={item} canEdit={false} canDelete={false} hiddeBtns={canDoActions} hiddeOwner={true} />)
       }
       </div>
       <h2 className="text-2xl font-bold mb-4 text-white">Reseñas</h2>
