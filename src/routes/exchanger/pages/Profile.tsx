@@ -19,32 +19,33 @@ import ReviewCard from "../components/ReviewCard";
 export default function Profile({ id }: ProfileProps) {
   const [userData, setUserData] = useState<ExchangerData>();
   const [reviews, setReviews] = useState<Review[]>();
-  const [info, setInfo] = useState(null)
+  const [info, setInfo] = useState(null);
   const user = User();
   const userId = user.getId();
   const [contextUserData, setContextUserData] = useState<ExchangerData>();
-  const [showReviews, setShowReviews] = useState(false)
+  const [showReviews, setShowReviews] = useState(false);
 
-  const { getRole, logout } = User()
-  const { showModal } = useCustomModal()
-  const { getId } = RoutesHandler()
-  
-  const resetReviews = (error: number) => error && setReviews([])
+  const { getRole, logout } = User();
+  const { showModal } = useCustomModal();
+  const { getId } = RoutesHandler();
+
+  const resetReviews = (error: number) => error && setReviews([]);
 
   useEffect(() => {
-    getProfile()
-    getReviews()
+    getProfile();
+    getReviews();
   }, [id]);
 
   const getProfile = () => {
-    if (id) getData(`${endPoints.otherProfile}${id}`).then(userData => setUserData(userData))
+    if (id) getData(`${endPoints.otherProfile}${id}`).then(userData => setUserData(userData));
     
     getData(`${endPoints.profile}`).then(userData => { 
-      if(!id) setUserData(userData)
-      setContextUserData(userData)
-    })
-  }
-  const getReviews = () => getData(`${id ? `${endPoints.reviews}${id}` : `${endPoints.reviews}${userId}`}`).then(reviews => setReviews(reviews)).catch(error => resetReviews(error))
+      if(!id) setUserData(userData);
+      setContextUserData(userData);
+    });
+  };
+
+  const getReviews = () => getData(`${id ? `${endPoints.reviews}${id}` : `${endPoints.reviews}${userId}`}`).then(reviews => setReviews(reviews)).catch(error => resetReviews(error));
 
   const { data: inventory = [] } = useQuery({
     queryKey: ['inventory', id],
@@ -52,21 +53,21 @@ export default function Profile({ id }: ProfileProps) {
       method: 'GET',
       headers: getHeaders()
     }).then(r => r.json())
-  })
+  });
 
   function handleEditProfile(newData: ExchangerData) {
     return putData(`${endPoints.exchanger}/${userData.id}`, null, {
       ...newData,
       email: userData.email
     })
-    .then(data => setUserData(data))
+    .then(data => setUserData(data));
   }
 
-  const isAdmin = getRole() == roles.ADMIN
+  const isAdmin = getRole() == roles.ADMIN;
   
-  const showEditModal = () => showModal(<EditProfileModal campos={isAdmin ? getAdminFields(userData) : getExchangerFields(userData)} onSave={handleEditProfile} />)
+  const showEditModal = () => showModal(<EditProfileModal campos={isAdmin ? getAdminFields(userData) : getExchangerFields(userData)} onSave={handleEditProfile} />);
 
-  useEffect(() => userData && setInfo(getProfileInfo()), [userData])
+  useEffect(() => userData && setInfo(getProfileInfo()), [userData]);
 
   const getProfileInfo = (): UserInfoFields[] => {
     const profileInfo = [
@@ -77,23 +78,23 @@ export default function Profile({ id }: ProfileProps) {
       { title: "Estrellas", value: <Rating qty={userData.stars}/>, color: "text-blue-500" },
       { title: "Inasistencias", value: userData.absentees, color: "text-red-500" },
       { title: "Fecha de nacimiento", value: formatDate(userData.birthdate), color: "text-red-500" },
-    ]
-    return (id && !isAdmin) ? profileInfo.filter(field => !["Correo electronico", "DNI", "Telefono"].includes(field.title)) : profileInfo
-  }
+    ];
+    return (id && !isAdmin) ? profileInfo.filter(field => !["Correo electronico", "DNI", "Telefono"].includes(field.title)) : profileInfo;
+  };
 
   function handleBan() {
-    deleteData(`${endPoints.exchanger}/ban/${userData.id}`)
+    deleteData(`${endPoints.exchanger}/ban/${userData.id}`);
   }
 
   function handleDelete() {
     deleteData(`${endPoints.exchanger}/${userData.id}`)
       .then(() => {
-        if(canDoActions) return //TODO: Si sos admin que te redirija al apartado de intercambiadores o ayudante (depende de a cual elimino)
-        logout()
-      })
+        if(canDoActions) return; //TODO: Si sos admin que te redirija al apartado de intercambiadores o ayudante (depende de a cual elimino)
+        logout();
+      });
   }
 
-  const canDoActions = !getId() || isAdmin
+  const canDoActions = !getId() || isAdmin;
 
   return (
     <UserProfile
@@ -118,12 +119,13 @@ export default function Profile({ id }: ProfileProps) {
       }
       </div>
       
-      <div className="form-control">
-        <label className="label cursor-pointer w-fit">
-        <input type="checkbox" defaultChecked={showReviews} className="checkbox checkbox-error" onClick={() => setShowReviews(!showReviews)} />
-        <span className="text-white line-clamp-2">Ver reseñas</span>
-        </label>
-      </div>
+      <button
+        className="btn btn-ghost false false text-base undefined"
+        onClick={() => setShowReviews(!showReviews)}
+      >
+        {showReviews ? "Ocultar reseñas" : "Ver reseñas"}
+      </button>
+
       { showReviews &&
       <div>
         <h2 className="text-2xl font-bold mb-4 text-white">Reseñas</h2>
