@@ -10,7 +10,7 @@ import ItemModal from "src/components/modals/Item";
 import { useQuery, useQueryClient } from "react-query";
 import LoadingSpinner from "src/components/LoadingSpinner";
 
-export default function ItemList({ ruta, inventory, children }: ItemListInventoryProps) {
+export default function ItemList({ ruta, inventory, children, showQuantityZero}: ItemListInventoryProps) {
   const [category, setCategory] = useState('');
   const { showModal } = useCustomModal()
   const queryClient = useQueryClient()
@@ -31,9 +31,17 @@ export default function ItemList({ ruta, inventory, children }: ItemListInventor
   })
 
   const filteredItems = useMemo(() => {
-    if(!category) return inventory
-    return inventory.filter(item => item.itemCategory.name === category)
-  }, [category, inventory])
+    if (!inventory) return inventory
+    return inventory.filter(item => {
+                      if(!category) return true
+                      return item.itemCategory.name === category
+                    })
+                    .filter(item => {
+                      if(showQuantityZero) return true
+                      return Number(item.quantity)>0
+                      }
+                     )
+  }, [category, inventory, showQuantityZero])
 
   const queryInvalidator = () => queryClient.invalidateQueries([ruta])
 

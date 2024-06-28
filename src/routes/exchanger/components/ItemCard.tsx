@@ -75,7 +75,7 @@ export default function ItemCard({ userStars, item, onClick, hiddeOwner, queryIn
 
   const checkThereAreNotRequestsReceived = exchangeHistory.length == 0
 
-  const disableIntercambiar = () => userStars<4
+  const contextUserTieneMasDe4Estrellas = () => userStars<4
   
   useEffect(() => {
     //setLoading(true)
@@ -103,8 +103,8 @@ export default function ItemCard({ userStars, item, onClick, hiddeOwner, queryIn
       {
         !hiddeBtns && 
         <div className="flex flex-col items-start">
-            { !disableIntercambiar() ? 
-              <button onClick={onClickExchange} disabled={disableIntercambiar()} className="bg-red-500 text-white px-4 py-2 rounded mb-2 transform transition-transform duration-200 hover:scale-105">
+            { !contextUserTieneMasDe4Estrellas() ? 
+              <button onClick={onClickExchange} disabled={contextUserTieneMasDe4Estrellas()} className="bg-red-500 text-white px-4 py-2 rounded mb-2 transform transition-transform duration-200 hover:scale-105">
                 Intercambiar
               </button>
             :

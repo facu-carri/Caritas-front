@@ -60,6 +60,7 @@ export type ItemCardProps = {
 }
 
 export type ItemListInventoryProps = {
+    showQuantityZero:boolean
     ruta: string
     inventory?: ItemData[]
     canEdit?: boolean
