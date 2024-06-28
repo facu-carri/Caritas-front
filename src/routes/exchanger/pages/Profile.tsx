@@ -23,6 +23,7 @@ export default function Profile({ id }: ProfileProps) {
   const user = User();
   const userId = user.getId();
   const [contextUserData, setContextUserData] = useState<ExchangerData>();
+  const [showReviews, setShowReviews] = useState(false)
 
   const { getRole, logout } = User()
   const { showModal } = useCustomModal()
@@ -116,15 +117,26 @@ export default function Profile({ id }: ProfileProps) {
           inventory.map(item => <ItemCard userStars={contextUserData?.stars} key={item.id} item={item} canEdit={false} canDelete={false} hiddeBtns={canDoActions} hiddeOwner={true} />)
       }
       </div>
-      <h2 className="text-2xl font-bold mb-4 text-white">Reseñas</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      {
-        (!reviews || reviews.length == 0) ?
-        <p className="text-gray-400 line-clamp-2">No hay elementos</p> 
-        :
-        reviews.map(review => <ReviewCard key={review.id} review={review} />)
-      }
+      
+      <div className="form-control">
+        <label className="label cursor-pointer w-fit">
+        <input type="checkbox" defaultChecked={showReviews} className="checkbox checkbox-error" onClick={() => setShowReviews(!showReviews)} />
+        <span className="text-white line-clamp-2">Ver reseñas</span>
+        </label>
       </div>
+      { showReviews &&
+      <div>
+        <h2 className="text-2xl font-bold mb-4 text-white">Reseñas</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {
+          (!reviews || reviews.length == 0) ?
+          <p className="text-gray-400 line-clamp-2">No hay elementos</p> 
+          :
+          reviews.map(review => <ReviewCard key={review.id} review={review} />)
+        }
+        </div>
+      </div> 
+      }
     </UserProfile>
   )
 }
