@@ -79,47 +79,56 @@ export default function ExchangesHistory() {
       <ExchangerHeader title="Intercambios">
       </ExchangerHeader>
       <div className="flex flex-col justify-center items-center text-[100%] gap-6 md:gap-8 mt-8 min-h-[300px]">
-      {
-          <select className="p-2 border border-gray-700 rounded-lg" value={location} onChange={e => setLocation(e.target.value)}>
+      <div className="flex items-center justify-between px-4">
+        {/* Select Component */}
+        <div className="flex-1">
+          <select
+            className="p-2 border border-gray-700 rounded-lg"
+            value={location}
+            onChange={e => setLocation(e.target.value)}
+          >
             <option value="">
-            {
-                !locations || locations.length == 0 ? 'No hay sedes cargadas' :
-                'Todas las sedes'
-            }
+              { !locations || locations.length === 0 ? 'No hay sedes cargadas' : 'Todas las sedes' }
             </option>
-            {
-              locations?.map(location =><option key={location.id} value={location.name}>{location.name}</option>)
+            { locations?.map(location => (
+                <option key={location.id} value={location.name}>{location.name}</option>
+              ))
             }
           </select>
-        }
-        <p className="mx-auto max-w-[700px] md:text-xl text-gray-400 text-center">
-          Filtra por fecha, estado o código
-        </p>
-        <form className="w-full max-w-md space-y-2 flex space-x-2" onSubmit={(e) => e.preventDefault()}>
-          <input
-            className="max-w-lg flex-1 p-2 border border-gray-300 rounded-md"
-            placeholder="Buscar..."
-            type="text"
-            value={searchQuery}
-            onChange={e=>setSearchQuery(e.target.value)}
-          />
-        </form>
-        {
-          <ErrorAlert attrs="w-fit" show={error != null}>
-            <span>{error && error.getMessage()}</span>
-          </ErrorAlert>
-        }
-        {
-          loading ? (<LoadingSpinner/>) : 
-          (!filteredExchanges || filteredExchanges.length==0) ? (<p>No Hay intercambios registrados</p>) : 
-          (!dayEnded &&
-            <div className="flex flex-col gap-2 items-center mb-2">
-              {filteredExchanges.map((exchange) => (
-                <ExchangeCard key={exchange.id} exchange={exchange} onClick={() => setRoute(`${routes.admin.exchange}/${exchange.id}`)}/>
-              ))}
-            </div>
-          )
-        }
+        </div>
+        
+        {/* Search Component */}
+        <div className="flex-1 text-center">
+          <p className="mx-auto max-w-[700px] md:text-xl text-gray-400">
+            Filtra por fecha, estado o código
+          </p>
+          <form className="w-full max-w-md mx-auto space-y-2 flex space-x-2" onSubmit={(e) => e.preventDefault()}>
+            <input
+              className="max-w-lg flex-1 p-2 border border-gray-300 rounded-md"
+              placeholder="Buscar..."
+              type="text"
+              value={searchQuery}
+              onChange={e => setSearchQuery(e.target.value)}
+            />
+          </form>
+        </div>
+      </div>
+      {
+        <ErrorAlert attrs="w-fit" show={error != null}>
+          <span>{error && error.getMessage()}</span>
+        </ErrorAlert>
+      }
+      {
+        loading ? (<LoadingSpinner/>) : 
+        (!filteredExchanges || filteredExchanges.length==0) ? (<p>No Hay intercambios registrados</p>) : 
+        (!dayEnded &&
+          <div className="flex flex-col gap-2 items-center mb-2">
+            {filteredExchanges.map((exchange) => (
+              <ExchangeCard key={exchange.id} exchange={exchange} onClick={() => setRoute(`${routes.admin.exchange}/${exchange.id}`)}/>
+            ))}
+          </div>
+        )
+      }
       </div>
     </div>
   )
