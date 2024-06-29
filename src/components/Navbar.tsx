@@ -19,25 +19,19 @@ export default function Navbar({startTabs: start, middleTabs: middle, endTabs: e
 
     return (
         <div className="px-5 fixed top-0 left-0 w-full text-white z-10">
-            <div className="navbar bg-navbar-blue mt-2 shadow-xl rounded-box flex-1">
-                <div className="navbar-start gap-2">
-                    {
-                        getTabObjs(start, 'start')
-                    }
+            <div className="navbar bg-navbar-blue mt-2 shadow-xl rounded-box flex flex-wrap items-center justify-between">
+                <div className="flex gap-2">
+                    {getTabObjs(start, 'start')}
                 </div>
-                <div className="navbar-center lg:flex">
+                <div className="flex justify-center">
                     <ul className="menu menu-horizontal px-1 gap-4">
-                        {
-                            getTabObjs(middle, 'middle')
-                        }
+                        {getTabObjs(middle, 'middle')}
                     </ul>
                 </div>
-                <div className="navbar-end gap-2">
-                    {
-                        getTabObjs(end, 'end')
-                    }
+                <div className="flex gap-2">
+                    {getTabObjs(end, 'end')}
                 </div>
             </div>
         </div>
-    )
+    );
 }
