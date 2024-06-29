@@ -17,7 +17,7 @@ export default function ExchangeInfo({ checked, itemData, onChange }: { checked:
 
   return (
     <section className="w-[300px]">
-      <ExchangerCard removeClick={true} cardData={{
+      { itemData.owner ? <ExchangerCard removeClick={true} cardData={{
         name: itemData.owner.name,
         email: itemData.owner.email,
         photo: itemData.owner.photo,
@@ -32,6 +32,15 @@ export default function ExchangeInfo({ checked, itemData, onChange }: { checked:
         */}
         <ItemInfo item={itemData} />
       </ExchangerCard>
+      :
+      
+      <div
+      className='relative bg-white rounded-lg shadow-lg max-w-sm p-2 cursor-pointer transform transition-transform duration-200 hover:scale-10'
+        >
+        <p className="text-gray-10000">Este usuario fue eliminado</p>
+      <ItemInfo item={itemData} />
+      </div>
+    }
     </section>
   )
 }
