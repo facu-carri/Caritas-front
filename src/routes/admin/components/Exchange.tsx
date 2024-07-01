@@ -131,9 +131,9 @@ export default function Exchange({ id }) {
       exchange.dateReviewGuest = today
       exchange.reviewGuest = inputValue
       exchange.starsGuest = cantEstrellas
-      exchange.dateReviewGuest = null
-      exchange.reviewGuest = null
-      exchange.starsGuest = null
+      exchange.dateReviewHost = null
+      exchange.reviewHost = null
+      exchange.starsHost = null
     } else {
       exchange.dateReviewHost = today
       exchange.reviewHost = inputValue
