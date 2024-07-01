@@ -127,33 +127,48 @@ export default function Exchange({ id }) {
 
   const handleSendReview = () => {
     const today = format(Date(), 'yyyy-MM-dd')
-    let reviewSend = null;
-    reviewSend.id = exchange.id
+   /*  let reviewSend = null;
+    reviewSend.id = exchange.id */
+    const objG = {
+      id:id,
+      dateReviewGuest: today,
+      reviewGuest: inputValue,
+      starsGuest: cantEstrellas
+    };
+    const objH = {
+      id:id,
+      dateReviewHost: today,
+      reviewHost: inputValue,
+      starsHost: cantEstrellas
+    };
 
     if (soyGuest()) {
       exchange.dateReviewGuest = today
       exchange.reviewGuest = inputValue
-      exchange.dateReviewGuest = today
-      reviewSend.reviewGuest = inputValue
-      reviewSend.starsGuest = cantEstrellas
-      reviewSend.starsGuest = cantEstrellas
-      reviewSend.reviewHost = null
-      reviewSend.starsHost = null
-      reviewSend.starsHost = null
+      exchange.starsGuest = cantEstrellas
+      objG.id=exchange.id
+      objG.dateReviewGuest=today
+      objG.reviewGuest=inputValue
+      objG.starsGuest=cantEstrellas
+      putData(`${endPoints.addReview}`, null, {...objG})
+    .then(() => {
+    })
     } else {
       exchange.dateReviewHost = today
       exchange.reviewHost = inputValue
       exchange.starsHost = cantEstrellas
-      reviewSend.reviewHost = inputValue
-      reviewSend.starsHost = cantEstrellas
-      reviewSend.starsHost = cantEstrellas
-      reviewSend.reviewGuest = null
-      reviewSend.starsGuest = null
-      reviewSend.starsGuest = null
-    }
-    putData(`${endPoints.addReview}`, null, { ...reviewSend })
+      objH.id=exchange.id
+      objH.dateReviewHost=exchange.dateReviewHost
+      objH.reviewHost=exchange.reviewHost
+      objH.starsHost=exchange.starsHost
+      putData(`${endPoints.addReview}`, null, {...objH})
     .then(() => {
     })
+     
+    }
+  /*   putData(`${endPoints.addReview}`, null, { exchange.id,})
+    .then(() => {
+    }) */
   };
 
   const handleCancel = () => showModal(<RejectExchangeModal onClose={closeModal} exchangeId={exchange.id}/>)
