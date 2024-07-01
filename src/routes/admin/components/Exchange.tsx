@@ -8,14 +8,6 @@ import LoadingAnimation from "src/components/LoadingAnimation";
 import RoutesHandler from "src/utils/routesHandler";
 import type { Exchange } from "src/types/Types";
 import { FiRefreshCcw } from "react-icons/fi";
-import { addDays, isBefore } from 'date-fns';
-import {User} from "src/utils/User.tsx";
-import { useEffect, useState } from "react";
-import { getData, putData } from "src/utils/request/httpRequests";
-import { format } from 'date-fns';
-import RejectExchangeModal from "src/routes/admin/components/RejectExchangeModal";
-import StarRating from "src/routes/exchanger/components/StarRating";
-import AcceptNotificationModal from "src/routes/exchanger/components/inventory/AcceptNotificationModal";
 import ExchangeHeader from "src/routes/helper/components/ExchangeHeader";
 import ExchangeInfo from "src/routes/exchanger/components/ExchangeInfo";
 
@@ -24,7 +16,6 @@ export default function Exchange({ id }) {
 
   const { setRoute } = RoutesHandler()
   const queryClient = useQueryClient()
-  const user = User();
   const { data: exchange = {} as Exchange, isLoading } = useQuery<Exchange>({
     enabled: !!id,
     queryKey: ['exchange', id],
@@ -60,98 +51,11 @@ export default function Exchange({ id }) {
     showConfirmationModal(markAttendanceGuest)
   }
 
-
-
   function showConfirmationModal(onAccept) {
     showModal(<ConfirmationModal onAccept={onAccept} />)
   }
 
   const handleBack = () => setRoute(routes.admin.listarIntercambios)
-
-  const exchangeDate = new Date(exchange.date); // Asegúrate de que exchange.date sea una cadena de texto con formato de fecha o un objeto Date
-  const currentDate = new Date();
-
-  const faltanMasDe24Hs = isBefore(addDays(currentDate, 1), exchangeDate);
-
-  const [inputValue, setInputValue] = useState('');
-  const handleInputChange = (event) => {
-    setInputValue(event.target.value);
-  };
-
-
-  
-  const onCancelExchange = (exchange: Exchange) => {
-    console.log('Cancel exchange', exchange)
-    putData(`${endPoints.exchange}/cancel/${exchange.id}`)
-    .then(() => {
-        //setExchangeHistory(exchangeHistory.map(e => e.id === exchange.id ? {...e, state: 'Canceled'} : e))
-    })
-    .finally(/*() => closeModal()*/)
-  }
-  
-  const onClickAccept = () => {
-    console.log(exchange)
-    showModal(
-      <AcceptNotificationModal
-        notificationData={exchange}
-        onEditNotification={(data) => {
-          console.log(data)
-          //setNotificationData({ ...notificationData, ...data });
-          closeModal();
-        }}
-      />
-    )
-  }
-  const [freeLocations, setFreeLocations] = useState([]);
-  
-  useEffect(() => {
-    getData(endPoints.nextFreeDay)
-    .then(nextFreeDay => handleGetNextDay(nextFreeDay))
-    .catch(/*err => handleError(err)*/)
-  }, [])
-
-  const handleGetNextDay = (nextFreeDay:string) => {
-    getData(endPoints.freeLocations+"/"+nextFreeDay)
-    .then(freeLocations => setFreeLocations(freeLocations))
-    .catch(/*err => handleError(err)*/)
-  }
-
-  const soyGuest = () => { return exchange.guestItem.owner?.id == user.getId()}
-  const soyHost = () => { return exchange.hostItem.owner?.id == user.getId()}
-  const pertenezcoAlIntercambio = () => {return soyGuest() || soyHost()}
-
-  const [cantEstrellas, setCantEstrellas] = useState(5);
-  const onRatingChange = (nro) => {
-    setCantEstrellas(nro)
-  }
-
-  const handleSendReview = () => {
-    const today = format(Date(), 'yyyy-MM-dd')
-    let exchaneSend = null;
-      exchaneSend.id = exchange.id
-      if (soyGuest()) {
-      exchange.dateReviewGuest = today
-      exchange.reviewGuest = inputValue
-      exchange.starsGuest = cantEstrellas
-      exchaneSend.id = exchange.id
-      exchaneSend.dateReviewGuest = today
-      exchaneSend.reviewGuest = inputValue
-      exchaneSend.starsGuest = cantEstrellas
-    } else {
-      exchange.dateReviewHost = today
-      exchange.reviewHost = inputValue
-      exchange.starsHost = cantEstrellas
-      exchaneSend.dateReviewHost = today
-      exchaneSend.reviewHost = inputValue
-      exchaneSend.starsHost = cantEstrellas
-    }
-    putData(`${endPoints.addReview}`, null, { exchaneSend })
-    .then(() => {
-    })
-  };
-
-  const handleCancel = () => showModal(<RejectExchangeModal onClose={closeModal} exchangeId={exchange.id}/>)
-  
 
   return (
     

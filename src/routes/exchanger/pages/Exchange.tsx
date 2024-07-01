@@ -127,16 +127,31 @@ export default function Exchange({ id }) {
 
   const handleSendReview = () => {
     const today = format(Date(), 'yyyy-MM-dd')
+    let reviewSend = null;
+    reviewSend.id = exchange.id
+
     if (soyGuest()) {
       exchange.dateReviewGuest = today
       exchange.reviewGuest = inputValue
-      exchange.starsGuest = cantEstrellas
+      exchange.dateReviewGuest = today
+      reviewSend.reviewGuest = inputValue
+      reviewSend.starsGuest = cantEstrellas
+      reviewSend.starsGuest = cantEstrellas
+      reviewSend.reviewHost = null
+      reviewSend.starsHost = null
+      reviewSend.starsHost = null
     } else {
       exchange.dateReviewHost = today
       exchange.reviewHost = inputValue
       exchange.starsHost = cantEstrellas
+      reviewSend.reviewHost = inputValue
+      reviewSend.starsHost = cantEstrellas
+      reviewSend.starsHost = cantEstrellas
+      reviewSend.reviewGuest = null
+      reviewSend.starsGuest = null
+      reviewSend.starsGuest = null
     }
-    putData(`${endPoints.addReview}`, null, { ...exchange })
+    putData(`${endPoints.addReview}`, null, { ...reviewSend })
     .then(() => {
     })
   };
