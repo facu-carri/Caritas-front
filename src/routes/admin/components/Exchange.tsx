@@ -127,7 +127,7 @@ export default function Exchange({ id }) {
 
   const handleSendReview = () => {
     const today = format(Date(), 'yyyy-MM-dd')
-    const exchaneSend = null;
+    let exchaneSend = null;
     if (soyGuest()) {
       exchange.dateReviewGuest = today
       exchange.reviewGuest = inputValue
