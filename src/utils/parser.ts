@@ -3,7 +3,7 @@ export function parseExchangeStateName(state) {
     'NotConfirmed': 'No Confirmado',
     'Rejected': 'Rechazado',
     'RejectedByDislike': 'Rechazado por disgusto',
-    'RejectedByPreference': 'Rechazado por prefierencia a esperar por una mejor oferta',
+    'RejectedByPreference': 'Rechazado por preferencia a esperar por una mejor oferta',
     'RejectedByTrust': 'Rechazado por falta de confianza al intercambiador',
     'Accepted': 'Aceptado',
     'Canceled': 'Cancelado',
@@ -14,7 +14,7 @@ export function parseExchangeStateName(state) {
 
     
     'Rechazado por disgusto': 'RejectedByDislike',
-    'Rechazado por prefierencia a esperar por una mejor oferta': 'RejectedByPreference',
+    'Rechazado por preferencia a esperar por una mejor oferta': 'RejectedByPreference',
     'Rechazado por falta de confianza al intercambiador': 'RejectedByTrust',
   };
   return mappedValues[state] || state;

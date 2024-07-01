@@ -13,7 +13,7 @@ export default function RejectExchangeModal({ onClose, exchangeId }) {
 
   const rejectReasons =[
     'Rechazado por disgusto',
-    'Rechazado por prefierencia a esperar por una mejor oferta',
+    'Rechazado por preferencia a esperar por una mejor oferta',
     'Rechazado por falta de confianza al intercambiador']
 
   const { mutate: rejectNotification } = useMutation({
