@@ -20,7 +20,7 @@ const PieChartSection = ({ nombreEntidades, data }) => (
             labelLine={false}
             outerRadius={120}
             fill="#8884d8"
-            dataKey="value"
+            dataKey="valor"
             label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
             >
             {data.map((entry, index) => (
