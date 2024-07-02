@@ -1,4 +1,5 @@
-import { ResponsiveContainer, Tooltip, Legend, BarChart, CartesianGrid, XAxis, YAxis, Bar, Label } from 'recharts';
+import { ResponsiveContainer, Tooltip, BarChart, CartesianGrid, XAxis, YAxis, Bar, Label } from 'recharts';
+import { NameType, Payload, ValueType } from 'recharts/types/component/DefaultTooltipContent';
 
 const GraficoBarras = ({ nombreEntidades, nombreEjeY, data }) => {
   const renderCustomAxisTick = ({ x, y, payload }) => {
@@ -45,8 +46,11 @@ const GraficoBarras = ({ nombreEntidades, nombreEjeY, data }) => {
                   style={{ textAnchor: 'middle', fontSize: '16px', fill: '#666' }}
                 />
               </YAxis>
-              <Tooltip cursor={{ fill: 'rgba(0,0,0,0.1)' }} contentStyle={{ fontSize: '14px' }} />
-              <Legend wrapperStyle={{ fontSize: '14px' }} />
+              <Tooltip cursor={{ fill: 'rgba(0,0,0,0.1)' }} contentStyle={{ fontSize: '14px' }}
+                formatter={(_value: NameType, _name: NameType, item: Payload<ValueType, NameType>) => {
+                  return [`${item.value}`, nombreEjeY];
+                }}
+              />
               <Bar dataKey="value" fill="#8884d8" />
             </BarChart>
           </ResponsiveContainer>
