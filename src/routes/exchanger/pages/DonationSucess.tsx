@@ -2,7 +2,7 @@
 import { useEffect } from "react"
 import Button from "src/components/Button"
 import { endPoints, routes, serverAddress } from "src/utils/constants"
-import { getHeaders, postData } from "src/utils/request/httpRequests"
+import { getHeaders } from "src/utils/request/httpRequests"
 import RoutesHandler from "src/utils/routesHandler"
 
 export default function DonationSucess() {
@@ -11,17 +11,13 @@ export default function DonationSucess() {
 
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
-        let amount = urlParams.get('amount')
-        const isAnon = urlParams.get('isAnon')
-        amount = amount.replace("?isAnon", "&isAnon");
+        const amount = urlParams.get('amount')
         if (amount) {
             handleSaveDonation(amount)
         }
     }, [])
     const handleSaveDonation = (amount) => {
-        //postData(endPoints.trackDonation, {amount}) // Esto envia 2 veces y se guarda repetido
-        
-        fetch(`${serverAddress}/${endPoints.trackDonation}?amount=${amount}`, { // Esto no funciona no se xq
+        fetch(`${serverAddress}/${endPoints.trackDonation}?amount=${amount}`, {
             method: 'POST',
             cache: 'no-cache',
             headers: getHeaders(),
