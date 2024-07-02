@@ -18,6 +18,7 @@ import { getData, putData } from "src/utils/request/httpRequests";
 import { format } from 'date-fns';
 import StarRating from "../components/StarRating";
 import RejectExchangeModal from "src/routes/admin/components/RejectExchangeModal";
+import { MouseEvent } from 'src/types/Types';
 
 export default function Exchange({ id }) {
   const { showModal, closeModal } = useCustomModal()
@@ -174,6 +175,17 @@ export default function Exchange({ id }) {
   const handleCancel = () => showModal(<RejectExchangeModal onClose={closeModal} exchangeId={exchange.id}/>)
   
 
+  const onClickOwner = (ev: MouseEvent, id) => {
+    ev.stopPropagation()
+    closeModal()
+    setRoute(`${routes.exchanger.profile}/${id}`)
+  }
+  const onClickHost = (ev: MouseEvent) => {
+    onClickOwner(ev, exchange.hostItem?.owner?.id)
+  }
+  const onClickGuest = (ev: MouseEvent) => {
+    onClickOwner(ev, exchange.guestItem?.owner?.id)
+  }
   return (
     
     isLoading ? <LoadingAnimation /> :
@@ -182,6 +194,21 @@ export default function Exchange({ id }) {
     <div className='bg-gray-700/50 rounded-2xl p-5 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8'>
       <ExchangeHeader exchange={exchange} handleBack={handleBack}/>
       <div className="w-full flex flex-col gap-8">
+        
+        { soyGuest() ?
+          <div>
+          { exchange.hostItem.owner && <button onClick={onClickHost} className={`bg-blue-500 text-white px-4 py-2 rounded transform transition-transform duration-200 hover:scale-105`}>
+            Ver perfil
+          </button>}
+          </div>
+          :
+          <div>
+          { exchange.guestItem.owner && <button onClick={onClickGuest} className={`bg-blue-500 text-white px-4 py-2 rounded transform transition-transform duration-200 hover:scale-105`}>
+            Ver perfil
+          </button>
+          }
+          </div>
+        }
         <div className="flex justify-between px-16">
           <ExchangeInfo checked={exchange.hostAsistio} itemData={exchange.hostItem} onChange={handleCheckHost}/>
           <FiRefreshCcw className="self-center w-16 h-16 text-white" />

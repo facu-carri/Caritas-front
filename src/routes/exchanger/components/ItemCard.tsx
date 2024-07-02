@@ -120,7 +120,7 @@ export default function ItemCard({ userStars, item, onClick, hiddeOwner, queryIn
                 Intercambiar
               </button>
             <button onClick={onClickOwner} className={`bg-blue-500 ${hiddeOwner && 'hidden'} text-white px-4 py-2 rounded transform transition-transform duration-200 hover:scale-105`}>
-              Dueño del item: {itemData.owner.name}
+              Ver perfil
             </button>
         </div>
       }
