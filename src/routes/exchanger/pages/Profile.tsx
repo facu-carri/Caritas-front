@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useQuery } from "react-query";
 import { deleteData, getData, getHeaders, putData } from "src/utils/request/httpRequests";
-import { endPoints, roles, serverAddress } from "src/utils/constants";
+import { endPoints, roles, routes, serverAddress } from "src/utils/constants";
 import { useEffect, useState } from 'react';
 import { useCustomModal } from 'src/context/CustomModalContext';
 import { User } from 'src/utils/User';
@@ -27,7 +27,7 @@ export default function Profile({ id }: ProfileProps) {
 
   const { getRole, logout } = User();
   const { showModal } = useCustomModal();
-  const { getId } = RoutesHandler();
+  const { getId, setRoute } = RoutesHandler();
 
   const resetReviews = (error: number) => error && setReviews([]);
 
@@ -83,14 +83,20 @@ export default function Profile({ id }: ProfileProps) {
   };
 
   function handleBan() {
-    deleteData(`${endPoints.exchanger}/ban/${userData.id}`);
+    deleteData(`${endPoints.exchanger}/ban/${userData.id}`)
+      .then(() => {
+        setRoute(routes.main);
+      });
   }
 
   function handleDelete() {
     deleteData(`${endPoints.exchanger}/${userData.id}`)
       .then(() => {
-        if(canDoActions) return; //TODO: Si sos admin que te redirija al apartado de intercambiadores o ayudante (depende de a cual elimino)
-        logout();
+        if(isAdmin) {
+          setRoute(routes.main);
+        } else {
+          logout();
+        }
       });
   }
 
