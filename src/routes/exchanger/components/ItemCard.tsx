@@ -15,6 +15,9 @@ import { Exchange } from "src/types/Types";
 import { BiBellPlus } from "react-icons/bi";
 import { useState, useEffect, useMemo } from "react";
 import { getData, putData } from "src/utils/request/httpRequests";
+import { ErrorTypes } from "src/utils/Error/ErrorTypes";
+import { ErrorCode } from 'src/utils/Error/ErrorCode';
+import ErrorAlert from 'src/components/ErrorAlert';
 
 //la publicacion particular del producto a intercambiar
 
@@ -23,6 +26,12 @@ export default function ItemCard({ userStars, item, onClick, hiddeOwner, queryIn
   const [ itemData, setItemData ] = useState(item)
   const { showModal, closeModal } = useCustomModal()
   const { setRoute } = RoutesHandler()
+  const [error, setError] = useState<ErrorCode>(null)
+
+  const handleError = (errCode: number) => {
+    const err = new ErrorCode(errCode, ErrorTypes.EXCHANGE_ERROR)
+    setError(err)
+  }
 
   const onClickOwner = (ev: MouseEvent) => {
     ev.stopPropagation()
@@ -32,7 +41,10 @@ export default function ItemCard({ userStars, item, onClick, hiddeOwner, queryIn
 
   const onClickExchange = (ev: MouseEvent) => {
     ev.stopPropagation()
-    showModal(<SelectItemModal itemId={item.id} categoryId={item.itemCategory.id} showConfirmation={confirmation} />)
+    if(contextUserTieneMenosDe4Estrellas()){
+      handleError(666)
+    }
+    else showModal(<SelectItemModal itemId={item.id} categoryId={item.itemCategory.id} showConfirmation={confirmation} />)
   }
 
   const onClickEdit = () => {
@@ -75,7 +87,7 @@ export default function ItemCard({ userStars, item, onClick, hiddeOwner, queryIn
 
   const checkThereAreNotRequestsReceived = exchangeHistory.length == 0
 
-  const contextUserTieneMasDe4Estrellas = () => userStars<4
+  const contextUserTieneMenosDe4Estrellas = () => userStars<4
   
   useEffect(() => {
     //setLoading(true)
@@ -103,13 +115,10 @@ export default function ItemCard({ userStars, item, onClick, hiddeOwner, queryIn
       {
         !hiddeBtns && 
         <div className="flex flex-col items-start">
-            { !contextUserTieneMasDe4Estrellas() ? 
-              <button onClick={onClickExchange} disabled={contextUserTieneMasDe4Estrellas()} className="bg-red-500 text-white px-4 py-2 rounded mb-2 transform transition-transform duration-200 hover:scale-105">
+          {error&&<ErrorAlert show={error!=null}>{error.getMessage()}</ErrorAlert>}
+           <button onClick={onClickExchange} className="bg-red-500 text-white px-4 py-2 rounded mb-2 transform transition-transform duration-200 hover:scale-105">
                 Intercambiar
               </button>
-            :
-            <p>Usted no puede realizar intercambios ya que tiene menos de 4 estrellas</p>
-            }
             <button onClick={onClickOwner} className={`bg-blue-500 ${hiddeOwner && 'hidden'} text-white px-4 py-2 rounded transform transition-transform duration-200 hover:scale-105`}>
               Dueño del item: {itemData.owner.name}
             </button>

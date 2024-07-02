@@ -10,6 +10,7 @@ import { EditProfileErrorMsgs } from "./ErrorMessages/EditProfile"
 import { AuthCodeErrorMsgs } from "./ErrorMessages/Auth"
 import { EndDayErrorMsgs } from "./ErrorMessages/EndDay"
 import { DonationErrorMsgs } from "./ErrorMessages/Donation"
+import { ExchangeError } from "./ErrorMessages/ExchangeError"
 
 const DefaultErrors: IErrorCodesMsgs = {
     [ErrorTypes.UNKNOWN_ERROR]: {
@@ -28,5 +29,6 @@ export const ErrorsMsgs = {
     ...EditProfileErrorMsgs,
     ...AuthCodeErrorMsgs,
     ...EndDayErrorMsgs,
-    ...DonationErrorMsgs
+    ...DonationErrorMsgs,
+    ...ExchangeError
 }

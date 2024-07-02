@@ -11,4 +11,5 @@ export enum ErrorTypes{
     AUTH_CODE_ERROR,
     END_DAY_ERROR,
     DONATION_ERROR,
+    EXCHANGE_ERROR,
 }
