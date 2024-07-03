@@ -11,7 +11,9 @@ export default function DonationSucess() {
 
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
-        const amount = urlParams.get('amount')
+        let amount = urlParams.get('amount')
+        const isAnon = urlParams.get('isAnon')
+        amount = amount.replace("?isAnon", "&isAnon");
         if (amount) {
             handleSaveDonation(amount)
         }
