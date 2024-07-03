@@ -30,7 +30,7 @@ export default function ExchangesHistory({route, title}) {
     const filteredExchanges = useMemo(() => {
         return exchangeHistory.filter((exchange) => {
             return !value || parseExchangeStateName(exchange.state).toLowerCase().includes(value) || exchange.authenticationCode.toLowerCase().includes(value) || exchange.location?.name?.toLowerCase().includes(value)
-        });
+        }).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
     }, [searchQuery, exchangeHistory])
 
     const confirmation = (fn) => showModal(<ConfirmationModal onAccept={fn}/>)

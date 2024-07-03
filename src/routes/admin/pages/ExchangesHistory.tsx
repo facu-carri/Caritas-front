@@ -62,7 +62,7 @@ export default function ExchangesHistory() {
                   })
                           .filter((exchange) => {
                       return !value || parseExchangeStateName(exchange.state).toLowerCase().includes(value) || exchange.authenticationCode.toLowerCase().includes(value) || exchange.date?.toLowerCase().includes(value)
-                  })
+                  }).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
   }, [searchQuery, exchangeHistory, location])
 
   const endDay = () => {
