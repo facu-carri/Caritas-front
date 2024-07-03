@@ -14,7 +14,7 @@ export default function HelpersList({ helpers, onSelect }: HelpersListProps){
     <div className='flex flex-col'>
       {
         helpers.length > 0 ? (
-          <ul className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
+          <ul className='flex flex-col gap-4'>
             {getHelpers()}
           </ul>
         ) : (
