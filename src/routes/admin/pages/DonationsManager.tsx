@@ -48,7 +48,7 @@ export default function DonationsManager() {
     }, [isLoading, donations, searchQuery])
 
     function handleError(errCode: number) {
-        const err = new ErrorCode(errCode, ErrorTypes.EXCHANGER_ERROR)
+        const err = new ErrorCode(errCode, ErrorTypes.DONATION_ERROR)
         setError(err)
     }
 
@@ -76,7 +76,7 @@ export default function DonationsManager() {
             </header>
             <section>
                 {
-                    error && (<ErrorAlert attrs="mt-5 w-fit" show={error != null}>{error.getMessage()}</ErrorAlert>)
+                    error && (<ErrorAlert attrs="mt-5 w-fit" show={error != null}>{"No hay donaciones"}</ErrorAlert>)
                 }
                 <div className="justify-center items-center text-[100%]">
                 {
